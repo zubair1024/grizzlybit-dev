@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .banner-container {
   background: url('/banner.svg') no-repeat;
   background-position: center;
@@ -17,19 +21,4 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.bg-contact {
-  background-color: #111827;
-  opacity: 0.8;
-  background-image: radial-gradient(circle at center center, #111827, #e5e5f7),
-    repeating-radial-gradient(
-      circle at center center,
-      #111827,
-      #111827,
-      10px,
-      transparent 20px,
-      transparent 10px
-    );
-  background-blend-mode: multiply;
 }
