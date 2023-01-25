@@ -10,6 +10,10 @@ html {
   scroll-behavior: smooth;
 }
 
+pre > code {
+  display: grid;
+}
+
 .banner-container {
   background: url('/banner.svg') no-repeat;
   background-position: center;

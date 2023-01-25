@@ -52,6 +52,12 @@ export async function getAllPostSlugs() {
 const remarkPlugins: PluggableList = [remarkGfm];
 
 const codeHighlightOptions: Partial<CodeHighlightOptions> = {
+  theme: JSON.parse(
+    fs.readFileSync(
+      path.join(process.cwd(), 'src/lib/themes/tokyo-night-color-theme.json'),
+      'utf-8',
+    ),
+  ),
   onVisitLine(node) {
     if (node.children.length === 0) {
       node.children = [{ type: 'text', value: ' ' }];
