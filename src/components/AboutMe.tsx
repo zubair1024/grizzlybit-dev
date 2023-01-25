@@ -9,7 +9,6 @@ const cardVariants: Variants = {
   onscreen: {
     y: 0,
     opacity: 1,
-    rotate: -5,
     transition: {
       type: 'spring',
       bounce: 0.4,
@@ -53,7 +52,7 @@ const AboutMe = () => {
             variants={cardVariants}
             initial="offscreen"
             whileInView="onscreen"
-            className="right-0 p-5 rounded-lg card glass"
+            className="right-0 p-5 rounded-lg"
           >
             <Image
               src="/zubair_2.jpg"
