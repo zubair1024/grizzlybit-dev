@@ -5,31 +5,31 @@ const Contact = () => {
         <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
           Let&apos;s have a conversation
         </h2>
-        <div className="grid max-w-4xl grid-cols-2 gap-6 p-10 mx-auto rounded-lg shadow-xl bg-base-300">
+        <div className="grid max-w-4xl grid-cols-2 gap-6 p-10 mx-auto bg-black rounded-lg shadow-2xl">
           <form className="space-y-6 font-mono">
             <div className="form-control">
               <label className="input-group">
-                <span>Name</span>
+                <span className="bg-black border">Name</span>
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className="w-full input input-bordered"
+                  className="w-full bg-black input input-bordered"
                 />
               </label>
             </div>
             <div className="form-control">
               <label className="input-group">
-                <span>Email</span>
+                <span className="bg-black border">Email</span>
                 <input
                   type="text"
                   placeholder="info@site.com"
-                  className="w-full input input-bordered"
+                  className="w-full bg-black input input-bordered"
                 />
               </label>
             </div>
             <div className="form-control">
               <textarea
-                className="textarea textarea-bordered"
+                className="bg-black textarea textarea-bordered"
                 placeholder="Message"
               ></textarea>
             </div>
