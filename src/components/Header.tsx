@@ -60,8 +60,8 @@ const Header = () => {
           <a className="btn btn-ghost">
             <Image
               src="/grizzlybit-dev-logo.svg"
-              width={100}
-              height={100}
+              width={150}
+              height={150}
               alt="grizzlybit.dev"
             ></Image>
           </a>
@@ -69,13 +69,16 @@ const Header = () => {
         <div className="hidden navbar-center lg:flex lg:justify-between">
           <ul className="px-1 uppercase menu menu-horizontal menu-compact">
             <li>
-              <a>Home</a>
-            </li>
-            <li>
               <a>About Me</a>
             </li>
             <li>
-              <a>Timeline</a>
+              <a>Toolbelt</a>
+            </li>
+            <li>
+              <a>Portfolio</a>
+            </li>
+            <li>
+              <a>Worked With</a>
             </li>
           </ul>
         </div>

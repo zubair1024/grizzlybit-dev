@@ -53,7 +53,7 @@ const socialLinks = [
 
 const Banner = () => {
   return (
-    <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-br from-[#2D1C69] via-fuchsia-800 to-pink-700">
+    <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121]">
       <motion.div
         className="card w-96 glass"
         initial={{ y: 300, opacity: 0 }}

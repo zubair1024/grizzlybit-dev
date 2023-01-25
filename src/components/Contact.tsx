@@ -1,11 +1,14 @@
 const Contact = () => {
   return (
     <>
-      <div id="contact-form" className="py-20 bg-black">
+      <div
+        id="contact-form"
+        className="py-20 bg-gradient-to-t from-black to-[#212121]"
+      >
         <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
           Let&apos;s have a conversation
         </h2>
-        <div className="grid max-w-4xl grid-cols-2 gap-6 p-10 mx-auto bg-black rounded-lg shadow-2xl">
+        <div className="grid max-w-4xl grid-cols-2 gap-6 p-10 mx-auto rounded-lg shadow-2xl card glass">
           <form className="space-y-6 font-mono">
             <div className="form-control">
               <label className="input-group">

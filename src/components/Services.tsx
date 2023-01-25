@@ -155,7 +155,7 @@ const Services = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        className="p-5 lg:mx-20 glass rounded-xl"
+        className="p-5 lg:mx-20 rounded-xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-4">
           {servicesData.map((i) => (
