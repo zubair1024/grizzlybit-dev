@@ -2,8 +2,8 @@ import { companies } from 'data/companies';
 import Image from 'next/image';
 const Companies = () => {
   return (
-    <div className="py-10 bg-gray-800">
-      <h2 className="font-mono text-2xl tracking-wider text-center capitalize">
+    <div className="py-10 bg-gray-900">
+      <h2 className="font-mono text-2xl tracking-wider text-center uppercase">
         Some entities I have had the pleasure of working with
       </h2>
       <div className="grid content-center justify-center grid-cols-2 gap-4 p-16 md:grid-cols-4">

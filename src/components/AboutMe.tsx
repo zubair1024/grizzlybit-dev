@@ -28,7 +28,7 @@ const AboutMe = () => {
   return (
     <div className="my-10">
       <div className="py-10">
-        <h2 className="font-mono text-2xl tracking-wider text-center capitalize">
+        <h2 className="font-mono text-2xl tracking-wider text-center uppercase">
           A little about me
         </h2>
         <div className="flex flex-col justify-between px-5 md:flex-row">
