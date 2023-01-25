@@ -1,0 +1,110 @@
+import BlogPostContainer from '../../components/BlogPostContainer';
+
+![How to Create a SSH Tarpit](/Image.png)
+
+## Why have an SSH Tarpit?
+
+If you have any servers that you access using SSH (Secure Socket Shell) connection, you'll be familiar with how it can be used my hackers to gain access to your servers. However, you'll also notice through reviewing your server authentication logs look like something like below:
+
+![SSH connection attempts by hackers](/static/images/ssh-tarpit-endlessh/ssh-connections-by-hackers.png)
+
+You'll notice that bots have been trying to log into your server with some default credentials thousands of times, this method is essentially called the "Brute-force" technique. Now, if you have setup your server an insecure password with password authentication enabled and are using the default port for SSH, you're highly likely to have a compromised server in your hands. If you have followed some standard best practices for setting up your Linux servers then these attacks might seem harmless.
+
+> In this post, we will be protecting our servers with a twist. We will be giving the hackers a taste of their own medicine. 😉
+
+To perform our trick, we are going to leverage the "banner" that is displayed and the fact that there is no real limit to how long it can be or how much time it can take to display its contents. Also, we know that the default port for SSH is usually 22 for any server. Now, we are going to use this concept to force the hacker to read a very long banner that essentially never ends, creating what we call an **endlessh (endless SSH)** or an **SSH tarpit**. Through this method, you're not only protecting your server but you'll also be wasting the precious time of the hackers, which otherwise could have been used compromising other servers.
+
+## How to create an SSH tarpit?
+
+We are going to use a git repository for this by [skeeto](https://github.com/skeeto) called `endlessh` . Log into your server and clone the repository
+
+```bash
+git clone https://github.com/skeeto/endlessh.git
+```
+
+Now, change to the directory and compile the directory
+
+```bash
+cd endlessh
+make
+```
+
+If you're using Debain based OS, you might get an error while you're compiling the program. You'll the `libc6-dev` library to be installed, which you can do using the `apt` package manager
+
+```bash
+sudo apt-get install libc6-dev
+```
+
+We will then move the binary into a folder for your `path`
+
+```bash
+sudo mv endlessh /usr/local/bin/
+```
+
+Now, lets just verify
+
+```bash
+which endlessh
+# it should print the path like /usr/local/bin/endlessh
+```
+
+Now, we will need to demonize it for which we will copy the `systemd` service file
+
+```bash
+sudo cp util/endlessh.service /etc/systemd/system/
+```
+
+Now, we will enable the `systemd` service
+
+```bash
+	sudo systemctl enable endlessh
+```
+
+Now the last thing we will do is create the configuration file by first creating the folder and then the configuration file inside it, which we will open in an editing mode
+
+```bash
+mkdir -p /etc/endlessh
+sudo nano /etc/endlessh/config
+```
+
+The content of the config file will be the following:
+
+```bash
+PORT 22 # this is becasue endlessh runs by default on port 2222
+```
+
+Now, we are done with the setup, let's start the service
+
+```bash
+sudo systemctl start endlessh
+```
+
+Also, let's verify that it is actually running
+
+```bash
+netstat -tulpn | grep enlessh
+```
+
+Once you verify that is the service is running, you're done. Pretty simple ain't it?
+
+## Mock a hacker
+
+We will now mock a hacker on another terminal window trying to SSH into the server
+
+```bash
+ssh root@<server-address> -p 22
+```
+
+Now, you will end up seeing nothing. To actually know what is happening under the hood, we will SSH using the verbose option
+
+```bash
+ssh -vvv root@<server-address> -p
+```
+
+You'll notice that the user will keep getting gibberish in the banner, each line taking almost 30 seconds to show up. And since the banner is not generally treated as anything that you can perform a timeout on explicitly the script that the hacker will be using will be stuck on this stage forever, who otherwise would. Mission accomplished 👍 .
+
+You have successfully wasted the time and efforts of a hacker. You are badass. 😎
+
+Now go out there and waste someone's time and effort and make the world a safer place, one server at a time.
+
+export default ({ children }) => <BlogPostContainer content={children} />;

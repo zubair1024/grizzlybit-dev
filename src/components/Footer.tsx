@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Footer = () => {
   const date = new Date();
   return (
-    <footer className="items-center p-4 bg-black footer text-neutral-content">
+    <footer className="items-center p-4 footer text-neutral-content">
       <div className="items-center grid-flow-col">
         <Image
           src="/grizzlybit-dev-only-logo.svg"
