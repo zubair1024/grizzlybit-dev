@@ -1,12 +1,46 @@
+import Image from 'next/image';
+
 const Portfolio = () => {
   return (
-    <div>
-      <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
+    <div className="mx-10 my-10">
+      <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize ">
         Some of my works
       </h2>
       <div>
-        <div className="flex flex-wrap items-center justify-center mx-auto">
-          {[1, 2, 3, 4].map((i) => {
+        <div className="grid grid-cols-4 gap-1 px-10 mx-auto">
+          <div className="transition ease-in hover:scale-105">
+            <Image
+              src="/zubair_2.jpg"
+              alt="project"
+              width={512}
+              height={512}
+            ></Image>
+          </div>
+          <div className="transition ease-in hover:scale-105">
+            <Image
+              src="/zubair_2.jpg"
+              alt="project"
+              width={512}
+              height={512}
+            ></Image>
+          </div>
+          <div className="transition ease-in hover:scale-105">
+            <Image
+              src="/zubair_2.jpg"
+              alt="project"
+              width={512}
+              height={512}
+            ></Image>
+          </div>
+          <div className="transition ease-in hover:scale-105">
+            <Image
+              src="/zubair_2.jpg"
+              alt="project"
+              width={512}
+              height={512}
+            ></Image>
+          </div>
+          {/* {[1, 2, 3, 4].map((i) => {
             return (
               <div key={i} className="max-w-sm mb-10 ml-10 card glass">
                 <figure>
@@ -20,13 +54,10 @@ const Portfolio = () => {
                     facilis placeat! Hic sit obcaecati, id fugiat assumenda eius
                     quidem quasi necessitatibus inventore corporis sapiente.
                   </p>
-                  {/* <div className="justify-start card-actions">
-                    <button className="btn btn-primary">Read more</button>
-                  </div> */}
                 </div>
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
     </div>

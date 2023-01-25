@@ -1,7 +1,7 @@
 const Contact = () => {
   return (
     <>
-      <div className="py-20 bg-contact">
+      <div className="py-20 bg-gray-900">
         <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
           Let&apos;s have a conversation
         </h2>

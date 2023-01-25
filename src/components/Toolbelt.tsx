@@ -6,7 +6,7 @@ const Toolbelt = () => {
     <div className="bg-fixed bg-toolBelt">
       <div className="pt-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
         <h2 className="font-mono text-2xl tracking-wider text-center capitalize">
-          My work tool-belt
+          My tool-belt
         </h2>
         <div className="grid content-center justify-center grid-cols-2 gap-4 p-16 md:grid-cols-4">
           {toolBelt.map((i) => {
