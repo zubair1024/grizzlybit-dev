@@ -18,7 +18,11 @@ export default function BlogPost({ code, frontmatter }: Props) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
 
   return (
-    <article itemScope itemType="http://schema.org/Article">
+    <article
+      itemScope
+      itemType="http://schema.org/Article"
+      className="prose prose-xl"
+    >
       <header>
         <h1 itemProp="headline">{frontmatter.title}</h1>
         <p>{frontmatter.date}</p>
