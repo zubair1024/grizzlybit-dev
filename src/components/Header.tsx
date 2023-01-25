@@ -1,9 +1,29 @@
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 const Header = () => {
+  useEffect(() => {
+    const header = document.getElementById('header');
+
+    const onScroll = () => {
+      if (window.scrollY !== 0) {
+        header?.classList.add('shadow-xl');
+        header?.classList.remove('bg-transparent');
+        header?.classList.add('bg-base-300');
+      } else {
+        header?.classList.remove('shadow-xl');
+        header?.classList.add('bg-transparent');
+        header?.classList.remove('bg-base-300');
+      }
+    };
+    document.addEventListener('scroll', onScroll);
+    return () => {
+      document.removeEventListener('scroll', onScroll);
+    };
+  }, []);
   return (
     <>
-      <header className="sticky navbar bg-base-300">
+      <header id="header" className="fixed z-50 navbar">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -47,7 +67,7 @@ const Header = () => {
           </a>
         </div>
         <div className="hidden navbar-center lg:flex lg:justify-between">
-          <ul className="px-1 uppercase  menu menu-horizontal menu-compact">
+          <ul className="px-1 uppercase menu menu-horizontal menu-compact">
             <li>
               <a>Home</a>
             </li>

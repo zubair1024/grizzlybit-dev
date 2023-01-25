@@ -1,7 +1,7 @@
 export const companies = [
   {
     name: 'ATLAS Security',
-    img: '/companies/atlas-logo.png',
+    img: '/companies/atlas.png',
   },
   {
     name: 'Cleverlab',
