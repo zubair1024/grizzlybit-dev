@@ -66,7 +66,7 @@ const Banner = () => {
             },
           }}
         >
-          <div className="flex items-center justify-center w-40 mx-auto mt-10 border-2 rounded-full bg-gradient-to-tr from-pink-700 to-blue-700">
+          <div className="flex items-center justify-center w-40 mx-auto mt-10 bg-yellow-400 border-2 rounded-full">
             <Image
               src="/Image.png"
               alt="Zubair Ahmed"
