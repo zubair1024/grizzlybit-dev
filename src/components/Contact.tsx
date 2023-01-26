@@ -1,3 +1,5 @@
+import { IoHome } from 'react-icons/io5';
+import { MdMail } from 'react-icons/md';
 const Contact = () => {
   return (
     <>
@@ -8,7 +10,7 @@ const Contact = () => {
         <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
           Let&apos;s have a conversation
         </h2>
-        <div className="grid max-w-4xl grid-cols-2 gap-6 p-10 mx-auto rounded-lg shadow-2xl card glass">
+        <div className="grid max-w-4xl gap-6 p-10 mx-auto rounded-lg md:grid-cols-2 ">
           <form className="space-y-6 font-mono">
             <div className="form-control">
               <label className="input-group">
@@ -40,18 +42,31 @@ const Contact = () => {
               <button className="btn btn-primary">Submit</button>
             </div>
           </form>
-          <div className="flex flex-col items-start justify-center pl-6 space-y-6 font-mono border-l-2">
+          <div className="flex flex-col items-start justify-center pl-6 space-y-6 font-mono md:border-l-2">
             <div>
-              <p className="font-semibold">Location</p>
+              <p className="flex items-center font-semibold">
+                <IoHome />
+                <span className="pl-2">Location</span>
+              </p>
               <p>Dubai, United Arab Emirates</p>
             </div>
             <div>
-              <p className="font-semibold">Email</p>
-              <p>za@grizzlybit.dev</p>
+              <p className="flex items-center font-semibold">
+                <MdMail />
+                <span className="pl-2">Email</span>
+              </p>
+              <a href="mailto:za@grizzlybit.dev">
+                <p>za@grizzlybit.dev</p>
+              </a>
             </div>
             <div>
-              <p className="font-semibold">Alternate Email</p>
-              <p>zubair1024@gmail.com</p>
+              <p className="flex items-center font-semibold">
+                <MdMail />
+                <span className="pl-2">Alternate Email</span>
+              </p>
+              <a href="mailto:zubair1024@gmail.com">
+                <p>zubair1024@gmail.com</p>
+              </a>
             </div>
           </div>
         </div>

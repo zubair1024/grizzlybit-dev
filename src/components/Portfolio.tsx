@@ -3,11 +3,11 @@ import Image from 'next/image';
 const Portfolio = () => {
   return (
     <div className="mx-10 my-10">
-      <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize ">
+      <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
         Some of my works
       </h2>
       <div>
-        <div className="grid grid-cols-4 gap-1 px-10 mx-auto">
+        <div className="grid gap-1 px-10 mx-auto md:grid-cols-4">
           <div className="transition ease-in hover:scale-105">
             <Image
               src="/zubair_2.jpg"
