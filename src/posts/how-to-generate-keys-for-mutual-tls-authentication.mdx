@@ -1,0 +1,134 @@
+---
+title: 'How to generate keys for Mutual TLS Authentication 🔑'
+publishedAt: '2020-10-02'
+summary: 'Mutual TLS authentication is a process that ensures that traffic between entities is secure and trusted in both directions between a client and a server. It essentially takes place through a TSL handshake. Here is a quickie on how to generate certificates and perform Mutual TLS Authentication between a client and a server.'
+image: '/blog/how-send-csv-files-with-nodemailer/cover.png'
+---
+
+![How to generate keys for Mutual TLS Authentication](/blog/how-to-generate-keys-for-mutual-tls-authentication/cover.png)
+
+At [RAZRLAB](https://razrlab.com), we always keep security at the upmost importance and a simple way to ensure that your IoT devices and your server are securely communicating is to leverage the concept of Mutual TLS Authentication.
+
+# What is Mutual Authentication?
+
+Mutual TLS authentication is a process that ensures that traffic between entities is secure and trusted in both directions between a client and a server. It essentially takes place through a TSL handshake.
+
+This takes place with a root certificate authority (CA) which essentially allows only requests from the devices with a corresponding client certificate issued for it. When a client request reaches the server, the server responds with a request for the client to present its certificate. If the client fails to present the request is not allowed to process, but if it does have a certificate a key exchange takes place for verification.
+
+![A typical Mutual TLS Authentication setup](/blog/how-to-generate-keys-for-mutual-tls-authentication/typical-mutual-authentication-setup.png)
+
+Mainly two things happen in this process:
+
+- The client will validate that the server is trusted to serve up content for the given configured DNS name
+- The server will also validate the client is known by the CA and will authenticate it.
+
+The process will ensure that both parties (client and server) are verified by each other and therefore, mutual authentication takes place and both parties end up trusting each other.
+
+Uff.... now that we have taken the theory out of the way, let's see how we can quickly setup a Mutual TLS Authenticated client and server setup.
+
+# How to setup Mutual TLS Authentication
+
+## Pre-requisites
+
+We are going to use `openssl` to generate certificates, hence, we will need a computer to have the package available.
+
+Check if you have `openssl` on your system by using the following command on your terminal:
+
+```bash
+openssl version -a
+```
+
+If you don't have `openssl` use the following links to it up on your system:
+
+- To install on Linux (Ubuntu) [click here](https://cloudwafer.com/blog/installing-openssl-on-ubuntu-16-04-18-04/)
+- To install on Windows [click here](https://stackoverflow.com/a/51378493/3779309)
+- To install/update on Mac using Homebrew [click here](https://medium.com/@katopz/how-to-upgrade-openssl-8d005554401)
+
+## Generate a Certificate Authority (CA)
+
+Run the following command to generate keys for certificate authority (CA)
+
+```bash
+openssl req -new -x509 -days 9999 -keyout ca-key.pem -out ca-crt.pem
+```
+
+You'll need to fill in the following prompts:
+
+- You'll be asked to insert CA password. Input a preferred password that you'll remember.
+- You'll be prompted to specify a CA Common Name. Insert that you prefer like `root.localhost` or `ca.localhost`.
+
+> The CA Common Name must be different for both server and client.
+
+## Generate a Server Certificate
+
+First we start with generating key for the server
+
+```bash
+openssl genrsa -out server-key.pem 4096
+```
+
+Now, generate a Server Certificate Signing Request
+
+```bash
+openssl req -new -key server-key.pem -out server-csr.pem
+```
+
+You'll need to fill the in the following prompts:
+
+- You'll be prompted to specify a CA Common Name. Insert that you prefer like `localhost` or `server.localhost`.
+- Optionally insert a challenge password
+
+> The client will need to verify the Common Name, so make sure you have a valid DNS name for this.
+
+Now sign the certificate using the Certificate Authority
+
+```bash
+openssl x509 -req -days 9999 -in server-csr.pem -CA ca-crt.pem -CAkey ca-key.pem -CAcreateserial -out server-crt.pem
+```
+
+You'll be prompted to insert the password for the Certificate Authority (CA).
+
+Seems like you have successfully generate your Server Certificate, you can verify the certificate using the following command:
+
+```bash
+openssl verify -CAfile ca-crt.pem server-crt.pem
+```
+
+## Generate a Client Certificate
+
+Once again, we start with generating key for the Client
+
+```bash
+openssl genrsa -out client1-key.pem 4096
+```
+
+Now, generate a Client Certificate Signing Request
+
+```bash
+openssl req -new -key client1-key.pem -out client1-csr.pem
+```
+
+You'll need to fill the in the following prompts:
+
+- You'll be prompted to specify a CA Common Name. Insert that you prefer like `client.localhost`. The server should not verify this, since it should not do a reverse DNS lookup.
+- Optionally insert a challenge password
+
+Now sign the certificate using the Certificate Authority
+
+```bash
+openssl x509 -req -days 9999 -in client1-csr.pem -CA ca-crt.pem -CAkey ca-key.pem -CAcreateserial -out client1-crt.pem
+```
+
+You'll be prompted to insert the password for the Certificate Authority (CA).
+
+Now, that you have successfully generated your Client Certificate, you can verify the certificate using the following command:
+
+```bash
+openssl verify -CAfile ca-crt.pem client1-crt.pem
+```
+
+Now, you can use the keys to perform Mutually Authenticated communication between your client and the server.
+
+I have also setup an example repository using Node.js-based clients and server leveraging Mutual TLS Authentication to send messages. [Click here](https://github.com/zubair1024/mutual-tls-authentication) to view the repository.
+
+Happy Grizzly Coding 🐻

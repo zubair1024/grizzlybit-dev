@@ -1,0 +1,131 @@
+---
+title: 'Easy PGP Encryption using Node.js'
+publishedAt: '2020-11-28'
+summary: 'An easy setup guide on how to begin using PGP Encryption on Node.js'
+image: '/blog/easy-pgp-encryption-using-nodejs/cover.png'
+---
+
+![Easy PGP Encryption using Node.js](/blog/easy-pgp-encryption-using-nodejs/cover.png)
+
+# What is Pretty Good Privacy Encryption?
+
+Pretty Good Privacy (PGP) encryption is an encryption system used for sending and receiving encrypted emails and sensitive files. Over the years, PGP has become the de facto standard for email security.
+
+Essentially, PGP uses a combination of two forms of encryption: symmetric key encryption and public-key encryption. Below is a diagram that illustrates how PGP encryption works:
+
+![How PGP Encryption Works?](/blog/easy-pgp-encryption-using-nodejs/How_PGP_Encryption_Works.jpg)
+
+I think we will stop the theory at that. If you like to know more about PGP encryption and the maths involved please [click here](https://en.wikipedia.org/wiki/Pretty_Good_Privacy).
+
+# How to use PGP with Node.js?
+
+For the use of PGP encryption on Node.js, we will first turn to the community and leverage the use of the `openpgp` library.
+
+> OpenPGP is a protocol that defines the standards for PGP. `openpgp` package implements the OpenPGP protocol in Node.js
+
+## Setup your workspace
+
+Let's create a folder and initialize a new project
+
+```bash
+mkdir simple-pgp-example && cd simple-pgp-example && npm init -y
+```
+
+Now install the `openpgp` package using `npm`
+
+```bash
+npm i openpgp --save
+```
+
+## Generate keys
+
+We will now be generating private and public PGP keys with OpenPGP. You can choose which curve to use in Elliptic-curve cryptography. In addition, you can choose to define a passphrase used to decrypt files and the private key
+
+```jsx
+//generate-keys.js
+const openpgp = require('openpgp');
+
+generate();
+async function generate() {
+  const { privateKeyArmored, publicKeyArmored } = await openpgp.generateKey({
+    userIds: [{ name: 'anakin', email: 'anakin@tatooine.com' }],
+    curve: 'ed25519',
+    passphrase: 'obiwan',
+  });
+}
+```
+
+## Encryption
+
+Now, we will write a text file that will contain information that we want to encrypt. Let's create a `secret.txt` on the root directory with the content:
+
+```bash
+Luke, I am your father
+```
+
+Once, done we will use the public key from the recipient to encrypt the payload. Let's create a file `encrypt.js` that is going to do just that
+
+```jsx
+// encrypt.js
+const openpgp = require('openpgp');
+const fs = require('fs');
+
+const publicKeyArmored = fs.readFileSync('./public.key', {
+  encoding: 'utf8',
+  flag: 'r',
+});
+
+(async () => {
+  const plainData = fs.readFileSync('secret.txt');
+  const encrypted = await openpgp.encrypt({
+    message: openpgp.message.fromText(plainData),
+    publicKeys: (await openpgp.key.readArmored(publicKeyArmored)).keys,
+  });
+
+  fs.writeFileSync('encrypted-secret.txt', encrypted.data);
+  console.log(`data has been encrypted...`);
+})();
+```
+
+This should create a new file called `encrypted-secret.txt` which will contain the encrypted payload.
+
+## Decryption
+
+Now, as a receiver of the file, we will try and decrypt the encrypted file. To decrypt we will use our private key and passphrase. Let's create a file called `decrypt.js` for this purpose
+
+```jsx
+// decrypt.js
+const openpgp = require('openpgp');
+const fs = require('fs');
+
+const privateKeyArmored = fs.readFileSync('./private.key');
+const passphrase = `obiwan`;
+
+(async () => {
+  const privateKey = (await openpgp.key.readArmored([privateKeyArmored]))
+    .keys[0];
+  await privateKey.decrypt(passphrase);
+
+  const encryptedData = fs.readFileSync('encrypted-secret.txt');
+  const decrypted = await openpgp.decrypt({
+    message: await openpgp.message.readArmored(encryptedData),
+    privateKeys: [privateKey],
+  });
+  console.log(`successfully decrypted data... 👇`);
+  console.log(decrypted.data);
+})();
+```
+
+Once you run this file. The output should read the original secret message you had encrypted
+
+```bash
+Luke, I am your father
+```
+
+Now, we all can go "Nooooooo...". 😝 🤦‍♂️
+
+Lame joke aside, we have successfully encrypted and decrypted a message using the PGP Encryption method.
+
+You can find the source code on Github. Please [click here](https://github.com/zubair1024/simple-pgp-example) to view it.
+
+Happy Grizzly Coding! 🐻

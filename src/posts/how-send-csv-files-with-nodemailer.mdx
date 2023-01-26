@@ -1,0 +1,180 @@
+---
+title: 'How to send CSV Files with Nodemailer 📨'
+publishedAt: '2020-07-12'
+summary: 'If you are wondering on how to send files, especially CSV files as attachments in Nodejs, then look no further, we are going to do just that in this post using Nodemailer. I promise you it is going to be easy as cake. 😊'
+image: '/blog/how-send-csv-files-with-nodemailer/cover.png'
+---
+
+![How to send CSV Files with Nodemailer](/blog/how-send-csv-files-with-nodemailer/cover.png)
+
+Well, there has been a slight struggle on how to send CSV file as an attachment using Node.js. If you're wondering how to do that, look no further, we are going to do just that in this post! 😊
+
+We will dwell into using [Nodemailer](https://nodemailer.com/about/), a popular emailing module that literally makes sending makes "easy as cake". It is a project that was started back in 2010 and now is a "de facto" solution for emailing that Node.js developers turn to.
+
+## Setup a workspace
+
+Let's get started by creating a new `npm` repository using your preferred terminal.
+
+```bash
+npm init --y
+```
+
+Note: The `--y` flag is for people that don't have much time 😛.
+
+## Install dependencies
+
+We will install the following dependencies in our repository:
+
+- Nodemailer
+- json2csv
+
+Yet again, let's use your preferred terminal and the `npm` package manager to install the dependencies:
+
+```bash
+npm i --save nodemailer json2csv
+```
+
+If you're successful, your `package.json` should list the dependencies with the "latest" version number against each of them.
+
+`json2csv` modules is used to convert JSON objects to CSV format in an easy and neat manner.
+
+## Write some boilerplate code
+
+Now let's include the Nodemailer dependency into our code and initialize a transporter. Note that I'm using the ES6 syntax for the code.
+
+```jsx
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+    user: '<email>',
+    pass: '<password>',
+  },
+});
+```
+
+In the above example, we have Ethereal email service. Ethereal is a fake SMTP service, mostly aimed at Nodemailer users (but not limited to). It's a completely free anti-transactional email service where messages never get delivered.
+
+Now, let's initialize some random JSON data.
+
+```jsx
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+    user: '<email>',
+    pass: '<password>',
+  },
+});
+
+//some data
+const data = [
+  { relation: 'father', name: 'Anakin Skywalker' },
+  { relation: 'son', name: 'Luke Skywalker' },
+];
+```
+
+Let's convert the data into CSV using the light but awesome `csvtojson` library
+
+```jsx
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  auth: {
+    user: "<email>",
+    pass: "<password>",
+  },
+});
+
+//some data
+const data = [{relation:"father",name:"Anakin Skywalker"},{relation:"son",name:"Luke Skywalker"},...];
+//conver the data to CSV with the column names
+const csv = parse(data, ["relation","name"]);
+```
+
+Now, without further a do, let's send this data as a CSV attachment leveraging the Nodemailer transporter mail options. Note that the data is sent using the "attachments" key on the mail configuration.
+
+```jsx
+transporter.sendMail(
+  {
+    from: 'darth.vader@sithmail.com',
+    to: 'luke.skywalker@jedimail.com',
+    subject: 'You need to know the truth',
+    text: 'Ola! Please check the attachment for a surprise 😊',
+    html: '<b>Ola! Please check the attachment for a surprise! 😊</b>',
+    // here is the magic
+    attachments: [
+      {
+        filename: 'file.csv',
+        content: csv,
+      },
+    ],
+  },
+  (err, info) => {
+    if (err) {
+      console.log('Error occurred. ' + err.message);
+      return process.exit(1);
+    }
+
+    console.log('Message sent: %s', info.messageId);
+    // Preview only available when sending through an Ethereal account
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  },
+);
+```
+
+Let's complete our example
+
+```jsx
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+    user: '<email>',
+    pass: '<password>',
+  },
+});
+
+//some data
+const data = [
+  { relation: 'father', name: 'Anakin Skywalker' },
+  { relation: 'son', name: 'Luke Skywalker' },
+];
+//conver the data to CSV with the column names
+const csv = parse(data, ['relation', 'name']);
+
+transporter.sendMail(
+  {
+    from: 'darth.vader@sithmail.com',
+    to: 'luke.skywalker@jedimail.com',
+    subject: 'You need to know the truth',
+    text: 'Ola! Please check the attachment for a surprise 😊',
+    html: '<b>Ola! Please check the attachment for a surprise! 😊</b>',
+    //here is the magic
+    attachments: [
+      {
+        filename: 'file.csv',
+        content: csv,
+      },
+    ],
+  },
+  (err, info) => {
+    if (err) {
+      console.log('Error occurred. ' + err.message);
+      return process.exit(1);
+    }
+
+    console.log('Message sent: %s', info.messageId);
+    // Preview only available when sending through an Ethereal account
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  },
+);
+```
+
+You should now receive an email on the receiver mailbox with an attached CSV file with the appropriate data! Boom! you're done!
+
+Happy Grizzly Coding! 🐻

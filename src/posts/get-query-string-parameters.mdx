@@ -1,0 +1,28 @@
+---
+title: 'GET query string parameters 💁‍♂️'
+publishedAt: '2016-12-14'
+summary: 'A utility function to get the value of any query string parameter. We all know that the query string parameters are available for us through window.location (JavaScript Window Location Object). But query string usually turns up as a string and has to be parsed to get the necessary attribute out...'
+image: '/blog/get-query-string-parameters/cover.png'
+---
+
+![GET query string parameters](/blog/get-query-string-parameters/cover.png)
+
+> A utility function to get the value of any query string parameter
+
+We all know that the query string parameters are available for us through window.location (JavaScript Window Location Object). But query string usually turns up as a string and has to be parsed to get the necessary attribute out. There is an easy way through a utility function given below, this can be included in any web deployment:
+
+```js
+function getParameterByName(name, url) {
+if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\"\\ "\\$&"amp;"amp;");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+// Usage for query string: ?sith=vader
+var foo = getParameterByName('sith'); // "vader"
+```
+
+Happy Grizzly 🐻 Coding!

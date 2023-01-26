@@ -1,0 +1,103 @@
+---
+title: 'How to SSH using Node.js'
+publishedAt: '2020-09-25'
+summary: 'Quick tip on how to build an application that will SSH to servers and run commands using Node.js for automation of commands and complex deployments.'
+image: '/blog/how-to-ssh-using-nodejs/cover.png'
+---
+
+![How to SSH using Node.js](/blog/how-to-ssh-using-nodejs/cover.png)
+
+I build IoT applications on a daily basis at [RAZRLAB](https://razrlab.com/), and every once in awhile, I do need the internal tools to perform some functions on servers, be it executing commands or forwarding ports. For this, I found a neat little tool `node-ssh` which helps establish ssh tunnels to servers with key authentication.
+
+## Let's get started
+
+Let's create a new folder and set up a fresh `npm` repository
+
+```bash
+npm init --y
+```
+
+## Install Dependencies
+
+We are going to use the following dependencies:
+
+- [node-ssh](https://www.npmjs.com/package/node-ssh) - an extremely lightweight Promise wrapper for [ssh2](https://github.com/mscdex/ssh2)
+- [dotenv](https://www.npmjs.com/package/dotenv) - a zero-dependency module that loads environment variables from a .env file into process.env
+
+## Environment Variables
+
+We will create our SSH tunnel using private key authentication for that we will create SSH key pair with a passphrase.
+
+I would recommend using your cloud providers SSH key access management to securely manage access to your servers. [Click here](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/) to know how to manage SSH key access through Digital Ocean.
+
+Now, let's specify paths and information in the `.env` file
+
+```bash
+# .env
+
+SSH_host=
+SSH_user=
+SSH_privatekey=
+SSH_passphrase=
+```
+
+Environment variable definitions:
+
+- `SSH_host` : Host IP Address or DNS name of the server
+- `SSH_user` : Host username for logging in
+- `SSH_privatekey` : path to the private key
+- `SSH_passphrase` : passphrase for the key for added layer of security
+
+## Test Setup
+
+We will access the server and install a [Redis](https://redis.io/) server. We will use an Ubuntu machine and leverage the `apt` package manager to install the Redis server.
+
+- SSH as we always do 😁
+
+```bash
+ssh <username>@<host>
+```
+
+- Install Redis Server
+
+```bash
+sudo apt-get install redis-server
+```
+
+This will download and install Redis and its dependencies. It will also export a CLI application called `redis-cli` to interact with the Redis server.
+
+## Let's go
+
+Now, that we have done the setup. Let's write a minimal client that will navigate to a directory and access the redis-cli to ping [Redis](https://redis.io/) server
+
+```jsx
+const node_ssh = require('node-ssh');
+const ssh = new node_ssh();
+
+require('dotenv').config();
+
+ssh
+  .connect({
+    host: process.env.SSH_host,
+    username: process.env.SSH_user,
+    privateKey: process.env.SSH_privatekey,
+    passphrase: process.env.SSH_passphrase,
+  })
+  .then(() => {
+    ssh.execCommand('redis-cli ping', { cwd: '/var/www' }).then((result) => {
+      console.log('STDOUT: ' + result.stdout);
+      console.log('STDERR: ' + result.stderr);
+    });
+  });
+```
+
+As you can see in the example above, we read the output from STDOUT and STDERR for output and errors respectively, after running the ping command through `redis-cli`.
+The neat thing about `node-ssh`, is that it is a simple Promise wrapper and hence you can use `async/await` logic with it.
+
+```jsx
+STDOUT: PONG;
+```
+
+Now, that you have been able to SSH to a remote server and have been able to run CLI commands, the next step would be to go crazy 😝. You now have endless possibilities of automating deployments and executing commands on your servers leveraging the power of building complex applications using Node.js.
+
+Happy Grizzly Coding 🐻 !

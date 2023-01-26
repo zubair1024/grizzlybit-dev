@@ -1,0 +1,142 @@
+---
+title: 'Install Docker on Ubuntu 18.04 (Bionic Beaver) 🐳'
+publishedAt: '2020-04-11'
+summary: 'One of the most beautiful sights to see is a smooth running development and production environment. Docker makes this a reality with ease 😁.  This is one of the main reason docker usage just skyrocketed in a the past couple of years. Well, are you wondering how to get started with installing docker? Look no further, here is a quick tutorial for the most widely use Linux Distro!'
+image: '/blog/install-docker-on-ubuntu-18/cover.png'
+---
+
+![Install Docker on Ubuntu 18.04](/blog/install-docker-on-ubuntu-18/cover.png)
+
+One of the most beautiful sights to see is a smooth-running development and production environment. Docker makes this a reality with ease 😁. This is one of the main reasons docker usage just skyrocketed in the past couple of years. Well, are you wondering how to get started with installing docker? Look no further, here is a quick tutorial for the most widely used Linux Distro!
+
+Before we start with the installation setups, we will need some prerequisites to be in place. They are:
+
+- Ubuntu 18.04 64 bit Operating System
+- A user account with `sudo` access rights
+- Though it’s a given, you’ll need a terminal to run the installation commands 😋
+
+### Step 1 Update repositories
+
+If you’re any familiar with the Ubuntu distro, you’ll know that it is always a good idea to update the local repositories before getting started with any software installation process. Hence, just run the following command:
+
+```bash
+sudo apt-get update
+```
+
+Now, you ahead a get yourself a candy bar 🍫 and wait to let the process complete.
+
+### Step 2 Uninstall Old version of Docker
+
+Since we will be doing a fresh installation of docker, let’s make sure all old installations (or attempts) are removed:
+
+```bash
+sudo apt-get remove docker docker-engine docker.io
+```
+
+This should be fairly quick. How does your candy bar taste, I bet it’s tasty 🤤.
+
+### Step 3 Install Docker 🐳
+
+Let’s use the `docker.io` repo to install Docker onto the machine:
+
+```bash
+sudo apt install docker.io
+```
+
+If the command works without any errors, congratulations you have successfully installed docker. Wasn’t it easy!
+
+### Step 4 Start Docker service and setup to run on Startup
+
+Now, that the service has been successfully installed. Let’s start the daemon and have it run on startup:
+
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+Voila! You’re done and have configured the docker service to run on start up. You can check the service if it is running using `systemd`:
+
+```bash
+sudo systemctl status docker
+```
+
+You should see a response like below:
+
+```bash
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2020-04-06 20:47:51 UTC; 4 days ago
+     Docs: https://docs.docker.com
+ Main PID: 22527 (dockerd)
+    Tasks: 49
+   CGroup: /system.slice/docker.service
+           ├─ 7090 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 15677 -container-ip 172.18.0.2 -container-port 15672
+           ├─ 7102 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 5672 -container-ip 172.18.0.2 -container-port 5672
+           ├─ 8104 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 6379 -container-ip 172.19.0.2 -container-port 6379
+           ├─ 9239 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8088 -container-ip 172.20.0.2 -container-port 8081
+           ├─ 9253 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 27717 -container-ip 172.20.0.3 -container-port 27717
+           └─22527 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+```
+
+### Step 5 Run docker commands without `sudo` (Optional)
+
+Let’s begin with adding `docker` group if it doesn’t already exist
+
+```bash
+sudo groupadd docker
+```
+
+Add the currently connected user `$USER` to the docker group. If needed, change the username to match the one you prefer
+
+```bash
+sudo gpasswd -a $USER docker
+```
+
+Also make sure the username is a `sudoer`
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Now you might have to logout and log back for the changes to take affect with a new session.
+
+### Step 6 Test by running `hello-world` docker container
+
+Finally, to make sure everything has been installed and configured correctly, just run the `hello-world` container
+
+```bash
+sudo docker run hello-world
+```
+
+Now, you should have the image downloaded to the cache, if it is not already available. You should see the following output on your terminal
+
+```bash
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+```
+
+Congratulations! 👏 You have docker up and running on your machine. Now go crazy running your docker containers!
+
+Happy Grizzly 🐻 Coding!

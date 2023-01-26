@@ -1,0 +1,254 @@
+---
+title: 'JavaScript Promises: Promise.all vs Promise.allSettled vs Promise.race vs Promise.any'
+publishedAt: '2020-12-12'
+summary: 'Ever wanted to be a "Promises whizz". There are a few tricks you can learn to become that through the use of promise static methods for handling an array of promises in JavaScript'
+image: '/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any/cover.png'
+---
+
+![JavaScript Promises: Promise.all vs Promise.allSettled vs Promise.race vs Promise.any](/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any/cover.png)
+
+On your way to become a "JavaScript Superstar" and "Promises whizz", you'll need to master the concept of handling multiple promises at the same time. There are some methods that are provided by the language to do just that, but before we dwell on those methods let's begin with understanding some basics of "states" and "fates" of promises.
+
+<h2>States and Fates</h2>
+
+Promises generally have 3 possible mutually exclusive **_states_**, they are:
+
+- **fulfilled** - A promise is "fulfilled" if `promise.then(f)` will call `f` as soon as possible
+- **rejected** - A promise is rejected if `promise.then(undefined, r)` will call `r` "as soon as possible."
+- **pending** - A promise is pending if it is neither "fulfilled" nor "rejected".
+
+An umbrella term, commonly used, for the above would be "settled" where a promise is said to be "settled" if it is not pending (that is if it is either fulfilled or rejected).
+
+Promises have two possible mutually exclusive **_fates_**, they are:
+
+- **resolved** - A promise is "resolved" if trying to resolve or reject it has no effect, that is the promise has been locked-in to either follow another promise ("thenable" value) or has been "fulfilled" or "rejected".
+- **unresolved** - A promise is "unresolved" if it is not resolved, that is if trying to resolve or reject it will have an impact on the promise.
+
+Now that we have covered the concept of states and fates, we should now be able to understand promise concepts with common terminology. Let's move on to the gist of the article.
+
+<h2>Promise.all</h2>
+
+`Promise.all` resolve all promises passed as an iterable object. The main characteristic is that it rejects completely when an input value is rejected. Basically, it follows an all-or-nothing methodology. Let us illustrate it with an example:
+
+```jsx
+const promises = [
+  Promise.resolve('Luke'),
+  'Lea',
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+];
+
+Promise.all(promises).then((characters) =>
+  console.log(`They are all getting along `, characters),
+);
+```
+
+The output being will look something like:
+
+```bash
+We got a happy family [ 'Luke', 'Lea', 'Han Solo' ]
+```
+
+Now let us introduce a rejection to the array of promises
+
+```jsx
+const promises = [
+  Promise.resolve('Luke'),
+  'Lea',
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+  new Promise((_, reject) => setTimeout(reject, 100, 'Darth Vader')),
+];
+
+Promise.all(promises)
+  .then((characters) => console.log(`They are all getting along `, characters))
+  .catch((characters) =>
+    console.error(`They are getting along because of `, characters),
+  );
+```
+
+Now if you see the output should be:
+
+```bash
+> They are getting along because of Darth Vader
+```
+
+So in the first example, you can see that `Promise.all` is fulfilled and all the names are returned. But in the next example, you can see that one rejected promise results in rejecting all the promises (all-or-nothing logic).
+
+<h2>Promise.allSettled</h2>
+
+`Promise.allSettled` method returns a promise that resolves after all of the given promises have either "fulfilled" or "rejected", with an array of objects that each describes the outcome of each promise. Let us illustrate it with an example:
+
+```jsx
+const promises = [
+  Promise.resolve('Luke'),
+  'Lea',
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+];
+
+Promise.allSettled(promises).then((characters) => console.log(characters));
+```
+
+The output will be different than before because `Promise.allSettled` returns an array of objects that describes the output:
+
+```bash
+> [
+	  { status: 'fulfilled', value: 'Luke' },
+	  { status: 'fulfilled', value: 'Lea' },
+	  { status: 'fulfilled', value: 'Han Solo' }
+	]
+```
+
+Now let us introduce a rejection and analyze the output:
+
+```jsx
+const promises = [
+  Promise.resolve('Luke'),
+  'Lea',
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+  new Promise((_, reject) => setTimeout(reject, 100, 'Darth Vader')),
+];
+
+Promise.allSettled(promises).then((characters) => console.log(characters));
+```
+
+The output of the array of promises with rejection being:
+
+```bash
+> [
+	  { status: 'fulfilled', value: 'Luke' },
+	  { status: 'fulfilled', value: 'Lea' },
+	  { status: 'fulfilled', value: 'Han Solo' },
+	  { status: 'rejected', reason: 'Darth Vader' }
+	]
+```
+
+As you might have noticed `Promise.allSettled` is a method that can be typically used when you have multiple asynchronous tasks that are not dependent on one another to complete successfully, unlike `Promise.all()` may be more appropriate if the tasks are dependent on each other.
+
+<h2>Promise.race</h2>
+
+`Promise.race()` method returns a promise that fulfills or rejects as soon as one of the promises in an iterable fulfills or rejects, with the value or reason from that promise. Hence, it short-circuits when the first input promise value is "**settled"**. Let us illustrate this with a quick example:
+
+```jsx
+const promises = [
+  Promise.resolve('Luke'),
+  'Lea',
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+];
+
+Promise.race(promises).then((characters) => console.log(characters));
+```
+
+The output will be the first fulfilled promise status
+
+```bash
+> "Luke"
+```
+
+Now, lets analyze `Promise.race` with a rejection:
+
+```jsx
+const promises = [
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+  new Promise((_, reject) => setTimeout(reject, 200, 'Darth Vader')),
+];
+
+Promise.race(promises)
+  .then((characters) => console.log(characters))
+  .catch((characters) => console.error(characters));
+```
+
+Since the rejection happens later, the output will be:
+
+```bash
+> "Han Solo"
+```
+
+Now, lets change things up and try to bring the rejection to be earlier
+
+```jsx
+const promises = [
+  new Promise((resolve, reject) => setTimeout(resolve, 200, 'Han Solo')),
+  new Promise((_, reject) => setTimeout(reject, 100, 'Darth Vader')),
+];
+
+Promise.race(promises)
+  .then((characters) => console.log(characters))
+  .catch((characters) =>
+    console.error(`They are getting along because of `, characters),
+  );
+```
+
+The output will now be:
+
+```bash
+> They are getting along because of Darth Vader
+```
+
+<h2>Promise.any</h2>
+
+`Promise.any` takes an iterable of Promise objects and, as soon as one of the promises in the iterable fulfills, returns a single promise that resolves with the value from that promise. Each difference with respect to `Promise.race` short-circuits on the first "fulfilled" promise. Let's illustrate with an example:
+
+```jsx
+const promises = [
+  Promise.resolve('Luke'),
+  'Lea',
+  new Promise((resolve, reject) => setTimeout(resolve, 100, 'Han Solo')),
+];
+
+Promise.any(promises).then((characters) => console.log(`Statues `, characters));
+```
+
+Output will be the first promise that is fulfilled
+
+```jsx
+> "Luke"
+```
+
+Now, let's try the same with a rejection that rejects the fastest
+
+```jsx
+const promises = [
+  new Promise((resolve, reject) => setTimeout(resolve, 200, 'Han Solo')),
+  new Promise((_, reject) => setTimeout(reject, 100, 'Darth Vader')),
+];
+
+Promise.any(promises)
+  .then((characters) => console.log(characters))
+  .catch((characters) => console.error(characters));
+```
+
+The output here will be:
+
+```jsx
+> "Han Solo"
+```
+
+Now, let's reject all promises
+
+```jsx
+const promises = [
+  new Promise((_, reject) => setTimeout(reject, 200, 'Ben Solo')),
+  new Promise((_, reject) => setTimeout(reject, 100, 'Darth Vader')),
+];
+
+Promise.any(promises)
+  .then((characters) => console.log(characters))
+  .catch((characters) => console.error(characters));
+```
+
+The output for the above will be an `AggregateError`
+
+```jsx
+> AggregateError: All promises were rejected
+```
+
+Essentially, as you can see this method is the opposite of `Promise.all`.
+
+An important note for `Promise.any` would be to check the compatibility since it might not be completely available on all environments but still can be implemented with [bluebird](http://bluebirdjs.com/docs/getting-started.html) and polyfills.
+
+> `AggregateError` is a new subclass of `Error` that groups together individual errors
+
+<h2>Conclusion</h2>
+
+I hope we now have conquered the characteristics of the methods `Promise.all`, `Promise.allSettled`, `Promise.race` and `Promise.any`. We now are in a better state to write optimized Promises in JavaScript.
+
+Happy Grizzly Coding 🐻

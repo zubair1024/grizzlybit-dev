@@ -1,0 +1,117 @@
+---
+title: 'Increase Node.js Memory Limit (Bonus: PM2) 🆙'
+publishedAt: '2020-10-16'
+summary: 'Node.js has memory limitations that you can hit quite easily in production. By default, Node.js (up to 11.x ) uses a maximum heap size of 700MB and 1400MB on 32-bit and 64-bit platforms, respectively. You’ll know this if you ever tried to load a large data file into your Node.js application. How do we work-around this limit? '
+image: '/blog/increase-nodejs-memory-limit/cover.png'
+---
+
+![My Terminal Setup: iTerm2 + ZSH + Powerlevel10k](/blog/increase-nodejs-memory-limit/cover.png)
+
+[Node.js](https://nodejs.org/en/) has memory limitations that you can hit quite easily in production. By default, Node.js (up to 11.x ) uses a maximum heap size of 700MB and 1400MB on 32-bit and 64-bit platforms, respectively. You’ll know this if you ever tried to load a large data file into your Node.js application. How do we work-around this limit?
+
+In Node.js, we don't explicitly manage the memory, we rather leave it to v8 garbage collector to do that for us. But it might not have the wiggle room to crunch the data we want it to. Hence, we might end up with a **FATAL ERROR** like below:
+
+```bash
+FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - JavaScript heap out of memory
+ 1: 0x1011d1c65 node::Abort() (.cold.1) [/usr/local/bin/node]
+ 2: 0x10009f919 node::Abort() [/usr/local/bin/node]
+ 3: 0x10009fa7f node::OnFatalError(char const*, char const*) [/usr/local/bin/node]
+ 4: 0x1001e3867 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/usr/local/bin/node]
+ 5: 0x1001e3807 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/usr/local/bin/node]
+ 6: 0x10036b995 v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/usr/local/bin/node]
+ 7: 0x100373a3c v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/usr/local/bin/node]
+ 8: 0x10033fdbd v8::internal::Factory::NewFixedArrayWithFiller(v8::internal::RootIndex, int, v8::internal::Object, v8::internal::AllocationType) [/usr/local/bin/node]
+ 9: 0x1004b9d29 v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastHoleySmiElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)1> >::GrowCapacityAndConvertImpl(v8::internal::Handle<v8::internal::JSObject>, unsigned int) [/usr/local/bin/node]
+10: 0x1004b98e8 v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastHoleySmiElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)1> >::SetLengthImpl(v8::internal::Isolate*, v8::internal::Handle<v8::internal::JSArray>, unsigned int, v8::internal::Handle<v8::internal::FixedArrayBase>) [/usr/local/bin/node]
+11: 0x100582d51 v8::internal::JSArray::SetLength(v8::internal::Handle<v8::internal::JSArray>, unsigned int) [/usr/local/bin/node]
+12: 0x10024c9a6 v8::internal::Accessors::ArrayLengthSetter(v8::Local<v8::Name>, v8::Local<v8::Value>, v8::PropertyCallbackInfo<v8::Boolean> const&) [/usr/local/bin/node]
+13: 0x100418466 v8::internal::PropertyCallbackArguments::CallAccessorSetter(v8::internal::Handle<v8::internal::AccessorInfo>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Object>) [/usr/local/bin/node]
+14: 0x10041503c v8::internal::Runtime_StoreCallbackProperty(int, unsigned long*, v8::internal::Isolate*) [/usr/local/bin/node]
+15: 0x1009dcb79 Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/usr/local/bin/node]
+16: 0x39249b3c82ac
+17: 0x100962524 Builtins_InterpreterEntryTrampoline [/usr/local/bin/node]
+[1]    39205 abort      node index.js
+```
+
+If you would like to trigger this error, we can run a simple program like:
+
+```jsx
+//index.js
+
+const references = [];
+
+const allocateSize = (size) => {
+  const numbers = size / 8;
+  const arr = [];
+  arr.length = numbers;
+  for (let i = 0; i < numbers; i++) {
+    arr[i] = i;
+  }
+  return arr;
+};
+
+while (true) {
+  //steps of 100
+  const allocation = allocateSize(100 * 1024);
+  //keep in memory so it is not garbage collected
+  references.push(allocation);
+  const usage = process.memoryUsage();
+  console.log(usage);
+}
+```
+
+The loop above should run and exhaust the memory limit for your Node.js program.
+
+> `process.memoryUsage()` is used to determine the help size for your proces
+
+# How to work-around the memory limit?
+
+V8 engine comes with a parameter to work around and raise the limit of the heap size through the use of `--max-old-space-size` , hence to increase your heap memory limit to 2 GB you would do:
+
+```bash
+node --max-old-space-size=2048 index.js
+```
+
+This will give you the memory to burn for your expensive usage/calculations for your Node.js process.
+
+You can even go higher for your memory limit:
+
+```bash
+node --max-old-space-size=1024 app.js                     # increase to 1gb
+node --max-old-space-size=2048 app.js                     # increase to 2gb
+node --max-old-space-size=3072 app.js                     # increase to 3gb
+node --max-old-space-size=4096 app.js                     # increase to 4gb
+node --max-old-space-size=5120 app.js                     # increase to 5gb
+node --max-old-space-size=6144 app.js                     # increase to 6gb
+```
+
+Now you would wonder, how far can I push this limit? 🤔
+
+Theoretically, in a 64-bit system, you can have a heap size of 16 TB of memory, but obviously, you won't be able to each anywhere as close to that. It will be limited by the physical memory limit on the machine and then it will try and leverage the hard disk of the machine to swap data.
+
+# How to increase memory when you're using PM2?
+
+PM2 is a daemon process manager that will help you manage and keep your application online 24/7, which is essential for running applications in a production environment. Sometimes, you want to demonize your application using PM2 but also you would like to allocate a higher memory limit for your application.
+
+To do that PM2 lets you to pass in Node.js arguments when forking a process through the `--node-args` flag, which can be leveraged to pass in a `--max-old-space-size` value for your forked process
+
+```bash
+pm2 start index.js --node-args="--max-old-space-size=1024" # increase to 1gb
+pm2 start index.js --node-args="--max-old-space-size=2048" # increase to 2gb
+pm2 start index.js --node-args="--max-old-space-size=3072" # increase to 3gb
+pm2 start index.js --node-args="--max-old-space-size=4096" # increase to 4gb
+pm2 start index.js --node-args="--max-old-space-size=5120" # increase to 5gb
+pm2 start index.js --node-args="--max-old-space-size=6144" # increase to 6gb
+```
+
+Boom! your application has a lot of room to wiggle around now, and also it is backed up by PM2 a as process monitor for a more robust high-performance production development.
+
+You can see further helpful v8 options and flag by running the command:
+
+```bash
+node --help --v8-options
+```
+
+That's pretty much it folks!
+
+Happy Grizzly Coding 🐻 !

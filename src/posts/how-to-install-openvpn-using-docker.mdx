@@ -1,0 +1,70 @@
+---
+title: 'How to install OpenVPN using Docker'
+publishedAt: '2021-10-02'
+summary: 'In this article we will be seeing how easy it is to get started with your own OpenVPN server.'
+image: '/blog/how-to-install-openvpn-using-docker/cover.png'
+---
+
+![How to install OpenVPN using Docker](/blog/how-to-install-openvpn-using-docker/cover.png)
+
+In today's day and age, with restrictions being imposed, there is an immense need to use VPN servers. There are many VPN providers available out there for free and paid use but these also require a degree of trust and might also sometimes seem to be unreliable.
+
+Well, there is one reliable and more controlled option: why not host your own VPN server! You might this it is hard to do this. But with containerization technologies, today such as Docker and a lovely community, it might just bridge the gap and make it a lot easier to have it done in a few minutes.
+
+In this article we will be seeing how easy it is to get started with your own OpenVPN server, using a Dockerfile prepared by Kyle Manna. Oh! I almost forgot you'll need a server with docker to install to get started. I would recommend using the cloud with any provider of your choice.
+
+First, let's use git to clone the repository
+
+```bash
+git clone https://github.com/kylemanna/docker-openvpn.git
+```
+
+and we can change the directory and build the image
+
+```bash
+cd docker-openvpn && docker built -t open-vpn-server .
+```
+
+We will then create a volume mapped directory to store config files.
+
+```bash
+mkdir vpn-data && touch vpn-data/vars
+```
+
+We will now use the OpenVPN server to generate config files
+
+```bash
+docker run -v $PWD/vpn-data:/etc/openvpn --rm open-vpn-server ovpn_genconfig -u udp://IP_ADDRESS:3000
+```
+
+In the above command add the server IP address in place of IP_ADDRESS.
+
+Now, we will work to setup our keys. We will generate CA certificate along with a private key. We will be asked for a passphrase for protecting the private key.
+
+```bash
+docker run -v $PWD/vpn-data:/etc/openvpn --rm -it open-vpn-server ovpn_initpki
+```
+
+Now, we will run the VPN server leveraging the config files
+
+```bash
+docker run -v $PWD/vpn-data:/etc/openvpn -d -p 3000:1194/udp --cap-add=NET_ADMIN open-vpn-server
+```
+
+We haven't created any users yet, we can create multiple users to use our newly setup OpenVPN server. We will now create our first user to use the server
+
+```bash
+ docker run -v $PWD/vpn-data:/etc/openvpn --rm -it open-vpn-server easyrsa build-client-full firstuser nopass
+```
+
+we called the user "firstuser" and have disabled password authentication using the nopass option. You can remove the nopass flag if you require to set a password.
+
+We will also generate a config file which we will send to the user to establish a connection to the VPN server
+
+```bash
+docker run -v $PWD/vpn-data:/etc/openvpn --rm open-vpn-server ovpn_getclient firstuser > firstuser.ovpn
+```
+
+You can then use this file to establish a connection to the VPN server using the OpenVPN Connect App which is available on most of the platforms.
+
+Yes, it was that simple. 😉

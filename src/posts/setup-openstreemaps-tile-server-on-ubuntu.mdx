@@ -1,0 +1,181 @@
+---
+title: 'Setup OpenStreetMap Tile Server on Ubuntu 20.x 🗺'
+publishedAt: '2020-11-13'
+summary: "Every wanted tour own Map server so that you don't have to pay those hefty unchecked prices from map tile providers; you can do so and have your own server using OpenStreetMaps. In this article, we are going to learn how to setup OpenStreetMaps OSM Carto as a tile server."
+image: '/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png'
+---
+
+![Setup OpenStreetMap Tile Server on Ubuntu](/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png)
+
+# Introduction
+
+OpenStreetMaps (OSM) is quoted to be a "free wiki world map". The OSM tile server is essentially a web server specialized in delivering raster maps. It serves them as static ties and is also able to perform rendering in real-time or providing cached images.
+
+# Install Dependencies
+
+we will start by updating our Ubuntu repositories
+
+```bash
+sudo apt-get update && sudo apt-get upgrade
+```
+
+Once done, we will start install the required base packages
+
+```bash
+sudo apt-get install postgresql postgresql-contrib postgis postgresql-10-postgis-2.4 postgresql-10-postgis-2.4-scripts osm2pgsql git
+```
+
+Just a brief description of all the above dependencies are mentioned below:
+
+- Postgres is the default database solution we will use for data persistence
+- Postgis is used for spatial data
+- Osm2pgsql is used to import the data into our postgres database
+- Git is a code versioning tool which we will use for cloning repositories
+
+Furthermore, we will install mapnik packages and Node.js (npm)
+
+```bash
+sudo apt-get install curl unzip gdal-bin mapnik-utils libmapnik-dev nodejs npm
+```
+
+Now, we will globally install carlo dependency
+
+```bash
+sudo npm install -g carto
+```
+
+We will now install `mod_tile` and `renderd` to render and display tiles
+
+```bash
+sudo add-apt-repository ppa:osmadmins/ppa && sudo apt install libapache2-mod-tile renderd
+```
+
+Lastly, we will install certain font packages that are required
+
+```bash
+sudo apt-get install ttf-dejavu fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted ttf-unifont
+```
+
+Ufff.... 😅, I think we are done with installing packages. Now let's move on to the setup.
+
+# Setup
+
+Firstly, we will begin by switching over to our postgres user
+
+```bash
+sudo -u postgres -i
+```
+
+Now, let's create a new database user
+
+```bash
+createuser osm
+```
+
+Next, we will create a new database named gis with the owner as the new user we have just created
+
+```bash
+createdb -E UTF8 -O osm gis
+```
+
+Now, setting the owner
+
+```bash
+psql -c "ALTER TABLE spatial_ref_sys OWNER TO osm;" -d gis
+```
+
+We will also enable two extensions for our created database
+
+```bash
+psql -c "CREATE EXTENSION postgis;" -d gis
+```
+
+```bash
+psql -c "CREATE EXTENSION hstore;" -d gis
+```
+
+Now, that we have setup our postgres database for importing the tile data we can now exit
+
+```bash
+exit
+```
+
+Let's now set up a system user called `osm`
+
+```bash
+adduser osm
+```
+
+Now, we will clone the repository that contains styles and transformations scripts that we will need for database imports
+
+```bash
+git clone https://github.com/gravitystorm/openstreetmap-carto.git
+```
+
+Next, we will download the map data we will be using `wget`
+
+```bash
+wget -c http://planet.openstreetmap.org/pbf/planet-latest.osm.pbf
+```
+
+Now, alas, we can start importing the data
+
+```bash
+osm2pgsql --slim -d gis --hstore --multi-geometry --number-processes 2 --tag-transform-script /home/osm/openstreetmap-carto/openstreetmap-carto.lua --style /home/osm/openstreetmap-carto/openstreetmap-carto.style -C 12000 planet-latest.osm.pbf
+```
+
+Note: The `-C` option should be used in a way that it matches the amount of RAM on your PC/Virtual Machine and `--number-processes` matches the number of CPU cores.
+
+Since this process will take quite a bit of time. It is recommended to run the entire process using a `screen` multiplex session. For a quickie on `screen` please [click here](https://grizzlybit.dev/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal). 👈
+
+Now we use the `osm` user and go into the directory where we had cloned the `openstreetmap-carto` repository and run the python script that loads the shapefiles from the internet
+
+```bash
+scripts/get-shapefiles.py
+```
+
+Shapefiles are a format in which we can store GeoJSON data.
+
+Now, we will use carto global dependency that was installed to convert `project.mml` file to a style file for mapnik to use
+
+```bash
+carto project.mml > style.xml
+```
+
+Now, we will configure `renderd`
+
+```bash
+nano /etc/renderd.conf
+```
+
+There are a few points to note here:
+
+- `num_threads` should match the number of cores on your map server.
+- `plugins_dir` should be `/usr/lib/mapnik/3.0/input`
+- `XML` should match the style file generated
+
+Save the file, now we will edit the initialization script in `/etc/init.d/renderd`
+
+```bash
+nano /etc/init.d/renderd
+```
+
+Here the `RUNASUSER` be set to `osm`
+
+Now, we will change the permission of the `mod_file` folder
+
+```bash
+sudo chown osm:osm /var/lib/mod_tile/ -R
+```
+
+Now, we can reload the daemon and restart `renderd`
+
+```bash
+sudo systemctl daemon-reload && sudo systemctl daemon-reload
+```
+
+Now, you might browse to the address `http:/127.0.0.1/osm/slippymap.html` and select local tiles to view your imported map tiles.
+
+Voila! That's pretty much it, you have setup your own tile server.
+
+Happy Grizzly 🐻 Coding!

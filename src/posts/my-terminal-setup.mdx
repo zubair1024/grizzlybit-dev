@@ -1,0 +1,212 @@
+---
+title: 'My Terminal Setup: iTerm2 + ZSH + Powerlevel10k'
+publishedAt: '2020-10-10'
+summary: 'Be it any type of development, one of the most important tool is the terminal. Through this post I want to share my preferred terminal setup.'
+image: '/blog/my-terminal-setup/cover.png'
+---
+
+![My Terminal Setup: iTerm2 + ZSH + Powerlevel10k](/blog/my-terminal-setup/cover.png)
+
+# My Terminal Emulator
+
+I use [iTerm2](https://www.iterm2.com/) as my default Terminal on the Mac. It is basically a much better terminal than the default one that comes out-of-the-box with Mac operating systems having some neat features like search, autocomplete, history, split panes, etc. So, whenever I do development I got multiple panes open for running my servers in split views and iTerm2 makes doing it a breeze with some very useful shortcuts.
+
+![Split Panes on iTerm2](/blog/my-terminal-setup/lots-of-sessions.png)
+
+To download iTerm2 on your Mac [click here](https://www.iterm2.com/).
+
+# My Shell
+
+For my shell, I'm going to be ZSH.
+
+ZSH, also called Z Shell, is an extended version of the Bourne shell (sh) that we are used to. It adds multiple functionalities through support for multiple plugins and themes. Since it is based on the same shell as Bash, the learning curve for the shell is fairly easier 👍.
+
+## Installing ZSH
+
+If you're on a Mac like me, the easiest way to install the shell is through [Homebrew](https://brew.sh/) through a single command:
+
+```bash
+brew install zsh
+```
+
+This should install the shell on your machine. Alternatively, if you're on Linux following [this guide](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH), and if you're on Windows follow [this guide](https://www.howtogeek.com/258518/how-to-use-zsh-or-another-shell-in-windows-10/).
+
+Now, to set ZSH as your default shell use the following command
+
+```bash
+chsh -s /usr/local/bin/zsh
+```
+
+Alternatively, for older Mac OS High Sierra and before you might want to run the following instead
+
+```bash
+chsh -s /bin/zsh
+```
+
+## Installing Oh-My-Zsh
+
+For configuring plugins and styling our shell we will be using Oh-My-Zsh.
+
+Oh-My-Zsh is essentially a framework to manage your ZSH configuration, is highly recommended to download and set it up. You can do so by using CURL
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
+## `.zshrc`
+
+We will use `.zshrc` file instead of `.bash_profile` file that we used for the Bash shell. This is the file in which we will be configuring plugins and themes for the shell.
+
+To install plugins we will use `plugins` section on the `.zshrc` file.
+
+## ZSH Plugins
+
+### `git`
+
+The `git` plugin for ZSH provides many aliases and useful functions for git on ZSH. To install it, specify it on the `.zshrc` under the `plugins` section
+
+```bash
+plugins=(git)
+```
+
+For it to take effect and reload your shell
+
+```bash
+source ~/.zshrc
+```
+
+### `wd`
+
+`wd` _(warp directory)_ is a neat plugin that lets us jump to custom directories in zsh without using a `cd` , as `cd` might be inefficient when the frequently visited directories have a long path.
+
+![Using wd on ZSH](/blog/my-terminal-setup/tty.gif)
+
+To install it, do the following
+
+```bash
+plugins=(git wd)
+```
+
+For it to take effect and reload your shell
+
+```bash
+source ~/.zshrc
+```
+
+### `docker`
+
+The `docker` enables auto-completion for docker.
+
+To install it, do the following
+
+```bash
+plugins=(git wd docker)
+```
+
+For it to take effect and reload your shell
+
+```bash
+source ~/.zshrc
+```
+
+### `zsh-autosuggestions`
+
+Another great alternate shell is `fish` , it comes with some next-level auto-suggestions for writing your terminal commands. Nevertheless, you can have similar auto-suggestions on `zsh` using the plugin `zsh-autosuggestions` .
+
+The `zsh-autosuggestions` plugin gives you fast and [Fish](http://fishshell.com/)-like unobtrusive auto-suggestions for ZSH.
+
+![zsh-autosuggestions plugin](/blog/my-terminal-setup/zsh-autosuggestions.png)
+
+We can use `git` to clone the repository into our ZSH plugins folder
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+```
+
+Now, let's specify the plugin in our `.zshrc` file
+
+```bash
+plugins=(git wd docker zsh-autosuggestions)
+```
+
+Reload the shell for it to take effect
+
+```bash
+source ~/.zshrc
+```
+
+### `zsh-syntax-highlighting`
+
+I really like the syntax coloring that comes with Fish, you can have similar syntax coloring on ZSH using the `zsh-syntax-highlighting` plugin. It enables the highlighting of commands whilst they are typed at a zsh prompt into an interactive terminal. This helps in reviewing commands before running them, particularly in catching syntax errors.
+
+![zsh-syntax-highlighting plugin for ZSH](/blog/my-terminal-setup/zsh-syntax-highlighting-min.png)
+
+We will use `git` once again to clone the repository into our ZSH plugins folder
+
+```bash
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+```
+
+Now, let's specify the plugin in our `.zshrc` file
+
+```bash
+plugins=(git wd docker zsh-autosuggestions zsh-syntax-highlighting)
+```
+
+Reload the shell for it to take effect
+
+```bash
+source ~/.zshrc
+```
+
+Voila, now that we are done with the essential plugins let's go ahead and style our ZSH shell.
+
+## Powerlevel10k
+
+Powerlevel10k is an update to the ever so popular Powerlevel9k with some improvements.
+
+![Powerlevel10k theme configuration](/blog/my-terminal-setup/prompt-styles-high-contrast.png)
+
+Let's begin with installing the required fonts and enable them on iTerm2. To download the fonts visit the following links:
+
+- [Source Code Pro](https://github.com/powerline/fonts/blob/master/SourceCodePro/Source%20Code%20Pro%20for%20Powerline.otf)
+- [Source Code Pro + Font Awesome](https://github.com/Falkor/dotfiles/blob/master/fonts/SourceCodePro%2BPowerline%2BAwesome%2BRegular.ttf), this one is needed if you want the icons from Font Awesome as shown in the screenshot for Powerlevel10k.
+- [Others @ powerline fonts](https://github.com/powerline/fonts)
+
+Open the downloaded font and press "Install Font".
+
+Set this font in iTerm2 (iTerm → Preferences → Profiles → Text → Font), in the dropdown select the desired Font. You will see it change on the fly.
+
+![iTerm2 profile font setting](/blog/my-terminal-setup/profile-setting-iterm2.png)
+
+Restart iTerm2 for all changes to take effect.
+
+By default, word jumps (option + → or ←) and word deletions (option + backspace) do not work. To enable these, go to "iTerm → Preferences → Profiles → Keys → Presets... → Natural Text Editing → Boom! 🤯
+
+## Bonus: VS Code Terminal Config
+
+Installing a patched font will mess up the integrated terminal in VS Code unless you use the proper settings. Edit VS code preference and set the following key value pairs:
+
+- for Source Code Pro + Font Awesome: `"terminal.integrated.fontFamily": "'SourceCodePro+Powerline+Awesome Regular'"`. The single quotes are important! Restart VS Code after the config change.
+- for Source Code Pro: `"terminal.integrated.fontFamily": "Source Code Pro for Powerline"`
+- for Meslo: `"terminal.integrated.fontFamily": "Meslo LG M for Powerline"`
+
+Now, that the required fonts have been installed. We will use `git` and Oh-My-Zsh to install Powerlevel10k
+
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Now, Set `ZSH_THEME="powerlevel10k/powerlevel10k"` in `~/.zshrc`. Reload your terminal for the change to take effect
+
+```bash
+source ~/.zshrc
+```
+
+![Powerlevel10k wizard](/blog/my-terminal-setup/configuration-wizard.gif)
+
+Boom! You're done. You have configured and setup some next level terminal, now you can go crazy being all Sci-fi and productive.
+
+![hacker](/blog/my-terminal-setup/200.gif)
+
+Happy Grizzly 🐻 Coding!
