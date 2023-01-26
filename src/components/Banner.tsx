@@ -74,8 +74,10 @@ const Banner = () => {
               height="200"
             />
           </div>
-          <div className="font-mono text-center card-body">
-            <h2 className="text-2xl font-bold text-center">Zubair Ahmed</h2>
+          <div className="text-center card-body">
+            <h2 className="text-2xl font-semibold tracking-wider text-center">
+              Zubair Ahmed
+            </h2>
             <div className="text-sm font-light">{info.roles.join(' | ')}</div>
             <div>
               {info.badges.map((i) => (
