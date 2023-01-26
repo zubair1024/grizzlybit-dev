@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -8,9 +9,20 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   return (
     <>
-      <Header></Header>
-      <div>{props.children}</div>
-      <Footer></Footer>
+      <motion.div
+        initial={{ x: 300, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: 300, opacity: 0 }}
+        transition={{
+          type: 'spring',
+          stiffness: 260,
+          damping: 20,
+        }}
+      >
+        <Header></Header>
+        <div>{props.children}</div>
+        <Footer></Footer>
+      </motion.div>
     </>
   );
 };

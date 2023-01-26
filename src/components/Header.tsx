@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 const Header = () => {
@@ -53,7 +54,7 @@ const Header = () => {
                 <a>About Me</a>
               </li>
               <li>
-                <a>Timeline</a>
+                <Link href="/blog">Blog</Link>
               </li>
             </ul>
           </div>
@@ -78,7 +79,7 @@ const Header = () => {
               <a>Portfolio</a>
             </li>
             <li>
-              <a>Worked With</a>
+              <Link href="/blog">Blog</Link>
             </li>
           </ul>
         </div>

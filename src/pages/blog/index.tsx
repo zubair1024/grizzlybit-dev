@@ -56,7 +56,9 @@ export default function BlogPage({ allPostsData }: Props) {
   const handleSearchClick = (text: string) => {
     if (text === '' || text === null) return setPosts(allPosts);
 
-    const filteredPosts = allPosts.filter((i) => i.title.indexOf(text) > -1);
+    const filteredPosts = allPosts.filter(
+      (i) => i.title.toLowerCase().indexOf(text.toLowerCase()) > -1,
+    );
     console.log(filteredPosts);
     setPosts(filteredPosts);
   };
