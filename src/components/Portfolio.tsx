@@ -1,3 +1,4 @@
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
 
 const Portfolio = () => {
@@ -8,56 +9,22 @@ const Portfolio = () => {
       </h2>
       <div>
         <div className="grid gap-1 px-10 mx-auto md:grid-cols-4">
-          <div className="transition ease-in hover:scale-105">
-            <Image
-              src="/zubair_2.jpg"
-              alt="project"
-              width={512}
-              height={512}
-            ></Image>
-          </div>
-          <div className="transition ease-in hover:scale-105">
-            <Image
-              src="/zubair_2.jpg"
-              alt="project"
-              width={512}
-              height={512}
-            ></Image>
-          </div>
-          <div className="transition ease-in hover:scale-105">
-            <Image
-              src="/zubair_2.jpg"
-              alt="project"
-              width={512}
-              height={512}
-            ></Image>
-          </div>
-          <div className="transition ease-in hover:scale-105">
-            <Image
-              src="/zubair_2.jpg"
-              alt="project"
-              width={512}
-              height={512}
-            ></Image>
-          </div>
-          {/* {[1, 2, 3, 4].map((i) => {
+          {portfolio.map((item) => {
             return (
-              <div key={i} className="max-w-sm mb-10 ml-10 card glass">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="car!" />
-                </figure>
-                <div className="font-mono card-body">
-                  <h2 className="card-title">Lorem Ipsum</h2>
-                  <p className="py-2">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Minus itaque explicabo voluptate. Sequi perspiciatis nisi
-                    facilis placeat! Hic sit obcaecati, id fugiat assumenda eius
-                    quidem quasi necessitatibus inventore corporis sapiente.
-                  </p>
-                </div>
+              <div
+                key={item.title}
+                className="transition ease-in hover:scale-105"
+              >
+                <Image
+                  src={item.img}
+                  alt={item.title}
+                  width={512}
+                  height={512}
+                  className="p-2 card glass"
+                ></Image>
               </div>
             );
-          })} */}
+          })}
         </div>
       </div>
     </div>
