@@ -21,8 +21,8 @@ const PostCard = (props: { data: PostData }) => {
   const { image, title, summary, publishedAt, slug } = props.data;
   return (
     <>
-      <div className="flex justify-center">
-        <div className="bg-[#0E0E0E] shadow-xl card card-compact w-96">
+      <div className="flex justify-center sm:mx-5">
+        <div className="bg-[#0E0E0E] shadow-xl card card-compact">
           <figure>
             <Link href={`/blog/${slug}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
