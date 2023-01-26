@@ -58,7 +58,7 @@ const Banner = () => {
         <motion.div
           className="z-40 card w-96 glass"
           initial={{ y: 300, opacity: 0 }}
-          animate={{
+          whileInView={{
             y: 0,
             opacity: 1,
             transition: {
