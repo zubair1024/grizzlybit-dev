@@ -17,8 +17,6 @@ In a very abstract way, it does the following:
 
 > Takes a function following the common Node.js callback style, i.e. taking a `(err, value) => ...` callback as the last argument, and returns a version that returns promises.
 
-<!--more-->
-
 and
 
 > `promisify(original)` assumes that original is a function taking a callback as its final argument in all cases, and the returned function will result in undefined behaviour if it does not.
@@ -36,7 +34,7 @@ const wait = (delay, callback) => {
 1. The last parameter of the function passed to `promisify` must be a callback
 2. The callback must follow Node's callback style
 
-But at the same time you can couple this with async to avoid the callback hell effectively!
+But at the same time you can couple this with async to avoid the callback hell effectively.
 
 ![Callback Hell](/blog/nodejs-util-promisify/callback.jpg)
 
@@ -131,4 +129,4 @@ const readFileAsync = util.promisify(fs.readFile);
 
 I hope this post will make your life a tad easier. I recommend signing up to our newsletter to get the most of what's happening in the grizzly world.
 
-Happy Grizzly 🐻 Coding!
+Happy Grizzly 🐻 Coding
