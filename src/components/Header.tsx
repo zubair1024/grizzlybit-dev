@@ -1,8 +1,47 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+const landingPageMenu = [
+  {
+    title: 'Home',
+    url: '/',
+  },
+  {
+    title: 'About',
+    url: '/#about-me',
+  },
+  {
+    title: 'Portfolio',
+    url: '/#my-portfolio',
+  },
+  {
+    title: 'Blog',
+    url: '/blog',
+  },
+];
+
+const otherPageMenu = [
+  {
+    title: 'Home',
+    url: '/blog',
+  },
+];
 
 const Header = () => {
+  const [isLandingPage, setIsLandingPage] = useState(false);
+
+  const { pathname } = useRouter();
+
+  useEffect(() => {
+    console.log(pathname);
+    if (pathname === '/') {
+      return setIsLandingPage(true);
+    }
+    setIsLandingPage(false);
+  }, [pathname]);
+
   useEffect(() => {
     const header = document.getElementById('header');
 
@@ -47,46 +86,51 @@ const Header = () => {
               tabIndex={0}
               className="p-2 mt-3 uppercase shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a>Home</a>
-              </li>
-              <li>
-                <a>About Me</a>
-              </li>
-              <li>
-                <Link href="/blog">Blog</Link>
-              </li>
+              {isLandingPage
+                ? landingPageMenu.map((i) => (
+                    <li key={i.title}>
+                      <Link href={i.url}>{i.title}</Link>
+                    </li>
+                  ))
+                : otherPageMenu.map((i) => (
+                    <li key={i.title}>
+                      <Link href={i.url}>{i.title}</Link>
+                    </li>
+                  ))}
             </ul>
           </div>
-          <a className="btn btn-ghost">
+          <Link href="/" className="btn btn-ghost">
             <Image
               src="/grizzlybit-dev-logo.svg"
               width={150}
               height={150}
               alt="grizzlybit.dev"
             ></Image>
-          </a>
+          </Link>
         </div>
         <div className="hidden navbar-center lg:flex lg:justify-between">
           <ul className="px-1 uppercase menu menu-horizontal menu-compact">
-            <li>
-              <a>About Me</a>
-            </li>
-            <li>
-              <a>Toolbelt</a>
-            </li>
-            <li>
-              <a>Portfolio</a>
-            </li>
-            <li>
-              <Link href="/blog">Blog</Link>
-            </li>
+            {isLandingPage
+              ? landingPageMenu.map((i) => (
+                  <li key={i.title}>
+                    <Link href={i.url}>{i.title}</Link>
+                  </li>
+                ))
+              : otherPageMenu.map((i) => (
+                  <li key={i.title}>
+                    <Link href={i.url}>{i.title}</Link>
+                  </li>
+                ))}
           </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn" href="#contact-form">
-            Contact Me
-          </a>
+          {isLandingPage ? (
+            <a className="btn" href="#contact-form">
+              Contact Me
+            </a>
+          ) : (
+            ''
+          )}
         </div>
       </header>
     </>

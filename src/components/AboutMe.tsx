@@ -25,7 +25,7 @@ const AboutMe = () => {
     now.getFullYear() - journeyStartDate.getFullYear();
   const yearsSinceCompany = now.getFullYear() - companyStartDate.getFullYear();
   return (
-    <div className="my-10">
+    <div className="my-10 scroll-m-10" id="about-me">
       <div className="py-10">
         <h2 className="font-mono text-2xl tracking-wider text-center uppercase">
           A little about me
