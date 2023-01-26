@@ -35,6 +35,14 @@ export default function BlogPost({ code, frontmatter }: Props) {
             </div>
           </div>
           <div className="max-w-[900px] mx-auto py-10 px-10 bg-base-300">
+            <div className="text-sm breadcrumbs">
+              <ul>
+                <li>
+                  <Link href="/blog">Blog</Link>
+                </li>
+                <li>{frontmatter.title}</li>
+              </ul>
+            </div>
             <Component />
             <div className="divider"></div>
             <div className="flex items-center justify-center space-x-5">

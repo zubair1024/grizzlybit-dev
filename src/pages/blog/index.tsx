@@ -1,5 +1,5 @@
+import Layout from '@/components/Layout';
 import { GetStaticProps } from 'next';
-import Link from 'next/link';
 import { getBlogPostData } from '../../util/posts';
 
 type PostData = {
@@ -17,7 +17,7 @@ export default function BlogPage({ allPostsData }: Props) {
   console.log(allPostsData);
   return (
     <>
-      <header>
+      {/* <header>
         <h1>Blog</h1>
       </header>
       <section>
@@ -33,7 +33,10 @@ export default function BlogPage({ allPostsData }: Props) {
             </Link>
           );
         })}
-      </section>
+      </section> */}
+      <Layout>
+        <h2>Blog</h2>
+      </Layout>
     </>
   );
 }
