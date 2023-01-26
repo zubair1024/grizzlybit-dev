@@ -56,7 +56,7 @@ const Banner = () => {
     <>
       <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121]">
         <motion.div
-          className="card w-96 glass"
+          className="z-40 card w-96 glass"
           initial={{ y: 300, opacity: 0 }}
           animate={{
             y: 0,
