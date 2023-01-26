@@ -7,8 +7,10 @@ import remarkGfm from 'remark-gfm';
 
 type Frontmatter = {
   title: string;
-  date: string;
+  publishedAt: string;
   description: string;
+  summary: string;
+  image: string;
 };
 
 const postsDirectory = path.join(process.cwd(), 'src/posts');
@@ -30,7 +32,7 @@ export async function getBlogPostData() {
   });
 
   return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
+    if (new Date(a.publishedAt) < new Date(b.publishedAt)) {
       return 1;
     }
     return -1;

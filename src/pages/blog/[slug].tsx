@@ -22,11 +22,10 @@ type Props = {
 export default function BlogPost({ code, frontmatter }: Props) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
 
-  console.log(frontmatter);
   return (
     <>
       <Layout>
-        <div className="max-w-full prose prose-xl">
+        <div className="max-w-full prose prose-lg">
           <div className="bg-fixed bg-toolBelt">
             <div className="py-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h2 className="p-16 text-center md:grid-cols-4">
