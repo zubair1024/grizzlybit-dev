@@ -73,18 +73,16 @@ export default function BlogPage({ allPostsData }: Props) {
             </div>
           </div>
           <div>
-            <div className="flex items-center justify-center py-10">
+            <div className="max-w-xl px-5 py-10 mx-auto">
               <div className="form-control">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder="Search…"
-                    className="w-full input input-bordered "
-                    onChange={(e) => {
-                      handleSearchClick(e.target.value);
-                    }}
-                  />
-                </div>
+                <input
+                  type="text"
+                  placeholder="Search…"
+                  className="w-full input input-bordered"
+                  onChange={(e) => {
+                    handleSearchClick(e.target.value);
+                  }}
+                />
               </div>
             </div>
             <div className="grid content-center justify-center gap-4 my-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:mx-16">
