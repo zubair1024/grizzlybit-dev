@@ -175,10 +175,10 @@ html {
 }
 
 .portfolio-card-bg:hover {
-  background: linear-gradient(
+  /* background: linear-gradient(
     45deg,
     rgb(0, 0, 0) 0%,
     rgb(0, 0, 0, 0.8) 46%,
     rgb(70, 70, 70, 0.5) 98%
-  );
+  ); */
 }

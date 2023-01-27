@@ -7,7 +7,7 @@ const portfolio = [
   },
   {
     img: '/portfolio/razrtrack-mobile.jpg',
-    url: '/portfolio/vehicle-tracking',
+    url: '/portfolio/vehicle-tracking-mobile',
     desc: 'A mobile application for remotely tracking telemetry data for vehicle and drivers',
     title: 'Vehicle Tracking Mobile App',
   },
@@ -25,7 +25,7 @@ const portfolio = [
   },
   {
     img: '/portfolio/razrboiler.jpg',
-    url: '/portfolio/vehicle-tracking',
+    url: '/portfolio/boiler-mobile',
     desc: 'A mobile application to remotely control your thermostat and boiler from anywhere',
     title: 'Smart Boiler Mobile',
   },

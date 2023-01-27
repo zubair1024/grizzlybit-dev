@@ -23,7 +23,7 @@ const Portfolio = () => {
                       height={500}
                       className="relative"
                     ></Image>
-                    <div className="absolute top-0 z-50 w-full h-full overflow-hidden opacity-0 hover:opacity-100 portfolio-card-bg">
+                    <div className="absolute top-0 z-50 w-full h-full overflow-hidden opacity-0 hover:opacity-100 hover:bg-black">
                       <div className="flex flex-col items-center justify-center h-full font-bold text-white">
                         <p className="text-xl text-md">{item.title}</p>
                         <p className="max-w-xs font-light text-center text-md">
