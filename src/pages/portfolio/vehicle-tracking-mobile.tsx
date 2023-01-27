@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Image from 'next/image';
 
-const VehicleApplicationPortfolioScreen = () => {
+const VehicleApplicationMobilePortfolioScreen = () => {
   return (
     <>
       <Layout>
@@ -110,4 +110,4 @@ const VehicleApplicationPortfolioScreen = () => {
   );
 };
 
-export default VehicleApplicationPortfolioScreen;
+export default VehicleApplicationMobilePortfolioScreen;

@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Image from 'next/image';
 
-const VehicleApplicationPortfolioScreen = () => {
+const TISPortfolioScreen = () => {
   return (
     <>
       <Layout>
@@ -19,15 +19,9 @@ const VehicleApplicationPortfolioScreen = () => {
               <div>
                 <h2>About</h2>
                 <p className="text-justify">
-                  A software tool that allows users to monitor the location and
-                  movement of vehicles in real-time. The application can be
-                  accessed via a web browser and typically displays a map view
-                  showing the location of all vehicles being tracked. Users can
-                  also view detailed information about each vehicle, such as its
-                  speed, fuel level, and route history. It also allows the user
-                  to get alerts on specific events, such as when a vehicle
-                  deviates from its expected route or exceeds a certain speed
-                  limit.
+                  A Next.JS based landing page created for a client whose
+                  expertise is in Thermal Insulation Cladding Solutions for
+                  buildings.
                 </p>
               </div>
             </div>
@@ -68,4 +62,4 @@ const VehicleApplicationPortfolioScreen = () => {
   );
 };
 
-export default VehicleApplicationPortfolioScreen;
+export default TISPortfolioScreen;
