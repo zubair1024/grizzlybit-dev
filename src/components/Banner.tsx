@@ -1,5 +1,7 @@
+import socialLinks from 'data/socialLinks';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const info = {
   name: 'Zubair Ahmed',
@@ -22,34 +24,6 @@ const info = {
     'Figma',
   ],
 };
-
-const socialLinks = [
-  {
-    img: '/social/linkedin.png',
-    name: 'LinkedIn',
-    url: '',
-  },
-  {
-    img: '/social/twitter.png',
-    name: 'Twitter',
-    url: '',
-  },
-  {
-    img: '/social/github.png',
-    name: 'Github',
-    url: '',
-  },
-  {
-    img: '/social/medium.png',
-    name: 'Medium',
-    url: '',
-  },
-  {
-    img: '/social/stack-overflow.png',
-    name: 'Stack-Overflow',
-    url: '',
-  },
-];
 
 const Banner = () => {
   return (
@@ -94,14 +68,16 @@ const Banner = () => {
                     data-tip={i.name}
                     key={i.name}
                   >
-                    <motion.div whileHover={{ scale: 1.5 }}>
-                      <Image
-                        src={i.img}
-                        height={32}
-                        width={32}
-                        alt={i.name}
-                      ></Image>
-                    </motion.div>
+                    <Link target={'_blank'} href={i.url} rel="noreferrer">
+                      <motion.div whileHover={{ scale: 1.5 }}>
+                        <Image
+                          src={i.img}
+                          height={32}
+                          width={32}
+                          alt={i.name}
+                        ></Image>
+                      </motion.div>
+                    </Link>
                   </div>
                 );
               })}
