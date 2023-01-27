@@ -16,15 +16,13 @@ const VehicleApplicationPortfolioScreen = () => {
           <div className="px-5 mx-auto max-w-7xl">
             {/* first section 1 */}
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
-              <div className="flex">
-                <Image
-                  src="/portfolio/razrlibre/razrlibre_main.svg"
-                  alt="razrtrack"
-                  height={2000}
-                  width={2000}
-                  className="transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-              </div>
+              <Image
+                src="/portfolio/he/he_overview.jpg"
+                alt="he"
+                height={700}
+                width={700}
+                className="transition ease-in rounded-xl hover:scale-105"
+              ></Image>
               <div className="ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
@@ -59,40 +57,40 @@ const VehicleApplicationPortfolioScreen = () => {
                   </ul>
                 </p>
               </div>
-              <div className="flex">
-                <Image
-                  src="/portfolio/razrlibre/razrlibre_record1.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-                <Image
-                  src="/portfolio/razrlibre/razrlibre_record2.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-              </div>
+              <Image
+                src="/portfolio/he/he_asset.jpg"
+                alt="he"
+                height={700}
+                width={700}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
             </div>
             {/* tech stack */}
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
-              <Image
-                src="/portfolio/razrlibre/razrlibre_sos.svg"
-                alt="razrtrack"
-                height={300}
-                width={300}
+              {/* <Image
+                src="/portfolio/he/he_vehicle.png"
+                alt="he"
+                height={700}
+                width={700}
                 className="transition ease-in rounded-xl hover:scale-105"
-              ></Image>
+              ></Image> */}
               <div>
                 <h2>Tech Stack Used</h2>
                 <div className="grid grid-cols-2 pb-10 text-md">
                   <div>TypeScript</div>
                   <div>JavaScript</div>
-                  <div>Ionic</div>
+                  <div>React</div>
                   <div>Node.JS</div>
                   <div>Express</div>
+                  <div>RabbitMQ</div>
+                  <div>Redis</div>
+                  <div>Leaflet</div>
+                  <div>KendoJS</div>
+                  <div>AmCharts</div>
+                  <div>OSRM</div>
+                  <div>OSM Tile Layer</div>
+                  <div>Google Maps</div>
+                  <div>Google OR Tools</div>
                 </div>
               </div>
             </div>

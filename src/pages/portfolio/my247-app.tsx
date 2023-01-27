@@ -18,10 +18,10 @@ const VehicleApplicationPortfolioScreen = () => {
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
               <div className="flex">
                 <Image
-                  src="/portfolio/razrlibre/razrlibre_main.svg"
+                  src="/portfolio/my247/my247_main.webp"
                   alt="razrtrack"
-                  height={2000}
-                  width={2000}
+                  height={1000}
+                  width={1000}
                   className="transition ease-in rounded-xl hover:scale-105"
                 ></Image>
               </div>
@@ -61,14 +61,14 @@ const VehicleApplicationPortfolioScreen = () => {
               </div>
               <div className="flex">
                 <Image
-                  src="/portfolio/razrlibre/razrlibre_record1.svg"
+                  src="/portfolio/my247/my247_home.webp"
                   alt="razrtrack"
                   height={250}
                   width={250}
                   className="ml-10 transition ease-in rounded-xl hover:scale-105"
                 ></Image>
                 <Image
-                  src="/portfolio/razrlibre/razrlibre_record2.svg"
+                  src="/portfolio/my247/my247_eligibility.webp"
                   alt="razrtrack"
                   height={250}
                   width={250}
@@ -79,7 +79,14 @@ const VehicleApplicationPortfolioScreen = () => {
             {/* tech stack */}
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
               <Image
-                src="/portfolio/razrlibre/razrlibre_sos.svg"
+                src="/portfolio/my247/my247_docs.webp"
+                alt="razrtrack"
+                height={300}
+                width={300}
+                className="transition ease-in rounded-xl hover:scale-105"
+              ></Image>
+              <Image
+                src="/portfolio/my247/my247_book.webp"
                 alt="razrtrack"
                 height={300}
                 width={300}
