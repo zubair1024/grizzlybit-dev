@@ -12,7 +12,7 @@ const Portfolio = () => {
         <div className="flex flex-wrap items-center justify-center">
           {portfolio.map((item) => {
             return (
-              <Link key={item.title} href={'#'}>
+              <Link key={item.title} href={item.url}>
                 <div>
                   <div className="relative mb-5 ml-5 group ">
                     <div className="  absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>

@@ -92,11 +92,7 @@ const Header = () => {
                       <Link href={i.url}>{i.title}</Link>
                     </li>
                   ))
-                : otherPageMenu.map((i) => (
-                    <li key={i.title}>
-                      <Link href={i.url}>{i.title}</Link>
-                    </li>
-                  ))}
+                : ''}
             </ul>
           </div>
           <Link href="/" className="btn btn-ghost">
@@ -116,11 +112,7 @@ const Header = () => {
                     <Link href={i.url}>{i.title}</Link>
                   </li>
                 ))
-              : otherPageMenu.map((i) => (
-                  <li key={i.title}>
-                    <Link href={i.url}>{i.title}</Link>
-                  </li>
-                ))}
+              : ''}
           </ul>
         </div>
         <div className="navbar-end">
