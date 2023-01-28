@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import OtherProjects from '@/components/OtherProjects';
 import portfolio from 'data/portfolio';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const title = 'Vehicle Tracking Application';
 
@@ -20,6 +21,14 @@ const VehicleApplicationPortfolioScreen = () => {
             </div>
           </div>
           <div className="px-5 mx-auto max-w-7xl">
+            <div className="text-sm breadcrumbs">
+              <ul>
+                <li>
+                  <Link href="/#my-portfolio">Portfolio</Link>
+                </li>
+                <li>{title}</li>
+              </ul>
+            </div>
             {/* first section 1 */}
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
               <Image
