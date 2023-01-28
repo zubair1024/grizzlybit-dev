@@ -45,6 +45,12 @@ const badges = [
     title: 'Responsive Web Design Certification',
     height: '4rem',
   },
+  {
+    url: 'https://github.com/zubair1024/dp_certificate_of_appreciation/blob/main/dubai_police_ai_certificate.pdf',
+    imageUrl: '/badges/dp.png',
+    title: 'Appreciation Certificate from Dubai Police',
+    height: '4rem',
+  },
 ];
 
 export default badges;
