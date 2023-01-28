@@ -1,5 +1,10 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
+
+const title = 'TIS';
+const otherProjects = portfolio.filter((i) => i.title !== title);
 
 const TISPortfolioScreen = () => {
   return (
@@ -21,7 +26,12 @@ const TISPortfolioScreen = () => {
                 <p className="text-justify">
                   A Next.JS based landing page created for a client whose
                   expertise is in Thermal Insulation Cladding Solutions for
-                  buildings.
+                  buildings. It is a standalone web page that serves as the
+                  entry point for visitors to your website. It&apos;s designed
+                  to give visitors a quick overview of your construction
+                  business and its services, and to encourage them to take a
+                  desired action such as contacting you, requesting a quote, or
+                  visiting other parts of the website.
                 </p>
               </div>
             </div>
@@ -54,6 +64,10 @@ const TISPortfolioScreen = () => {
                   <div>Express</div>
                 </div>
               </div>
+            </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
             </div>
           </div>
         </div>

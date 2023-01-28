@@ -1,7 +1,12 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
 
-const VehicleApplicationPortfolioScreen = () => {
+const title = 'Heavy Equipment Monitoring';
+const otherProjects = portfolio.filter((i) => i.title !== title);
+
+const HeavyEquipmentMonitoringPortfolioScreen = () => {
   return (
     <>
       <Layout>
@@ -9,7 +14,7 @@ const VehicleApplicationPortfolioScreen = () => {
           <div className="bg-fixed bg-toolBelt">
             <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                Vehicle Tracking Application
+                {title}
               </h1>
             </div>
           </div>
@@ -26,15 +31,15 @@ const VehicleApplicationPortfolioScreen = () => {
               <div className="ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
-                  A software tool that allows users to monitor the location and
-                  movement of vehicles in real-time. The application can be
-                  accessed via a web browser and typically displays a map view
-                  showing the location of all vehicles being tracked. Users can
-                  also view detailed information about each vehicle, such as its
-                  speed, fuel level, and route history. It also allows the user
-                  to get alerts on specific events, such as when a vehicle
-                  deviates from its expected route or exceeds a certain speed
-                  limit.
+                  is a tool designed to help operators and managers keep track
+                  of the performance, maintenance and overall health of gensets
+                  and other heavy equipments, which are portable power
+                  generators typically used in industrial and commercial
+                  settings. The application is designed to provide real-time
+                  data and alerts to help users quickly identify and address any
+                  issues with the equipments. The application also includes a
+                  feature for remote access to the genset, this allows users to
+                  start, stop and control the genset from a distance.
                 </p>
               </div>
             </div>
@@ -46,14 +51,30 @@ const VehicleApplicationPortfolioScreen = () => {
                   Some key features of the application include:
                   <ul>
                     <li>
-                      Tracking and monitoring of vehicle location and usage
+                      Real-time monitoring: The ability to monitor the
+                      performance of the genset in real-time, including load,
+                      fuel consumption, run time, and temperature.
                     </li>
-                    <li>Scheduling and dispatching of vehicles and drivers</li>
-                    <li>Maintenance and repair tracking</li>
-                    <li>Fuel consumption and cost tracking</li>
-                    <li>Driver performance monitoring and evaluation</li>
-                    <li>Compliance with regulations and safety standards</li>
-                    <li>Reporting and data analysis capabilities</li>
+                    <li>
+                      Alerts and notifications: The ability to set up and
+                      receive alerts for various parameters such as low oil
+                      pressure, high temperature, and low fuel levels, to
+                      quickly identify and address any issues.
+                    </li>
+                    <li>
+                      Maintenance scheduling and tracking: The ability to
+                      schedule regular maintenance, track the status of
+                      maintenance tasks, and receive notifications when tasks
+                      are due.
+                    </li>
+                    <li>
+                      The ability to access historical data to track performance
+                      over time and identify patterns or trends.
+                    </li>
+                    <li>
+                      Remote access: The ability to start, stop and control the
+                      genset from a distance, through the application.
+                    </li>
                   </ul>
                 </p>
               </div>
@@ -94,6 +115,10 @@ const VehicleApplicationPortfolioScreen = () => {
                 </div>
               </div>
             </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
+            </div>
           </div>
         </div>
       </Layout>
@@ -101,4 +126,4 @@ const VehicleApplicationPortfolioScreen = () => {
   );
 };
 
-export default VehicleApplicationPortfolioScreen;
+export default HeavyEquipmentMonitoringPortfolioScreen;
