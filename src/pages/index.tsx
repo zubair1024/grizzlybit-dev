@@ -1,5 +1,6 @@
 import AboutMe from '@/components/AboutMe';
 import Banner from '@/components/Banner';
+import BlogSection from '@/components/BlogSection';
 import Companies from '@/components/Companies';
 import Contact from '@/components/Contact';
 import CustomHead from '@/components/CustomHead';
@@ -7,8 +8,11 @@ import Layout from '@/components/Layout';
 import Portfolio from '@/components/Portfolio';
 import Services from '@/components/Services';
 import Toolbelt from '@/components/Toolbelt';
+import { getBlogPostDataForHome } from '@/util/posts';
+import { PostData } from '@/util/types';
+import { GetStaticProps } from 'next';
 
-export default function Home() {
+export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
   return (
     <>
       <CustomHead />
@@ -19,6 +23,7 @@ export default function Home() {
           <div className="mx-auto max-w-[1200px]">
             <AboutMe></AboutMe>
           </div>
+          <BlogSection allPostsData={allPostsData}></BlogSection>
           <Toolbelt></Toolbelt>
           <Portfolio></Portfolio>
           <Companies></Companies>
@@ -28,3 +33,12 @@ export default function Home() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = await getBlogPostDataForHome();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};

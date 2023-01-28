@@ -4,6 +4,7 @@ import { bundleMDX } from 'mdx-bundler';
 import path from 'path';
 import rehypePrism from 'rehype-prism-plus';
 import remarkGfm from 'remark-gfm';
+import { PostData } from './types';
 
 type Frontmatter = {
   title: string;
@@ -11,11 +12,12 @@ type Frontmatter = {
   description: string;
   summary: string;
   image: string;
+  showOnHome: boolean;
 };
 
 const postsDirectory = path.join(process.cwd(), 'src/posts');
 
-export async function getBlogPostData() {
+export async function getBlogPostData(): Promise<PostData[]> {
   const filenames = fs.readdirSync(postsDirectory);
   const allPostsData = filenames.map((filename) => {
     const slug = filename.replace(/\.mdx$/, '');
@@ -37,6 +39,14 @@ export async function getBlogPostData() {
     }
     return -1;
   });
+}
+
+export async function getBlogPostDataForHome(): Promise<PostData[]> {
+  const allPostsData = await getBlogPostData();
+
+  const filteredPostsData = allPostsData.filter((i) => i.showOnHome === true);
+
+  return filteredPostsData;
 }
 
 export async function getAllPostSlugs() {

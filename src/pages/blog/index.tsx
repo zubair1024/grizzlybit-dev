@@ -1,23 +1,15 @@
 import Layout from '@/components/Layout';
+import { PostData } from '@/util/types';
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { useState } from 'react';
 import { getBlogPostData } from '../../util/posts';
 
-type PostData = {
-  title: string;
-  publishedAt: string;
-  description: string;
-  summary: string;
-  image: string;
-  slug: string;
-};
-
 type Props = {
   allPostsData: PostData[];
 };
 
-const PostCard = (props: { data: PostData }) => {
+export const PostCard = (props: { data: PostData }) => {
   const { image, title, summary, publishedAt, slug } = props.data;
   return (
     <>
