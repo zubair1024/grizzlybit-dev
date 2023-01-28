@@ -1,6 +1,65 @@
+import { useState } from 'react';
 import { IoHome } from 'react-icons/io5';
 import { MdMail } from 'react-icons/md';
+
+const formDataDefault = {
+  name: '',
+  email: '',
+  message: '',
+};
+
+const FormCompletionModal = () => {
+  const handleHideModal = () => {
+    const elm = document.getElementById(
+      'contact-form-completed',
+    ) as HTMLInputElement | null;
+    if (elm) elm.checked = false;
+  };
+  return (
+    <>
+      <input
+        type="checkbox"
+        id="contact-form-completed"
+        className="modal-toggle"
+      />
+      <div className="modal">
+        <div className="relative modal-box">
+          <label
+            onClick={handleHideModal}
+            htmlFor="my-modal-3"
+            className="absolute btn btn-sm btn-circle right-2 top-2"
+          >
+            ✕
+          </label>
+          <h3 className="text-lg font-bold">Thank you</h3>
+          <p className="py-4">
+            Thank you for your message. You can also email be directly with the
+            email address provided on the page.
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const Contact = () => {
+  const [formData, setFormData] = useState(formDataDefault);
+  const handleModalOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const elm = document.getElementById(
+      'contact-form-completed',
+    ) as HTMLInputElement | null;
+    if (elm) elm.checked = true;
+    setFormData(formDataDefault);
+  };
+
+  const handleFormChange = (
+    field: string,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const str = e.target.value;
+    setFormData({ ...formData, [field]: str });
+  };
   return (
     <>
       <div
@@ -19,6 +78,10 @@ const Contact = () => {
                   type="text"
                   placeholder="John Doe"
                   className="w-full bg-black input input-bordered"
+                  value={formData.name}
+                  onChange={(e) => {
+                    handleFormChange('name', e);
+                  }}
                 />
               </label>
             </div>
@@ -29,6 +92,10 @@ const Contact = () => {
                   type="text"
                   placeholder="info@site.com"
                   className="w-full bg-black input input-bordered"
+                  value={formData.email}
+                  onChange={(e) => {
+                    handleFormChange('email', e);
+                  }}
                 />
               </label>
             </div>
@@ -36,12 +103,19 @@ const Contact = () => {
               <textarea
                 className="bg-black textarea textarea-bordered"
                 placeholder="Message"
+                value={formData.message}
+                onChange={(e) => {
+                  handleFormChange('message', e);
+                }}
               ></textarea>
             </div>
             <div className="form-control">
-              <button className="btn btn-primary">Submit</button>
+              <button onClick={handleModalOpen} className="btn btn-primary">
+                Submit
+              </button>
             </div>
           </form>
+          <FormCompletionModal />
           <div className="flex flex-col items-start justify-center pl-6 space-y-6 font-mono md:border-l-2">
             <div>
               <p className="flex items-center font-semibold">
