@@ -1,4 +1,11 @@
-const portfolio = [
+export interface IPortfolioItem {
+  img: string;
+  url: string;
+  desc: string;
+  title: string;
+}
+
+const portfolio: IPortfolioItem[] = [
   {
     img: '/portfolio/razrtrack.jpg',
     url: '/portfolio/vehicle-tracking',

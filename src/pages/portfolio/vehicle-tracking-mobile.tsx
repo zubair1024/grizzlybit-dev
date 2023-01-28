@@ -1,5 +1,11 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
+
+const title = 'Vehicle Tracking Mobile Application';
+
+const otherProjects = portfolio.filter((i) => i.title !== title);
 
 const VehicleApplicationMobilePortfolioScreen = () => {
   return (
@@ -9,7 +15,7 @@ const VehicleApplicationMobilePortfolioScreen = () => {
           <div className="bg-fixed bg-toolBelt">
             <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                Vehicle Tracking Application
+                {title}
               </h1>
             </div>
           </div>
@@ -35,15 +41,12 @@ const VehicleApplicationMobilePortfolioScreen = () => {
               <div className="ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
-                  A software tool that allows users to monitor the location and
-                  movement of vehicles in real-time. The application can be
-                  accessed via a web browser and typically displays a map view
-                  showing the location of all vehicles being tracked. Users can
-                  also view detailed information about each vehicle, such as its
-                  speed, fuel level, and route history. It also allows the user
-                  to get alerts on specific events, such as when a vehicle
-                  deviates from its expected route or exceeds a certain speed
-                  limit.
+                  The mobile application is a powerful tool for tracking and
+                  monitoring vehicles in real-time. With its easy-to-use
+                  interface, users can quickly and easily view the current
+                  location and movement of their vehicles, as well as view
+                  detailed information of the work orders being completed by the
+                  drivers in real-time with push notification capability.
                 </p>
               </div>
             </div>
@@ -61,8 +64,14 @@ const VehicleApplicationMobilePortfolioScreen = () => {
                     <li>Maintenance and repair tracking</li>
                     <li>Fuel consumption and cost tracking</li>
                     <li>Driver performance monitoring and evaluation</li>
-                    <li>Compliance with regulations and safety standards</li>
-                    <li>Reporting and data analysis capabilities</li>
+                    <li>
+                      Multiple Stop Work Order Monitoring with time-window and
+                      distance constraints
+                    </li>
+                    <li>
+                      Estimated vs Actual monitoring for stop over arrival and
+                      departures
+                    </li>
                   </ul>
                 </p>
               </div>
@@ -100,8 +109,13 @@ const VehicleApplicationMobilePortfolioScreen = () => {
                   <div>Ionic</div>
                   <div>Node.JS</div>
                   <div>Express</div>
+                  <div>OneSignal</div>
                 </div>
               </div>
+            </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
             </div>
           </div>
         </div>

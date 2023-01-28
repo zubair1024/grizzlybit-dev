@@ -1,5 +1,11 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
+
+const title = 'Vehicle Tracking Application';
+
+const otherProjects = portfolio.filter((i) => i.title !== title);
 
 const VehicleApplicationPortfolioScreen = () => {
   return (
@@ -9,7 +15,7 @@ const VehicleApplicationPortfolioScreen = () => {
           <div className="bg-fixed bg-toolBelt">
             <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                Vehicle Tracking Application
+                {title}
               </h1>
             </div>
           </div>
@@ -54,6 +60,11 @@ const VehicleApplicationPortfolioScreen = () => {
                     <li>Driver performance monitoring and evaluation</li>
                     <li>Compliance with regulations and safety standards</li>
                     <li>Reporting and data analysis capabilities</li>
+                    <li>
+                      Integration with other systems: The ability to integrate
+                      the application with other systems, such as an ERP or CRM
+                      system, to share information and automate processes.
+                    </li>
                   </ul>
                 </p>
               </div>
@@ -93,6 +104,10 @@ const VehicleApplicationPortfolioScreen = () => {
                   <div>Google OR Tools</div>
                 </div>
               </div>
+            </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
             </div>
           </div>
         </div>

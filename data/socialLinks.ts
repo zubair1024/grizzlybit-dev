@@ -1,4 +1,10 @@
-const socialLinks = [
+export interface ISocialLink {
+  img: string;
+  name: string;
+  url: string;
+}
+
+const socialLinks: ISocialLink[] = [
   {
     img: '/social/linkedin.png',
     name: 'LinkedIn',

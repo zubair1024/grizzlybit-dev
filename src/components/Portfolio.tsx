@@ -1,6 +1,38 @@
-import portfolio from 'data/portfolio';
+import portfolio, { IPortfolioItem } from 'data/portfolio';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const PortfolioCardItem = (props: {
+  data: IPortfolioItem;
+  textSize?: 'text-sm' | 'text-md';
+}) => {
+  const item = props.data;
+  const textSize = props.textSize ?? 'text-md';
+  return (
+    <Link href={item.url}>
+      <div>
+        <div className="relative mb-5 ml-5 group ">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+          <Image
+            src={item.img}
+            alt={item.title}
+            width={400}
+            height={400}
+            className="relative"
+          ></Image>
+          <div className="absolute top-0 z-40 w-full h-full overflow-hidden opacity-0 hover:opacity-100 hover:bg-black">
+            <div className="flex flex-col items-center justify-center h-full font-bold text-white">
+              <p className={`${textSize} text-center`}>{item.title}</p>
+              <p className={`max-w-xs font-light text-center ${textSize}`}>
+                {item.desc}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
 
 const Portfolio = () => {
   return (
@@ -11,30 +43,7 @@ const Portfolio = () => {
       <div>
         <div className="flex flex-wrap items-center justify-center">
           {portfolio.map((item) => {
-            return (
-              <Link key={item.title} href={item.url}>
-                <div>
-                  <div className="relative mb-5 ml-5 group ">
-                    <div className="  absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                    <Image
-                      src={item.img}
-                      alt={item.title}
-                      width={400}
-                      height={400}
-                      className="relative"
-                    ></Image>
-                    <div className="absolute top-0 z-40 w-full h-full overflow-hidden opacity-0 hover:opacity-100 hover:bg-black">
-                      <div className="flex flex-col items-center justify-center h-full font-bold text-white">
-                        <p className="text-xl text-md">{item.title}</p>
-                        <p className="max-w-xs font-light text-center text-md">
-                          {item.desc}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
+            return <PortfolioCardItem key={item.title} data={item} />;
           })}
         </div>
       </div>

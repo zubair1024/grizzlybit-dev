@@ -1,4 +1,8 @@
-const toolBelt = [
+export interface IToolBeltItem {
+  img: string;
+  name: string;
+}
+const toolBelt: IToolBeltItem[] = [
   { img: '/toolbelt/javascript.svg', name: 'Node.JS' },
   { img: '/toolbelt/typescript.svg', name: 'Node.JS' },
   { img: '/toolbelt/node-js.svg', name: 'Node.JS' },

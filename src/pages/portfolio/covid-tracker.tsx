@@ -1,5 +1,11 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
+
+const title = 'COVID Tracking Mobile Application';
+
+const otherProjects = portfolio.filter((i) => i.title !== title);
 
 const VehicleApplicationPortfolioScreen = () => {
   return (
@@ -9,7 +15,7 @@ const VehicleApplicationPortfolioScreen = () => {
           <div className="bg-fixed bg-toolBelt">
             <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                Vehicle Tracking Application
+                {title}
               </h1>
             </div>
           </div>
@@ -28,15 +34,15 @@ const VehicleApplicationPortfolioScreen = () => {
               <div className="ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
-                  A software tool that allows users to monitor the location and
-                  movement of vehicles in real-time. The application can be
-                  accessed via a web browser and typically displays a map view
-                  showing the location of all vehicles being tracked. Users can
-                  also view detailed information about each vehicle, such as its
-                  speed, fuel level, and route history. It also allows the user
-                  to get alerts on specific events, such as when a vehicle
-                  deviates from its expected route or exceeds a certain speed
-                  limit.
+                  The patient covid health tracking mobile application is a
+                  valuable tool for managing and monitoring the health and
+                  well-being of patients during the COVID-19 pandemic. With its
+                  easy-to-use interface, patients can quickly and easily track
+                  their symptoms, medications, and test results, as well as
+                  access important information about the virus and how to stay
+                  safe. It integrated with oxygen meter BLE sensor through
+                  bluetooth connectivity to read the oxygen meter reading of the
+                  patient.
                 </p>
               </div>
             </div>
@@ -48,14 +54,21 @@ const VehicleApplicationPortfolioScreen = () => {
                   Some key features of the application include:
                   <ul>
                     <li>
-                      Tracking and monitoring of vehicle location and usage
+                      Symptom tracking: The ability for patients to log their
+                      symptoms on a daily basis, such as fever, cough, and
+                      shortness of breath, and view a history of their symptoms
+                      over time.
                     </li>
-                    <li>Scheduling and dispatching of vehicles and drivers</li>
-                    <li>Maintenance and repair tracking</li>
-                    <li>Fuel consumption and cost tracking</li>
-                    <li>Driver performance monitoring and evaluation</li>
-                    <li>Compliance with regulations and safety standards</li>
-                    <li>Reporting and data analysis capabilities</li>
+                    <li>
+                      Medication tracking: The ability for patients to log the
+                      medications they are taking, including the dosage and
+                      frequency, and view a history of their medication usage.
+                    </li>
+                    <li>
+                      Reminders: The ability to set up reminders for taking
+                      medication, booking test, and other health-related
+                      appointments.
+                    </li>
                   </ul>
                 </p>
               </div>
@@ -95,6 +108,10 @@ const VehicleApplicationPortfolioScreen = () => {
                   <div>Express</div>
                 </div>
               </div>
+            </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
             </div>
           </div>
         </div>
