@@ -30,24 +30,24 @@ const VehicleApplicationMobilePortfolioScreen = () => {
               </ul>
             </div>
             {/* first section 1 */}
-            <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
+            <div className="flex flex-col-reverse flex-wrap items-center py-5 justify-evenly md:flex-row">
               <div className="flex">
                 <Image
                   src="/portfolio/razrtrack_mobile/razrtrack_mobile_login.svg"
                   alt="razrtrack"
-                  height={2000}
-                  width={2000}
+                  height={350}
+                  width={350}
                   className="transition ease-in rounded-xl hover:scale-105"
                 ></Image>
                 <Image
                   src="/portfolio/razrtrack_mobile/razrtrack_mobile_list.svg"
                   alt="razrtrack"
-                  height={2000}
-                  width={2000}
-                  className="ml-5 transition ease-in rounded-xl hover:scale-105"
+                  height={350}
+                  width={350}
+                  className="ml-3 transition ease-in rounded-xl hover:scale-105"
                 ></Image>
               </div>
-              <div className="ml-10">
+              <div className="ml-10 xl:max-w-md">
                 <h2>About</h2>
                 <p className="text-justify">
                   The mobile application is a powerful tool for tracking and
@@ -60,8 +60,8 @@ const VehicleApplicationMobilePortfolioScreen = () => {
               </div>
             </div>
             {/* section 2 */}
-            <div className="flex flex-col items-center py-5 justify-evenly lg:flex-row">
-              <div>
+            <div className="flex flex-col flex-wrap items-center py-5 justify-evenly lg:flex-row">
+              <div className="xl:max-w-md">
                 <h2>Key Features</h2>
                 <p className="text-justify">
                   Some key features of the application include:
@@ -84,20 +84,20 @@ const VehicleApplicationMobilePortfolioScreen = () => {
                   </ul>
                 </p>
               </div>
-              <div className="flex">
+              <div className="flex flex-wrap">
                 <Image
                   src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo.svg"
                   alt="razrtrack"
                   height={250}
                   width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
+                  className="transition ease-in rounded-xl hover:scale-105"
                 ></Image>
                 <Image
                   src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single.svg"
                   alt="razrtrack"
                   height={250}
                   width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
+                  className="transition ease-in rounded-xl hover:scale-105 md:ml-3"
                 ></Image>
               </div>
             </div>
