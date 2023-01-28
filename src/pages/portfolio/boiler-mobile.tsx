@@ -1,7 +1,12 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
 
-const VehicleApplicationPortfolioScreen = () => {
+const title = 'Smart Boiler Mobile';
+const otherProjects = portfolio.filter((i) => i.title !== title);
+
+const SmartBoilerMobilePortfolioScreen = () => {
   return (
     <>
       <Layout>
@@ -9,7 +14,7 @@ const VehicleApplicationPortfolioScreen = () => {
           <div className="bg-fixed bg-toolBelt">
             <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                Vehicle Tracking Application
+                {title}
               </h1>
             </div>
           </div>
@@ -35,15 +40,16 @@ const VehicleApplicationPortfolioScreen = () => {
               <div className="ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
-                  A software tool that allows users to monitor the location and
-                  movement of vehicles in real-time. The application can be
-                  accessed via a web browser and typically displays a map view
-                  showing the location of all vehicles being tracked. Users can
-                  also view detailed information about each vehicle, such as its
-                  speed, fuel level, and route history. It also allows the user
-                  to get alerts on specific events, such as when a vehicle
-                  deviates from its expected route or exceeds a certain speed
-                  limit.
+                  The application helps customers to control and manage their
+                  home or office thermostats from their smartphones or tablets.
+                  With this application, customers can easily adjust the
+                  temperature, set schedules, and monitor energy usage from
+                  anywhere, at any time. The application also includes a feature
+                  for monitoring energy usage. Customers can use the application
+                  to view their energy usage history, track their energy
+                  consumption and set goals to reduce their energy consumption.
+                  This feature can be useful for identifying patterns in energy
+                  usage and making adjustments to reduce costs.
                 </p>
               </div>
             </div>
@@ -55,14 +61,26 @@ const VehicleApplicationPortfolioScreen = () => {
                   Some key features of the application include:
                   <ul>
                     <li>
-                      Tracking and monitoring of vehicle location and usage
+                      Remote temperature control: The ability for customers to
+                      adjust the temperature of their thermostat remotely from
+                      their smartphone or tablet.
                     </li>
-                    <li>Scheduling and dispatching of vehicles and drivers</li>
-                    <li>Maintenance and repair tracking</li>
-                    <li>Fuel consumption and cost tracking</li>
-                    <li>Driver performance monitoring and evaluation</li>
-                    <li>Compliance with regulations and safety standards</li>
-                    <li>Reporting and data analysis capabilities</li>
+                    <li>
+                      Schedule setting: The ability for customers to create
+                      customized schedules for their thermostat, such as turning
+                      the heat down when they&apos;re away during the day or
+                      turning it up just before they get home.
+                    </li>
+                    <li>
+                      User-friendly interface: The application is designed to be
+                      easy to use, with a user-friendly interface, and can be
+                      accessed from any device connected to the internet.
+                    </li>
+                    <li>
+                      Notifications and Alerts: The ability to receive
+                      notifications and alerts, such as low battery, temperature
+                      out of range, and schedule changes.
+                    </li>
                   </ul>
                 </p>
               </div>
@@ -100,8 +118,14 @@ const VehicleApplicationPortfolioScreen = () => {
                   <div>Ionic</div>
                   <div>Node.JS</div>
                   <div>Express</div>
+                  <div>Cordova</div>
+                  <div>OneSignal</div>
                 </div>
               </div>
+            </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
             </div>
           </div>
         </div>
@@ -110,4 +134,4 @@ const VehicleApplicationPortfolioScreen = () => {
   );
 };
 
-export default VehicleApplicationPortfolioScreen;
+export default SmartBoilerMobilePortfolioScreen;
