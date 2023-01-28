@@ -117,9 +117,14 @@ const Header = () => {
         </div>
         <div className="navbar-end">
           {isLandingPage ? (
-            <a className="btn" href="#contact-form">
-              Contact Me
-            </a>
+            <div className="flex space-x-2">
+              <a href="assets/zubair_cv.pdf" className=" btn" download>
+                My Resume
+              </a>
+              {/* <a className="hidden btn md:flex" href="#contact-form">
+                Contact Me
+              </a> */}
+            </div>
           ) : (
             ''
           )}
