@@ -4,10 +4,9 @@ import portfolio from 'data/portfolio';
 import Image from 'next/image';
 
 const title = 'COVID Tracking Mobile Application';
-
 const otherProjects = portfolio.filter((i) => i.title !== title);
 
-const VehicleApplicationPortfolioScreen = () => {
+const CovidTrackingPortfolioScreen = () => {
   return (
     <>
       <Layout>
@@ -72,7 +71,7 @@ const VehicleApplicationPortfolioScreen = () => {
                   </ul>
                 </p>
               </div>
-              <div className="flex">
+              <div className="flex flex-wrap md:flex-nowrap">
                 <Image
                   src="/portfolio/razrlibre/razrlibre_record1.svg"
                   alt="razrtrack"
@@ -120,4 +119,4 @@ const VehicleApplicationPortfolioScreen = () => {
   );
 };
 
-export default VehicleApplicationPortfolioScreen;
+export default CovidTrackingPortfolioScreen;

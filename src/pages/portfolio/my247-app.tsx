@@ -1,5 +1,10 @@
 import Layout from '@/components/Layout';
+import OtherProjects from '@/components/OtherProjects';
+import portfolio from 'data/portfolio';
 import Image from 'next/image';
+
+const title = 'My247';
+const otherProjects = portfolio.filter((i) => i.title !== title);
 
 const VehicleApplicationPortfolioScreen = () => {
   return (
@@ -9,7 +14,7 @@ const VehicleApplicationPortfolioScreen = () => {
           <div className="bg-fixed bg-toolBelt">
             <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                Vehicle Tracking Application
+                {title}
               </h1>
             </div>
           </div>
@@ -28,15 +33,14 @@ const VehicleApplicationPortfolioScreen = () => {
               <div className="ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
-                  A software tool that allows users to monitor the location and
-                  movement of vehicles in real-time. The application can be
-                  accessed via a web browser and typically displays a map view
-                  showing the location of all vehicles being tracked. Users can
-                  also view detailed information about each vehicle, such as its
-                  speed, fuel level, and route history. It also allows the user
-                  to get alerts on specific events, such as when a vehicle
-                  deviates from its expected route or exceeds a certain speed
-                  limit.
+                  24|7 Home Rescue app is designed to let customers get help,
+                  make a claim, complete your eligibility, book a service and
+                  use their cover from the convenience of their smartphone.
+                  My247 app is free to download and keep the app stored on your
+                  smartphone for extra peace of mind and should something go
+                  wrong, you can view your cover plan coverage, make a claim,
+                  book a service, complete your eligibility and call us directly
+                  in just a few clicks.
                 </p>
               </div>
             </div>
@@ -47,15 +51,13 @@ const VehicleApplicationPortfolioScreen = () => {
                 <p className="text-justify">
                   Some key features of the application include:
                   <ul>
-                    <li>
-                      Tracking and monitoring of vehicle location and usage
-                    </li>
-                    <li>Scheduling and dispatching of vehicles and drivers</li>
-                    <li>Maintenance and repair tracking</li>
-                    <li>Fuel consumption and cost tracking</li>
-                    <li>Driver performance monitoring and evaluation</li>
-                    <li>Compliance with regulations and safety standards</li>
-                    <li>Reporting and data analysis capabilities</li>
+                    <li>View your product details</li>
+                    <li> Make a claim</li>
+                    <li>Call in one click</li>
+                    <li>Book a service</li>
+                    <li>See latest offers</li>
+                    <li>Complete eligibility</li>
+                    <li>Keep all document in one place</li>
                   </ul>
                 </p>
               </div>
@@ -102,6 +104,10 @@ const VehicleApplicationPortfolioScreen = () => {
                   <div>Express</div>
                 </div>
               </div>
+            </div>
+            <div>
+              <h2>Other projects</h2>
+              <OtherProjects data={otherProjects}></OtherProjects>
             </div>
           </div>
         </div>
