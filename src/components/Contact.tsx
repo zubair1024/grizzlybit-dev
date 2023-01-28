@@ -1,20 +1,8 @@
-import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoHome } from 'react-icons/io5';
 import { MdMail } from 'react-icons/md';
 
-const formDataDefault = {
-  name: '',
-  email: '',
-  message: '',
-};
-
 const FormCompletionModal = () => {
-  const handleHideModal = () => {
-    const elm = document.getElementById(
-      'contact-form-completed',
-    ) as HTMLInputElement | null;
-    if (elm) elm.checked = false;
-  };
   return (
     <>
       <input
@@ -25,8 +13,7 @@ const FormCompletionModal = () => {
       <div className="modal">
         <div className="relative modal-box">
           <label
-            onClick={handleHideModal}
-            htmlFor="my-modal-3"
+            htmlFor="contact-form-completed"
             className="absolute btn btn-sm btn-circle right-2 top-2"
           >
             ✕
@@ -42,24 +29,38 @@ const FormCompletionModal = () => {
   );
 };
 
+interface IContactFormValues {
+  name: string;
+  email: string;
+  message: string;
+}
+
 const Contact = () => {
-  const [formData, setFormData] = useState(formDataDefault);
-  const handleModalOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<IContactFormValues>();
+
+  const handleModalOpen = () => {
     const elm = document.getElementById(
       'contact-form-completed',
     ) as HTMLInputElement | null;
     if (elm) elm.checked = true;
-    setFormData(formDataDefault);
+  };
+  const onSubmit: SubmitHandler<IContactFormValues> = async ({
+    name,
+    email,
+    message,
+  }) => {
+    try {
+      // await sendMessage({ name, email, message });
+      handleModalOpen();
+    } catch (err) {
+      alert('An error occurred while sending message. Please try again later');
+    }
   };
 
-  const handleFormChange = (
-    field: string,
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const str = e.target.value;
-    setFormData({ ...formData, [field]: str });
-  };
   return (
     <>
       <div
@@ -78,12 +79,18 @@ const Contact = () => {
                   type="text"
                   placeholder="John Doe"
                   className="w-full bg-black input input-bordered"
-                  value={formData.name}
-                  onChange={(e) => {
-                    handleFormChange('name', e);
-                  }}
+                  {...register('name', {
+                    required: 'Please enter your name.',
+                  })}
                 />
               </label>
+
+              {errors?.name?.message && (
+                <div className="text-[red] py-2 text-left">
+                  {' '}
+                  <p>{errors.name.message}</p>
+                </div>
+              )}
             </div>
             <div className="form-control">
               <label className="input-group">
@@ -92,25 +99,38 @@ const Contact = () => {
                   type="text"
                   placeholder="info@site.com"
                   className="w-full bg-black input input-bordered"
-                  value={formData.email}
-                  onChange={(e) => {
-                    handleFormChange('email', e);
-                  }}
+                  {...register('email', {
+                    required: 'Please enter your email.',
+                  })}
                 />
               </label>
+              {errors?.email?.message && (
+                <div className="text-[red] py-2 text-left">
+                  {' '}
+                  <p>{errors.email.message}</p>
+                </div>
+              )}
             </div>
             <div className="form-control">
               <textarea
                 className="bg-black textarea textarea-bordered"
                 placeholder="Message"
-                value={formData.message}
-                onChange={(e) => {
-                  handleFormChange('message', e);
-                }}
+                {...register('message', {
+                  required: 'Please enter your message.',
+                })}
               ></textarea>
+              {errors?.message?.message && (
+                <div className="text-[red] py-2 text-left">
+                  {' '}
+                  <p>{errors.message.message}</p>
+                </div>
+              )}
             </div>
             <div className="form-control">
-              <button onClick={handleModalOpen} className="btn btn-primary">
+              <button
+                onClick={handleSubmit(onSubmit)}
+                className="btn btn-primary"
+              >
                 Submit
               </button>
             </div>
