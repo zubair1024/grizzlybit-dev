@@ -51,7 +51,7 @@ const VehicleApplicationMobilePortfolioScreen = () => {
               </div>
             </div>
             {/* section 2 */}
-            <div className="flex flex-col items-center py-5 justify-evenly md:flex-row">
+            <div className="flex flex-col items-center py-5 justify-evenly lg:flex-row">
               <div>
                 <h2>Key Features</h2>
                 <p className="text-justify">
@@ -93,7 +93,7 @@ const VehicleApplicationMobilePortfolioScreen = () => {
               </div>
             </div>
             {/* tech stack */}
-            <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
+            <div className="flex flex-col-reverse items-center py-5 justify-evenly lg:flex-row">
               <Image
                 src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single_status.svg"
                 alt="razrtrack"

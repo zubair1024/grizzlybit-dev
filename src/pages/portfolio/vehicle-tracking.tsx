@@ -29,7 +29,7 @@ const VehicleApplicationPortfolioScreen = () => {
                 width={700}
                 className="transition ease-in rounded-xl hover:scale-105"
               ></Image>
-              <div className="ml-10">
+              <div className="md:ml-10">
                 <h2>About</h2>
                 <p className="text-justify">
                   A software tool that allows users to monitor the location and

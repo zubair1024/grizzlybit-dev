@@ -84,22 +84,21 @@ const SmartBoilerMobilePortfolioScreen = () => {
                   </ul>
                 </p>
               </div>
-              <div className="flex">
-                <Image
-                  src="/portfolio/razrboiler/razrboiler_thermostat.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-                <Image
-                  src="/portfolio/razrboiler/razrboiler_control.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-              </div>
+
+              <Image
+                src="/portfolio/razrboiler/razrboiler_thermostat.svg"
+                alt="razrtrack"
+                height={250}
+                width={250}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
+              <Image
+                src="/portfolio/razrboiler/razrboiler_control.svg"
+                alt="razrtrack"
+                height={250}
+                width={250}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
             </div>
             {/* tech stack */}
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">

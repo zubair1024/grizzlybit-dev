@@ -71,22 +71,21 @@ const CovidTrackingPortfolioScreen = () => {
                   </ul>
                 </p>
               </div>
-              <div className="flex flex-wrap md:flex-nowrap">
-                <Image
-                  src="/portfolio/razrlibre/razrlibre_record1.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-                <Image
-                  src="/portfolio/razrlibre/razrlibre_record2.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-              </div>
+
+              <Image
+                src="/portfolio/razrlibre/razrlibre_record1.svg"
+                alt="razrtrack"
+                height={250}
+                width={250}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
+              <Image
+                src="/portfolio/razrlibre/razrlibre_record2.svg"
+                alt="razrtrack"
+                height={250}
+                width={250}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
             </div>
             {/* tech stack */}
             <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">

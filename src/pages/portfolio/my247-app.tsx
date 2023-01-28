@@ -20,7 +20,7 @@ const VehicleApplicationPortfolioScreen = () => {
           </div>
           <div className="px-5 mx-auto max-w-7xl">
             {/* first section 1 */}
-            <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
+            <div className="flex flex-col-reverse items-center py-5 justify-evenly lg:flex-row">
               <div className="flex">
                 <Image
                   src="/portfolio/my247/my247_main.webp"
@@ -45,7 +45,7 @@ const VehicleApplicationPortfolioScreen = () => {
               </div>
             </div>
             {/* section 2 */}
-            <div className="flex flex-col items-center py-5 justify-evenly md:flex-row">
+            <div className="flex flex-col items-center py-5 justify-evenly lg:flex-row">
               <div>
                 <h2>Key Features</h2>
                 <p className="text-justify">
@@ -61,25 +61,24 @@ const VehicleApplicationPortfolioScreen = () => {
                   </ul>
                 </p>
               </div>
-              <div className="flex">
-                <Image
-                  src="/portfolio/my247/my247_home.webp"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-                <Image
-                  src="/portfolio/my247/my247_eligibility.webp"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="ml-10 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-              </div>
+
+              <Image
+                src="/portfolio/my247/my247_home.webp"
+                alt="razrtrack"
+                height={250}
+                width={250}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
+              <Image
+                src="/portfolio/my247/my247_eligibility.webp"
+                alt="razrtrack"
+                height={250}
+                width={250}
+                className="ml-10 transition ease-in rounded-xl hover:scale-105"
+              ></Image>
             </div>
             {/* tech stack */}
-            <div className="flex flex-col-reverse items-center py-5 justify-evenly md:flex-row">
+            <div className="flex flex-col-reverse items-center py-5 justify-evenly lg:flex-row">
               <Image
                 src="/portfolio/my247/my247_docs.webp"
                 alt="razrtrack"
