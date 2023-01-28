@@ -1,5 +1,6 @@
 import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
+import BadgesSection from './BadgesSection';
 
 const cardVariants: Variants = {
   offscreen: {
@@ -47,6 +48,7 @@ const AboutMe = () => {
               perpetually working on improving my chops one coding problem at a
               time.
             </p>
+            <BadgesSection></BadgesSection>
           </div>
           <motion.div
             variants={cardVariants}
@@ -54,13 +56,15 @@ const AboutMe = () => {
             whileInView="onscreen"
             className="right-0 p-5 rounded-lg"
           >
-            <Image
-              src="/zubair_2.jpg"
-              width={400}
-              height={500}
-              alt="Zubair"
-              className="rounded-lg"
-            ></Image>
+            <div className="flex items-center justify-center">
+              <Image
+                src="/zubair_2.jpg"
+                width={400}
+                height={500}
+                alt="Zubair"
+                className="rounded-lg"
+              ></Image>
+            </div>
           </motion.div>
         </div>
       </div>

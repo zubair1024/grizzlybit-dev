@@ -1,4 +1,5 @@
 import AboutMe from '@/components/AboutMe';
+import BadgesSection from '@/components/BadgesSection';
 import Banner from '@/components/Banner';
 import BlogSection from '@/components/BlogSection';
 import Companies from '@/components/Companies';
@@ -26,6 +27,7 @@ export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
           <BlogSection allPostsData={allPostsData}></BlogSection>
           <Toolbelt></Toolbelt>
           <Portfolio></Portfolio>
+          <BadgesSection></BadgesSection>
           <Companies></Companies>
           <Contact></Contact>
         </main>
