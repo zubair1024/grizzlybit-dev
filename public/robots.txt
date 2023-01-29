@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.grizzlybit.dev
+
+# Sitemaps
+Sitemap: https://www.grizzlybit.dev/sitemap.xml
