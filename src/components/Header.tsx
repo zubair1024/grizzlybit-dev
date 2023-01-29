@@ -17,6 +17,10 @@ const landingPageMenu = [
     url: '/#my-portfolio',
   },
   {
+    title: 'Testimonials',
+    url: '/#my-testimonials',
+  },
+  {
     title: 'Blog',
     url: '/blog',
   },

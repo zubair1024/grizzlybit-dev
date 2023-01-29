@@ -14,10 +14,12 @@ interface ITestimonialData {
 const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
   return (
     <motion.div
-      initial={{ y: '50px' }}
+      initial={{ y: '300px', opacity: 0 }}
       whileInView={{
         y: 0,
+        opacity: 1,
         transition: {
+          duration: 5,
           type: 'spring',
           stiffness: 100,
           mass: 0.3,
@@ -72,7 +74,7 @@ const containerVariants = {
 const Testimonials = () => {
   return (
     <>
-      <div className="py-10">
+      <div className="py-10" id="my-testimonials">
         <h2 className="py-10 font-mono text-2xl tracking-wider text-center uppercase">
           Testimonials
         </h2>
