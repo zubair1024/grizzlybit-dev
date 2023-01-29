@@ -15,6 +15,17 @@ const Footer = () => {
         ></Image>
         <p>Copyright © {date.getFullYear()} - All right reserved</p>
       </div>
+      {/* <div className="flex items-center justify-center text-sm">
+        Built using{' '}
+        <Image
+          src="/toolbelt/nextjs-icon.svg"
+          className="inline"
+          height={30}
+          width={30}
+          alt="nextjs"
+        />{' '}
+        with ❤️
+      </div> */}
       <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
         {socialLinks.map((i) => {
           return (

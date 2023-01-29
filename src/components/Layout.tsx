@@ -20,7 +20,7 @@ const Layout = (props: ILayoutProps) => {
         }}
       >
         <Header></Header>
-        <div>{props.children}</div>
+        <div className="antialiased">{props.children}</div>
         <Footer></Footer>
       </motion.div>
     </>

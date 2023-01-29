@@ -40,9 +40,9 @@ const Banner = () => {
             },
           }}
         >
-          <div className="flex items-center justify-center w-40 mx-auto mt-10 bg-yellow-400 border-2 rounded-full">
+          <div className="flex items-center justify-center w-40 mx-auto mt-10">
             <Image
-              src="/Image.png"
+              src="/zubair_avatar.png"
               alt="Zubair Ahmed"
               width="200"
               height="200"

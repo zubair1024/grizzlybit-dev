@@ -7,6 +7,7 @@ import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import Portfolio from '@/components/Portfolio';
 import Services from '@/components/Services';
+import Testimonials from '@/components/Testimonials';
 import Toolbelt from '@/components/Toolbelt';
 import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
@@ -27,6 +28,7 @@ export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
           <Toolbelt></Toolbelt>
           <Portfolio></Portfolio>
           <Companies></Companies>
+          <Testimonials></Testimonials>
           <Contact></Contact>
         </main>
       </Layout>
