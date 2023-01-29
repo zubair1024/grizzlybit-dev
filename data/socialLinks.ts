@@ -6,27 +6,27 @@ export interface ISocialLink {
 
 const socialLinks: ISocialLink[] = [
   {
-    img: '/social/linkedin.png',
+    img: '/social/linkedin.svg',
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/zubair1024/',
   },
   {
-    img: '/social/twitter.png',
+    img: '/social/twitter.svg',
     name: 'Twitter',
     url: 'https://twitter.com/zubair1024',
   },
   {
-    img: '/social/github.png',
+    img: '/social/github.svg',
     name: 'Github',
     url: 'https://github.com/zubair1024',
   },
   {
-    img: '/social/medium.png',
+    img: '/social/medium.svg',
     name: 'Medium',
     url: 'https://medium.com/@zubair1024',
   },
   {
-    img: '/social/stack-overflow.png',
+    img: '/social/stack-overflow.svg',
     name: 'Stack-Overflow',
     url: 'https://stackoverflow.com/users/3779309/zubair1024',
   },
