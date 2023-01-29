@@ -118,7 +118,7 @@ const Header = () => {
         <div className="navbar-end">
           {isLandingPage ? (
             <div className="flex space-x-2">
-              <a href="assets/zubair_cv.pdf" className=" btn" download>
+              <a href="/zubair_cv.pdf" className=" btn" download>
                 My Resume
               </a>
               {/* <a className="hidden btn md:flex" href="#contact-form">
