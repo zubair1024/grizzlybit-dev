@@ -17,7 +17,6 @@
     "daisyui": "^2.47.0",
     "dayjs": "^1.11.7",
     "esbuild": "^0.17.4",
-    "eslint-config-next": "13.1.4",
     "framer-motion": "^8.5.2",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^9.2.1",
@@ -29,8 +28,7 @@
     "react-icons": "^4.7.1",
     "rehype-prism-plus": "^1.5.0",
     "remark-gfm": "^3.0.1",
-    "typescript": "4.9.4",
-    "yet-another-react-lightbox": "^2.2.7"
+    "typescript": "4.9.4"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.48.2",
