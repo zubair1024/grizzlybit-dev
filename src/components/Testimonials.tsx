@@ -1,4 +1,5 @@
 import testimonials from 'data/testimonials';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 interface ITestimonialData {
@@ -12,7 +13,18 @@ interface ITestimonialData {
 
 const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
   return (
-    <div>
+    <motion.div
+      initial={{ y: '50px' }}
+      whileInView={{
+        y: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 100,
+          mass: 0.3,
+          // remove delay: 0.3,
+        },
+      }}
+    >
       <div className="grid items-center justify-center grid-cols-4 py-2 px-5 m-2 bg-[#272727] rounded-lg max-w-lg shadow-xl">
         <div className="flex flex-col justify-center col-span-1">
           <Image
@@ -40,8 +52,21 @@ const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
+};
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0, // this will set a delay before the children start animating
+      staggerChildren: 0.3, // this will set the time inbetween children animation
+    },
+  },
 };
 
 const Testimonials = () => {
@@ -51,12 +76,16 @@ const Testimonials = () => {
         <h2 className="py-10 font-mono text-2xl tracking-wider text-center uppercase">
           Testimonials
         </h2>
-        {/* <div className="grid grid-cols-1 px-10 md:grid-cols-2 lg:grid-cols-3 "> */}
-        <div className="flex flex-wrap items-center justify-center">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          className="flex flex-wrap items-center justify-center"
+        >
           {testimonials.map((item) => {
             return <TestimonialCard key={item.name} data={item} />;
           })}
-        </div>
+        </motion.div>
       </div>
     </>
   );
