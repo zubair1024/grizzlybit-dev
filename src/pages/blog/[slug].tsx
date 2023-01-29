@@ -25,7 +25,7 @@ export default function BlogPost({ code, frontmatter }: Props) {
   return (
     <>
       <Layout>
-        <div className="max-w-full prose prose-lg">
+        <div className="max-w-full prose prose-md">
           <div className="bg-fixed bg-toolBelt">
             <div className="py-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
               <h2 className="p-16 text-center md:grid-cols-4">
