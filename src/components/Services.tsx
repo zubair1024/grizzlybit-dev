@@ -113,7 +113,7 @@ const Card = (props: { data: ServicesData }) => {
         <div>
           <h2 className="font-mono text-xl text-center">{props.data.title}</h2>
         </div>
-        <p className="pt-4 font-mono tracking-widest text-left text-justify">
+        <p className="pt-4 font-mono tracking-normal text-justify">
           {props.data.description}
         </p>
         {/* <div className="py-2">
