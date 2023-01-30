@@ -27,25 +27,27 @@ const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
         },
       }}
     >
-      <div className="grid items-center justify-center grid-cols-4 py-2 px-5 m-2 bg-[#272727] rounded-lg max-w-lg shadow-xl">
-        <div className="flex flex-col justify-center col-span-1">
+      <div className="py-2 px-5 m-2 bg-[#272727] rounded-lg max-w-lg shadow-xl">
+        <div className="  flex justify-start items-center space-x-2">
           <Image
             src={data.imageUrl}
-            height={100}
-            width={100}
+            height={70}
+            width={70}
             alt="name"
             className="mask mask-circle"
           ></Image>
-          <p className="pt-2 font-bold">{data.name}</p>
-          <p className="text-xs">{data.designation}</p>
-          <p className="text-sm font-semibold">{data.company}</p>
+          <div>
+            <p className="pt-2 font-bold">{data.name}</p>
+            <p className="text-xs">{data.designation}</p>
+            <p className="text-sm font-semibold">{data.company}</p>
+          </div>
         </div>
-        <div className="col-span-3 py-10">
+        <div className="col-span-4 pt-2 pb-2">
           <p className="ml-2 text-sm text-justify ">
             <Image
               src="/quotation-mark.svg"
-              height={15}
-              width={15}
+              height={10}
+              width={10}
               alt="quotation-mark"
               style={{ display: 'inline' }}
               className="mr-2"
