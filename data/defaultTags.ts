@@ -5,7 +5,7 @@ const defaultTags = {
   imageType: 'image/png',
   websiteUrl: 'https://www.grizzlybit.dev',
   twitterHandle: '@zubair1024',
-  GA_TRACKING_CODE: 'G-QHRT7757GK',
+  GA_TRACKING_CODE: 'image.png',
 };
 
 export default defaultTags;
