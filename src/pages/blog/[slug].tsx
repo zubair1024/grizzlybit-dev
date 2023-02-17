@@ -1,3 +1,4 @@
+import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -24,6 +25,7 @@ export default function BlogPost({ code, frontmatter }: Props) {
 
   return (
     <>
+      <CustomHead />
       <Layout>
         <div className="max-w-full prose prose-md">
           <div className="bg-fixed bg-toolBelt">

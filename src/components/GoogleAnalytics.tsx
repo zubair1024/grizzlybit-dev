@@ -6,17 +6,21 @@ const GoogleAnalytics = () => {
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-9GL68GYWYP"
-      ></Script>
+      />
       <Script
-        id="ga-tracking"
+        id="google-analytics"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: ` window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', 'G-9GL68GYWYP');`,
+          __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-9GL68GYWYP', {
+                   page_path: window.location.pathname,
+                  });
+                  `,
         }}
-      ></Script>
+      />
     </>
   );
 };

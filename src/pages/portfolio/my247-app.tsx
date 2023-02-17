@@ -1,3 +1,4 @@
+import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import OtherProjects from '@/components/OtherProjects';
 import portfolio from 'data/portfolio';
@@ -10,6 +11,7 @@ const otherProjects = portfolio.filter((i) => i.title !== title);
 const VehicleApplicationPortfolioScreen = () => {
   return (
     <>
+      <CustomHead />
       <Layout>
         <div className="max-w-full min-h-screen prose prose-2xl">
           <div className="bg-fixed bg-toolBelt">

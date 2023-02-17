@@ -1,3 +1,4 @@
+import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import { PostData } from '@/util/types';
 import { GetStaticProps } from 'next';
@@ -57,6 +58,7 @@ export default function BlogPage({ allPostsData }: Props) {
 
   return (
     <>
+      <CustomHead />
       <Layout>
         <div className="max-w-full min-h-screen">
           <div className="bg-fixed bg-toolBelt">
