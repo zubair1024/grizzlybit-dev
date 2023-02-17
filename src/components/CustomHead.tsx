@@ -1,6 +1,5 @@
 import defaultTags from 'data/defaultTags';
 import { NextSeo } from 'next-seo';
-import GoogleAnalytics from './GoogleAnalytics';
 
 const CustomHead = () => {
   return (
@@ -66,7 +65,7 @@ const CustomHead = () => {
           },
         ]}
       />
-      <GoogleAnalytics />
+      {/* <GoogleAnalytics /> */}
     </>
   );
 };

@@ -19,6 +19,7 @@
     "dayjs": "^1.11.7",
     "esbuild": "^0.17.4",
     "framer-motion": "^8.5.2",
+    "ga-4-react": "^0.1.281",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^9.2.1",
     "next": "13.1.4",
