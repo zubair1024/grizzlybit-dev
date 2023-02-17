@@ -1,20 +1,21 @@
-import Script from 'next/script';
-
 const GoogleAnalytics = () => {
   return (
     <>
-      <Script
-        strategy="lazyOnload"
+      <script
+        async
         src={`https://www.googletagmanager.com/gtag/js?id=G-ZD3BELKQE2`}
       />
 
-      <Script id="ga-tracking" strategy="lazyOnload">{`
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', G-ZD3BELKQE2, {
-      page_path: window.location.pathname,
-      });`}</Script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-ZD3BELKQE2', { 'send_page_view': true });
+            `,
+        }}
+      />
     </>
   );
 };
