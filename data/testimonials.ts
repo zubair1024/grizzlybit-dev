@@ -28,17 +28,6 @@ const testimonials = [
   },
 
   {
-    name: 'Louis Christopher',
-    company: 'Atlan',
-    designation: 'Senior Software Engineer',
-    place: 'Bangalore, India',
-    imageUrl: '/testimonials/louis.jpeg',
-    message: `Working in fast paced startup means wearing many hats and I’m thankful Zubair trusted me from day one to own multiple pieces of the stack.
-    I’ve learned a lot watching him lead both the technical side and the management side of things.
-    Brainstorming with him is always a pleasure, no problem feels too difficult!
-    Zubair is one of those people I can always rely on, I’m sure he’ll find success in any endeavour he pursues.`,
-  },
-  {
     name: 'Manav Mishra',
     company: 'Fulfill.io',
     designation: 'Lead Fullstack Developer',
@@ -49,6 +38,17 @@ const testimonials = [
     Their guidance and mentorship has been invaluable in my own personal and professional development. He has a talent for organizing and delegating tasks effectively, which contributed to the success of our product team.
     
     Zubair has the technical skills and the leadership abilities to excel in any role, so I would highly recommend him as both a developer and a leader.`,
+  },
+  {
+    name: 'Louis Christopher',
+    company: 'Atlan',
+    designation: 'Senior Software Engineer',
+    place: 'Bangalore, India',
+    imageUrl: '/testimonials/louis.jpeg',
+    message: `Working in fast paced startup means wearing many hats and I’m thankful Zubair trusted me from day one to own multiple pieces of the stack.
+    I’ve learned a lot watching him lead both the technical side and the management side of things.
+    Brainstorming with him is always a pleasure, no problem feels too difficult!
+    Zubair is one of those people I can always rely on, I’m sure he’ll find success in any endeavour he pursues.`,
   },
   {
     name: 'Sumit Kumar',

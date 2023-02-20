@@ -74,6 +74,12 @@ const containerVariants = {
 };
 
 const Testimonials = () => {
+  const copyTestimonials = [...testimonials];
+  const leftTestimonials = copyTestimonials.splice(
+    0,
+    Math.ceil(copyTestimonials.length / 2),
+  );
+  const rightTestimonials = copyTestimonials;
   return (
     <>
       <div className="py-10" id="my-testimonials">
@@ -84,11 +90,18 @@ const Testimonials = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          className="flex flex-wrap items-center justify-center"
+          className="flex flex-wrap items-start justify-center"
         >
-          {testimonials.map((item) => {
-            return <TestimonialCard key={item.name} data={item} />;
-          })}
+          <div className="left-testimonials">
+            {leftTestimonials.map((item) => {
+              return <TestimonialCard key={item.name} data={item} />;
+            })}
+          </div>
+          <div className="right-testimonials">
+            {rightTestimonials.map((item) => {
+              return <TestimonialCard key={item.name} data={item} />;
+            })}
+          </div>
         </motion.div>
       </div>
     </>
