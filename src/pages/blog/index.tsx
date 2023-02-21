@@ -16,12 +16,17 @@ export const PostCard = (props: { data: PostData }) => {
     <>
       <div className="flex justify-center sm:mx-5">
         <div className="bg-[#0E0E0E] shadow-xl card card-compact">
-          <figure>
-            <Link href={`/blog/${slug}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={image} alt={title} />
-            </Link>
-          </figure>
+          <Link href={`/blog/${slug}`}>
+            {image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="rounded-t-xl" src={image} alt={title} />
+            ) : (
+              <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 w-full h-[150px] flex items-center justify-center rounded-t-xl">
+                <h3 className="text-2xl px-4 font-bold">{title}</h3>
+              </div>
+            )}
+          </Link>
+
           <div className="card-body">
             <p className="text-right text-md">{publishedAt}</p>
             <Link href={`/blog/${slug}`}>
