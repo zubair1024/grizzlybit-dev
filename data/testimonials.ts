@@ -51,6 +51,14 @@ const testimonials = [
     Zubair is one of those people I can always rely on, I’m sure he’ll find success in any endeavour he pursues.`,
   },
   {
+    name: 'Amritendu Bhattacharjee',
+    company: 'Optym',
+    designation: 'Software Engineer',
+    place: 'Bangalore, India',
+    imageUrl: '/testimonials/amrit.jpg',
+    message: `One of the best CTOs I have worked with. He is an eccentric developer who can create innovative solutions. A natural leader who does not compromise on quality. I learnt a lot from him during my tennure at Razrlab working under him.`,
+  },
+  {
     name: 'Sumit Kumar',
     company: 'Nium',
     designation: 'Senior Software Engineer',

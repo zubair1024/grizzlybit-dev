@@ -77,7 +77,7 @@ const Testimonials = () => {
   const copyTestimonials = [...testimonials];
   const leftTestimonials = copyTestimonials.splice(
     0,
-    Math.ceil(copyTestimonials.length / 2),
+    Math.ceil(copyTestimonials.length / 2 - 1),
   );
   const rightTestimonials = copyTestimonials;
   return (
