@@ -1,12 +1,18 @@
 import defaultTags from 'data/defaultTags';
 import { NextSeo } from 'next-seo';
 
-const CustomHead = () => {
+interface CustomHeadProps {
+  title?: string;
+  description?: string;
+}
+
+const CustomHead = (props: CustomHeadProps) => {
+  const { title, description } = props;
   return (
     <>
       <NextSeo
-        title={defaultTags.title}
-        description={defaultTags.description}
+        title={title ?? defaultTags.title}
+        description={description ?? defaultTags.description}
         canonical={defaultTags.websiteUrl}
         openGraph={{
           url: defaultTags.websiteUrl,

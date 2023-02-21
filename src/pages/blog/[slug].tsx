@@ -25,7 +25,7 @@ export default function BlogPost({ code, frontmatter }: Props) {
 
   return (
     <>
-      <CustomHead />
+      <CustomHead title={frontmatter.title} description={frontmatter.summary} />
       <Layout>
         <div className="max-w-full prose prose-md">
           <div className="bg-fixed bg-toolBelt">

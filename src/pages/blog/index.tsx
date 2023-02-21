@@ -10,10 +10,29 @@ type Props = {
   allPostsData: PostData[];
 };
 
+const gradients = [
+  'bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500',
+  'bg-gradient-to-r from-rose-700 to-pink-600',
+  'bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800',
+  'bg-gradient-to-r from-yellow-600 to-red-600',
+  'bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900',
+  'bg-gradient-to-r from-gray-700 via-gray-900 to-black',
+  'bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500',
+  'bg-gradient-to-br from-green-300 via-blue-500 to-purple-600',
+  'bg-gradient-to-r from-red-800 via-yellow-600 to-yellow-500',
+  'bg-gradient-to-r from-pink-400 to-pink-600',
+];
+
+function randomGradientBg() {
+  const num = Math.floor(Math.random() * 10);
+  return gradients[num];
+}
+
 export const PostCard = (props: { data: PostData }) => {
   const { image, title, summary, publishedAt, slug } = props.data;
   return (
     <>
+      <CustomHead title="blog" description="Selection of blog pos" />
       <div className="flex justify-center sm:mx-5">
         <div className="bg-[#0E0E0E] shadow-xl card card-compact">
           <Link href={`/blog/${slug}`}>
@@ -21,8 +40,12 @@ export const PostCard = (props: { data: PostData }) => {
               // eslint-disable-next-line @next/next/no-img-element
               <img className="rounded-t-xl" src={image} alt={title} />
             ) : (
-              <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900 w-full h-[150px] flex items-center justify-center rounded-t-xl">
-                <h3 className="text-2xl px-4 font-bold">{title}</h3>
+              <div
+                className={`${randomGradientBg()} w-full h-[150px] flex items-center justify-center rounded-t-xl`}
+              >
+                <h3 className="text-2xl px-4 font-bold tracking-tighter leading-tight">
+                  {title}
+                </h3>
               </div>
             )}
           </Link>
