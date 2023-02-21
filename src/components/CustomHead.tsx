@@ -16,8 +16,8 @@ const CustomHead = (props: CustomHeadProps) => {
         canonical={defaultTags.websiteUrl}
         openGraph={{
           url: defaultTags.websiteUrl,
-          title: defaultTags.title,
-          description: defaultTags.description,
+          title: title ?? defaultTags.title,
+          description: description ?? defaultTags.description,
           images: [
             {
               url: defaultTags.image,
