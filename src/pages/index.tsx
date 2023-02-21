@@ -11,12 +11,16 @@ import Testimonials from '@/components/Testimonials';
 import Toolbelt from '@/components/Toolbelt';
 import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
+import defaultTags from 'data/defaultTags';
 import { GetStaticProps } from 'next';
 
 export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
   return (
     <>
-      <CustomHead />
+      <CustomHead
+        title={defaultTags.title}
+        description={defaultTags.description}
+      />
       <Layout>
         <main>
           <Banner></Banner>
