@@ -32,7 +32,6 @@ export const PostCard = (props: { data: PostData }) => {
   const { image, title, summary, publishedAt, slug } = props.data;
   return (
     <>
-      <CustomHead title="blog" description="Selection of blog pos" />
       <div className="flex justify-center sm:mx-5">
         <div className="bg-[#0E0E0E] shadow-xl card card-compact">
           <Link href={`/blog/${slug}`}>
@@ -86,7 +85,10 @@ export default function BlogPage({ allPostsData }: Props) {
 
   return (
     <>
-      <CustomHead />
+      <CustomHead
+        title="blog"
+        description="Selection of blog posts by Grizzlybit.dev"
+      />
       <Layout>
         <div className="max-w-full min-h-screen">
           <div className="bg-fixed bg-toolBelt">
