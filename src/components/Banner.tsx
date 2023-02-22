@@ -2,6 +2,7 @@ import socialLinks from 'data/socialLinks';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import Statistics from './Statistics';
 
 const info = {
   name: 'Zubair Ahmed',
@@ -28,7 +29,7 @@ const info = {
 const Banner = () => {
   return (
     <>
-      <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121]">
+      <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121] pt-20">
         <motion.div
           className="z-40 card w-96 glass"
           initial={{ y: 300, opacity: 0 }}
@@ -40,7 +41,7 @@ const Banner = () => {
             },
           }}
         >
-          <div className="flex items-center justify-center w-40 mx-auto mt-10">
+          <div className="flex items-center justify-center w-40 mx-auto mt-5">
             <Image
               src="/zubair_avatar.png"
               alt="Zubair Ahmed"
@@ -84,6 +85,9 @@ const Banner = () => {
             </div>
           </div>
         </motion.div>
+        <div className="pt-10  flex items-center justify-center z-50">
+          <Statistics></Statistics>
+        </div>
       </div>
       <div className="area">
         <ul className="circles">

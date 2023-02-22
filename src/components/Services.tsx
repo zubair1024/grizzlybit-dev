@@ -146,7 +146,7 @@ const Card = (props: { data: ServicesData }) => {
 const Services = () => {
   return (
     <>
-      <div className="text-white mt-[-100px]">
+      <div className="text-white">
         {/* <h1 className="my-4 text-3xl font-bold text-center uppercase">
           What I do
         </h1> */}
@@ -155,7 +155,7 @@ const Services = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        className="p-5 lg:mx-20 rounded-xl"
+        className="px -5 lg:mx-20 rounded-xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-4">
           {servicesData.map((i) => (
