@@ -31,7 +31,7 @@ const Banner = () => {
     <>
       <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121] pt-20">
         <motion.div
-          className="z-40 card w-96 glass"
+          className="z-40 card w-96 backdrop-blur-lg border-[0.5px]"
           initial={{ y: 300, opacity: 0 }}
           whileInView={{
             y: 0,
