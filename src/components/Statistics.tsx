@@ -26,7 +26,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <div className="px-2 rounded-md shadow grid grid-flow-row grid-cols-2 md:grid-cols-4 bg-[#181818]">
+    <div className="px-2 my-10 rounded-md shadow grid grid-flow-row grid-cols-2 md:grid-cols-4 bg-[#181818]">
       <div className="stat b-0">
         <div className="stat-figure">
           <Image
