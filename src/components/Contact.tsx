@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoHome } from 'react-icons/io5';
 import { MdMail } from 'react-icons/md';
@@ -35,11 +36,16 @@ interface IContactFormValues {
   message: string;
 }
 
+async function sendMessage({ name, email, message }: IContactFormValues) {
+  return axios.post(`/api/contact`, { name, email, message });
+}
+
 const Contact = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm<IContactFormValues>();
 
   const handleModalOpen = () => {
@@ -54,7 +60,8 @@ const Contact = () => {
     message,
   }) => {
     try {
-      // await sendMessage({ name, email, message });
+      await sendMessage({ name, email, message });
+      reset();
       handleModalOpen();
     } catch (err) {
       alert('An error occurred while sending message. Please try again later');
@@ -101,6 +108,10 @@ const Contact = () => {
                   className="w-full bg-black input input-bordered"
                   {...register('email', {
                     required: 'Please enter your email.',
+                    pattern: {
+                      value: /\S+@\S+\.\S+/,
+                      message: 'Entered value does not match email format',
+                    },
                   })}
                 />
               </label>
