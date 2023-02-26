@@ -43,6 +43,12 @@ const portfolio: IPortfolioItem[] = [
     title: 'Heavy Equipment Monitoring',
   },
   {
+    img: '/portfolio/gizzly-tools.jpg',
+    url: '/portfolio/tools-grizzly',
+    desc: 'A collection of tools for developers',
+    title: 'Grizzly Tools',
+  },
+  {
     img: '/portfolio/tis.jpg',
     url: '/portfolio/tis-landing-page',
     desc: 'A website for the Thermal Insulation solution company in Dubai',
