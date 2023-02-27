@@ -38,8 +38,9 @@ const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
           ></Image>
           <div>
             <p className="pt-2 font-bold">{data.name}</p>
-            <p className="text-xs">{data.designation}</p>
-            <p className="text-sm font-semibold">{data.company}</p>
+            <p className="text-sm">{data.designation}</p>
+            <p className="text-xs font-semibold">{data.company}</p>
+            <p className="text-xs font-light">{data.place}</p>
           </div>
         </div>
         <div className="col-span-4 pt-2 pb-2">
