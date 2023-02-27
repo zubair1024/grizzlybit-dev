@@ -1,5 +1,13 @@
 const testimonials = [
   {
+    name: 'Fahd Helwani',
+    company: 'ROAMWORKS',
+    designation: 'Director of Technology',
+    place: 'Bonn, Germany',
+    imageUrl: '/testimonials/fahd.jpeg',
+    message: `I had the pleasure of working with Zubair on few projects and to me he was always someone who manages to get the job done. There is no "I can't" in Zubair's dictionary and that makes him a valuable asset to any team or company he joins. Going above and beyond to understand the problem at hand and provide a suitable solution considering all the circumstances is something that differentiates Zubair from lots of people I worked with.`,
+  },
+  {
     name: 'Rani Hazeem',
     company: 'IDP Education',
     designation: 'Senior Business Analyst',
