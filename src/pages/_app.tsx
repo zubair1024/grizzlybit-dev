@@ -7,6 +7,7 @@ import { init } from '../util/ga';
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
+    if (process.env.NODE_ENV === 'development') return;
     init('G-ZD3BELKQE2');
     hotjar.initialize(3372547, 6);
   }, []);
