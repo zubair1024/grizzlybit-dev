@@ -25,7 +25,7 @@ export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
         <main>
           <Banner></Banner>
           <Services></Services>
-          <div className="mx-auto max-w-[1200px]">
+          <div className="mx-auto max-w-[1200px] min-h-[100vh]">
             <AboutMe></AboutMe>
           </div>
           <BlogSection allPostsData={allPostsData}></BlogSection>

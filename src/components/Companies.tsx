@@ -2,7 +2,7 @@ import { companies } from 'data/companies';
 import Image from 'next/image';
 const Companies = () => {
   return (
-    <div className="py-10">
+    <div className="py-10 min-h-[100vh] flex flex-col justify-center">
       <h2 className="font-mono text-2xl tracking-wider text-center uppercase">
         Some entities I have had the pleasure of working with
       </h2>

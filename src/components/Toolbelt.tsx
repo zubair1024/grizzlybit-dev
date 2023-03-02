@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 const Toolbelt = () => {
   return (
-    <div className="bg-fixed bg-toolBelt">
-      <div className="pt-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
+    <div className="bg-fixed bg-toolBelt min-h-[100vh]">
+      <div className="pt-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg min-h-[100vh] flex flex-col  justify-center">
         <h2 className="font-mono text-2xl tracking-wider text-center uppercase">
           My tool-belt
         </h2>

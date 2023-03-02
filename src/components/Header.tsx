@@ -24,6 +24,10 @@ const landingPageMenu = [
     title: 'Blog',
     url: '/blog',
   },
+  {
+    title: 'Contact',
+    url: '/#contact-form',
+  },
 ];
 
 const otherPageMenu = [

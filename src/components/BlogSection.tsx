@@ -8,7 +8,7 @@ type Props = {
 
 const BlogSection = ({ allPostsData }: Props) => {
   return (
-    <>
+    <div className="min-h-[100vh]">
       <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
         Blog
       </h2>
@@ -22,7 +22,7 @@ const BlogSection = ({ allPostsData }: Props) => {
           <button className="btn btn-primary">See More Posts</button>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 

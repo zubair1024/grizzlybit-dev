@@ -83,7 +83,7 @@ const Testimonials = () => {
   const rightTestimonials = copyTestimonials;
   return (
     <>
-      <div className="py-10" id="my-testimonials">
+      <div className="py-10 min-h-[100vh]" id="my-testimonials">
         <h2 className="py-10 font-mono text-2xl tracking-wider text-center uppercase">
           Testimonials
         </h2>

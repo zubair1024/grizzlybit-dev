@@ -72,7 +72,7 @@ const Contact = () => {
     <>
       <div
         id="contact-form"
-        className="py-20 bg-gradient-to-t from-black to-[#212121]"
+        className="py-20 bg-gradient-to-t from-black to-[#212121] min-h-[100vh]"
       >
         <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
           Let&apos;s have a conversation

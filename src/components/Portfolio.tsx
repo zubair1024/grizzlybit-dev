@@ -36,7 +36,7 @@ export const PortfolioCardItem = (props: {
 
 const Portfolio = () => {
   return (
-    <div className="mx-10 my-10 scroll-m-20" id="my-portfolio">
+    <div className="mx-10 my-10 scroll-m-20 min-h-[100vh]" id="my-portfolio">
       <h2 className="my-10 font-mono text-2xl font-thin tracking-wider text-center capitalize">
         Some of my works
       </h2>
