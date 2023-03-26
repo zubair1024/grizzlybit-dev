@@ -16,8 +16,8 @@ export const PortfolioCardItem = (props: {
           <Image
             src={item.img}
             alt={item.title}
-            width={400}
-            height={400}
+            width={350}
+            height={350}
             className="relative"
           ></Image>
           <div className="absolute top-0 z-40 w-full h-full overflow-hidden opacity-0 hover:opacity-100 hover:bg-black">
