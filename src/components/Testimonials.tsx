@@ -1,6 +1,7 @@
 import testimonials from 'data/testimonials';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface ITestimonialData {
   name: string;
@@ -8,6 +9,7 @@ interface ITestimonialData {
   designation: string;
   place: string;
   imageUrl: string;
+  linkedIn: string;
   message: string;
 }
 
@@ -28,19 +30,32 @@ const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
       }}
     >
       <div className="py-2 px-5 m-2 bg-[#272727] rounded-lg max-w-lg shadow-xl">
-        <div className="  flex justify-start items-center space-x-2">
-          <Image
-            src={data.imageUrl}
-            height={70}
-            width={70}
-            alt="name"
-            className="mask mask-circle"
-          ></Image>
-          <div>
-            <p className="pt-2 font-bold">{data.name}</p>
-            <p className="text-sm">{data.designation}</p>
-            <p className="text-xs font-semibold">{data.company}</p>
-            <p className="text-xs font-light">{data.place}</p>
+        <div className="flex justify-between">
+          <div className="flex items-center justify-start space-x-2">
+            <Image
+              src={data.imageUrl}
+              height={70}
+              width={70}
+              alt="name"
+              className="mask mask-circle"
+            ></Image>
+
+            <div>
+              <p className="pt-2 font-bold">{data.name}</p>
+              <p className="text-sm">{data.designation}</p>
+              <p className="text-xs font-semibold">{data.company}</p>
+              <p className="text-xs font-light">{data.place}</p>
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <Link target={'_blank'} href={data.linkedIn}>
+              <Image
+                src="social/linkedin.svg"
+                width={24}
+                height={24}
+                alt="linkedin"
+              ></Image>
+            </Link>
           </div>
         </div>
         <div className="col-span-4 pt-2 pb-2">
