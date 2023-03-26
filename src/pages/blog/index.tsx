@@ -42,27 +42,27 @@ export const PostCard = (props: { data: PostData }) => {
               <div
                 className={`${randomGradientBg()} w-full h-[150px] flex items-center justify-center rounded-t-xl`}
               >
-                <h3 className="text-2xl px-4 font-bold tracking-tighter leading-tight">
+                <h3 className="px-4 text-2xl font-bold leading-tight tracking-tighter">
                   {title}
                 </h3>
               </div>
             )}
-          </Link>
 
-          <div className="card-body">
-            <p className="text-right text-md">{publishedAt}</p>
-            <Link href={`/blog/${slug}`}>
-              <h2 className="text-md card-title">{title}</h2>
-            </Link>
-            <p className="text-justify ">{summary}</p>
-            <div className="justify-end card-actions">
+            <div className="card-body">
+              <p className="text-right text-md">{publishedAt}</p>
               <Link href={`/blog/${slug}`}>
-                <button className="mt-5 btn-sm btn btn-primary">
-                  Read more
-                </button>
+                <h2 className="text-md card-title">{title}</h2>
               </Link>
+              <p className="text-justify ">{summary}</p>
+              <div className="justify-end card-actions">
+                <Link href={`/blog/${slug}`}>
+                  <button className="mt-5 btn-sm btn btn-primary">
+                    Read more
+                  </button>
+                </Link>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </>
