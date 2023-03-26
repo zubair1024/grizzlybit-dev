@@ -49,6 +49,12 @@ const portfolio: IPortfolioItem[] = [
     title: 'Heavy Equipment Monitoring',
   },
   {
+    img: '/portfolio/worldlypins.jpg',
+    url: '/portfolio/worldly-pins',
+    desc: "A traveler's best friend",
+    title: 'Wordly Pins',
+  },
+  {
     img: '/portfolio/gizzly-tools.jpg',
     url: '/portfolio/tools-grizzly',
     desc: 'A collection of tools for developers',
