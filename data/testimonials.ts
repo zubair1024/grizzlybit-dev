@@ -8,6 +8,15 @@ const testimonials = [
     message: `I had the pleasure of working with Zubair on few projects and to me he was always someone who manages to get the job done. There is no "I can't" in Zubair's dictionary and that makes him a valuable asset to any team or company he joins. Going above and beyond to understand the problem at hand and provide a suitable solution considering all the circumstances is something that differentiates Zubair from lots of people I worked with.`,
   },
   {
+    name: 'Rizky Farhan',
+    company: 'Pure Storage',
+    designation: 'Engineering Manager',
+    place: 'Prague, Czechia',
+    imageUrl: '/testimonials/rizky.jpeg',
+    message: `The first impression I had of Zubair was that he "has the potential to change the world for the better". His strong can-do attitude can be overwhelming and borderline superhuman. He is an expert in his craft; a master in architecting software solutions, be that in JavaScript or anything he has his hands on.
+    His positive attitude at work is contagious - it encourages others to have the same.`,
+  },
+  {
     name: 'Rani Hazeem',
     company: 'IDP Education',
     designation: 'Senior Business Analyst',
