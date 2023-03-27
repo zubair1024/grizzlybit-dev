@@ -31,7 +31,10 @@ const Banner = () => {
     <>
       <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121] pt-20">
         <motion.div
-          className="z-40 card w-96 backdrop-blur-lg border-[0.5px]"
+          className="z-40 card w-96 backdrop-blur-lg"
+          style={{
+            boxShadow: 'white 0px 0px 2px 0px',
+          }}
           initial={{ y: 300, opacity: 0 }}
           whileInView={{
             y: 0,
@@ -85,7 +88,7 @@ const Banner = () => {
             </div>
           </div>
         </motion.div>
-        <div className="pt-10  flex items-center justify-center z-50">
+        <div className="z-50 flex items-center justify-center pt-10">
           <Statistics></Statistics>
         </div>
       </div>

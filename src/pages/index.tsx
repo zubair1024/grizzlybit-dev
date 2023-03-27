@@ -13,8 +13,9 @@ import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
 import defaultTags from 'data/defaultTags';
 import { GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
 
-export default function Home({ allPostsData }: { allPostsData: PostData[] }) {
+function Home({ allPostsData }: { allPostsData: PostData[] }) {
   return (
     <>
       <CustomHead
@@ -48,3 +49,5 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   };
 };
+
+export default dynamic(() => Promise.resolve(Home), { ssr: false });
