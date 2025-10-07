@@ -1,6 +1,18 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /api/*
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /api/*
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /api/*
+Crawl-delay: 1
 
 # Host
 Host: https://www.grizzlybit.dev

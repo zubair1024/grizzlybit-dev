@@ -20,14 +20,19 @@ const BlogPostingSchema = ({
   slug,
   author = { name: 'Zubair Ahmed', url: 'https://www.grizzlybit.dev' },
 }: BlogPostingSchemaProps) => {
+  // Handle image URL - check if it exists and format it properly
+  const imageUrl = image
+    ? image.startsWith('http')
+      ? image
+      : `https://www.grizzlybit.dev${image}`
+    : 'https://www.grizzlybit.dev/grizzlybit-logo-image.png'; // Default fallback
+
   const blogPostingSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: title,
     description: description,
-    image: image.startsWith('http')
-      ? image
-      : `https://www.grizzlybit.dev${image}`,
+    image: imageUrl,
     datePublished: publishedAt,
     dateModified: publishedAt,
     author: {
