@@ -30,13 +30,6 @@ const landingPageMenu = [
   },
 ];
 
-const otherPageMenu = [
-  {
-    title: 'Home',
-    url: '/blog',
-  },
-];
-
 const Header = () => {
   const [isLandingPage, setIsLandingPage] = useState(false);
 

@@ -268,9 +268,23 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
 };
 
 /**
+ * Structured data types
+ */
+interface StructuredDataInput {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  publishedAt?: string;
+  modifiedAt?: string;
+  author?: string;
+  [key: string]: string | undefined;
+}
+
+/**
  * Generate structured data (JSON-LD) for better SEO
  */
-export function generateStructuredData(type: 'website' | 'article' | 'portfolio', data: any) {
+export function generateStructuredData(type: 'website' | 'article' | 'portfolio', data: StructuredDataInput) {
   const baseUrl = process.env.SITE_URL || 'https://www.grizzlybit.dev';
 
   const commonData = {

@@ -251,7 +251,12 @@ export function WebVitalsThresholdExample(metric: string, value: number) {
  */
 export const customSitemapExample = {
   additionalPaths: async (config: any) => {
-    const result = [];
+    const result: Array<{
+      loc: string;
+      changefreq: string;
+      priority: number;
+      lastmod: string;
+    }> = [];
 
     // Example: Add dynamic portfolio items
     const portfolioItems = [

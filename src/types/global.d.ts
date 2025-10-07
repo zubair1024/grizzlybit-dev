@@ -6,11 +6,18 @@
  * Google Analytics gtag function
  * Used for tracking events and Web Vitals
  */
+interface GtagConfig {
+  value?: number;
+  event_label?: string;
+  non_interaction?: boolean;
+  [key: string]: string | number | boolean | undefined;
+}
+
 interface Window {
   gtag?: (
     command: 'config' | 'event' | 'set',
     targetId: string,
-    config?: Record<string, any>
+    config?: GtagConfig
   ) => void;
 }
 
@@ -22,7 +29,7 @@ declare global {
     gtag?: (
       command: 'config' | 'event' | 'set',
       targetId: string,
-      config?: Record<string, any>
+      config?: GtagConfig
     ) => void;
   }
 }
