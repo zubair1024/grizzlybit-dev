@@ -16,7 +16,8 @@ const Toolbelt = () => {
                   src={i.img}
                   height={100}
                   width={100}
-                  alt={i.name}
+                  alt={`${i.name} technology logo`}
+                  loading="lazy"
                 ></Image>
               </div>
             );

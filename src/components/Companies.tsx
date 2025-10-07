@@ -10,7 +10,13 @@ const Companies = () => {
         {companies.map((i) => {
           return (
             <div key={i.name} className="flex items-center justify-center">
-              <Image src={i.img} height={200} width={200} alt={i.name}></Image>
+              <Image
+                src={i.img}
+                height={200}
+                width={200}
+                alt={`${i.name} company logo`}
+                loading="lazy"
+              ></Image>
             </div>
           );
         })}

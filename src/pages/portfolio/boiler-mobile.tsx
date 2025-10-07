@@ -1,17 +1,39 @@
+import BreadcrumbListSchema from '@/components/BreadcrumbListSchema';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import OtherProjects from '@/components/OtherProjects';
+import {
+  getPortfolioCanonicalUrl,
+  getPortfolioMetadata,
+} from '@/data/portfolioMetadata';
 import portfolio from 'data/portfolio';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const title = 'Smart Boiler Mobile';
 const otherProjects = portfolio.filter((i) => i.title !== title);
+const metadata = getPortfolioMetadata('boiler-mobile');
 
 const SmartBoilerMobilePortfolioScreen = () => {
   return (
     <>
-      <CustomHead />
+      <CustomHead
+        title={metadata.title}
+        description={metadata.description}
+        canonical={getPortfolioCanonicalUrl(metadata.slug)}
+        ogImage={metadata.ogImage}
+        ogType="article"
+      />
+      <BreadcrumbListSchema
+        items={[
+          { name: 'Home', url: 'https://www.grizzlybit.dev' },
+          { name: 'Portfolio', url: 'https://www.grizzlybit.dev/#my-portfolio' },
+          {
+            name: title,
+            url: getPortfolioCanonicalUrl(metadata.slug),
+          },
+        ]}
+      />
       <Layout>
         <div className="max-w-full min-h-screen prose prose-2xl">
           <div className="bg-fixed bg-toolBelt">

@@ -15,10 +15,11 @@ export const PortfolioCardItem = (props: {
           <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
           <Image
             src={item.img}
-            alt={item.title}
+            alt={`${item.title} - ${item.desc}`}
             width={350}
             height={350}
             className="relative"
+            loading="lazy"
           ></Image>
           <div className="absolute top-0 z-40 w-full h-full overflow-hidden opacity-0 hover:opacity-100 hover:bg-black">
             <div className="flex flex-col items-center justify-center h-full font-bold text-white">

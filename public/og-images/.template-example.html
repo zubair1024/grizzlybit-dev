@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200, height=630">
+  <title>OG Image Template</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px;
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: #f97316;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    .brand {
+      font-size: 32px;
+      font-weight: 700;
+      color: #f9fafb;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 0;
+    }
+
+    .title {
+      font-size: 64px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #f9fafb;
+      max-width: 1000px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .subtitle {
+      font-size: 32px;
+      font-weight: 400;
+      color: #9ca3af;
+      max-width: 900px;
+    }
+
+    .category {
+      display: inline-block;
+      background: #10b981;
+      color: #1f2937;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #374151;
+      padding-top: 30px;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .author-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .author-name {
+      font-size: 24px;
+      font-weight: 600;
+      color: #f9fafb;
+    }
+
+    .author-role {
+      font-size: 18px;
+      color: #9ca3af;
+    }
+
+    .website {
+      font-size: 24px;
+      color: #f97316;
+      font-weight: 600;
+    }
+
+    /* Decorative elements */
+    .decoration {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -200px;
+      right: -200px;
+      z-index: -1;
+    }
+
+    .decoration-2 {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -150px;
+      left: -150px;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="decoration"></div>
+  <div class="decoration-2"></div>
+
+  <div class="header">
+    <div class="logo">GB</div>
+    <div class="brand">Grizzlybit</div>
+  </div>
+
+  <div class="content">
+    <div class="category">Tutorial</div>
+    <h1 class="title">Building a Modern PWA with Next.js and TypeScript</h1>
+    <p class="subtitle">A complete guide to Progressive Web Apps</p>
+  </div>
+
+  <div class="footer">
+    <div class="author">
+      <div class="author-avatar">ZA</div>
+      <div class="author-info">
+        <div class="author-name">Zubair Ahmed</div>
+        <div class="author-role">CTO at RAZRLAB</div>
+      </div>
+    </div>
+    <div class="website">grizzlybit.dev</div>
+  </div>
+</body>
+</html>
+
+<!--
+  USAGE INSTRUCTIONS:
+
+  This HTML template can be used to generate OG images using:
+
+  1. Puppeteer/Playwright (Automated):
+     - Load this HTML with custom content
+     - Take a screenshot at 1200x630
+     - Save as PNG
+
+  2. Browser Screenshot (Manual):
+     - Open this file in a browser
+     - Set browser window to 1200x630
+     - Take a screenshot
+     - Crop if necessary
+
+  3. Screenshot Tools:
+     - Use tools like "Screenshot Webpage" extensions
+     - Set precise dimensions before capturing
+
+  CUSTOMIZATION:
+  - Replace "Building a Modern PWA..." with your post title
+  - Update category badge text (Tutorial, Guide, Case Study, etc.)
+  - Modify colors if needed (but stick to brand colors)
+  - Add/remove subtitle as needed
+
+  AUTOMATION SCRIPT EXAMPLE (Node.js):
+
+  const puppeteer = require('puppeteer');
+
+  async function generateOGImage(title, category, slug) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    // Set viewport to exact OG image dimensions
+    await page.setViewport({ width: 1200, height: 630 });
+
+    // Load template and inject content
+    await page.goto(`file://${__dirname}/.template-example.html`);
+    await page.evaluate((title, category) => {
+      document.querySelector('.title').textContent = title;
+      document.querySelector('.category').textContent = category;
+    }, title, category);
+
+    // Take screenshot
+    await page.screenshot({
+      path: `public/og-images/${slug}.png`,
+      type: 'png'
+    });
+
+    await browser.close();
+  }
+
+  // Usage:
+  // generateOGImage('My Post Title', 'Tutorial', 'my-post-slug');
+-->

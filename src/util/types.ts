@@ -5,4 +5,8 @@ export type PostData = {
   image: string;
   showOnHome?: boolean;
   slug: string;
+  keywords?: string[];
+  author?: string;
+  lastModified?: string;
+  readingTime?: string;
 };

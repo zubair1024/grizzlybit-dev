@@ -36,8 +36,9 @@ const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
               src={data.imageUrl}
               height={70}
               width={70}
-              alt="name"
+              alt={`${data.name} - ${data.designation} at ${data.company}`}
               className="mask mask-circle"
+              loading="lazy"
             ></Image>
 
             <div>
@@ -53,7 +54,7 @@ const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
                 src="social/linkedin.svg"
                 width={24}
                 height={24}
-                alt="linkedin"
+                alt={`View ${data.name}'s LinkedIn profile`}
               ></Image>
             </Link>
           </div>
@@ -106,17 +107,18 @@ const Testimonials = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          className="flex flex-wrap items-start justify-center"
         >
-          <div className="left-testimonials">
-            {leftTestimonials.map((item) => {
-              return <TestimonialCard key={item.name} data={item} />;
-            })}
-          </div>
-          <div className="right-testimonials">
-            {rightTestimonials.map((item) => {
-              return <TestimonialCard key={item.name} data={item} />;
-            })}
+          <div className="flex flex-wrap items-start justify-center">
+            <div className="left-testimonials">
+              {leftTestimonials.map((item) => {
+                return <TestimonialCard key={item.name} data={item} />;
+              })}
+            </div>
+            <div className="right-testimonials">
+              {rightTestimonials.map((item) => {
+                return <TestimonialCard key={item.name} data={item} />;
+              })}
+            </div>
           </div>
         </motion.div>
       </div>

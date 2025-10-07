@@ -54,15 +54,15 @@ const AboutMe = () => {
             variants={cardVariants}
             initial="offscreen"
             whileInView="onscreen"
-            className="right-0 p-5 rounded-lg"
           >
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center right-0 p-5 rounded-lg">
               <Image
                 src="/zubair_2.jpg"
                 width={400}
                 height={500}
-                alt="Zubair"
+                alt="Zubair Ahmed - Software Engineer profile photo"
                 className="rounded-lg"
+                loading="lazy"
               ></Image>
             </div>
           </motion.div>

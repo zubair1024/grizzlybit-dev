@@ -31,7 +31,6 @@ const Banner = () => {
     <>
       <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121] pt-20">
         <motion.div
-          className="z-40 card w-96 backdrop-blur-lg"
           style={{
             boxShadow: 'white 0px 0px 2px 0px',
           }}
@@ -44,12 +43,14 @@ const Banner = () => {
             },
           }}
         >
+          <div className="z-40 card w-96 backdrop-blur-lg">
           <div className="flex items-center justify-center w-40 mx-auto mt-5">
             <Image
               src="/zubair_avatar.png"
-              alt="Zubair Ahmed"
+              alt="Zubair Ahmed - Software Engineer and Entrepreneur"
               width="200"
               height="200"
+              priority
             />
           </div>
           <div className="text-center card-body">
@@ -78,7 +79,7 @@ const Banner = () => {
                           src={i.img}
                           height={32}
                           width={32}
-                          alt={i.name}
+                          alt={`${i.name} social media profile`}
                         ></Image>
                       </motion.div>
                     </Link>
@@ -86,6 +87,7 @@ const Banner = () => {
                 );
               })}
             </div>
+          </div>
           </div>
         </motion.div>
         <div className="z-50 flex items-center justify-center pt-10">

@@ -14,7 +14,8 @@ const BadgesSection = () => {
                   src={item.imageUrl}
                   height={50}
                   width={50}
-                  alt={item.title}
+                  alt={`${item.title} certification badge`}
+                  loading="lazy"
                 ></Image>
                 <div className="text-[12px] py-2 tracking-tight leading-tight">
                   {item.title}

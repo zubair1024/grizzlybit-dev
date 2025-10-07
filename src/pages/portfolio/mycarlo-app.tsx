@@ -1,19 +1,42 @@
+import BreadcrumbListSchema from '@/components/BreadcrumbListSchema';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import OtherProjects from '@/components/OtherProjects';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
+import {
+  getPortfolioCanonicalUrl,
+  getPortfolioMetadata,
+} from '@/data/portfolioMetadata';
 import portfolio from 'data/portfolio';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const title = 'My247';
+const title = 'MyCarlo';
 const otherProjects = portfolio.filter((i) => i.title !== title);
+const metadata = getPortfolioMetadata('mycarlo-app');
 
 const MyCarloAppScreen = () => {
   return (
     <>
-      <CustomHead />
+      <CustomHead
+        title={metadata.title}
+        description={metadata.description}
+        canonical={getPortfolioCanonicalUrl(metadata.slug)}
+        ogImage={metadata.ogImage}
+        ogType="article"
+        keywords={metadata.keywords}
+      />
+      <BreadcrumbListSchema
+        items={[
+          { name: 'Home', url: 'https://www.grizzlybit.dev' },
+          { name: 'Portfolio', url: 'https://www.grizzlybit.dev/#my-portfolio' },
+          {
+            name: title,
+            url: getPortfolioCanonicalUrl(metadata.slug),
+          },
+        ]}
+      />
       <Layout>
         <div className="max-w-full min-h-screen prose prose-2xl">
           <div className="bg-fixed bg-toolBelt">

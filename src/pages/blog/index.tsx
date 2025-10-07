@@ -2,6 +2,7 @@ import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import { PostData } from '@/util/types';
 import { GetStaticProps } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { getBlogPostData } from '../../util/posts';
@@ -29,15 +30,21 @@ function randomGradientBg() {
 }
 
 export const PostCard = (props: { data: PostData }) => {
-  const { image, title, summary, publishedAt, slug } = props.data;
+  const { image, title, summary, publishedAt, slug, readingTime } = props.data;
   return (
     <>
       <div className="flex justify-center sm:mx-5">
         <div className="bg-[#0E0E0E] shadow-xl card card-compact">
           <Link href={`/blog/${slug}`}>
             {image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img className="rounded-t-xl" src={image} alt={title} />
+              <Image
+                className="rounded-t-xl"
+                src={image}
+                alt={`Featured image for ${title}`}
+                width={400}
+                height={250}
+                style={{ objectFit: 'cover' }}
+              />
             ) : (
               <div
                 className={`${randomGradientBg()} w-full h-[150px] flex items-center justify-center rounded-t-xl`}
@@ -49,7 +56,10 @@ export const PostCard = (props: { data: PostData }) => {
             )}
 
             <div className="card-body">
-              <p className="text-right text-md">{publishedAt}</p>
+              <p className="text-right text-md">
+                {publishedAt}
+                {readingTime && <span> • {readingTime}</span>}
+              </p>
               <Link href={`/blog/${slug}`}>
                 <h2 className="text-md card-title">{title}</h2>
               </Link>
@@ -76,10 +86,24 @@ export default function BlogPage({ allPostsData }: Props) {
   const handleSearchClick = (text: string) => {
     if (text === '' || text === null) return setPosts(allPosts);
 
-    const filteredPosts = allPosts.filter(
-      (i) => i.title.toLowerCase().indexOf(text.toLowerCase()) > -1,
-    );
-    console.log(filteredPosts);
+    const searchTerm = text.toLowerCase();
+    const filteredPosts = allPosts.filter((post) => {
+      // Search in title
+      const titleMatch = post.title.toLowerCase().includes(searchTerm);
+
+      // Search in summary
+      const summaryMatch = post.summary.toLowerCase().includes(searchTerm);
+
+      // Search in keywords
+      const keywordsMatch = post.keywords
+        ? post.keywords.some((keyword) =>
+            keyword.toLowerCase().includes(searchTerm),
+          )
+        : false;
+
+      return titleMatch || summaryMatch || keywordsMatch;
+    });
+
     setPosts(filteredPosts);
   };
 
@@ -88,6 +112,7 @@ export default function BlogPage({ allPostsData }: Props) {
       <CustomHead
         title="blog"
         description="Selection of blog posts by Grizzlybit.dev"
+        canonical="https://www.grizzlybit.dev/blog"
       />
       <Layout>
         <div className="max-w-full min-h-screen">

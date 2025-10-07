@@ -1,19 +1,28 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Grizzlybit - Zubair Ahmed's Portfolio",
+  "short_name": "Grizzlybit",
+  "description": "Portfolio and blog of Zubair Ahmed, CTO at RAZRLAB. Software engineering, Node.js, React, and full-stack development.",
+  "categories": ["business", "education", "technology"],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "dir": "ltr",
+  "lang": "en-US",
+  "theme_color": "#1f2937",
+  "background_color": "#1f2937",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/android-chrome-256x256.png",
       "sizes": "256x256",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  ]
 }

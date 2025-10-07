@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 type ServicesData = {
   title: string;
@@ -95,21 +96,23 @@ const containerVariants = {
 
 const Card = (props: { data: ServicesData }) => {
   return (
-    <motion.div
-      variants={dropUpVariants}
-      className="flex flex-col items-center justify-center w-full py-10 text-white border border-gray-600 shadow-lg bg-base-300 font-extralight"
-    >
-      <motion.img
-        src={props.data.img}
-        alt="Shoes"
-        className="w-24"
-        whileHover={{
-          rotate: [-1, 10, 0],
-          scale: 1.1,
-        }}
-      />
+    <motion.div variants={dropUpVariants}>
+      <div className="flex flex-col items-center justify-center w-full py-10 text-white border border-gray-600 shadow-lg bg-base-300 font-extralight">
+        <motion.div
+          whileHover={{
+            rotate: [-1, 10, 0],
+            scale: 1.1,
+          }}
+        >
+          <Image
+            src={props.data.img}
+            alt={`${props.data.title} service icon`}
+            width={96}
+            height={96}
+          />
+        </motion.div>
 
-      <div className="card-body">
+        <div className="card-body">
         <div>
           <h2 className="font-mono text-xl text-center">{props.data.title}</h2>
         </div>
@@ -138,6 +141,7 @@ const Card = (props: { data: ServicesData }) => {
             ))}
           </ul>
         </div> */}
+        </div>
       </div>
     </motion.div>
   );
@@ -155,12 +159,13 @@ const Services = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        className="px -5 lg:mx-20 rounded-xl"
       >
-        <div className="grid grid-cols-1 md:grid-cols-4">
-          {servicesData.map((i) => (
-            <Card key={i.title} data={i}></Card>
-          ))}
+        <div className="px -5 lg:mx-20 rounded-xl">
+          <div className="grid grid-cols-1 md:grid-cols-4">
+            {servicesData.map((i) => (
+              <Card key={i.title} data={i}></Card>
+            ))}
+          </div>
         </div>
       </motion.div>
     </>

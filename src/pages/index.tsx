@@ -9,11 +9,14 @@ import Portfolio from '@/components/Portfolio';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
 import Toolbelt from '@/components/Toolbelt';
+import PersonSchema from '@/components/schemas/PersonSchema';
+import WebSiteSchema from '@/components/schemas/WebSiteSchema';
+import ReviewSchema from '@/components/schemas/ReviewSchema';
 import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
 import defaultTags from 'data/defaultTags';
+import testimonials from 'data/testimonials';
 import { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
 
 function Home({ allPostsData }: { allPostsData: PostData[] }) {
   return (
@@ -21,7 +24,11 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
       <CustomHead
         title={defaultTags.title}
         description={defaultTags.description}
+        canonical="https://www.grizzlybit.dev/"
       />
+      <PersonSchema />
+      <WebSiteSchema />
+      <ReviewSchema reviews={testimonials} />
       <Layout>
         <main>
           <Banner></Banner>
@@ -50,4 +57,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default dynamic(() => Promise.resolve(Home), { ssr: false });
+export default Home;

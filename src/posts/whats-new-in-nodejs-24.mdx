@@ -1,0 +1,482 @@
+---
+title: "What's New in Node.js 24 (And How to Upgrade Your Codebase Smoothly) 🚀"
+publishedAt: '2025-10-07'
+summary: 'Node.js 24 is here with game-changing features like V8 13.6, Float16Array, explicit resource management, WebAssembly Memory64, and npm 11. Learn what's new, breaking changes to watch for, and how to upgrade your codebase smoothly to Node.js 24 LTS.'
+image: '/blog/whats-new-in-nodejs-24/cover.png'
+keywords: ['nodejs', 'nodejs 24', 'v8 engine', 'javascript', 'performance', 'upgrade', 'migration', 'lts', 'webassembly', 'npm 11', 'float16array', 'resource management', 'undici', 'typescript']
+author: 'Zubair Ahmed'
+showOnHome: true
+---
+
+![What's New in Node.js 24](/blog/whats-new-in-nodejs-24/cover.png)
+
+Node.js 24 officially launched on **May 6, 2025**, bringing a massive set of new features, performance improvements, and modern JavaScript capabilities. Set to enter LTS (Long-Term Support) in **October 2025** with support until **April 2028**, this release is packed with upgrades that will transform how you build server-side applications.
+
+Whether you're building microservices, APIs, or full-stack applications, Node.js 24 has something for everyone. Let's dive into what's new and how you can upgrade smoothly!
+
+## 🔥 Major Features in Node.js 24
+
+### V8 Engine 13.6 Upgrade
+
+Node.js 24 ships with **V8 13.6**, bringing significant performance improvements and modern JavaScript features. This upgrade alone makes Node.js 24 worth the upgrade, with faster execution times and reduced memory consumption across the board.
+
+### Float16Array: Memory-Efficient Data Processing
+
+One of the standout features is the new **Float16Array** typed array, which provides 16-bit floating-point numbers. This is a game-changer for:
+
+- **Machine learning models** - Reduced memory footprint for neural networks
+- **Graphics processing** - Efficient handling of image data
+- **Scientific computing** - Better performance for numerical computations
+- **Audio processing** - Efficient handling of audio samples
+
+```javascript
+// Using Float16Array for memory-efficient ML model weights
+const modelWeights = new Float16Array(1000000);
+
+// Save 50% memory compared to Float32Array
+console.log(modelWeights.byteLength); // 2MB instead of 4MB
+
+// Perfect for graphics processing
+const pixelData = new Float16Array([0.5, 0.75, 1.0, 0.25]);
+```
+
+The memory savings are substantial - Float16Array uses **half the memory** of Float32Array while maintaining reasonable precision for most use cases.
+
+### Explicit Resource Management with `using`
+
+Node.js 24 introduces **explicit resource management** through the new `using` statement, providing automatic cleanup of resources like file handles, database connections, and network sockets.
+
+```javascript
+import { open } from 'fs/promises';
+
+async function processFile() {
+  // Automatic cleanup when scope exits
+  using file = await open('data.txt');
+
+  const content = await file.readFile('utf8');
+  console.log(content);
+
+  // File is automatically closed here, even if an error occurs
+}
+
+// Database connection example
+async function queryDatabase() {
+  using connection = await connectToDatabase();
+
+  const results = await connection.query('SELECT * FROM users');
+
+  // Connection is automatically closed, no .finally() needed!
+  return results;
+}
+```
+
+This eliminates the need for try-finally blocks and ensures resources are properly cleaned up, even when exceptions occur. No more leaked file descriptors or hanging database connections!
+
+### WebAssembly Memory64 Support
+
+Node.js 24 adds support for **64-bit memory addressing (Memory64)** in WebAssembly, breaking through the previous 4GB memory limit. This is crucial for:
+
+- Large-scale data processing
+- Scientific simulations
+- Video/image processing pipelines
+- Database engines running in WebAssembly
+
+```javascript
+// Now you can work with WebAssembly modules that require >4GB memory
+const wasmModule = await WebAssembly.instantiate(wasmBytes, {
+  env: {
+    memory: new WebAssembly.Memory({
+      initial: 1024,
+      maximum: 65536, // Much larger than before
+      index: 'i64' // 64-bit addressing
+    })
+  }
+});
+```
+
+### RegExp.escape() - Finally!
+
+The new **RegExp.escape()** method safely escapes special characters in strings for use in regular expressions. No more manually escaping regex characters!
+
+```javascript
+// Before Node.js 24 - manual escaping
+const userInput = 'price: $50 (50% off)';
+const escaped = userInput.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// Node.js 24 - built-in escaping
+const safePattern = RegExp.escape(userInput);
+const regex = new RegExp(safePattern);
+
+// Perfect for dynamic search patterns
+function searchInText(text, userQuery) {
+  const safeQuery = RegExp.escape(userQuery);
+  const pattern = new RegExp(safeQuery, 'gi');
+  return text.match(pattern);
+}
+```
+
+### Global URLPattern API
+
+The **URLPattern** constructor is now available globally, eliminating the need for explicit imports. This makes URL routing and pattern matching much more convenient:
+
+```javascript
+// No imports needed!
+const pattern = new URLPattern({ pathname: '/users/:id' });
+
+const match = pattern.exec('https://api.example.com/users/123');
+console.log(match.pathname.groups.id); // "123"
+
+// Perfect for custom routing logic
+const routes = [
+  new URLPattern({ pathname: '/api/users/:userId/posts/:postId' }),
+  new URLPattern({ pathname: '/api/products/:category/:id' }),
+];
+
+function findRoute(url) {
+  for (const pattern of routes) {
+    const match = pattern.exec(url);
+    if (match) return match;
+  }
+}
+```
+
+### Improved Test Runner
+
+The built-in test runner now **intelligently manages test lifecycles** without requiring explicit await statements for subtests. This makes writing tests more intuitive:
+
+```javascript
+import { test } from 'node:test';
+import assert from 'node:assert';
+
+test('user authentication', async (t) => {
+  // No need to await subtests anymore!
+  t.test('should login with valid credentials', () => {
+    const result = login('user@example.com', 'password');
+    assert.ok(result.success);
+  });
+
+  t.test('should reject invalid credentials', () => {
+    const result = login('user@example.com', 'wrong');
+    assert.strictEqual(result.success, false);
+  });
+
+  // Test runner handles lifecycle automatically
+});
+```
+
+## 📦 Ecosystem Updates
+
+### npm 11
+
+Node.js 24 ships with **npm 11**, bringing:
+
+- **Enhanced performance** - Faster installs and updates
+- **Improved security features** - Better vulnerability scanning
+- **Better compatibility** - Support for modern JavaScript packages
+- **Cleaner output** - More readable install logs
+
+```bash
+# npm 11 is blazing fast
+npm install express
+# Noticeably faster than npm 10
+```
+
+### Undici 7
+
+Node.js 24 includes **Undici 7**, the high-performance HTTP client that powers `fetch()`:
+
+- Better performance than the previous version
+- Support for HTTP/2 and HTTP/3
+- Improved connection pooling
+- Better error handling
+
+```javascript
+// Using the built-in fetch powered by Undici 7
+const response = await fetch('https://api.example.com/data', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'John' })
+});
+
+const data = await response.json();
+```
+
+## ⚠️ Breaking Changes and Deprecations
+
+### url.parse() Runtime Deprecation
+
+The legacy `url.parse()` API is now deprecated. Use the **WHATWG URL API** instead:
+
+```javascript
+// ❌ Deprecated - url.parse()
+const url = require('url');
+const parsed = url.parse('https://example.com/path?query=value');
+
+// ✅ Use WHATWG URL API
+const urlObject = new URL('https://example.com/path?query=value');
+console.log(urlObject.pathname); // "/path"
+console.log(urlObject.searchParams.get('query')); // "value"
+```
+
+### tls.createSecurePair() Removed
+
+The deprecated `tls.createSecurePair()` method has been removed. Use `tls.TLSSocket` instead:
+
+```javascript
+// ❌ Removed - tls.createSecurePair()
+const pair = tls.createSecurePair(credentials);
+
+// ✅ Use TLSSocket
+const socket = new tls.TLSSocket(tcpSocket, {
+  isServer: false,
+  server: null,
+  requestCert: true,
+  rejectUnauthorized: true
+});
+```
+
+## 🚀 How to Upgrade to Node.js 24 Smoothly
+
+### Step 1: Check Your Current Version
+
+```bash
+node --version
+# v20.x.x or earlier
+```
+
+### Step 2: Install Node.js 24
+
+Using **nvm** (recommended):
+
+```bash
+# Install nvm if you haven't already
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Install Node.js 24
+nvm install 24
+
+# Set it as default
+nvm alias default 24
+
+# Verify installation
+node --version
+# v24.0.0
+```
+
+Using official installer:
+
+```bash
+# macOS with Homebrew
+brew update
+brew upgrade node
+
+# Ubuntu/Debian
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Windows - Download from nodejs.org
+```
+
+### Step 3: Update Your package.json
+
+Update the engines field to specify Node.js 24:
+
+```json
+{
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
+  }
+}
+```
+
+### Step 4: Update Dependencies
+
+```bash
+# Remove old node_modules and lock files
+rm -rf node_modules package-lock.json
+
+# Clean npm cache
+npm cache clean --force
+
+# Reinstall dependencies
+npm install
+
+# Check for outdated packages
+npm outdated
+
+# Update packages
+npm update
+```
+
+### Step 5: Run Your Tests
+
+```bash
+# Run your test suite
+npm test
+
+# Check for deprecation warnings
+node --trace-warnings app.js
+```
+
+### Step 6: Address Deprecation Warnings
+
+Search your codebase for deprecated APIs:
+
+```bash
+# Find url.parse() usage
+grep -r "url.parse" src/
+
+# Find tls.createSecurePair() usage
+grep -r "createSecurePair" src/
+```
+
+### Step 7: Update TypeScript Types (if using TypeScript)
+
+```bash
+# Update @types/node
+npm install --save-dev @types/node@24
+
+# Update TypeScript if needed
+npm install --save-dev typescript@latest
+```
+
+Update your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  }
+}
+```
+
+### Step 8: Update CI/CD Pipelines
+
+Update your GitHub Actions, GitLab CI, or other CI/CD configurations:
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [24.x]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm test
+```
+
+### Step 9: Update Docker Images
+
+```dockerfile
+# Use Node.js 24 Alpine for smaller images
+FROM node:24-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+
+CMD ["node", "app.js"]
+```
+
+### Step 10: Monitor in Production
+
+Deploy to staging first and monitor for:
+
+- Performance improvements
+- Memory usage changes
+- Deprecation warnings in logs
+- Any unexpected behavior
+
+```javascript
+// Add monitoring for Node.js version
+console.log('Node.js version:', process.version);
+console.log('V8 version:', process.versions.v8);
+
+// Monitor memory usage
+setInterval(() => {
+  const usage = process.memoryUsage();
+  console.log('Memory usage:', {
+    heapUsed: `${Math.round(usage.heapUsed / 1024 / 1024)}MB`,
+    heapTotal: `${Math.round(usage.heapTotal / 1024 / 1024)}MB`,
+  });
+}, 60000);
+```
+
+## 🎯 Quick Migration Checklist
+
+- [ ] Install Node.js 24 using nvm or official installer
+- [ ] Update `package.json` engines field
+- [ ] Remove `node_modules` and reinstall dependencies
+- [ ] Replace `url.parse()` with WHATWG URL API
+- [ ] Replace `tls.createSecurePair()` with `tls.TLSSocket`
+- [ ] Update TypeScript types to `@types/node@24`
+- [ ] Run full test suite
+- [ ] Update CI/CD pipelines to Node.js 24
+- [ ] Update Docker images to `node:24`
+- [ ] Deploy to staging and monitor
+- [ ] Gradually roll out to production
+
+## 🌟 Performance Tips for Node.js 24
+
+### Leverage Float16Array for ML Workloads
+
+```javascript
+// Before: Using Float32Array
+const weights = new Float32Array(10000000); // 40MB
+
+// After: Using Float16Array
+const weights = new Float16Array(10000000); // 20MB (50% savings!)
+```
+
+### Use Explicit Resource Management
+
+```javascript
+// Cleaner, safer file operations
+async function processLargeFile(filename) {
+  using file = await open(filename);
+  using writeStream = createWriteStream('output.txt');
+
+  for await (const line of file.readLines()) {
+    writeStream.write(processLine(line));
+  }
+
+  // Everything is automatically cleaned up!
+}
+```
+
+### Optimize RegExp with RegExp.escape()
+
+```javascript
+// Safe and fast dynamic patterns
+function createSearchPattern(userInput) {
+  const escaped = RegExp.escape(userInput);
+  return new RegExp(`\\b${escaped}\\b`, 'i');
+}
+```
+
+## 🎉 Conclusion
+
+Node.js 24 is a significant upgrade that brings modern JavaScript features, better performance, and improved developer experience. With V8 13.6, Float16Array, explicit resource management, and WebAssembly Memory64, you'll be able to build faster, more efficient applications.
+
+The upgrade process is straightforward if you follow the steps above, and the benefits far outweigh the minimal migration effort. With LTS support until April 2028, Node.js 24 is a solid foundation for your next project.
+
+Ready to upgrade? Start with a staging environment, run your tests, and gradually roll out to production. Your applications will thank you for it!
+
+Happy Grizzly Coding 🐻!

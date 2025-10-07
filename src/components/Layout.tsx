@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 import Footer from './Footer';
 import Header from './Header';
 
 interface ILayoutProps {
-  children: JSX.Element;
+  children: ReactNode;
 }
 
 const Layout = (props: ILayoutProps) => {
