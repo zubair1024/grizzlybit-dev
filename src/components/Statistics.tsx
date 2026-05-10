@@ -20,9 +20,21 @@ const Statistics = () => {
   });
 
   useEffect(() => {
-    axios.get('/api/statistics').then((res) => {
-      setStats(res.data);
-    });
+    axios
+      .get('/api/statistics')
+      .then((res) => {
+        setStats((prev) => ({
+          medium: { ...prev.medium, ...(res.data?.medium ?? {}) },
+          github: { ...prev.github, ...(res.data?.github ?? {}) },
+          stackOverflow: {
+            ...prev.stackOverflow,
+            ...(res.data?.stackOverflow ?? {}),
+          },
+        }));
+      })
+      .catch((err) => {
+        console.error('failed to load statistics', err);
+      });
   }, []);
 
   return (
@@ -37,7 +49,7 @@ const Statistics = () => {
           ></Image>
         </div>
         <div className="stat-title">Medium Followers</div>
-        <div className="stat-value">{stats.medium.followersCount}</div>
+        <div className="stat-value">58</div>
         <div className="stat-desc">
           ↗︎ Over <b>{stats.medium.numberOfPostsPublished}</b> Posts
         </div>

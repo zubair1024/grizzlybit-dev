@@ -18,26 +18,15 @@ type Data = {
   };
 };
 
-// WHACKY STUFF THEY PUT IN FRONT OF RESPONSE
-const JSON_HIJACKING_PREFIX = '])}while(1);</x>';
-
 async function getMediumStats() {
-  const response = await axios.get(
-    'https://medium.com/@zubair1024?format=json',
-  );
-
-  const responseData = JSON.parse(
-    response.data.replace(JSON_HIJACKING_PREFIX, ''),
-  );
-  const userId = responseData?.payload?.user?.userId;
-  if (userId) {
-    const followersCount = responseData?.payload?.references?.SocialStats?.[
-      userId
-    ]?.usersFollowedByCount as number;
-    const numberOfPostsPublished = responseData?.payload?.userMeta
-      ?.numberOfPostsPublished as number;
-    return { followersCount, numberOfPostsPublished };
-  }
+  // Medium removed public follower counts and Cloudflare blocks the JSON
+  // endpoint, so fall back to counting items in the public RSS feed.
+  const response = await axios.get('https://medium.com/feed/@zubair1024', {
+    responseType: 'text',
+  });
+  const xml = response.data as string;
+  const numberOfPostsPublished = (xml.match(/<item>/g) || []).length;
+  return { followersCount: 0, numberOfPostsPublished };
 }
 
 async function getGithubStats() {
@@ -58,22 +47,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  let result = {};
+  const settle = async <T>(fn: () => Promise<T>, label: string) => {
+    try {
+      return await fn();
+    } catch (err) {
+      console.error(`statistics: ${label} failed`, err);
+      return undefined;
+    }
+  };
 
-  const medium = await getMediumStats();
-  if (medium) {
-    result = { ...result, medium };
-  }
+  const [medium, github, stackOverflow] = await Promise.all([
+    settle(getMediumStats, 'medium'),
+    settle(getGithubStats, 'github'),
+    settle(getStackOverflowStats, 'stackOverflow'),
+  ]);
 
-  const github = await getGithubStats();
-  if (github) {
-    result = { ...result, github };
-  }
+  const result: Data = {};
+  if (medium) result.medium = medium;
+  if (github) result.github = github;
+  if (stackOverflow) result.stackOverflow = stackOverflow;
 
-  const stackOverflow = await getStackOverflowStats();
-  if (stackOverflow) {
-    result = { ...result, stackOverflow };
-  }
-
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
   return res.status(200).json(result);
 }
