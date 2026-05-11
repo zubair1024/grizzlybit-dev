@@ -4,8 +4,11 @@ const WebSiteSchema = () => {
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Zubair Ahmed - grizzlybit.dev',
+    '@id': 'https://www.grizzlybit.dev/#website',
+    name: 'Grizzlybit — Zubair Ahmed',
+    alternateName: 'Grizzlybit',
     url: 'https://www.grizzlybit.dev',
+    publisher: { '@id': 'https://www.grizzlybit.dev/#person' },
     description:
       'Personal portfolio and blog of Zubair Ahmed, Chief Technology Officer at RAZRLAB. Showcasing software development projects, blog posts, and technical expertise.',
     author: {

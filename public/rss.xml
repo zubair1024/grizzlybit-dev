@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Grizzlybit — Zubair Ahmed</title>
+    <link>https://www.grizzlybit.dev</link>
+    <atom:link href="https://www.grizzlybit.dev/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Engineering blog of Zubair Ahmed (Grizzlybit) — Node.js, React, TypeScript, IoT, and full-stack engineering.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 May 2026 10:51:49 GMT</lastBuildDate>
+    <item>
+      <title>What&apos;s New in Node.js 24 (And How to Upgrade Your Codebase Smoothly)</title>
+      <link>https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24</guid>
+      <pubDate>Tue, 07 Oct 2025 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Node.js 24 is here with game-changing features like V8 13.6, Float16Array, explicit resource management, WebAssembly Memory64, and npm 11. Learn what's new and how to upgrade smoothly.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/nodejs-util-promisify/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>nodejs 24</category>
+      <category>v8 engine</category>
+      <category>javascript</category>
+      <category>performance</category>
+      <category>upgrade</category>
+      <category>migration</category>
+      <category>lts</category>
+    </item>
+    <item>
+      <title>Use Hook in React 18</title>
+      <link>https://www.grizzlybit.dev/blog/use-hook-in-react</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/use-hook-in-react</guid>
+      <pubDate>Mon, 27 Feb 2023 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[This blog post focuses on the new experimental feature in React 18 called the use hook. It explains how the use hook can be used to create custom hooks that can be reused across different components, simplifying state management and making code more modular.]]></description>
+      <category>react</category>
+      <category>hooks</category>
+      <category>react 18</category>
+      <category>javascript</category>
+      <category>use hook</category>
+      <category>state management</category>
+    </item>
+    <item>
+      <title>Optimal SEO Performance for NextJS</title>
+      <link>https://www.grizzlybit.dev/blog/optimal-seo-performance-for-nextjs</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/optimal-seo-performance-for-nextjs</guid>
+      <pubDate>Thu, 05 Jan 2023 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[In this blog post we'll explore how Next.js can help you optimize your website for search engines From server-side rendering to automatic code splitting we will cover all the features that make Next.js a powerful tool for SEO optimization]]></description>
+      <category>nextjs</category>
+      <category>seo</category>
+      <category>performance</category>
+      <category>react</category>
+      <category>ssr</category>
+      <category>core web vitals</category>
+    </item>
+    <item>
+      <title>How to install OpenVPN using Docker</title>
+      <link>https://www.grizzlybit.dev/blog/how-to-install-openvpn-using-docker</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-to-install-openvpn-using-docker</guid>
+      <pubDate>Sat, 02 Oct 2021 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[In this article we will be seeing how easy it is to get started with your own OpenVPN server.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/how-to-install-openvpn-using-docker/cover.png" type="image/png" />
+      <category>vpn</category>
+      <category>openvpn</category>
+      <category>docker</category>
+      <category>linux</category>
+      <category>devops</category>
+      <category>self-hosted</category>
+    </item>
+    <item>
+      <title>How to create an SSH tarpit</title>
+      <link>https://www.grizzlybit.dev/blog/how-to-create-an-ssh-tarpit</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-to-create-an-ssh-tarpit</guid>
+      <pubDate>Sun, 23 May 2021 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[A quick an easy way get back at those obnoxious hacker that target to gain SSH access to your Linux server. This article will show you how to trap the hackers in a SSH tarpit.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/ssh-tarpit-endlessh/cover.png" type="image/png" />
+      <category>ssh</category>
+      <category>linux</category>
+      <category>security</category>
+      <category>devops</category>
+      <category>tarpit</category>
+      <category>endlessh</category>
+      <category>sysadmin</category>
+    </item>
+    <item>
+      <title>JavaScript Promises: Promise.all vs Promise.allSettled vs Promise.race vs Promise.any</title>
+      <link>https://www.grizzlybit.dev/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any</guid>
+      <pubDate>Sat, 12 Dec 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Ever wanted to be a Promises whizz. There are a few tricks you can learn to become that through the use of promise static methods for handling an array of promises in JavaScript]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any/cover.png" type="image/png" />
+      <category>javascript</category>
+      <category>promises</category>
+      <category>async</category>
+      <category>es6</category>
+      <category>web development</category>
+    </item>
+    <item>
+      <title>Easy PGP Encryption using Node.js</title>
+      <link>https://www.grizzlybit.dev/blog/easy-pgp-encryption-using-nodejs</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/easy-pgp-encryption-using-nodejs</guid>
+      <pubDate>Sat, 28 Nov 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[An easy setup guide on how to begin using PGP Encryption on Node.js]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/easy-pgp-encryption-using-nodejs/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>pgp</category>
+      <category>encryption</category>
+      <category>security</category>
+      <category>openpgp</category>
+      <category>cryptography</category>
+    </item>
+    <item>
+      <title>Setup OpenStreetMap Tile Server on Ubuntu 20.x 🗺</title>
+      <link>https://www.grizzlybit.dev/blog/setup-openstreemaps-tile-server-on-ubuntu</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/setup-openstreemaps-tile-server-on-ubuntu</guid>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Every wanted tour own Map server so that you don't have to pay those hefty unchecked prices from map tile providers; you can do so and have your own server using OpenStreetMaps. In this article, we are going to learn how to setup OpenStreetMaps OSM Carto as a tile server.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png" type="image/png" />
+      <category>openstreetmap</category>
+      <category>osm</category>
+      <category>maps</category>
+      <category>tile server</category>
+      <category>ubuntu</category>
+      <category>self-hosted</category>
+      <category>gis</category>
+    </item>
+    <item>
+      <title>How to Use Tee on Linux</title>
+      <link>https://www.grizzlybit.dev/blog/how-to-use-tee-on-linux</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-to-use-tee-on-linux</guid>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Ever wondered how to read from standard input and write results to standard output and files at the same time? Look no further, tee on Linux lets you do just that with no hassle. In this article, we will discuss the basics of tee with some easy to understand examples.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/how-to-use-tee-on-linux/cover.png" type="image/png" />
+      <category>linux</category>
+      <category>tee</category>
+      <category>terminal</category>
+      <category>devops</category>
+      <category>shell</category>
+      <category>sysadmin</category>
+    </item>
+    <item>
+      <title>How to use Screen on Linux to Detach and Reattach your Terminal</title>
+      <link>https://www.grizzlybit.dev/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal</guid>
+      <pubDate>Thu, 05 Nov 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Screen is this awesome software tool in Linux that provides you the ability to spring-up and use multiple shell sessions from a single ssh session. Screen essentially acts as a terminal multiplexer emulator that is packed with features.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal/cover.png" type="image/png" />
+      <category>linux</category>
+      <category>screen</category>
+      <category>terminal multiplexer</category>
+      <category>devops</category>
+      <category>sysadmin</category>
+      <category>tmux alternative</category>
+    </item>
+    <item>
+      <title>Easy Remote Debugging Node.js using VS Code</title>
+      <link>https://www.grizzlybit.dev/blog/easy-remote-debugging-nodejs-using-vscode</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/easy-remote-debugging-nodejs-using-vscode</guid>
+      <pubDate>Fri, 23 Oct 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[In this post, we will see how to perform remote debugging on a server running heedlessly leveraging the power of an SSH tunnel.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/easy-remote-debugging-nodejs-using-vscode/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>vscode</category>
+      <category>debugging</category>
+      <category>ssh</category>
+      <category>remote</category>
+      <category>development</category>
+    </item>
+    <item>
+      <title>Increase Node.js Memory Limit (Bonus: PM2)</title>
+      <link>https://www.grizzlybit.dev/blog/increase-nodejs-memory-limit</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/increase-nodejs-memory-limit</guid>
+      <pubDate>Fri, 16 Oct 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Node.js has memory limitations that you can hit quite easily in production. By default, Node.js uses a maximum heap size of 700MB and 1400MB on 32-bit and 64-bit platforms.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/increase-nodejs-memory-limit/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>memory</category>
+      <category>performance</category>
+      <category>v8</category>
+      <category>pm2</category>
+      <category>optimization</category>
+    </item>
+    <item>
+      <title>My Terminal Setup: iTerm2 + ZSH + Powerlevel10k</title>
+      <link>https://www.grizzlybit.dev/blog/my-terminal-setup</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/my-terminal-setup</guid>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Be it any type of development, one of the most important tool is the terminal. Through this post I want to share my preferred terminal setup.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/my-terminal-setup/cover.png" type="image/png" />
+      <category>terminal</category>
+      <category>iterm2</category>
+      <category>zsh</category>
+      <category>powerlevel10k</category>
+      <category>productivity</category>
+      <category>developer setup</category>
+    </item>
+    <item>
+      <title>How to generate keys for Mutual TLS Authentication 🔑</title>
+      <link>https://www.grizzlybit.dev/blog/how-to-generate-keys-for-mutual-tls-authentication</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-to-generate-keys-for-mutual-tls-authentication</guid>
+      <pubDate>Fri, 02 Oct 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Mutual TLS authentication is a process that ensures that traffic between entities is secure and trusted in both directions between a client and a server. It essentially takes place through a TSL handshake. Here is a quickie on how to generate certificates and perform Mutual TLS Authentication between a client and a server.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/how-send-csv-files-with-nodemailer/cover.png" type="image/png" />
+      <category>tls</category>
+      <category>mtls</category>
+      <category>mutual tls</category>
+      <category>security</category>
+      <category>certificates</category>
+      <category>openssl</category>
+      <category>pki</category>
+    </item>
+    <item>
+      <title>How to SSH using Node.js</title>
+      <link>https://www.grizzlybit.dev/blog/how-to-ssh-using-nodejs</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-to-ssh-using-nodejs</guid>
+      <pubDate>Fri, 25 Sep 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Quick tip on how to build an application that will SSH to servers and run commands using Node.js for automation of commands and complex deployments.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/how-to-ssh-using-nodejs/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>ssh</category>
+      <category>automation</category>
+      <category>devops</category>
+      <category>node-ssh</category>
+      <category>remote execution</category>
+    </item>
+    <item>
+      <title>How to send CSV Files with Nodemailer 📨</title>
+      <link>https://www.grizzlybit.dev/blog/how-send-csv-files-with-nodemailer</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/how-send-csv-files-with-nodemailer</guid>
+      <pubDate>Sun, 12 Jul 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[If you are wondering on how to send files, especially CSV files as attachments in Nodejs, then look no further, we are going to do just that in this post using Nodemailer. I promise you it is going to be easy as cake. 😊]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/how-send-csv-files-with-nodemailer/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>nodemailer</category>
+      <category>csv</category>
+      <category>email</category>
+      <category>attachments</category>
+      <category>smtp</category>
+    </item>
+    <item>
+      <title>Install Docker on Ubuntu 18.04 (Bionic Beaver) 🐳</title>
+      <link>https://www.grizzlybit.dev/blog/install-docker-on-ubuntu-18</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/install-docker-on-ubuntu-18</guid>
+      <pubDate>Sat, 11 Apr 2020 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[One of the most beautiful sights to see is a smooth running development and production environment. Docker makes this a reality with ease 😁.  This is one of the main reason docker usage just skyrocketed in a the past couple of years. Well, are you wondering how to get started with installing docker? Look no further, here is a quick tutorial for the most widely use Linux Distro!]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/install-docker-on-ubuntu-18/cover.png" type="image/png" />
+      <category>docker</category>
+      <category>ubuntu</category>
+      <category>devops</category>
+      <category>installation</category>
+      <category>containers</category>
+      <category>linux</category>
+    </item>
+    <item>
+      <title>Addressing Businesses with the Right Innovation: IoT 📈</title>
+      <link>https://www.grizzlybit.dev/blog/addressing-business-with-the-right-innovation-iot</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/addressing-business-with-the-right-innovation-iot</guid>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[IoT is frequently called the 4th Industrial Revolution and revolutions rarely happen without complication. The IoT revolution is no different, it is complicated, because even though there are widespread solutions being developed by developers around the world, there is a key factor that is not taken into account, that is addressing this innovation with integration...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/addressing-business-with-the-right-innovation-iot/cover.png" type="image/png" />
+      <category>IoT</category>
+      <category>Internet of Things</category>
+      <category>IoT integration</category>
+      <category>innovation</category>
+      <category>enterprise IoT</category>
+      <category>industrial IoT</category>
+    </item>
+    <item>
+      <title>Truth About Being a Full-Stack Developer 👩‍💻</title>
+      <link>https://www.grizzlybit.dev/blog/truth-about-being-a-full-stack-developer</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/truth-about-being-a-full-stack-developer</guid>
+      <pubDate>Sat, 16 Dec 2017 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[A full-stack developer is simply someone who is familiar with all layers in computer software development. These developers aren’t experts at everything; they simply have a functional knowledge and ability to take a concept and turn it into a finished product...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/truth-about-being-a-full-stack-developer/cover.png" type="image/png" />
+      <category>full-stack</category>
+      <category>developer</category>
+      <category>career</category>
+      <category>software engineering</category>
+      <category>web development</category>
+    </item>
+    <item>
+      <title>Importance of Teaching Children to Code 🧒</title>
+      <link>https://www.grizzlybit.dev/blog/importance-of-teaching-children-to-code</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/importance-of-teaching-children-to-code</guid>
+      <pubDate>Sat, 14 Oct 2017 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[The future most definitely is going to be more and more automated since our reliance on technology will only increase. The children today should not only learn to passively use this technology but also understand and control it...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/importance-of-teaching-children-to-code/cover.png" type="image/png" />
+      <category>education</category>
+      <category>kids coding</category>
+      <category>programming for kids</category>
+      <category>computer science education</category>
+      <category>STEM</category>
+    </item>
+    <item>
+      <title>Node.js 8: util.promisify() 💡</title>
+      <link>https://www.grizzlybit.dev/blog/nodejs-util-promisify</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/nodejs-util-promisify</guid>
+      <pubDate>Fri, 29 Sep 2017 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Node.js 8 has a new utility function: util.promisify(). It converts a callback-based function to a Promise-based one. Since we are on this topic I would like to highlight one of the most straight forward explanation for promises that I have come across by Jecelyn Yeen...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/nodejs-util-promisify/cover.png" type="image/png" />
+      <category>nodejs</category>
+      <category>promises</category>
+      <category>async</category>
+      <category>util</category>
+      <category>callbacks</category>
+      <category>es6</category>
+    </item>
+    <item>
+      <title>GET query string parameters 💁‍♂️</title>
+      <link>https://www.grizzlybit.dev/blog/get-query-string-parameters</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/get-query-string-parameters</guid>
+      <pubDate>Wed, 14 Dec 2016 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[A utility function to get the value of any query string parameter. We all know that the query string parameters are available for us through window.location (JavaScript Window Location Object). But query string usually turns up as a string and has to be parsed to get the necessary attribute out...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/get-query-string-parameters/cover.png" type="image/png" />
+      <category>javascript</category>
+      <category>query string</category>
+      <category>url parsing</category>
+      <category>web development</category>
+      <category>utility function</category>
+    </item>
+    <item>
+      <title>Yarn on the Rise 😺</title>
+      <link>https://www.grizzlybit.dev/blog/yarn-on-the-rise</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/yarn-on-the-rise</guid>
+      <pubDate>Tue, 13 Dec 2016 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Titans such as Facebook and Google have teamed up to make a faster and better package manager in comparison to npm. It is called Yarn. Though, don’t be alarmed this package management tool takes packages from NpmJS and Bower registries supporting parallel dependency installations...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/yarn-on-the-rise/cover.png" type="image/png" />
+      <category>yarn</category>
+      <category>npm</category>
+      <category>package manager</category>
+      <category>javascript</category>
+      <category>nodejs</category>
+      <category>dependency management</category>
+    </item>
+    <item>
+      <title>Rick And Morty 👾</title>
+      <link>https://www.grizzlybit.dev/blog/rick-and-morty-if-you-havent-watched-it</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/rick-and-morty-if-you-havent-watched-it</guid>
+      <pubDate>Sat, 01 Oct 2016 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[Let me start by saying that I’m very picky and skeptical about all TV shows. Judging from the promos I suspected that it was going to be just another lazily animated show with some cheap comedy and cheap standards. I had never been so wrong. It might seem that is a silly knock off to the “Back to the Future” franchise, but it has perks of its own. The hilarious and bizarre adventure of an alcoholic scientist and his awkward grandson. The writing was fantastic and the animation was well crafted...]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/rick-and-morty-if-you-havent-watched-it/cover.png" type="image/png" />
+      <category>tv shows</category>
+      <category>review</category>
+      <category>rick and morty</category>
+      <category>animation</category>
+      <category>pop culture</category>
+    </item>
+  </channel>
+</rss>

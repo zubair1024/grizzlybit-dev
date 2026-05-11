@@ -3,15 +3,23 @@ title: 'How to Use Tee on Linux'
 publishedAt: '2020-11-08'
 summary: 'Ever wondered how to read from standard input and write results to standard output and files at the same time? Look no further, tee on Linux lets you do just that with no hassle. In this article, we will discuss the basics of tee with some easy to understand examples.'
 image: '/blog/how-to-use-tee-on-linux/cover.png'
+keywords:
+  - linux
+  - tee
+  - terminal
+  - devops
+  - shell
+  - sysadmin
+author: 'Zubair Ahmed'
 ---
 
 ![How to use tee on Linux](/blog/how-to-use-tee-on-linux/cover.png)
 
-# What is tee?
+## What is tee?
 
 `tee` on Linux is a command-line tool, it reads from the standard input and is the capability of writing results to the terminal's standard output and files at the same time. This essentially lets you store and view (both at the same time) the output at any time.
 
-# How to use it?
+## How to use it?
 
 Let's illustrate the use of `tee` with a simple example. We can use a command to ping `[google.com](http://google.com)`
 
@@ -83,7 +91,7 @@ And quite plainly the `man` page explains it as:
 
 > > The tee utility copies standard input to standard output, making a copy in zero or more files. The output is unbuffered.
 
-# More Options
+## More Options
 
 As you might have stumbled on the `man` page already, there are more options that can be fed to our `tee` command. Some of them are:
 
@@ -103,7 +111,7 @@ You can write to multiple files by just specifying the names or directories of t
 ping google.com | tee -a file1 file2 file3
 ```
 
-# Conclusion
+## Conclusion
 
 I think we can all agree that `tee` is one delightful Linux command. The tool definitely is quite easy to use and has a little-to-no learning curve. But you can always view its `man` page at any time to know further information.
 

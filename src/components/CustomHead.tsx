@@ -12,6 +12,7 @@ interface CustomHeadProps {
   modifiedTime?: string;
   author?: string;
   keywords?: string[];
+  noindex?: boolean;
 }
 
 const CustomHead = (props: CustomHeadProps) => {
@@ -26,6 +27,7 @@ const CustomHead = (props: CustomHeadProps) => {
     modifiedTime,
     author,
     keywords,
+    noindex,
   } = props;
 
   const imageUrl = ogImage ?? defaultTags.image;
@@ -77,16 +79,27 @@ const CustomHead = (props: CustomHeadProps) => {
     }
   }
 
+  // Apply brand suffix on every child page; leave homepage title untouched.
+  // Strip trailing slash so '/grizzlybit.dev' and '/grizzlybit.dev/' both match.
+  const normalize = (u: string) => u.replace(/\/$/, '');
+  const isHomepage =
+    !title || normalize(canonicalUrl) === normalize(defaultTags.websiteUrl);
+  const resolvedTitle = title ?? defaultTags.title;
+  const titleTemplate = isHomepage ? undefined : defaultTags.titleTemplate;
+
   return (
     <>
       <NextSeo
-        title={title ?? defaultTags.title}
+        title={resolvedTitle}
+        titleTemplate={titleTemplate}
+        defaultTitle={defaultTags.title}
         description={description ?? defaultTags.description}
         canonical={canonicalUrl}
+        noindex={noindex}
         openGraph={{
           type: ogType,
           url: canonicalUrl,
-          title: title ?? defaultTags.title,
+          title: resolvedTitle,
           description: description ?? defaultTags.description,
           images: [
             {

@@ -3,13 +3,22 @@ title: 'How to generate keys for Mutual TLS Authentication 🔑'
 publishedAt: '2020-10-02'
 summary: 'Mutual TLS authentication is a process that ensures that traffic between entities is secure and trusted in both directions between a client and a server. It essentially takes place through a TSL handshake. Here is a quickie on how to generate certificates and perform Mutual TLS Authentication between a client and a server.'
 image: '/blog/how-send-csv-files-with-nodemailer/cover.png'
+keywords:
+  - tls
+  - mtls
+  - mutual tls
+  - security
+  - certificates
+  - openssl
+  - pki
+author: 'Zubair Ahmed'
 ---
 
 ![How to generate keys for Mutual TLS Authentication](/blog/how-to-generate-keys-for-mutual-tls-authentication/cover.png)
 
 At [RAZRLAB](https://razrlab.com), we always keep security at the upmost importance and a simple way to ensure that your IoT devices and your server are securely communicating is to leverage the concept of Mutual TLS Authentication.
 
-# What is Mutual Authentication?
+## What is Mutual Authentication?
 
 Mutual TLS authentication is a process that ensures that traffic between entities is secure and trusted in both directions between a client and a server. It essentially takes place through a TSL handshake.
 
@@ -26,7 +35,7 @@ The process will ensure that both parties (client and server) are verified by ea
 
 Uff.... now that we have taken the theory out of the way, let's see how we can quickly setup a Mutual TLS Authenticated client and server setup.
 
-# How to setup Mutual TLS Authentication
+## How to setup Mutual TLS Authentication
 
 ## Pre-requisites
 

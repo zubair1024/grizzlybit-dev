@@ -37,11 +37,7 @@ const Header = () => {
   const { pathname } = useRouter();
 
   useEffect(() => {
-    console.log(pathname);
-    if (pathname === '/') {
-      return setIsLandingPage(true);
-    }
-    setIsLandingPage(false);
+    setIsLandingPage(pathname === '/');
   }, [pathname]);
 
   useEffect(() => {
@@ -102,7 +98,7 @@ const Header = () => {
               src="/grizzlybit-dev-logo.svg"
               width={150}
               height={150}
-              alt="grizzlybit.dev"
+              alt="Grizzlybit"
             ></Image>
           </Link>
         </div>

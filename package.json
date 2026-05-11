@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap && node scripts/generate-rss.js"
   },
   "dependencies": {
     "@next/font": "13.1.4",

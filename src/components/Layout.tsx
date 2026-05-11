@@ -10,6 +10,12 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-md focus:bg-brand-glow focus:text-black focus:font-mono focus:text-sm"
+      >
+        Skip to content
+      </a>
       <motion.div
         initial={{ x: 300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}

@@ -74,7 +74,7 @@ The loop above should run and exhaust the memory limit for your Node.js program.
 
 > `process.memoryUsage()` is used to determine the help size for your proces
 
-# How to work-around the memory limit?
+## How to work-around the memory limit?
 
 V8 engine comes with a parameter to work around and raise the limit of the heap size through the use of `--max-old-space-size` , hence to increase your heap memory limit to 2 GB you would do:
 
@@ -99,7 +99,7 @@ Now you would wonder, how far can I push this limit? 🤔
 
 Theoretically, in a 64-bit system, you can have a heap size of 16 TB of memory, but obviously, you won't be able to each anywhere as close to that. It will be limited by the physical memory limit on the machine and then it will try and leverage the hard disk of the machine to swap data.
 
-# How to increase memory when you're using PM2?
+## How to increase memory when you're using PM2?
 
 PM2 is a daemon process manager that will help you manage and keep your application online 24/7, which is essential for running applications in a production environment. Sometimes, you want to demonize your application using PM2 but also you would like to allocate a higher memory limit for your application.
 

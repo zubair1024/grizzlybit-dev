@@ -17,6 +17,14 @@ export default function Document() {
         <link rel="preconnect" href="https://static.hotjar.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://script.hotjar.com" crossOrigin="anonymous" />
 
+        {/* RSS feed autodiscovery */}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Grizzlybit — Zubair Ahmed Blog"
+          href="/rss.xml"
+        />
+
         {/*
           Font Optimization Notes:
           - Using @next/font (Next.js 13) for automatic font optimization

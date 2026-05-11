@@ -6,11 +6,11 @@ import {
   TechStackSection,
 } from '@/components/PortfolioDetail';
 
-const title = 'Tools-Grizzlybit.dev';
+const title = 'Grizzly Tools';
 
 const ToolsGrizzlyScreen = () => {
   return (
-    <PortfolioDetailShell slug="tools-grizzly" title={title} command="open tools-grizzlybit">
+    <PortfolioDetailShell slug="tools-grizzly" title={title} command="open grizzly-tools">
       <AboutSection
         copy={
           <>

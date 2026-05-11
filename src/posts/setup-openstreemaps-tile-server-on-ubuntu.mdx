@@ -3,15 +3,24 @@ title: 'Setup OpenStreetMap Tile Server on Ubuntu 20.x 🗺'
 publishedAt: '2020-11-13'
 summary: "Every wanted tour own Map server so that you don't have to pay those hefty unchecked prices from map tile providers; you can do so and have your own server using OpenStreetMaps. In this article, we are going to learn how to setup OpenStreetMaps OSM Carto as a tile server."
 image: '/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png'
+keywords:
+  - openstreetmap
+  - osm
+  - maps
+  - tile server
+  - ubuntu
+  - self-hosted
+  - gis
+author: 'Zubair Ahmed'
 ---
 
 ![Setup OpenStreetMap Tile Server on Ubuntu](/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png)
 
-# Introduction
+## Introduction
 
 OpenStreetMaps (OSM) is quoted to be a "free wiki world map". The OSM tile server is essentially a web server specialized in delivering raster maps. It serves them as static ties and is also able to perform rendering in real-time or providing cached images.
 
-# Install Dependencies
+## Install Dependencies
 
 we will start by updating our Ubuntu repositories
 
@@ -58,7 +67,7 @@ sudo apt-get install ttf-dejavu fonts-noto-cjk fonts-noto-hinted fonts-noto-unhi
 
 Ufff.... 😅, I think we are done with installing packages. Now let's move on to the setup.
 
-# Setup
+## Setup
 
 Firstly, we will begin by switching over to our postgres user
 

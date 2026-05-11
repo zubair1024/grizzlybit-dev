@@ -10,6 +10,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo } from 'react';
+import { TagLink } from '@/components/blog/TagLink';
 import { getAllPostSlugs, getBlogPostData, getPostData } from '../../util/posts';
 import { calculateReadingTime } from '../../util/readingTime';
 
@@ -101,18 +102,20 @@ export default function BlogPost({
         title={frontmatter.title}
         description={frontmatter.summary}
         publishedAt={frontmatter.publishedAt}
+        modifiedAt={frontmatter.lastModified}
         image={frontmatter.image}
         slug={slug}
+        keywords={frontmatter.keywords}
         author={{ name: author, url: 'https://www.grizzlybit.dev' }}
       />
       <BreadcrumbListSchema items={breadcrumbItems} />
       <Layout>
-        <div className="max-w-full prose prose-md">
+        <main id="main" className="max-w-full prose prose-md">
           <div className="bg-fixed bg-toolBelt">
             <div className="py-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
-              <h2 className="p-16 text-center md:grid-cols-4">
+              <h1 className="p-16 text-center md:grid-cols-4">
                 {frontmatter.title}
-              </h2>
+              </h1>
             </div>
           </div>
           <div className="max-w-[900px] mx-auto py-10 px-10 bg-base-300">
@@ -124,6 +127,13 @@ export default function BlogPost({
                 <li>{frontmatter.title}</li>
               </ul>
             </div>
+            {frontmatter.keywords && frontmatter.keywords.length > 0 && (
+              <div className="not-prose flex flex-wrap gap-2 mb-6">
+                {frontmatter.keywords.map((k) => (
+                  <TagLink key={k} tag={k} />
+                ))}
+              </div>
+            )}
             <Component />
             <div className="divider"></div>
             <div className="flex items-center justify-center space-x-5">
@@ -140,7 +150,7 @@ export default function BlogPost({
                 <p>
                   Published on {frontmatter.publishedAt} • {readingTime}
                 </p>
-                <h2>{author}</h2>
+                <p className="font-semibold text-lg m-0">{author}</p>
                 <p>
                   I&apos;m a developer, an entrepreneur, an ambitious tweaker,
                   author, traveller and over-scrutinizer. I work at RAZRLAB as
@@ -160,7 +170,7 @@ export default function BlogPost({
               allPosts={allPosts}
             />
           </div>
-        </div>
+        </main>
       </Layout>
     </>
   );

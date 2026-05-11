@@ -4,14 +4,13 @@ import Contact from '@/components/Contact';
 import CustomHead from '@/components/CustomHead';
 import LazyMount from '@/components/fx/LazyMount';
 import Layout from '@/components/Layout';
+import OrganizationSchema from '@/components/schemas/OrganizationSchema';
 import PersonSchema from '@/components/schemas/PersonSchema';
-import ReviewSchema from '@/components/schemas/ReviewSchema';
 import WebSiteSchema from '@/components/schemas/WebSiteSchema';
 import Services from '@/components/Services';
 import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
 import defaultTags from 'data/defaultTags';
-import testimonials from 'data/testimonials';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 
@@ -53,12 +52,12 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
         description={defaultTags.description}
         canonical="https://www.grizzlybit.dev/"
       />
+      <OrganizationSchema />
       <PersonSchema />
       <WebSiteSchema />
-      <ReviewSchema reviews={testimonials} />
       <Layout>
         <ScrollSignal />
-        <main>
+        <main id="main">
           <Banner />
           <Services />
           <LazyMount minHeight="600px">

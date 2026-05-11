@@ -66,8 +66,8 @@ export async function getBlogPostData(): Promise<PostData[]> {
 
     const matterResult = matter(fileContents);
 
-    // Calculate reading time from content
-    const readingTime = calculateReadingTime(fileContents);
+    // Calculate reading time from body only (exclude YAML frontmatter)
+    const readingTime = calculateReadingTime(matterResult.content);
 
     return {
       slug,
@@ -76,12 +76,9 @@ export async function getBlogPostData(): Promise<PostData[]> {
     };
   });
 
-  return allPostsData.sort((a, b) => {
-    if (new Date(a.publishedAt) < new Date(b.publishedAt)) {
-      return 1;
-    }
-    return -1;
-  });
+  return allPostsData.sort(
+    (a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt),
+  );
 }
 
 export async function getBlogPostDataForHome(): Promise<PostData[]> {

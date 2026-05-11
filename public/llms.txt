@@ -1,0 +1,56 @@
+# Grizzlybit — Zubair Ahmed
+
+> Personal portfolio and engineering blog of Zubair Ahmed (Grizzlybit), full-stack software engineer and Chief Technology Officer at RAZRLAB. Based in Dubai, United Arab Emirates. Focus areas: Node.js, React, TypeScript, Next.js, IoT, fleet management, mobile (Ionic), Linux, and cloud architecture.
+
+Identity:
+- Name: Zubair Ahmed
+- Alias: Grizzlybit
+- Role: CTO, RAZRLAB
+- Location: Dubai, UAE
+- Site: https://www.grizzlybit.dev
+- Contact: za@grizzlybit.dev
+- GitHub: https://github.com/zubair1024
+- LinkedIn: https://www.linkedin.com/in/zubair1024/
+- X / Twitter: https://twitter.com/zubair1024
+
+## Core
+
+- [Home](https://www.grizzlybit.dev/): Overview, services, portfolio, testimonials, contact.
+- [Blog](https://www.grizzlybit.dev/blog): Engineering articles on Node.js, React, TypeScript, Linux, security, DevOps.
+- [Resume / CV](https://www.grizzlybit.dev/zubair_cv.pdf): Downloadable PDF.
+- [Sitemap](https://www.grizzlybit.dev/sitemap.xml)
+- [RSS feed](https://www.grizzlybit.dev/rss.xml)
+
+## Portfolio case studies
+
+- [Vehicle Tracking Application](https://www.grizzlybit.dev/portfolio/vehicle-tracking): Real-time fleet management web app — React, Node.js, RabbitMQ, Redis, Leaflet, OSRM. Recognized by Dubai Police.
+- [Vehicle Tracking Mobile App](https://www.grizzlybit.dev/portfolio/vehicle-tracking-mobile): Ionic/TypeScript mobile companion for fleet ops.
+- [COVID-19 Patient Tracker](https://www.grizzlybit.dev/portfolio/covid-tracker): Remote health monitoring with BLE oxygen meter integration.
+- [My247](https://www.grizzlybit.dev/portfolio/my247-app): App for UK's 4th-largest boiler service company.
+- [MyCarlo](https://www.grizzlybit.dev/portfolio/mycarlo-app): Consumer vehicle telematics and family safety product.
+- [Smart Boiler Mobile](https://www.grizzlybit.dev/portfolio/boiler-mobile): Remote thermostat / boiler control.
+- [Heavy Equipment Monitoring](https://www.grizzlybit.dev/portfolio/he-app): Construction-industry heavy-equipment telemetry dashboard.
+- [Worldly Pins](https://www.grizzlybit.dev/portfolio/worldly-pins): Traveller utility app.
+- [Grizzly Tools](https://www.grizzlybit.dev/portfolio/tools-grizzly): Collection of developer utilities.
+- [TIS Landing Page](https://www.grizzlybit.dev/portfolio/tis-landing-page): Marketing site for a Dubai thermal-insulation company.
+
+## Notable blog posts
+
+- [What's New in Node.js 24](https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24)
+- [Optimal SEO Performance for Next.js](https://www.grizzlybit.dev/blog/optimal-seo-performance-for-nextjs)
+- [JavaScript Promises: all vs allSettled vs race vs any](https://www.grizzlybit.dev/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any)
+- [Easy Remote Debugging Node.js using VS Code](https://www.grizzlybit.dev/blog/easy-remote-debugging-nodejs-using-vscode)
+- [How to generate keys for Mutual TLS Authentication](https://www.grizzlybit.dev/blog/how-to-generate-keys-for-mutual-tls-authentication)
+- [How to create an SSH tarpit](https://www.grizzlybit.dev/blog/how-to-create-an-ssh-tarpit)
+- [Setup OpenStreetMap Tile Server on Ubuntu](https://www.grizzlybit.dev/blog/setup-openstreemaps-tile-server-on-ubuntu)
+- [How to install OpenVPN using Docker](https://www.grizzlybit.dev/blog/how-to-install-openvpn-using-docker)
+- [Increase Node.js Memory Limit (Bonus: PM2)](https://www.grizzlybit.dev/blog/increase-nodejs-memory-limit)
+- [Use Hook in React 18](https://www.grizzlybit.dev/blog/use-hook-in-react)
+
+## Tech stack & expertise
+
+JavaScript, TypeScript, Node.js, React, Next.js, Ionic, React Native, MongoDB, MSSQL, PostgreSQL, Redis, RabbitMQ, Docker, AWS, GCP, Leaflet / OpenStreetMap, Google Maps, OSRM, BLE / IoT integration, Linux sysadmin, mutual TLS, SSH automation, NGINX.
+
+## Licensing
+
+Content is © Zubair Ahmed. Quoting with attribution is allowed.

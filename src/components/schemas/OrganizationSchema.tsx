@@ -4,9 +4,15 @@ const OrganizationSchema = () => {
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': 'https://www.grizzlybit.dev/#organization',
     name: 'RAZRLAB',
     url: 'https://www.grizzlybit.dev',
-    logo: 'https://www.grizzlybit.dev/logo.png',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.grizzlybit.dev/grizzlybit-logo-image.png',
+      width: 479,
+      height: 91,
+    },
     description:
       'RAZRLAB is a technology company specializing in software development, web applications, mobile applications, and cloud solutions.',
     founder: {
@@ -19,6 +25,12 @@ const OrganizationSchema = () => {
       name: 'Zubair Ahmed',
       jobTitle: 'Chief Technology Officer',
     },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Dubai',
+      addressCountry: 'AE',
+    },
+    areaServed: 'AE',
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Service',

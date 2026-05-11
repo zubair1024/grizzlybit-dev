@@ -5,26 +5,32 @@ const PersonSchema = () => {
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': 'https://www.grizzlybit.dev/#person',
     name: 'Zubair Ahmed',
+    alternateName: 'Grizzlybit',
     jobTitle: 'Chief Technology Officer',
     worksFor: {
       '@type': 'Organization',
+      '@id': 'https://www.grizzlybit.dev/#organization',
       name: 'RAZRLAB',
     },
     url: 'https://www.grizzlybit.dev',
     sameAs: socialLinks.map((link) => link.url),
     description:
-      "I'm a developer, an entrepreneur, an ambitious tweaker, author, traveller and over-scrutinizer. I work at RAZRLAB as the Chief Technology Officer. Since beginning my journey as a software engineer, I've done remote work for agencies, consulted for startups, and collaborated with talented people to create digital products for both business and consumer use. I'm quietly confident, naturally curious, and perpetually working on improving my chops one coding problem at a time.",
+      'Full-stack software engineer and CTO at RAZRLAB. Builds Node.js, React, TypeScript, and IoT products. Based in Dubai, working across web, mobile, and cloud.',
     image: 'https://www.grizzlybit.dev/zubair_2.jpg',
-    alumniOf: {
-      '@type': 'Organization',
-      name: 'University',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Dubai',
+      addressCountry: 'AE',
     },
     knowsAbout: [
       'Software Engineering',
+      'Full-stack Development',
       'Web Development',
       'Mobile Development',
       'Cloud Architecture',
+      'IoT',
       'JavaScript',
       'TypeScript',
       'React',

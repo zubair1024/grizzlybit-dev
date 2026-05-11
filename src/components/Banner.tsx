@@ -55,10 +55,14 @@ const Banner = () => {
             />
           </div>
           <div className="text-center card-body">
-            <h2 className="text-2xl font-semibold tracking-wider text-center">
+            <h1 className="text-2xl font-semibold tracking-wider text-center">
               Zubair Ahmed
-            </h2>
-            <div className="text-sm font-light">{info.roles.join(' | ')}</div>
+              <span className="sr-only">
+                {' '}— Full-stack software engineer & CTO at RAZRLAB. Node.js,
+                React, TypeScript, and IoT.
+              </span>
+            </h1>
+            <p className="text-sm font-light">{info.roles.join(' | ')}</p>
             <div>
               {info.badges.map((i) => (
                 <span key={i} className="mx-1 badge glass">
@@ -106,7 +110,7 @@ const Banner = () => {
           <Statistics></Statistics>
         </div>
       </div>
-      <div className="area">
+      <div className="area" aria-hidden="true">
         <ul className="circles">
           <li></li>
           <li></li>

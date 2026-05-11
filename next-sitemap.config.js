@@ -1,3 +1,52 @@
+const fs = require('fs');
+const path = require('path');
+
+// Read MDX frontmatter once at sitemap generation
+const postsDir = path.join(process.cwd(), 'src/posts');
+const tagToSlug = (t) =>
+  t
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const { postLastmods, tagLastmods } = (() => {
+  const posts = {};
+  const tags = {};
+  try {
+    for (const f of fs.readdirSync(postsDir)) {
+      const slug = f.replace(/\.mdx$/, '');
+      const src = fs.readFileSync(path.join(postsDir, f), 'utf8');
+      const lm = src.match(/lastModified:\s*['"]?([^\n'"]+)/);
+      const pub = src.match(/publishedAt:\s*['"]?([^\n'"]+)/);
+      const fileMtime = fs
+        .statSync(path.join(postsDir, f))
+        .mtime.toISOString();
+      const iso = new Date(
+        (lm && lm[1].trim()) || (pub && pub[1].trim()) || fileMtime,
+      ).toISOString();
+      posts[slug] = iso;
+
+      const kwBlock = src.match(/keywords:\s*\n((?:\s+-\s+.+\n?)+)/);
+      if (kwBlock) {
+        for (const line of kwBlock[1].split('\n')) {
+          const m = line.match(/^\s+-\s+(.+?)\s*$/);
+          if (!m) continue;
+          const raw = m[1].replace(/^['"]|['"]$/g, '');
+          const ts = tagToSlug(raw);
+          if (!ts) continue;
+          if (!tags[ts]) tags[ts] = { lastmod: iso, count: 0 };
+          tags[ts].count += 1;
+          if (tags[ts].lastmod < iso) tags[ts].lastmod = iso;
+        }
+      }
+    }
+  } catch (e) {
+    /* sitemap proceeds with defaults */
+  }
+  return { postLastmods: posts, tagLastmods: tags };
+})();
+
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://www.grizzlybit.dev',
@@ -5,55 +54,69 @@ module.exports = {
   sitemapSize: 7000,
   changefreq: 'daily',
   priority: 0.5,
+  autoLastmod: true,
 
-  // Exclude API routes and admin paths from sitemap
-  exclude: ['/api/*', '/server-sitemap.xml'],
-
-  // Additional sitemap configuration for separate blog and portfolio sitemaps
-  additionalPaths: async (config) => {
-    const result = [];
-
-    // You can add dynamic routes here if needed
-    // For now, we'll let Next.js handle blog routes automatically
-
-    return result;
-  },
+  // Exclude API routes, admin paths, AND thin (single-post) tag pages
+  exclude: [
+    '/api/*',
+    '/server-sitemap.xml',
+    ...Object.entries(tagLastmods)
+      .filter(([, v]) => v.count < 2)
+      .map(([t]) => `/blog/tag/${t}`),
+  ],
 
   // Transform function to customize each URL entry
-  transform: async (config, path) => {
-    // Default values
+  transform: async (config, urlPath) => {
     let priority = 0.5;
     let changefreq = 'weekly';
+    let lastmod = new Date().toISOString();
 
-    // Homepage
-    if (path === '/') {
+    if (urlPath === '/') {
       priority = 1.0;
       changefreq = 'weekly';
-    }
-    // Blog listing page
-    else if (path === '/blog') {
+    } else if (urlPath === '/blog') {
       priority = 0.9;
       changefreq = 'daily';
-    }
-    // Individual blog posts
-    else if (path.startsWith('/blog/')) {
+      // Newest post drives blog index freshness
+      const newest = Object.values(postLastmods).sort().pop();
+      if (newest) lastmod = newest;
+    } else if (urlPath.startsWith('/blog/')) {
       priority = 0.8;
       changefreq = 'monthly';
-    }
-    // Portfolio pages
-    else if (path.startsWith('/portfolio')) {
+      const slug = urlPath.replace('/blog/', '');
+      if (postLastmods[slug]) lastmod = postLastmods[slug];
+    } else if (urlPath.startsWith('/blog/tag/')) {
+      priority = 0.6;
+      changefreq = 'weekly';
+      const tag = urlPath.replace('/blog/tag/', '');
+      // Skip thin tag pages (single post) to align with runtime noindex
+      if (!tagLastmods[tag] || tagLastmods[tag].count < 2) return null;
+      lastmod = tagLastmods[tag].lastmod;
+    } else if (urlPath.startsWith('/portfolio')) {
       priority = 0.7;
       changefreq = 'yearly';
     }
 
     return {
-      loc: path,
+      loc: urlPath,
       changefreq,
       priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      lastmod,
       alternateRefs: config.alternateRefs ?? [],
     };
   },
+
+  // Inject dynamic tag routes (next-sitemap can't discover GSPaths).
+  // Single-post tags are noindex'd at runtime — skip them here too.
+  additionalPaths: async () =>
+    Object.entries(tagLastmods)
+      .filter(([, v]) => v.count >= 2)
+      .map(([tag, v]) => ({
+        loc: `/blog/tag/${tag}`,
+        changefreq: 'weekly',
+        priority: 0.6,
+        lastmod: v.lastmod,
+      })),
 
   // Advanced robots.txt configuration
   robotsTxtOptions: {

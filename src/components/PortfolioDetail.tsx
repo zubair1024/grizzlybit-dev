@@ -1,4 +1,4 @@
-import BreadcrumbListSchema from '@/components/BreadcrumbListSchema';
+import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import { MDiv } from '@/components/fx/m';
@@ -44,7 +44,7 @@ export const PortfolioDetailShell = ({
         ]}
       />
       <Layout>
-        <main className="min-h-screen pb-20">
+        <main id="main" className="min-h-screen pb-20">
           <PortfolioHero
             title={title}
             slug={slug}
