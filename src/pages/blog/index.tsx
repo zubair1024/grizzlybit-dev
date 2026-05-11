@@ -1,111 +1,126 @@
 import CustomHead from '@/components/CustomHead';
+import { MDiv } from '@/components/fx/m';
 import Layout from '@/components/Layout';
+import { trackEvent } from '@/util/ga';
 import { PostData } from '@/util/types';
 import { GetStaticProps } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { getBlogPostData } from '../../util/posts';
 
 type Props = {
   allPostsData: PostData[];
 };
 
-const gradients = [
-  'bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500',
-  'bg-gradient-to-r from-rose-700 to-pink-600',
-  'bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800',
-  'bg-gradient-to-r from-yellow-600 to-red-600',
-  'bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900',
-  'bg-gradient-to-r from-gray-700 via-gray-900 to-black',
-  'bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500',
-  'bg-gradient-to-br from-green-300 via-blue-500 to-purple-600',
-  'bg-gradient-to-r from-red-800 via-yellow-600 to-yellow-500',
-  'bg-gradient-to-r from-pink-400 to-pink-600',
-];
+const slugToCmd = (slug: string) => `cat ${slug}.mdx`;
 
-function randomGradientBg() {
-  const num = Math.floor(Math.random() * 10);
-  return gradients[num];
-}
-
-export const PostCard = (props: { data: PostData }) => {
-  const { image, title, summary, publishedAt, slug, readingTime } = props.data;
+export const PostCard = ({
+  data,
+  index = 0,
+}: {
+  data: PostData;
+  index?: number;
+}) => {
   return (
-    <>
-      <div className="flex justify-center sm:mx-5">
-        <div className="bg-[#0E0E0E] shadow-xl card card-compact">
-          <Link href={`/blog/${slug}`}>
-            {image ? (
-              <Image
-                className="rounded-t-xl"
-                src={image}
-                alt={`Featured image for ${title}`}
-                width={400}
-                height={250}
-                style={{ objectFit: 'cover' }}
-              />
-            ) : (
-              <div
-                className={`${randomGradientBg()} w-full h-[150px] flex items-center justify-center rounded-t-xl`}
-              >
-                <h3 className="px-4 text-2xl font-bold leading-tight tracking-tighter">
-                  {title}
-                </h3>
-              </div>
-            )}
+    <MDiv
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{
+        delay: (index % 8) * 0.05,
+        type: 'spring',
+        stiffness: 130,
+        damping: 18,
+      }}
+      className="mb-5 break-inside-avoid"
+    >
+      <Link
+        href={`/blog/${data.slug}`}
+        onClick={() =>
+          trackEvent('blog_open', {
+            slug: data.slug,
+            title: data.title,
+            position: index + 1,
+            location: 'blog_index',
+          })
+        }
+      >
+        <article className="terminal-window group relative flex flex-col rounded-xl overflow-hidden hover:-translate-y-1 transition-transform duration-300">
+          <div className="flex items-center gap-2 border-b border-white/10 bg-black/40 px-4 py-2.5">
+            <span className="terminal-dot bg-[#ff5f56]" />
+            <span className="terminal-dot bg-[#ffbd2e]" />
+            <span className="terminal-dot bg-[#27c93f]" />
+            <span className="ml-3 font-mono text-[11px] text-white/40 truncate">
+              ~/blog/{data.slug}.mdx
+            </span>
+          </div>
 
-            <div className="card-body">
-              <p className="text-right text-md">
-                {publishedAt}
-                {readingTime && <span> • {readingTime}</span>}
-              </p>
-              <Link href={`/blog/${slug}`}>
-                <h2 className="text-md card-title">{title}</h2>
-              </Link>
-              <p className="text-justify ">{summary}</p>
-              <div className="justify-end card-actions">
-                <Link href={`/blog/${slug}`}>
-                  <button className="mt-5 btn-sm btn btn-primary">
-                    Read more
-                  </button>
-                </Link>
-              </div>
+          <div className="flex-1 flex flex-col gap-3 p-5 font-mono text-sm">
+            <div className="flex items-center gap-2 text-white/40 text-xs">
+              <span className="text-brand-cool">zubair</span>
+              <span className="text-white/30">@</span>
+              <span className="text-brand-haze">grizzlybit</span>
+              <span className="text-white/30">:</span>
+              <span className="text-brand-glow">~/blog</span>
+              <span className="text-white/30">$</span>
             </div>
-          </Link>
-        </div>
-      </div>
-    </>
+
+            <div className="text-white/90 break-all leading-relaxed">
+              <span className="text-brand-glow">$</span>{' '}
+              <span className="text-white">{slugToCmd(data.slug)}</span>
+              <span className="inline-block w-2 h-4 ml-1 bg-brand-glow align-middle animate-caret" />
+            </div>
+
+            <h3 className="mt-1 text-base md:text-lg font-mono text-white leading-snug line-clamp-3 group-hover:text-brand-glow transition-colors">
+              {data.title}
+            </h3>
+
+            <p className="text-xs text-white/55 line-clamp-4 leading-relaxed">
+              {data.summary}
+            </p>
+
+            <div className="mt-auto flex items-center justify-between pt-3 border-t border-white/5 text-[11px] text-white/40">
+              <span>{data.publishedAt}</span>
+              {data.readingTime && <span>{data.readingTime}</span>}
+            </div>
+          </div>
+        </article>
+      </Link>
+    </MDiv>
   );
 };
 
+const EmptyState = ({ term }: { term: string }) => (
+  <div className="terminal-window mx-auto max-w-xl rounded-xl p-6 font-mono text-sm">
+    <div className="text-white/40">
+      <span className="text-brand-glow">$</span>{' '}
+      <span className="text-white">grep -r {JSON.stringify(term)} posts/</span>
+    </div>
+    <div className="mt-3 text-white/60">
+      <span className="text-red-400">zsh:</span> no matches found:{' '}
+      <span className="text-white">{term}</span>
+    </div>
+    <div className="mt-2 text-white/40">
+      <span className="text-brand-glow">$</span>{' '}
+      <span className="inline-block w-2 h-4 bg-brand-glow align-middle animate-caret" />
+    </div>
+  </div>
+);
+
 export default function BlogPage({ allPostsData }: Props) {
-  const allPosts = allPostsData;
-  const [posts, setPosts] = useState(allPostsData);
+  const [query, setQuery] = useState('');
 
-  const handleSearchClick = (text: string) => {
-    if (text === '' || text === null) return setPosts(allPosts);
-
-    const searchTerm = text.toLowerCase();
-    const filteredPosts = allPosts.filter((post) => {
-      // Search in title
-      const titleMatch = post.title.toLowerCase().includes(searchTerm);
-
-      // Search in summary
-      const summaryMatch = post.summary.toLowerCase().includes(searchTerm);
-
-      // Search in keywords
-      const keywordsMatch = post.keywords
-        ? post.keywords.some((keyword) =>
-            keyword.toLowerCase().includes(searchTerm),
-          )
-        : false;
-
-      return titleMatch || summaryMatch || keywordsMatch;
+  const posts = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    if (!term) return allPostsData;
+    return allPostsData.filter((p) => {
+      const inTitle = p.title.toLowerCase().includes(term);
+      const inSummary = p.summary.toLowerCase().includes(term);
+      const inKeywords =
+        p.keywords?.some((k) => k.toLowerCase().includes(term)) ?? false;
+      return inTitle || inSummary || inKeywords;
     });
-
-    setPosts(filteredPosts);
-  };
+  }, [allPostsData, query]);
 
   return (
     <>
@@ -115,34 +130,70 @@ export default function BlogPage({ allPostsData }: Props) {
         canonical="https://www.grizzlybit.dev/blog"
       />
       <Layout>
-        <div className="max-w-full min-h-screen">
-          <div className="bg-fixed bg-toolBelt">
-            <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
-              <h2 className="text-4xl font-bold text-center md:grid-cols-4">
+        <main className="min-h-screen">
+          <section className="relative pt-24 pb-10 overflow-hidden">
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 opacity-[0.15] pointer-events-none"
+              style={{
+                backgroundImage:
+                  'linear-gradient(rgba(169,145,247,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(169,145,247,0.5) 1px, transparent 1px)',
+                backgroundSize: '40px 40px',
+                maskImage:
+                  'radial-gradient(circle at 50% 30%, black 30%, transparent 80%)',
+              }}
+            />
+            <div className="mx-auto max-w-3xl px-5 text-center">
+              <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
+                Writing
+              </p>
+              <h1 className="mt-3 font-mono text-3xl md:text-5xl tracking-wider uppercase text-white">
                 Blog
-              </h2>
-            </div>
-          </div>
-          <div>
-            <div className="max-w-xl px-5 py-10 mx-auto">
-              <div className="form-control">
-                <input
-                  type="text"
-                  placeholder="Search…"
-                  className="w-full input input-bordered"
-                  onChange={(e) => {
-                    handleSearchClick(e.target.value);
-                  }}
-                />
+              </h1>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-sm">
+                <span className="text-brand-glow">$</span>
+                <span className="text-white/80">ls posts/</span>
+                <span className="text-white/40">|</span>
+                <span className="text-brand-cool">wc -l</span>
+                <span className="text-white/30">→</span>
+                <span className="text-brand-haze tabular-nums">
+                  {allPostsData.length}
+                </span>
               </div>
             </div>
-            <div className="grid content-center justify-center gap-4 my-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:mx-16">
-              {posts.map((i) => (
-                <PostCard key={i.title} data={i} />
-              ))}
+
+            <div className="mx-auto mt-10 max-w-2xl px-5">
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-sm text-brand-glow pointer-events-none">
+                  $ grep
+                </div>
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder='"search posts…"'
+                  className="w-full rounded-lg border border-white/10 bg-black/60 pl-20 pr-4 py-3 font-mono text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand-glow/60 transition-colors"
+                />
+              </div>
+              <p className="mt-2 text-center font-mono text-[11px] text-white/40">
+                {posts.length} of {allPostsData.length}{' '}
+                {posts.length === 1 ? 'post' : 'posts'}
+              </p>
             </div>
-          </div>
-        </div>
+          </section>
+
+          <section className="mx-auto max-w-7xl px-5 pb-20">
+            {posts.length === 0 ? (
+              <EmptyState term={query} />
+            ) : (
+              <div className="columns-1 md:columns-2 lg:columns-3 gap-5">
+                {posts.map((p, i) => (
+                  <PostCard key={p.slug} data={p} index={i} />
+                ))}
+              </div>
+            )}
+          </section>
+        </main>
       </Layout>
     </>
   );

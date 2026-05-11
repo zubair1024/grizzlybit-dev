@@ -51,6 +51,11 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{document.querySelectorAll('style[data-next-hide-fouc]').forEach(function(e){e.remove();});document.body.style.display='';}catch(e){}})();`,
+          }}
+        />
       </body>
     </Html>
   );

@@ -3,18 +3,18 @@ export interface IToolBeltItem {
   name: string;
 }
 const toolBelt: IToolBeltItem[] = [
-  { img: '/toolbelt/javascript.svg', name: 'Node.JS' },
-  { img: '/toolbelt/typescript.svg', name: 'Node.JS' },
+  { img: '/toolbelt/javascript.svg', name: 'JavaScript' },
+  { img: '/toolbelt/typescript.svg', name: 'TypeScript' },
   { img: '/toolbelt/node-js.svg', name: 'Node.JS' },
-  { img: '/toolbelt/react-native.svg', name: 'Node.JS' },
-  { img: '/toolbelt/docker.svg', name: 'Node.JS' },
-  { img: '/toolbelt/github.svg', name: 'Node.JS' },
-  { img: '/toolbelt/ionic.svg', name: 'Node.JS' },
-  { img: '/toolbelt/mongodb.svg', name: 'Node.JS' },
-  { img: '/toolbelt/notion.svg', name: 'Node.JS' },
-  { img: '/toolbelt/vs-code.svg', name: 'Node.JS' },
-  { img: '/toolbelt/figma.svg', name: 'Node.JS' },
-  { img: '/toolbelt/mac-os-logo.svg', name: 'Node.JS' },
+  { img: '/toolbelt/react-native.svg', name: 'React' },
+  { img: '/toolbelt/docker.svg', name: 'Docker' },
+  { img: '/toolbelt/github.svg', name: 'GitHub' },
+  { img: '/toolbelt/ionic.svg', name: 'Ionic' },
+  { img: '/toolbelt/mongodb.svg', name: 'MongoDB' },
+  { img: '/toolbelt/notion.svg', name: 'Notion' },
+  { img: '/toolbelt/vs-code.svg', name: 'VS Code' },
+  { img: '/toolbelt/figma.svg', name: 'Figma' },
+  { img: '/toolbelt/mac-os-logo.svg', name: 'macOS' },
 ];
 
 export default toolBelt;

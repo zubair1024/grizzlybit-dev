@@ -2,6 +2,7 @@ import socialLinks from 'data/socialLinks';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { trackEvent } from '@/util/ga';
 import Statistics from './Statistics';
 
 const info = {
@@ -73,7 +74,18 @@ const Banner = () => {
                     data-tip={i.name}
                     key={i.name}
                   >
-                    <Link target={'_blank'} href={i.url} rel="noreferrer">
+                    <Link
+                      target={'_blank'}
+                      href={i.url}
+                      rel="noreferrer"
+                      onClick={() =>
+                        trackEvent('social_click', {
+                          network: i.name,
+                          url: i.url,
+                          location: 'banner',
+                        })
+                      }
+                    >
                       <motion.div whileHover={{ scale: 1.5 }}>
                         <Image
                           src={i.img}

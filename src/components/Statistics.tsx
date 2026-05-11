@@ -2,12 +2,12 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+// Manual: Medium killed public follower counts and Cloudflare blocks scraping.
+const MEDIUM_FOLLOWERS = 58;
+const MEDIUM_POSTS = 19;
+
 const Statistics = () => {
   const [stats, setStats] = useState({
-    medium: {
-      followersCount: 0,
-      numberOfPostsPublished: 0,
-    },
     github: {
       followers: 0,
       public_repos: 0,
@@ -24,7 +24,6 @@ const Statistics = () => {
       .get('/api/statistics')
       .then((res) => {
         setStats((prev) => ({
-          medium: { ...prev.medium, ...(res.data?.medium ?? {}) },
           github: { ...prev.github, ...(res.data?.github ?? {}) },
           stackOverflow: {
             ...prev.stackOverflow,
@@ -45,13 +44,13 @@ const Statistics = () => {
             src="/statistics/medium.svg"
             height="40"
             width="40"
-            alt="stack-overflow"
+            alt="medium"
           ></Image>
         </div>
         <div className="stat-title">Medium Followers</div>
-        <div className="stat-value">58</div>
+        <div className="stat-value">{MEDIUM_FOLLOWERS}</div>
         <div className="stat-desc">
-          ↗︎ Over <b>{stats.medium.numberOfPostsPublished}</b> Posts
+          ↗︎ Over <b>{MEDIUM_POSTS}</b> Posts
         </div>
       </div>
 

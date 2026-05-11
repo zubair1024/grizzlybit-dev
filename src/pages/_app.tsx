@@ -1,3 +1,4 @@
+import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
 import '@/styles/globals.css';
 import { AnimatePresence } from 'framer-motion';
 import type { AppProps } from 'next/app';
@@ -43,6 +44,15 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
+    document
+      .querySelectorAll('style[data-next-hide-fouc]')
+      .forEach((el) => el.remove());
+    if (document.body.style.display === 'none') {
+      document.body.style.display = '';
+    }
+  }, []);
+
+  useEffect(() => {
     console.log(`Running in ${process.env.NODE_ENV}`);
     if (process.env.NODE_ENV === 'development') return;
     init('G-ZD3BELKQE2');
@@ -73,9 +83,11 @@ export default function App({ Component, pageProps }: AppProps) {
         ```
       */}
       <div data-theme="halloween">
-        <AnimatePresence mode="wait" initial={false}>
-          <Component {...pageProps} />
-        </AnimatePresence>
+        <CapabilityProvider>
+          <AnimatePresence mode="wait" initial={false}>
+            <Component {...pageProps} />
+          </AnimatePresence>
+        </CapabilityProvider>
       </div>
     </>
   );

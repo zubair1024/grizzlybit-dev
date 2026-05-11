@@ -3,12 +3,13 @@ import Layout from '@/components/Layout';
 import RelatedPosts from '@/components/RelatedPosts';
 import BlogPostingSchema from '@/components/schemas/BlogPostingSchema';
 import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
+import { trackEvent } from '@/util/ga';
 import { PostData } from '@/util/types';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { getAllPostSlugs, getBlogPostData, getPostData } from '../../util/posts';
 import { calculateReadingTime } from '../../util/readingTime';
 
@@ -40,6 +41,39 @@ export default function BlogPost({
 }: Props) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
   const author = frontmatter.author || 'Zubair Ahmed';
+
+  useEffect(() => {
+    let fired = false;
+    const sessionKey = `blog_read_complete:${slug}`;
+    try {
+      if (sessionStorage.getItem(sessionKey)) fired = true;
+    } catch {
+      /* sessionStorage unavailable (private mode, quota) — track anyway */
+    }
+    const onScroll = () => {
+      if (fired) return;
+      const doc = document.documentElement;
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = doc.scrollHeight;
+      if (total <= 0) return;
+      if (scrolled / total >= 0.9) {
+        fired = true;
+        try {
+          sessionStorage.setItem(sessionKey, '1');
+        } catch {
+          /* ignore */
+        }
+        trackEvent('blog_read_complete', {
+          slug,
+          title: frontmatter.title,
+        });
+        window.removeEventListener('scroll', onScroll);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [slug, frontmatter.title]);
 
   const breadcrumbItems = [
     { name: 'Home', url: 'https://www.grizzlybit.dev/' },

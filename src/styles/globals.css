@@ -2,12 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.crt-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.04) 0px,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+
+.holo-foil {
+  background: conic-gradient(
+    from var(--angle, 0deg) at 50% 50%,
+    rgba(242, 140, 24, 0.0) 0deg,
+    rgba(169, 145, 247, 0.35) 90deg,
+    rgba(55, 205, 190, 0.35) 180deg,
+    rgba(255, 120, 71, 0.35) 270deg,
+    rgba(242, 140, 24, 0.0) 360deg
+  );
+  filter: blur(28px);
+  animation: borderSpin 6s linear infinite;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 180px;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 200px;
+  }
+}
+
+.terminal-window {
+  background: linear-gradient(180deg, #0f1115 0%, #14171d 100%);
+  border: 1px solid rgba(169, 145, 247, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+    0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
+@keyframes blobA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(8%, -6%) scale(1.15); }
+  66% { transform: translate(-5%, 5%) scale(0.9); }
+}
+
+@keyframes blobB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-7%, 5%) scale(0.85); }
+  66% { transform: translate(6%, -4%) scale(1.18); }
+}
+
+@keyframes blobC {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5%, -8%) scale(1.1); }
+  66% { transform: translate(-6%, 6%) scale(0.95); }
 }
 
 .bg-toolBelt {

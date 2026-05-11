@@ -1,7 +1,7 @@
 import testimonials from 'data/testimonials';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MDiv } from './fx/m';
 
 interface ITestimonialData {
   name: string;
@@ -13,116 +13,90 @@ interface ITestimonialData {
   message: string;
 }
 
-const TestimonialCard = ({ data }: { data: ITestimonialData }) => {
-  return (
-    <motion.div
-      initial={{ y: '300px', opacity: 0 }}
-      whileInView={{
-        y: 0,
-        opacity: 1,
-        transition: {
-          duration: 5,
-          type: 'spring',
-          stiffness: 100,
-          mass: 0.3,
-          // remove delay: 0.3,
-        },
-      }}
+const TestimonialCard = ({
+  data,
+  index,
+}: {
+  data: ITestimonialData;
+  index: number;
+}) => (
+  <MDiv
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.1 }}
+    transition={{
+      delay: (index % 6) * 0.08,
+      type: 'spring',
+      stiffness: 130,
+      damping: 18,
+    }}
+    className="relative mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#101218]/95 p-6 shadow-xl backdrop-blur-sm overflow-hidden hover:border-brand-glow/40 transition-colors"
+  >
+    <div
+      aria-hidden
+      className="absolute -top-10 -left-6 font-mono text-[140px] leading-none text-brand-glow/15 select-none pointer-events-none"
     >
-      <div className="py-2 px-5 m-2 bg-[#272727] rounded-lg max-w-lg shadow-xl">
-        <div className="flex justify-between">
-          <div className="flex items-center justify-start space-x-2">
-            <Image
-              src={data.imageUrl}
-              height={70}
-              width={70}
-              alt={`${data.name} - ${data.designation} at ${data.company}`}
-              className="mask mask-circle"
-              loading="lazy"
-            ></Image>
+      &ldquo;
+    </div>
 
-            <div>
-              <p className="pt-2 font-bold">{data.name}</p>
-              <p className="text-sm">{data.designation}</p>
-              <p className="text-xs font-semibold">{data.company}</p>
-              <p className="text-xs font-light">{data.place}</p>
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <Link target={'_blank'} href={data.linkedIn}>
-              <Image
-                src="social/linkedin.svg"
-                width={24}
-                height={24}
-                alt={`View ${data.name}'s LinkedIn profile`}
-              ></Image>
-            </Link>
-          </div>
-        </div>
-        <div className="col-span-4 pt-2 pb-2">
-          <p className="ml-2 text-sm text-justify ">
-            <Image
-              src="/quotation-mark.svg"
-              height={10}
-              width={10}
-              alt="quotation-mark"
-              style={{ display: 'inline' }}
-              className="mr-2"
-            />
-            {data.message}
-          </p>
+    <div className="relative flex items-start justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <Image
+          src={data.imageUrl}
+          height={56}
+          width={56}
+          alt={`${data.name} - ${data.designation} at ${data.company}`}
+          className="mask mask-circle h-14 w-14 object-cover"
+          loading="lazy"
+        />
+        <div className="text-left">
+          <p className="font-mono font-bold text-white text-sm">{data.name}</p>
+          <p className="font-mono text-xs text-white/70">{data.designation}</p>
+          <p className="font-mono text-xs text-brand-glow/90">{data.company}</p>
+          <p className="font-mono text-[10px] text-white/40">{data.place}</p>
         </div>
       </div>
-    </motion.div>
-  );
-};
+      <Link
+        target="_blank"
+        href={data.linkedIn}
+        className="shrink-0"
+        aria-label={`${data.name} on LinkedIn`}
+      >
+        <Image
+          src="/social/linkedin.svg"
+          width={20}
+          height={20}
+          alt={`View ${data.name}'s LinkedIn profile`}
+        />
+      </Link>
+    </div>
 
-const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0, // this will set a delay before the children start animating
-      staggerChildren: 1, // this will set the time in-between children animation
-    },
-  },
-};
+    <p className="relative mt-4 font-mono text-sm leading-relaxed text-white/80 whitespace-pre-line">
+      {data.message}
+    </p>
+  </MDiv>
+);
 
 const Testimonials = () => {
-  const copyTestimonials = [...testimonials];
-  const leftTestimonials = copyTestimonials.splice(
-    0,
-    Math.ceil(copyTestimonials.length / 2 - 1),
-  );
-  const rightTestimonials = copyTestimonials;
   return (
-    <>
-      <div className="py-10 min-h-[100vh]" id="my-testimonials">
-        <h2 className="py-10 font-mono text-2xl tracking-wider text-center uppercase">
+    <section
+      id="my-testimonials"
+      className="relative py-16 overflow-hidden"
+    >
+      <div className="text-center mb-10 px-4">
+        <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
+          Words
+        </p>
+        <h2 className="mt-2 font-mono text-2xl md:text-3xl tracking-wider uppercase text-white">
           Testimonials
         </h2>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-        >
-          <div className="flex flex-wrap items-start justify-center">
-            <div className="left-testimonials">
-              {leftTestimonials.map((item) => {
-                return <TestimonialCard key={item.name} data={item} />;
-              })}
-            </div>
-            <div className="right-testimonials">
-              {rightTestimonials.map((item) => {
-                return <TestimonialCard key={item.name} data={item} />;
-              })}
-            </div>
-          </div>
-        </motion.div>
       </div>
-    </>
+      <div className="mx-auto max-w-7xl px-5 columns-1 md:columns-2 lg:columns-3 gap-5">
+        {testimonials.map((item, i) => (
+          <TestimonialCard key={item.name} data={item} index={i} />
+        ))}
+      </div>
+    </section>
   );
 };
 

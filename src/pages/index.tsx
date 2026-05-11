@@ -1,22 +1,49 @@
-import AboutMe from '@/components/AboutMe';
 import Banner from '@/components/Banner';
 import BlogSection from '@/components/BlogSection';
-import Companies from '@/components/Companies';
 import Contact from '@/components/Contact';
 import CustomHead from '@/components/CustomHead';
+import LazyMount from '@/components/fx/LazyMount';
 import Layout from '@/components/Layout';
-import Portfolio from '@/components/Portfolio';
-import Services from '@/components/Services';
-import Testimonials from '@/components/Testimonials';
-import Toolbelt from '@/components/Toolbelt';
 import PersonSchema from '@/components/schemas/PersonSchema';
-import WebSiteSchema from '@/components/schemas/WebSiteSchema';
 import ReviewSchema from '@/components/schemas/ReviewSchema';
+import WebSiteSchema from '@/components/schemas/WebSiteSchema';
+import Services from '@/components/Services';
 import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
 import defaultTags from 'data/defaultTags';
 import testimonials from 'data/testimonials';
 import { GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
+
+const ScrollSignal = dynamic(
+  () => import('@/components/fx/ScrollSignal'),
+  { ssr: false },
+);
+
+const Toolbelt = dynamic(() => import('@/components/Toolbelt'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: 600 }} />,
+});
+
+const AboutMe = dynamic(() => import('@/components/AboutMe'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: 500 }} />,
+});
+
+const Portfolio = dynamic(() => import('@/components/Portfolio'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: 600 }} />,
+});
+
+const Companies = dynamic(() => import('@/components/Companies'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: 600 }} />,
+});
+
+const Testimonials = dynamic(() => import('@/components/Testimonials'), {
+  ssr: false,
+  loading: () => <div style={{ minHeight: 600 }} />,
+});
 
 function Home({ allPostsData }: { allPostsData: PostData[] }) {
   return (
@@ -30,18 +57,29 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
       <WebSiteSchema />
       <ReviewSchema reviews={testimonials} />
       <Layout>
+        <ScrollSignal />
         <main>
-          <Banner></Banner>
-          <Services></Services>
-          <div className="mx-auto max-w-[1200px] min-h-[100vh]">
-            <AboutMe></AboutMe>
+          <Banner />
+          <Services />
+          <LazyMount minHeight="600px">
+            <Toolbelt />
+          </LazyMount>
+          <div className="mx-auto max-w-[1200px] px-4">
+            <LazyMount minHeight="500px">
+              <AboutMe />
+            </LazyMount>
           </div>
-          <BlogSection allPostsData={allPostsData}></BlogSection>
-          <Toolbelt></Toolbelt>
-          <Portfolio></Portfolio>
-          <Companies></Companies>
-          <Testimonials></Testimonials>
-          <Contact></Contact>
+          <LazyMount minHeight="600px">
+            <Portfolio />
+          </LazyMount>
+          <LazyMount minHeight="600px">
+            <Companies />
+          </LazyMount>
+          <LazyMount minHeight="600px">
+            <Testimonials />
+          </LazyMount>
+          <BlogSection allPostsData={allPostsData} />
+          <Contact />
         </main>
       </Layout>
     </>

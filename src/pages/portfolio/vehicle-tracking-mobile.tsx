@@ -1,159 +1,95 @@
-import BreadcrumbListSchema from '@/components/BreadcrumbListSchema';
-import CustomHead from '@/components/CustomHead';
-import Layout from '@/components/Layout';
-import OtherProjects from '@/components/OtherProjects';
 import {
-  getPortfolioCanonicalUrl,
-  getPortfolioMetadata,
-} from '@/data/portfolioMetadata';
-import portfolio from 'data/portfolio';
-import Image from 'next/image';
-import Link from 'next/link';
+  AboutSection,
+  FeaturesSection,
+  ImageRow,
+  PortfolioDetailShell,
+  PortfolioImage,
+  TechStackSection,
+} from '@/components/PortfolioDetail';
 
 const title = 'Vehicle Tracking Mobile Application';
-const otherProjects = portfolio.filter((i) => i.title !== title);
-const metadata = getPortfolioMetadata('vehicle-tracking-mobile');
 
 const VehicleApplicationMobilePortfolioScreen = () => {
   return (
-    <>
-      <CustomHead
-        title={metadata.title}
-        description={metadata.description}
-        canonical={getPortfolioCanonicalUrl(metadata.slug)}
-        ogImage={metadata.ogImage}
-        ogType="article"
-        keywords={metadata.keywords}
+    <PortfolioDetailShell slug="vehicle-tracking-mobile" title={title} command="open razrtrack-mobile">
+      <AboutSection
+        copy={
+          <p>
+            The mobile application is a powerful tool for tracking and
+            monitoring vehicles in real-time. With its easy-to-use interface,
+            users can quickly view the current location and movement of their
+            vehicles, plus detailed information about the work orders being
+            completed by drivers in real-time, with push notification
+            capability.
+          </p>
+        }
+        visual={
+          <ImageRow>
+            <PortfolioImage
+              src="/portfolio/razrtrack_mobile/razrtrack_mobile_login.svg"
+              alt="login screen"
+              width={260}
+              height={260}
+            />
+            <PortfolioImage
+              src="/portfolio/razrtrack_mobile/razrtrack_mobile_list.svg"
+              alt="list screen"
+              width={260}
+              height={260}
+            />
+          </ImageRow>
+        }
       />
-      <BreadcrumbListSchema
-        items={[
-          { name: 'Home', url: 'https://www.grizzlybit.dev' },
-          { name: 'Portfolio', url: 'https://www.grizzlybit.dev/#my-portfolio' },
-          {
-            name: title,
-            url: getPortfolioCanonicalUrl(metadata.slug),
-          },
+
+      <FeaturesSection
+        reverse
+        features={[
+          'Tracking and monitoring of vehicle location and usage.',
+          'Scheduling and dispatching of vehicles and drivers.',
+          'Maintenance and repair tracking.',
+          'Fuel consumption and cost tracking.',
+          'Driver performance monitoring and evaluation.',
+          'Multiple-stop work order monitoring with time-window and distance constraints.',
+          'Estimated vs actual monitoring for stop-over arrival and departure.',
+        ]}
+        visual={
+          <ImageRow>
+            <PortfolioImage
+              src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo.svg"
+              alt="work orders"
+              width={220}
+              height={220}
+            />
+            <PortfolioImage
+              src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single.svg"
+              alt="work order detail"
+              width={220}
+              height={220}
+            />
+          </ImageRow>
+        }
+      />
+
+      <div className="flex justify-center">
+        <PortfolioImage
+          src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single_status.svg"
+          alt="work order status"
+          width={300}
+          height={300}
+        />
+      </div>
+
+      <TechStackSection
+        tech={[
+          'TypeScript',
+          'JavaScript',
+          'Ionic',
+          'Node.JS',
+          'Express',
+          'OneSignal',
         ]}
       />
-      <Layout>
-        <div className="max-w-full min-h-screen prose prose-2xl">
-          <div className="bg-fixed bg-toolBelt">
-            <div className="py-20 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
-              <h1 className="text-4xl font-bold text-center md:grid-cols-4">
-                {title}
-              </h1>
-            </div>
-          </div>
-          <div className="px-5 mx-auto max-w-7xl">
-            <div className="text-sm breadcrumbs">
-              <ul>
-                <li>
-                  <Link href="/#my-portfolio">Portfolio</Link>
-                </li>
-                <li>{title}</li>
-              </ul>
-            </div>
-            {/* first section 1 */}
-            <div className="flex flex-col-reverse flex-wrap items-center py-5 justify-evenly md:flex-row">
-              <div className="flex">
-                <Image
-                  src="/portfolio/razrtrack_mobile/razrtrack_mobile_login.svg"
-                  alt="razrtrack"
-                  height={350}
-                  width={350}
-                  className="transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-                <Image
-                  src="/portfolio/razrtrack_mobile/razrtrack_mobile_list.svg"
-                  alt="razrtrack"
-                  height={350}
-                  width={350}
-                  className="ml-3 transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-              </div>
-              <div className="ml-10 xl:max-w-md">
-                <h2>About</h2>
-                <p className="text-justify">
-                  The mobile application is a powerful tool for tracking and
-                  monitoring vehicles in real-time. With its easy-to-use
-                  interface, users can quickly and easily view the current
-                  location and movement of their vehicles, as well as view
-                  detailed information of the work orders being completed by the
-                  drivers in real-time with push notification capability.
-                </p>
-              </div>
-            </div>
-            {/* section 2 */}
-            <div className="flex flex-col flex-wrap items-center py-5 justify-evenly lg:flex-row">
-              <div className="xl:max-w-md">
-                <h2>Key Features</h2>
-                <p className="text-justify">
-                  Some key features of the application include:
-                  <ul>
-                    <li>
-                      Tracking and monitoring of vehicle location and usage
-                    </li>
-                    <li>Scheduling and dispatching of vehicles and drivers</li>
-                    <li>Maintenance and repair tracking</li>
-                    <li>Fuel consumption and cost tracking</li>
-                    <li>Driver performance monitoring and evaluation</li>
-                    <li>
-                      Multiple Stop Work Order Monitoring with time-window and
-                      distance constraints
-                    </li>
-                    <li>
-                      Estimated vs Actual monitoring for stop over arrival and
-                      departures
-                    </li>
-                  </ul>
-                </p>
-              </div>
-              <div className="flex flex-wrap">
-                <Image
-                  src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="transition ease-in rounded-xl hover:scale-105"
-                ></Image>
-                <Image
-                  src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single.svg"
-                  alt="razrtrack"
-                  height={250}
-                  width={250}
-                  className="transition ease-in rounded-xl hover:scale-105 md:ml-3"
-                ></Image>
-              </div>
-            </div>
-            {/* tech stack */}
-            <div className="flex flex-col-reverse items-center py-5 justify-evenly lg:flex-row">
-              <Image
-                src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single_status.svg"
-                alt="razrtrack"
-                height={300}
-                width={300}
-                className="transition ease-in rounded-xl hover:scale-105"
-              ></Image>
-              <div>
-                <h2>Tech Stack Used</h2>
-                <div className="grid grid-cols-2 pb-10 text-md">
-                  <div>TypeScript</div>
-                  <div>JavaScript</div>
-                  <div>Ionic</div>
-                  <div>Node.JS</div>
-                  <div>Express</div>
-                  <div>OneSignal</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h2>Other projects</h2>
-              <OtherProjects data={otherProjects}></OtherProjects>
-            </div>
-          </div>
-        </div>
-      </Layout>
-    </>
+    </PortfolioDetailShell>
   );
 };
 

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { trackEvent } from '@/util/ga';
 
 const landingPageMenu = [
   {
@@ -119,7 +120,17 @@ const Header = () => {
         <div className="navbar-end">
           {isLandingPage ? (
             <div className="flex space-x-2">
-              <a href="/zubair_cv.pdf" className=" btn" download>
+              <a
+                href="/zubair_cv.pdf"
+                className=" btn"
+                download
+                onClick={() =>
+                  trackEvent('resume_download', {
+                    file: 'zubair_cv.pdf',
+                    location: 'header',
+                  })
+                }
+              >
                 My Resume
               </a>
               {/* <a className="hidden btn md:flex" href="#contact-form">
