@@ -53,8 +53,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   useEffect(() => {
-    console.log(`Running in ${process.env.NODE_ENV}`);
-    if (process.env.NODE_ENV === 'development') return;
+    if (process.env.NODE_ENV !== 'production') return;
     init('G-ZD3BELKQE2');
     hotjar.initialize(3372547, 6);
   }, []);

@@ -121,7 +121,7 @@ const AboutMe = () => {
             />
             <div className="relative flex items-center justify-center p-2 rounded-2xl bg-black/40 backdrop-blur-sm">
               <Image
-                src="/zubair_2.jpg"
+                src="/zubair_2.webp"
                 width={400}
                 height={500}
                 alt="Zubair Ahmed - Software Engineer profile photo"

@@ -2,6 +2,9 @@
 
 > Personal portfolio and engineering blog of Zubair Ahmed (Grizzlybit), full-stack software engineer and Chief Technology Officer at RAZRLAB. Based in Dubai, United Arab Emirates. Focus areas: Node.js, React, TypeScript, Next.js, IoT, fleet management, mobile (Ionic), Linux, and cloud architecture.
 
+Last updated: 2026-05-11
+License: Content © Zubair Ahmed. Quoting with attribution allowed. Code samples in blog posts are MIT unless otherwise stated.
+
 Identity:
 - Name: Zubair Ahmed
 - Alias: Grizzlybit

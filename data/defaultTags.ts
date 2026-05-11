@@ -1,8 +1,8 @@
 const defaultTags = {
-  title: 'Zubair Ahmed — Full-Stack Engineer & CTO | Node.js, React, TypeScript',
-  titleTemplate: '%s | Grizzlybit — Zubair Ahmed',
+  title: 'Zubair Ahmed — Full-Stack Engineer & CTO (Dubai)',
+  titleTemplate: '%s | Grizzlybit',
   description:
-    'Zubair Ahmed (Grizzlybit) — full-stack software engineer and CTO at RAZRLAB. Building Node.js, React, TypeScript, and IoT products in Dubai. Portfolio, case studies, and engineering blog.',
+    'Zubair Ahmed (Grizzlybit) — full-stack software engineer and CTO building Node.js, React, TypeScript, and IoT products in Dubai. Portfolio, case studies, and engineering blog.',
   fullTitle: "Grizzlybit — Zubair Ahmed's Portfolio",
   tagline: 'Portfolio and blog of Zubair Ahmed, CTO at RAZRLAB',
   author: 'Zubair Ahmed',

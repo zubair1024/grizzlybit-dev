@@ -1,48 +1,28 @@
+import AboutMe from '@/components/AboutMe';
 import Banner from '@/components/Banner';
 import BlogSection from '@/components/BlogSection';
+import Companies from '@/components/Companies';
 import Contact from '@/components/Contact';
 import CustomHead from '@/components/CustomHead';
-import LazyMount from '@/components/fx/LazyMount';
 import Layout from '@/components/Layout';
+import Portfolio from '@/components/Portfolio';
 import OrganizationSchema from '@/components/schemas/OrganizationSchema';
 import PersonSchema from '@/components/schemas/PersonSchema';
 import WebSiteSchema from '@/components/schemas/WebSiteSchema';
 import Services from '@/components/Services';
+import Testimonials from '@/components/Testimonials';
+import Toolbelt from '@/components/Toolbelt';
 import { getBlogPostDataForHome } from '@/util/posts';
 import { PostData } from '@/util/types';
 import defaultTags from 'data/defaultTags';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 
+// ScrollSignal is purely visual + uses window APIs; safe to keep client-only.
 const ScrollSignal = dynamic(
   () => import('@/components/fx/ScrollSignal'),
   { ssr: false },
 );
-
-const Toolbelt = dynamic(() => import('@/components/Toolbelt'), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: 600 }} />,
-});
-
-const AboutMe = dynamic(() => import('@/components/AboutMe'), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: 500 }} />,
-});
-
-const Portfolio = dynamic(() => import('@/components/Portfolio'), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: 600 }} />,
-});
-
-const Companies = dynamic(() => import('@/components/Companies'), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: 600 }} />,
-});
-
-const Testimonials = dynamic(() => import('@/components/Testimonials'), {
-  ssr: false,
-  loading: () => <div style={{ minHeight: 600 }} />,
-});
 
 function Home({ allPostsData }: { allPostsData: PostData[] }) {
   return (
@@ -50,7 +30,7 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
       <CustomHead
         title={defaultTags.title}
         description={defaultTags.description}
-        canonical="https://www.grizzlybit.dev/"
+        canonical="https://www.grizzlybit.dev"
       />
       <OrganizationSchema />
       <PersonSchema />
@@ -60,23 +40,13 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
         <main id="main">
           <Banner />
           <Services />
-          <LazyMount minHeight="600px">
-            <Toolbelt />
-          </LazyMount>
+          <Toolbelt />
           <div className="mx-auto max-w-[1200px] px-4">
-            <LazyMount minHeight="500px">
-              <AboutMe />
-            </LazyMount>
+            <AboutMe />
           </div>
-          <LazyMount minHeight="600px">
-            <Portfolio />
-          </LazyMount>
-          <LazyMount minHeight="600px">
-            <Companies />
-          </LazyMount>
-          <LazyMount minHeight="600px">
-            <Testimonials />
-          </LazyMount>
+          <Portfolio />
+          <Companies />
+          <Testimonials />
           <BlogSection allPostsData={allPostsData} />
           <Contact />
         </main>

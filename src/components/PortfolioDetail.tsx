@@ -39,7 +39,10 @@ export const PortfolioDetailShell = ({
       <BreadcrumbListSchema
         items={[
           { name: 'Home', url: 'https://www.grizzlybit.dev' },
-          { name: 'Portfolio', url: 'https://www.grizzlybit.dev/#my-portfolio' },
+          {
+            name: 'Portfolio',
+            url: 'https://www.grizzlybit.dev/#my-portfolio',
+          },
           { name: title, url: canonical },
         ]}
       />

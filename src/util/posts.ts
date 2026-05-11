@@ -114,9 +114,13 @@ export async function getPostData(slug: string) {
     },
   });
 
+  // Pass raw MDX body (not compiled JS) to reading-time calculator.
+  const bodyOnly = matter(mdxSource).content;
+
   return {
     slug,
     frontmatter,
     code,
+    body: bodyOnly,
   };
 }

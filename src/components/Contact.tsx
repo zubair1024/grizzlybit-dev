@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AnimatePresence, LayoutGroup } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoHome } from 'react-icons/io5';
 import { MdMail } from 'react-icons/md';
@@ -59,44 +59,68 @@ const SuccessModal = ({
 }: {
   open: boolean;
   onClose: () => void;
-}) => (
-  <AnimatePresence>
-    {open && (
-      <MDiv
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-        onClick={onClose}
-      >
+}) => {
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    closeBtnRef.current?.focus();
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  return (
+    <AnimatePresence>
+      {open && (
         <MDiv
-          initial={{ y: 40, opacity: 0, scale: 0.92 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 30, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 22 }}
-          onClick={(e: React.MouseEvent) => e.stopPropagation()}
-          className="relative max-w-md rounded-2xl border border-white/10 bg-[#101218] p-8 text-white shadow-2xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={onClose}
+          role="presentation"
         >
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            className="absolute right-3 top-3 h-8 w-8 rounded-full border border-white/15 text-white/70 hover:text-white"
+          <MDiv
+            initial={{ y: 40, opacity: 0, scale: 0.92 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 30, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-success-title"
+            className="relative max-w-md rounded-2xl border border-white/10 bg-[#101218] p-8 text-white shadow-2xl"
           >
-            ✕
-          </button>
-          <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-            Transmission Received
-          </p>
-          <h3 className="mt-2 font-mono text-xl">Thank you</h3>
-          <p className="mt-3 font-mono text-sm text-white/70">
-            Thank you for your message. You can also email me directly with the
-            email address provided on the page.
-          </p>
+            <button
+              ref={closeBtnRef}
+              onClick={onClose}
+              aria-label="Close success dialog"
+              className="absolute right-3 top-3 h-10 w-10 rounded-full border border-white/15 text-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow"
+            >
+              ✕
+            </button>
+            <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
+              Transmission Received
+            </p>
+            <h3
+              id="contact-success-title"
+              className="mt-2 font-mono text-xl"
+            >
+              Thank you
+            </h3>
+            <p className="mt-3 font-mono text-sm text-white/80">
+              Thank you for your message. You can also email me directly with
+              the email address provided on the page.
+            </p>
+          </MDiv>
         </MDiv>
-      </MDiv>
-    )}
-  </AnimatePresence>
-);
+      )}
+    </AnimatePresence>
+  );
+};
 
 const Contact = () => {
   const {
@@ -110,9 +134,11 @@ const Contact = () => {
   const [focusKey, setFocusKey] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const showBurst = sent && !reducedMotion && !isMobile;
 
   const onSubmit: SubmitHandler<IContactFormValues> = async (values) => {
+    setSubmitError(null);
     try {
       await sendMessage(values);
       trackEvent('contact_submit', { status: 'success' });
@@ -124,12 +150,14 @@ const Contact = () => {
       }, 700);
     } catch {
       trackEvent('contact_submit', { status: 'error' });
-      alert('An error occurred while sending message. Please try again later');
+      setSubmitError(
+        'Could not send your message. Please try again or email za@grizzlybit.dev.',
+      );
     }
   };
 
   const inputClass =
-    'w-full bg-black/60 border border-white/10 rounded-md px-3 py-2.5 font-mono text-sm text-white placeholder-white/30 focus:outline-none focus:border-brand-glow/60 transition-colors';
+    'w-full bg-black/60 border border-white/10 rounded-md px-3 py-2.5 font-mono text-sm text-white placeholder-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow focus:border-brand-glow/60 transition-colors';
 
   const fields: Array<{
     key: 'name' | 'email' | 'message';
@@ -205,8 +233,17 @@ const Contact = () => {
                     variants={fieldVariants}
                     className="relative"
                   >
-                    <label className="block font-mono text-[11px] tracking-[0.2em] text-white/50 uppercase mb-1.5">
-                      <span className="text-brand-glow">$</span> {field.label}
+                    <label
+                      htmlFor={`contact-${field.key}`}
+                      className="block font-mono text-[11px] tracking-[0.2em] text-white/70 uppercase mb-1.5"
+                    >
+                      <span className="text-brand-glow" aria-hidden="true">
+                        $
+                      </span>{' '}
+                      {field.label}{' '}
+                      <span className="text-red-400" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <div className="relative">
                       {focusKey === field.key && (
@@ -225,18 +262,42 @@ const Contact = () => {
                       )}
                       {field.type === 'textarea' ? (
                         <textarea
+                          id={`contact-${field.key}`}
                           rows={4}
                           placeholder={field.placeholder}
                           className={inputClass}
+                          aria-required="true"
+                          aria-invalid={errors?.[field.key] ? true : false}
+                          aria-describedby={
+                            errors?.[field.key]
+                              ? `contact-${field.key}-error`
+                              : undefined
+                          }
                           {...register(field.key, field.validation)}
                           onFocus={() => setFocusKey(field.key)}
                           onBlur={() => setFocusKey(null)}
                         />
                       ) : (
                         <input
-                          type="text"
+                          id={`contact-${field.key}`}
+                          type={field.key === 'email' ? 'email' : 'text'}
+                          inputMode={field.key === 'email' ? 'email' : undefined}
+                          autoComplete={
+                            field.key === 'email'
+                              ? 'email'
+                              : field.key === 'name'
+                              ? 'name'
+                              : undefined
+                          }
                           placeholder={field.placeholder}
                           className={inputClass}
+                          aria-required="true"
+                          aria-invalid={errors?.[field.key] ? true : false}
+                          aria-describedby={
+                            errors?.[field.key]
+                              ? `contact-${field.key}-error`
+                              : undefined
+                          }
                           {...register(field.key, field.validation)}
                           onFocus={() => setFocusKey(field.key)}
                           onBlur={() => setFocusKey(null)}
@@ -244,12 +305,26 @@ const Contact = () => {
                       )}
                     </div>
                     {errors?.[field.key]?.message && (
-                      <p className="mt-1.5 font-mono text-xs text-red-400">
+                      <p
+                        id={`contact-${field.key}-error`}
+                        role="alert"
+                        className="mt-1.5 font-mono text-xs text-red-300"
+                      >
                         {errors[field.key]?.message as string}
                       </p>
                     )}
                   </MDiv>
                 ))}
+
+                {submitError && (
+                  <div
+                    role="alert"
+                    aria-live="assertive"
+                    className="rounded-md border border-red-400/40 bg-red-500/10 px-3 py-2 font-mono text-xs text-red-200"
+                  >
+                    {submitError}
+                  </div>
+                )}
 
                 <MDiv
                   initial="hidden"

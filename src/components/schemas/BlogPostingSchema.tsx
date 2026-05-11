@@ -47,12 +47,12 @@ const BlogPostingSchema = ({
     publisher: {
       '@type': 'Organization',
       '@id': 'https://www.grizzlybit.dev/#organization',
-      name: 'RAZRLAB',
+      name: 'Grizzlybit',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.grizzlybit.dev/grizzlybit-logo-image.png',
-        width: 479,
-        height: 91,
+        url: 'https://www.grizzlybit.dev/grizzlybit-logo-square.png',
+        width: 512,
+        height: 512,
       },
     },
     mainEntityOfPage: {

@@ -6,7 +6,7 @@
     <atom:link href="https://www.grizzlybit.dev/rss.xml" rel="self" type="application/rss+xml" />
     <description>Engineering blog of Zubair Ahmed (Grizzlybit) — Node.js, React, TypeScript, IoT, and full-stack engineering.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 May 2026 10:51:49 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 11 May 2026 11:21:31 GMT</lastBuildDate>
     <item>
       <title>What&apos;s New in Node.js 24 (And How to Upgrade Your Codebase Smoothly)</title>
       <link>https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24</link>

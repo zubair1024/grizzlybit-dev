@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
-  const title = `${tagLabel} — Posts tagged "${tagLabel}"`;
+  const title = `${tagLabel} — Engineering posts`;
   const description = `${posts.length} engineering post${
     posts.length === 1 ? '' : 's'
   } tagged ${tagLabel} by Zubair Ahmed (Grizzlybit).`;
@@ -34,7 +34,7 @@ export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
       />
       <BreadcrumbListSchema
         items={[
-          { name: 'Home', url: 'https://www.grizzlybit.dev/' },
+          { name: 'Home', url: 'https://www.grizzlybit.dev' },
           { name: 'Blog', url: 'https://www.grizzlybit.dev/blog' },
           { name: tagLabel, url: canonical },
         ]}

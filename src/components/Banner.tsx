@@ -81,7 +81,8 @@ const Banner = () => {
                     <Link
                       target={'_blank'}
                       href={i.url}
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
+                      aria-label={`${i.name} profile`}
                       onClick={() =>
                         trackEvent('social_click', {
                           network: i.name,
@@ -89,13 +90,14 @@ const Banner = () => {
                           location: 'banner',
                         })
                       }
+                      className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow"
                     >
                       <motion.div whileHover={{ scale: 1.5 }}>
                         <Image
                           src={i.img}
                           height={32}
                           width={32}
-                          alt={`${i.name} social media profile`}
+                          alt=""
                         ></Image>
                       </motion.div>
                     </Link>

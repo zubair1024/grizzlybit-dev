@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const matter = require('gray-matter');
 
-// Read MDX frontmatter once at sitemap generation
+// Parse MDX frontmatter once at sitemap generation via gray-matter
+// (robust against quoted strings, inline arrays, block scalars).
 const postsDir = path.join(process.cwd(), 'src/posts');
 const tagToSlug = (t) =>
-  t
+  String(t)
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, '-')
@@ -13,36 +15,39 @@ const tagToSlug = (t) =>
 const { postLastmods, tagLastmods } = (() => {
   const posts = {};
   const tags = {};
+  let files = [];
   try {
-    for (const f of fs.readdirSync(postsDir)) {
-      const slug = f.replace(/\.mdx$/, '');
-      const src = fs.readFileSync(path.join(postsDir, f), 'utf8');
-      const lm = src.match(/lastModified:\s*['"]?([^\n'"]+)/);
-      const pub = src.match(/publishedAt:\s*['"]?([^\n'"]+)/);
-      const fileMtime = fs
-        .statSync(path.join(postsDir, f))
-        .mtime.toISOString();
-      const iso = new Date(
-        (lm && lm[1].trim()) || (pub && pub[1].trim()) || fileMtime,
-      ).toISOString();
-      posts[slug] = iso;
-
-      const kwBlock = src.match(/keywords:\s*\n((?:\s+-\s+.+\n?)+)/);
-      if (kwBlock) {
-        for (const line of kwBlock[1].split('\n')) {
-          const m = line.match(/^\s+-\s+(.+?)\s*$/);
-          if (!m) continue;
-          const raw = m[1].replace(/^['"]|['"]$/g, '');
-          const ts = tagToSlug(raw);
-          if (!ts) continue;
-          if (!tags[ts]) tags[ts] = { lastmod: iso, count: 0 };
-          tags[ts].count += 1;
-          if (tags[ts].lastmod < iso) tags[ts].lastmod = iso;
-        }
-      }
-    }
+    files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.mdx'));
   } catch (e) {
-    /* sitemap proceeds with defaults */
+    console.warn('[sitemap] posts dir unreadable:', e.message);
+    return { postLastmods: posts, tagLastmods: tags };
+  }
+
+  for (const f of files) {
+    const slug = f.replace(/\.mdx$/, '');
+    const fullPath = path.join(postsDir, f);
+    let data = {};
+    try {
+      data = matter(fs.readFileSync(fullPath, 'utf8')).data || {};
+    } catch (e) {
+      console.warn(`[sitemap] frontmatter parse failed for ${f}:`, e.message);
+    }
+    const fileMtime = fs.statSync(fullPath).mtime.toISOString();
+    const candidate = data.lastModified || data.publishedAt || fileMtime;
+    const d = new Date(candidate);
+    const iso = Number.isNaN(d.getTime())
+      ? fileMtime
+      : d.toISOString();
+    posts[slug] = iso;
+
+    const kws = Array.isArray(data.keywords) ? data.keywords : [];
+    for (const raw of kws) {
+      const ts = tagToSlug(raw);
+      if (!ts) continue;
+      if (!tags[ts]) tags[ts] = { lastmod: iso, count: 0 };
+      tags[ts].count += 1;
+      if (tags[ts].lastmod < iso) tags[ts].lastmod = iso;
+    }
   }
   return { postLastmods: posts, tagLastmods: tags };
 })();
@@ -70,6 +75,8 @@ module.exports = {
     let priority = 0.5;
     let changefreq = 'weekly';
     let lastmod = new Date().toISOString();
+    // Normalize so sitemap homepage <loc> matches canonical (trailing slash)
+    let loc = urlPath === '/' ? '/' : urlPath;
 
     if (urlPath === '/') {
       priority = 1.0;
@@ -98,7 +105,7 @@ module.exports = {
     }
 
     return {
-      loc: urlPath,
+      loc,
       changefreq,
       priority,
       lastmod,

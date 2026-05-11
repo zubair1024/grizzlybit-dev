@@ -18,7 +18,7 @@ const PersonSchema = () => {
     sameAs: socialLinks.map((link) => link.url),
     description:
       'Full-stack software engineer and CTO at RAZRLAB. Builds Node.js, React, TypeScript, and IoT products. Based in Dubai, working across web, mobile, and cloud.',
-    image: 'https://www.grizzlybit.dev/zubair_2.jpg',
+    image: 'https://www.grizzlybit.dev/zubair_2.webp',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Dubai',

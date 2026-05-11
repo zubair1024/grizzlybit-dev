@@ -71,7 +71,7 @@ const Footer = () => {
                 <Link
                   target="_blank"
                   href={s.url}
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={s.name}
                   onClick={() =>
                     trackEvent('social_click', {
@@ -80,7 +80,7 @@ const Footer = () => {
                       location: 'footer',
                     })
                   }
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:border-brand-glow/60 hover:bg-brand-glow/10 transition-colors"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:border-brand-glow/60 hover:bg-brand-glow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
                 >
                   <Image src={s.img} height={18} width={18} alt={s.name} />
                 </Link>

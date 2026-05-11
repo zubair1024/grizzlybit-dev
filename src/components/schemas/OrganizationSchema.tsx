@@ -5,26 +5,23 @@ const OrganizationSchema = () => {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': 'https://www.grizzlybit.dev/#organization',
-    name: 'RAZRLAB',
+    name: 'Grizzlybit',
+    alternateName: 'Grizzlybit — Zubair Ahmed',
     url: 'https://www.grizzlybit.dev',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.grizzlybit.dev/grizzlybit-logo-image.png',
-      width: 479,
-      height: 91,
+      url: 'https://www.grizzlybit.dev/grizzlybit-logo-square.png',
+      width: 512,
+      height: 512,
     },
     description:
-      'RAZRLAB is a technology company specializing in software development, web applications, mobile applications, and cloud solutions.',
+      'Grizzlybit is the personal practice of Zubair Ahmed — full-stack software engineering, Node.js, React, TypeScript, and IoT product builds in Dubai.',
     founder: {
       '@type': 'Person',
+      '@id': 'https://www.grizzlybit.dev/#person',
       name: 'Zubair Ahmed',
     },
     foundingDate: '2017-03-01',
-    employee: {
-      '@type': 'Person',
-      name: 'Zubair Ahmed',
-      jobTitle: 'Chief Technology Officer',
-    },
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Dubai',

@@ -77,7 +77,7 @@ export default function BlogPost({
   }, [slug, frontmatter.title]);
 
   const breadcrumbItems = [
-    { name: 'Home', url: 'https://www.grizzlybit.dev/' },
+    { name: 'Home', url: 'https://www.grizzlybit.dev' },
     { name: 'Blog', url: 'https://www.grizzlybit.dev/blog' },
     {
       name: frontmatter.title,
@@ -119,14 +119,17 @@ export default function BlogPost({
             </div>
           </div>
           <div className="max-w-[900px] mx-auto py-10 px-10 bg-base-300">
-            <div className="text-sm breadcrumbs">
+            <nav aria-label="Breadcrumb" className="text-sm breadcrumbs">
               <ul>
+                <li>
+                  <Link href="/">Home</Link>
+                </li>
                 <li>
                   <Link href="/blog">Blog</Link>
                 </li>
-                <li>{frontmatter.title}</li>
+                <li aria-current="page">{frontmatter.title}</li>
               </ul>
-            </div>
+            </nav>
             {frontmatter.keywords && frontmatter.keywords.length > 0 && (
               <div className="not-prose flex flex-wrap gap-2 mb-6">
                 {frontmatter.keywords.map((k) => (
@@ -139,7 +142,7 @@ export default function BlogPost({
             <div className="flex items-center justify-center space-x-5">
               <div>
                 <Image
-                  src="/zubair_2.jpg"
+                  src="/zubair_2.webp"
                   height={200}
                   width={200}
                   alt="Zubair Ahmed"
@@ -188,16 +191,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
   const postData = await getPostData(slug);
 
-  // Calculate reading time from the MDX code
-  const readingTime = calculateReadingTime(postData.code);
+  // Calculate reading time from raw MDX body (not compiled JS)
+  const readingTime = calculateReadingTime(postData.body);
 
   // Get all posts for related posts functionality
   const allPosts = await getBlogPostData();
 
   return {
     props: {
-      ...postData,
       slug,
+      frontmatter: postData.frontmatter,
+      code: postData.code,
       readingTime,
       allPosts,
     },
