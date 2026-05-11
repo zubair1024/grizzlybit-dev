@@ -122,7 +122,7 @@ const PortfolioHero = ({
 const Breadcrumbs = ({ title }: { title: string }) => (
   <nav
     aria-label="Breadcrumb"
-    className="font-mono text-xs text-white/40 flex items-center gap-2 flex-wrap"
+    className="font-mono text-xs text-white/60 flex items-center gap-2 flex-wrap"
   >
     <Link href="/" className="hover:text-brand-glow transition-colors">
       /

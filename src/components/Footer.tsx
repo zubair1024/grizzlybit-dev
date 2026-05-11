@@ -38,7 +38,7 @@ const Footer = () => {
             Building products at the intersection of Node.js, React, and
             TypeScript.
           </p>
-          <p className="mt-3 font-mono text-xs text-white/40">
+          <p className="mt-3 font-mono text-xs text-white/60">
             Dubai, United Arab Emirates
           </p>
         </div>
@@ -103,7 +103,7 @@ const Footer = () => {
       </div>
 
       <div className="border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-xs text-white/40">
+        <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-xs text-white/60">
           <p>© {year} Zubair Ahmed. All rights reserved.</p>
           <p>
             Built with <span className="text-brand-glow">Next.js</span> &

@@ -26,22 +26,13 @@ const Header = () => {
   const isLandingPage = pathname === '/';
   const menu = isLandingPage ? landingPageMenu : subRouteMenu;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const header = document.getElementById('header');
-    const onScroll = () => {
-      if (window.scrollY !== 0) {
-        header?.classList.add('shadow-xl');
-        header?.classList.remove('bg-transparent');
-        header?.classList.add('bg-base-300');
-      } else {
-        header?.classList.remove('shadow-xl');
-        header?.classList.add('bg-transparent');
-        header?.classList.remove('bg-base-300');
-      }
-    };
-    document.addEventListener('scroll', onScroll);
-    return () => document.removeEventListener('scroll', onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Close mobile menu on route change
@@ -60,7 +51,12 @@ const Header = () => {
   }, [mobileOpen]);
 
   return (
-    <header id="header" className="fixed z-50 navbar">
+    <header
+      id="header"
+      className={`fixed top-0 left-0 right-0 z-50 navbar transition-colors duration-200 ${
+        scrolled ? 'bg-base-300 shadow-xl' : 'bg-transparent'
+      }`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <button

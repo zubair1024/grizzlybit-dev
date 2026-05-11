@@ -181,7 +181,7 @@ html {
   width: 110px;
   height: 110px;
   animation-delay: 3s;
-  background: url('/toolbelt/macos.svg') no-repeat;
+  background: url('/toolbelt/mac-os-logo.svg') no-repeat;
   background-size: cover;
   background-position: center;
 }

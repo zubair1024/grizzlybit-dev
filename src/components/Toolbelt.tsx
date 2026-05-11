@@ -202,7 +202,7 @@ const Toolbelt = () => {
               aria-hidden
               className="absolute inset-0 m-auto flex items-center justify-center pointer-events-none"
             >
-              <div className="font-mono text-[10px] tracking-[0.3em] text-white/40 uppercase">
+              <div className="font-mono text-[10px] tracking-[0.3em] text-white/60 uppercase">
                 core
               </div>
             </div>

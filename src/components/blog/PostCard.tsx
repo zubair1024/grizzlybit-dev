@@ -43,13 +43,13 @@ export const PostCard = ({
             <span className="terminal-dot bg-[#ff5f56]" />
             <span className="terminal-dot bg-[#ffbd2e]" />
             <span className="terminal-dot bg-[#27c93f]" />
-            <span className="ml-3 font-mono text-[11px] text-white/40 truncate">
+            <span className="ml-3 font-mono text-[11px] text-white/60 truncate">
               ~/blog/{data.slug}.mdx
             </span>
           </div>
 
           <div className="flex-1 flex flex-col gap-3 p-5 font-mono text-sm">
-            <div className="flex items-center gap-2 text-white/40 text-xs">
+            <div className="flex items-center gap-2 text-white/60 text-xs">
               <span className="text-brand-cool">zubair</span>
               <span className="text-white/30">@</span>
               <span className="text-brand-haze">grizzlybit</span>

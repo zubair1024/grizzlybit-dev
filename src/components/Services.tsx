@@ -121,7 +121,7 @@ const Card = ({ data, index }: { data: ServicesData; index: number }) => {
           style={{ transform: 'translateZ(0)' }}
         >
           <div className="flex items-start justify-between">
-            <span className="font-mono text-xs tracking-[0.25em] text-white/40">
+            <span className="font-mono text-xs tracking-[0.25em] text-white/60">
               0{index + 1}
             </span>
             <MDiv

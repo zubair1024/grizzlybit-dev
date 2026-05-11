@@ -33,13 +33,13 @@ const TerminalCard = ({ post, index }: { post: PostData; index: number }) => {
             <span className="terminal-dot bg-[#ff5f56]" />
             <span className="terminal-dot bg-[#ffbd2e]" />
             <span className="terminal-dot bg-[#27c93f]" />
-            <span className="ml-3 font-mono text-[11px] text-white/40">
+            <span className="ml-3 font-mono text-[11px] text-white/60">
               ~/blog
             </span>
           </div>
 
           <div className="flex-1 flex flex-col gap-3 p-5 font-mono text-sm">
-            <div className="flex items-center gap-2 text-white/40 text-xs">
+            <div className="flex items-center gap-2 text-white/60 text-xs">
               <span className="text-brand-cool">zubair</span>
               <span className="text-white/30">@</span>
               <span className="text-brand-haze">grizzlybit</span>
@@ -62,7 +62,7 @@ const TerminalCard = ({ post, index }: { post: PostData; index: number }) => {
               {post.summary}
             </p>
 
-            <div className="mt-auto flex items-center justify-between pt-3 border-t border-white/5 text-[11px] text-white/40">
+            <div className="mt-auto flex items-center justify-between pt-3 border-t border-white/5 text-[11px] text-white/60">
               <span>{post.publishedAt}</span>
               {post.readingTime && <span>{post.readingTime}</span>}
             </div>
@@ -111,7 +111,7 @@ const BlogSection = ({ allPostsData }: Props) => {
               <span className="relative flex items-center gap-2">
                 <span className="text-brand-glow">$</span>
                 <span>ls posts/</span>
-                <span className="text-white/40 group-hover:text-brand-glow transition-colors">
+                <span className="text-white/60 group-hover:text-brand-glow transition-colors">
                   →
                 </span>
               </span>

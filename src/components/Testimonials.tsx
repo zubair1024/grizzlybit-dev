@@ -53,7 +53,7 @@ const TestimonialCard = ({
           <p className="font-mono font-bold text-white text-sm">{data.name}</p>
           <p className="font-mono text-xs text-white/70">{data.designation}</p>
           <p className="font-mono text-xs text-brand-glow/90">{data.company}</p>
-          <p className="font-mono text-[10px] text-white/40">{data.place}</p>
+          <p className="font-mono text-[10px] text-white/60">{data.place}</p>
         </div>
       </div>
       <Link
