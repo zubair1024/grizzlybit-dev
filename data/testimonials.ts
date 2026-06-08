@@ -103,6 +103,15 @@ const testimonials = [
     linkedIn: `https://www.linkedin.com/in/shahba/`,
     message: ` He was very enthusiastic and passionate on whichever tasks that he undertook. His good interpersonal skills helped him to easily get along well with others. With his qualities, I am sure that he would attain further greater heights in his career. I wish him all the best for his career and keep having a smiling face.`,
   },
+  {
+    name: 'Md. Akram',
+    company: 'Emirates NBD',
+    designation: 'Full Stack Engineer',
+    place: 'Dubai, United Arab Emirates',
+    imageUrl: '/testimonials/akram.jpeg',
+    linkedIn: `https://www.linkedin.com/in/mohdakram`,
+    message: `Fantastic CTO who supports his team while giving them the space to innovate. Working with Zubair was a great pleasure and a highlight of my career. A brilliant architect with an eye for pragmatism and good design, for whom no problem is too complex to tackle, and at a rapid pace too. Zubair motivates the team to be more ambitious and driven to solve the hard problems, and he does it with a smile.`,
+  },
 ];
 
 export default testimonials;
