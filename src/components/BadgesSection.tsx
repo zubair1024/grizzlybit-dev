@@ -1,9 +1,10 @@
+import type { Variants } from 'motion/react';
 import badges from 'data/badges';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MDiv } from './fx/m';
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: (i: number) => ({
     y: 0,

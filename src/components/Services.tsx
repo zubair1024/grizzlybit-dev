@@ -2,7 +2,7 @@ import {
   useMotionTemplate,
   useMotionValue,
   useSpring,
-} from 'framer-motion';
+} from 'motion/react';
 import Image from 'next/image';
 import { MouseEvent, useRef } from 'react';
 import { useCapabilities } from './fx/CapabilityProvider';
@@ -117,7 +117,7 @@ const Card = ({ data, index }: { data: ServicesData; index: number }) => {
         />
 
         <div
-          className="relative flex h-full flex-col gap-4 rounded-xl border border-white/10 bg-[#0f1218]/85 p-7 text-white shadow-2xl backdrop-blur-sm"
+          className="relative flex h-full flex-col gap-4 rounded-xl border border-white/10 bg-[#0f1218]/85 p-7 text-white shadow-2xl backdrop-blur-xs"
           style={{ transform: 'translateZ(0)' }}
         >
           <div className="flex items-start justify-between">
@@ -150,7 +150,7 @@ const Card = ({ data, index }: { data: ServicesData; index: number }) => {
 
           <div style={{ transform: 'translateZ(20px)' }}>
             <h3 className="font-mono text-xl">{data.title}</h3>
-            <div className="mt-2 h-px w-12 bg-gradient-to-r from-brand-glow to-transparent" />
+            <div className="mt-2 h-px w-12 bg-linear-to-r/srgb from-brand-glow to-transparent" />
           </div>
 
           <p

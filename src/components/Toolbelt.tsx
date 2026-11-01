@@ -1,5 +1,5 @@
 import toolBelt from 'data/toolbelt';
-import { useAnimationControls } from 'framer-motion';
+import { useAnimationControls } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useCapabilities } from './fx/CapabilityProvider';
@@ -141,7 +141,7 @@ const Toolbelt = () => {
   const minimal = lowPower || isMobile;
 
   return (
-    <section className="relative py-16 flex flex-col justify-center overflow-hidden bg-gradient-to-b from-[#0b0d12] via-[#0f1218] to-[#0b0d12]">
+    <section className="relative py-16 flex flex-col justify-center overflow-hidden bg-linear-to-b/srgb from-[#0b0d12] via-[#0f1218] to-[#0b0d12]">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.15] pointer-events-none"

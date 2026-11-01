@@ -107,7 +107,7 @@ const PortfolioHero = ({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-sm"
+        className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-xs"
       >
         <span className="text-brand-glow">$</span>
         <span className="text-white/80">{command}</span>
@@ -421,7 +421,7 @@ const OtherProjectCard = ({
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"
+            className="absolute inset-0 bg-linear-to-t/srgb from-black/95 via-black/40 to-transparent"
           />
           <div className="absolute inset-x-0 bottom-0 p-3">
             <p className="font-mono text-[9px] tracking-[0.25em] text-brand-glow uppercase">

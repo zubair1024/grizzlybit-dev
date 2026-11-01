@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio and blog website for Zubair Ahmed (grizzlybit.dev) built with Next.js 13, TypeScript, Tailwind CSS with DaisyUI, and MDX for blog content.
+Personal portfolio and blog website for Zubair Ahmed (grizzlybit.dev) built with Next.js 16 (Pages Router), React 19, TypeScript, Tailwind CSS 4 with daisyUI 5, and MDX for blog content.
 
 ## Commands
 
@@ -43,18 +43,18 @@ The project uses Husky with lint-staged to automatically format code on commit:
 - **Post utilities (`src/util/posts.ts`)**: Functions for reading MDX files, extracting frontmatter, and bundling with rehype-prism-plus (syntax highlighting) and remark-gfm (GitHub Flavored Markdown)
 
 ### Key Components
-- **Layout (`src/components/Layout.tsx`)**: Wraps all pages with Header/Footer and Framer Motion page transitions
+- **Layout (`src/components/Layout.tsx`)**: Wraps all pages with Header/Footer and Motion (motion/react) page transitions
 - **Section Components**: Self-contained components for each homepage section (AboutMe, Banner, BlogSection, Companies, Contact, Portfolio, Services, Statistics, Testimonials, Toolbelt)
 - **CustomHead**: SEO metadata management with next-seo
 
 ### Styling
-- Tailwind CSS with custom config in `src/` directory
-- DaisyUI component library with "halloween" theme
-- Framer Motion for page transitions and animations
+- Tailwind CSS 4, configured CSS-first in `src/styles/globals.css` (`@theme`, `@plugin`); no `tailwind.config.js`
+- daisyUI 5 "halloween" theme, pinned to its daisyUI 2 palette via `@plugin 'daisyui/theme'` in `globals.css`
+- Motion (`motion/react`) for page transitions and animations
 - Custom CSS modules for specific pages (Home.module.css, Portfolio.module.css)
 
 ### External Integrations
-- **Analytics**: Google Analytics 4 (via ga-4-react) and Hotjar
+- **Analytics**: Google Analytics 4 (gtag.js bootstrapped in `src/util/ga.ts`) and Hotjar
 - **Email**: AWS SES via nodemailer for contact form (`src/util/mailer.ts`)
 - **SEO**: next-sitemap for automatic sitemap generation (postbuild script)
 

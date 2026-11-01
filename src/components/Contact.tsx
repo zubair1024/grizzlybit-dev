@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AnimatePresence, LayoutGroup } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, type Variants } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoHome } from 'react-icons/io5';
@@ -18,7 +18,7 @@ async function sendMessage({ name, email, message }: IContactFormValues) {
   return axios.post(`/api/contact`, { name, email, message });
 }
 
-const fieldVariants = {
+const fieldVariants: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,
@@ -79,7 +79,7 @@ const SuccessModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs"
           onClick={onClose}
           role="presentation"
         >
@@ -98,7 +98,7 @@ const SuccessModal = ({
               ref={closeBtnRef}
               onClick={onClose}
               aria-label="Close success dialog"
-              className="absolute right-3 top-3 h-10 w-10 rounded-full border border-white/15 text-white/80 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow"
+              className="absolute right-3 top-3 h-10 w-10 rounded-full border border-white/15 text-white/80 hover:text-white focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow"
             >
               ✕
             </button>
@@ -157,7 +157,7 @@ const Contact = () => {
   };
 
   const inputClass =
-    'w-full bg-black/60 border border-white/10 rounded-md px-3 py-2.5 font-mono text-sm text-white placeholder-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow focus:border-brand-glow/60 transition-colors';
+    'w-full bg-black/60 border border-white/10 rounded-md px-3 py-2.5 font-mono text-sm text-white placeholder-white/40 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow focus:border-brand-glow/60 transition-colors';
 
   const fields: Array<{
     key: 'name' | 'email' | 'message';
@@ -199,7 +199,7 @@ const Contact = () => {
     <>
       <section
         id="contact-form"
-        className="relative py-16 bg-gradient-to-t from-black via-[#0c0e13] to-[#16191f] overflow-hidden"
+        className="relative py-16 bg-linear-to-t/srgb from-black via-[#0c0e13] to-[#16191f] overflow-hidden"
       >
         <div
           aria-hidden
@@ -207,7 +207,7 @@ const Contact = () => {
         />
         <div
           aria-hidden
-          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-glow/60 to-transparent"
+          className="absolute inset-x-0 top-0 h-px bg-linear-to-r/srgb from-transparent via-brand-glow/60 to-transparent"
         />
 
         <div className="relative mx-auto max-w-5xl px-5">
@@ -220,7 +220,7 @@ const Contact = () => {
             </h2>
           </div>
 
-          <div className="grid gap-10 md:grid-cols-2 p-6 md:p-10 rounded-2xl border border-white/10 bg-[#0b0d12]/70 backdrop-blur-sm shadow-2xl">
+          <div className="grid gap-10 md:grid-cols-2 p-6 md:p-10 rounded-2xl border border-white/10 bg-[#0b0d12]/70 backdrop-blur-xs shadow-2xl">
             <LayoutGroup>
               <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                 {fields.map((field, i) => (

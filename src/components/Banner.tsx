@@ -1,5 +1,5 @@
 import socialLinks from 'data/socialLinks';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { trackEvent } from '@/util/ga';
@@ -30,7 +30,7 @@ const info = {
 const Banner = () => {
   return (
     <>
-      <div className=" min-h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-black to-[#212121] pt-20">
+      <div className=" min-h-screen flex flex-col justify-center items-center bg-linear-to-b/srgb from-black to-[#212121] pt-20">
         <motion.div
           style={{
             boxShadow: 'white 0px 0px 2px 0px',
@@ -54,7 +54,7 @@ const Banner = () => {
               priority
             />
           </div>
-          <div className="text-center card-body">
+          <div className="text-center card-body text-base">
             <h1 className="text-2xl font-semibold tracking-wider text-center">
               Zubair Ahmed
               <span className="sr-only">
@@ -90,7 +90,7 @@ const Banner = () => {
                           location: 'banner',
                         })
                       }
-                      className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow"
+                      className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow"
                     >
                       <motion.div whileHover={{ scale: 1.5 }}>
                         <Image

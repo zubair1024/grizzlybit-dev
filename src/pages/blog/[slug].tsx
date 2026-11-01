@@ -112,7 +112,7 @@ export default function BlogPost({
       <Layout>
         <main id="main" className="max-w-full prose prose-md">
           <div className="bg-fixed bg-toolBelt">
-            <div className="py-10 overflow-hidden text-white bg-black bg-opacity-50 shadow-lg toolBelt-content backdrop-filter backdrop-blur-lg">
+            <div className="py-10 overflow-hidden text-white bg-black/50 shadow-lg toolBelt-content backdrop-blur-lg">
               <h1 className="p-16 text-center md:grid-cols-4">
                 {frontmatter.title}
               </h1>

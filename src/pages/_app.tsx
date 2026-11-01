@@ -1,6 +1,6 @@
 import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
 import '@/styles/globals.css';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'motion/react';
 import type { AppProps } from 'next/app';
 import type { NextWebVitalsMetric } from 'next/app';
 import { useEffect } from 'react';
@@ -55,7 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
     init('G-ZD3BELKQE2');
-    hotjar.initialize(3372547, 6);
+    hotjar.initialize({ id: 3372547, sv: 6 });
   }, []);
 
   return (

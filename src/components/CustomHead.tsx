@@ -1,5 +1,9 @@
 import defaultTags from 'data/defaultTags';
-import { NextSeo } from 'next-seo';
+import { generateNextSeo, type NextSeoProps } from 'next-seo/pages';
+import Head from 'next/head';
+
+// next-seo 7 dropped the <NextSeo> component for the Pages Router
+const NextSeo = (props: NextSeoProps) => <Head>{generateNextSeo(props)}</Head>;
 
 interface CustomHeadProps {
   title?: string;
@@ -85,7 +89,8 @@ const CustomHead = (props: CustomHeadProps) => {
   const isHomepage =
     !title || normalize(canonicalUrl) === normalize(defaultTags.websiteUrl);
   const resolvedTitle = title ?? defaultTags.title;
-  const titleTemplate = isHomepage ? undefined : defaultTags.titleTemplate;
+  // '%s' (not undefined): next-seo keeps the last titleTemplate module-wide
+  const titleTemplate = isHomepage ? '%s' : defaultTags.titleTemplate;
 
   return (
     <>

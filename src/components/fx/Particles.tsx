@@ -1,18 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
-import Particles, { initParticlesEngine } from '@tsparticles/react';
+import Particles, { ParticlesProvider } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
-import type { ISourceOptions } from '@tsparticles/engine';
+import type { Engine, ISourceOptions } from '@tsparticles/engine';
 
-let initPromise: Promise<void> | null = null;
-
-const ensureEngine = () => {
-  if (!initPromise) {
-    initPromise = initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    });
-  }
-  return initPromise;
-};
+// Must be a stable reference: the provider inits the engine once per app
+const loadEngine = (engine: Engine) => loadSlim(engine);
 
 export const orbitOptions: ISourceOptions = {
   fullScreen: { enable: false },
@@ -20,7 +11,7 @@ export const orbitOptions: ISourceOptions = {
   fpsLimit: 60,
   particles: {
     number: { value: 40, density: { enable: true } },
-    color: { value: ['#f28c18', '#a991f7', '#37cdbe'] },
+    paint: { color: { value: ['#f28c18', '#a991f7', '#37cdbe'] } },
     shape: { type: 'circle' },
     opacity: { value: 0.35 },
     size: { value: { min: 1, max: 2.5 } },
@@ -47,7 +38,7 @@ export const constellationOptions: ISourceOptions = {
   fpsLimit: 60,
   particles: {
     number: { value: 60 },
-    color: { value: ['#f28c18', '#a991f7'] },
+    paint: { color: { value: ['#f28c18', '#a991f7'] } },
     shape: { type: 'circle' },
     opacity: { value: 0.5 },
     size: { value: { min: 0.5, max: 2 } },
@@ -73,18 +64,10 @@ type Props = {
   className?: string;
 };
 
-const ParticlesField = ({ id, options, className }: Props) => {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    ensureEngine().then(() => setReady(true));
-  }, []);
-
-  const opts = useMemo(() => options, [options]);
-
-  if (!ready) return null;
-
-  return <Particles id={id} options={opts} className={className} />;
-};
+const ParticlesField = ({ id, options, className }: Props) => (
+  <ParticlesProvider init={loadEngine}>
+    <Particles id={id} options={options} className={className} />
+  </ParticlesProvider>
+);
 
 export default ParticlesField;
