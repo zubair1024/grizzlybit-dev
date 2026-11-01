@@ -11,8 +11,8 @@ const nextConfig = {
   // Image optimization configuration
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: [
-      'www.youtube.com', // For embedded YouTube videos
+    remotePatterns: [
+      { protocol: 'https', hostname: 'www.youtube.com' }, // For embedded YouTube videos
     ],
   },
 
