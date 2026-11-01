@@ -1,17 +1,15 @@
-import AWS from 'aws-sdk';
+import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
 import nodemailer, { Transporter } from 'nodemailer';
 
 let cachedTransporter: Transporter | null = null;
 
 function getTransporter(): Transporter {
   if (cachedTransporter) return cachedTransporter;
-  const ses = new AWS.SES({
-    apiVersion: '2010-12-01',
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION,
+  // Credentials come from AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY via the default provider chain
+  const sesClient = new SESv2Client({ region: process.env.AWS_REGION });
+  cachedTransporter = nodemailer.createTransport({
+    SES: { sesClient, SendEmailCommand },
   });
-  cachedTransporter = nodemailer.createTransport({ SES: ses });
   return cachedTransporter;
 }
 

@@ -27,7 +27,7 @@ export default function Document() {
 
         {/*
           Font Optimization Notes:
-          - Using @next/font (Next.js 13) for automatic font optimization
+          - Using next/font for automatic font optimization
           - Fonts are configured in _app.tsx with font-display: swap
           - This prevents layout shift and improves CLS (Cumulative Layout Shift)
           - System fonts are used as fallbacks for optimal performance

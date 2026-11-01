@@ -64,11 +64,11 @@ export default function App({ Component, pageProps }: AppProps) {
         Font Optimization:
         - Using system fonts via Tailwind/DaisyUI for optimal performance
         - System fonts load instantly without network requests
-        - If custom fonts are needed, use @next/font with font-display: swap
+        - If custom fonts are needed, use next/font with font-display: swap
 
-        Example with @next/font (Next.js 13):
+        Example with next/font:
         ```typescript
-        import { Inter } from '@next/font/google';
+        import { Inter } from 'next/font/google';
 
         const inter = Inter({
           subsets: ['latin'],
