@@ -89,7 +89,8 @@ const CustomHead = (props: CustomHeadProps) => {
   const isHomepage =
     !title || normalize(canonicalUrl) === normalize(defaultTags.websiteUrl);
   const resolvedTitle = title ?? defaultTags.title;
-  const titleTemplate = isHomepage ? undefined : defaultTags.titleTemplate;
+  // '%s' (not undefined): next-seo keeps the last titleTemplate module-wide
+  const titleTemplate = isHomepage ? '%s' : defaultTags.titleTemplate;
 
   return (
     <>

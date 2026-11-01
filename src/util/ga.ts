@@ -13,9 +13,8 @@ export function init(G: string) {
     window.dataLayer!.push(arguments);
   };
   window.gtag('js', new Date());
-  window.gtag('config', G, {
-    debug_mode: process.env.NODE_ENV !== 'production',
-  });
+  // page_view is sent explicitly by logPageViews; any debug_mode value enables debug mode
+  window.gtag('config', G, { send_page_view: false });
   const script = document.createElement('script');
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${G}`;

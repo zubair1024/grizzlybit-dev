@@ -409,14 +409,18 @@ html {
   ); */
 }
 
-/* Keep the daisyUI 2 look: uppercase buttons, stats without dividers */
-.btn {
-  text-transform: uppercase;
-}
-.stat {
-  border: 0;
-}
-.stat-title {
-  font-size: 1rem;
-  line-height: 1.5rem;
+/* Keep the daisyUI 2 look: uppercase buttons, stats without dividers.
+   daisyUI 5 lives in a sub-layer of utilities, so this beats it;
+   :where() keeps specificity at 0 so utilities still override */
+@layer utilities {
+  :where(.btn) {
+    text-transform: uppercase;
+  }
+  :where(.stat) {
+    border: 0;
+  }
+  :where(.stat-title) {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
 }

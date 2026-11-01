@@ -11,7 +11,7 @@ export const orbitOptions: ISourceOptions = {
   fpsLimit: 60,
   particles: {
     number: { value: 40, density: { enable: true } },
-    color: { value: ['#f28c18', '#a991f7', '#37cdbe'] },
+    paint: { color: { value: ['#f28c18', '#a991f7', '#37cdbe'] } },
     shape: { type: 'circle' },
     opacity: { value: 0.35 },
     size: { value: { min: 1, max: 2.5 } },
@@ -38,7 +38,7 @@ export const constellationOptions: ISourceOptions = {
   fpsLimit: 60,
   particles: {
     number: { value: 60 },
-    color: { value: ['#f28c18', '#a991f7'] },
+    paint: { color: { value: ['#f28c18', '#a991f7'] } },
     shape: { type: 'circle' },
     opacity: { value: 0.5 },
     size: { value: { min: 0.5, max: 2 } },

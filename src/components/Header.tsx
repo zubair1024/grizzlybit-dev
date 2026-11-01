@@ -87,7 +87,7 @@ const Header = () => {
             id="mobile-menu"
             className={`${
               mobileOpen ? '' : 'hidden'
-            } absolute left-0 top-full p-2 mt-3 uppercase shadow menu menu-compact bg-base-100 rounded-box w-52`}
+            } absolute left-0 top-full p-2 mt-3 uppercase shadow menu [&_li>*]:px-4 [&_li>*]:py-2 [&_li>*]:text-sm bg-base-100 rounded-box w-52`}
           >
             {menu.map((i) => (
               <li key={i.title}>
