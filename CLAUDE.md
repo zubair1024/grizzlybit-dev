@@ -54,7 +54,7 @@ The project uses Husky with lint-staged to automatically format code on commit:
 - Custom CSS modules for specific pages (Home.module.css, Portfolio.module.css)
 
 ### External Integrations
-- **Analytics**: Google Analytics 4 (via ga-4-react) and Hotjar
+- **Analytics**: Google Analytics 4 (gtag.js bootstrapped in `src/util/ga.ts`) and Hotjar
 - **Email**: AWS SES via nodemailer for contact form (`src/util/mailer.ts`)
 - **SEO**: next-sitemap for automatic sitemap generation (postbuild script)
 

@@ -22,7 +22,6 @@
     "daisyui": "^5.7.50",
     "dayjs": "^1.11.7",
     "esbuild": "^0.28.2",
-    "ga-4-react": "^0.1.281",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^10.1.1",
     "motion": "^14.9.0",
