@@ -119,7 +119,7 @@ const AboutMe = () => {
                 animation: 'borderSpin 8s linear infinite',
               }}
             />
-            <div className="relative flex items-center justify-center p-2 rounded-2xl bg-black/40 backdrop-blur-sm">
+            <div className="relative flex items-center justify-center p-2 rounded-2xl bg-black/40 backdrop-blur-xs">
               <Image
                 src="/zubair_2.webp"
                 width={400}

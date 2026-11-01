@@ -30,7 +30,7 @@ const TestimonialCard = ({
       stiffness: 130,
       damping: 18,
     }}
-    className="relative mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#101218]/95 p-6 shadow-xl backdrop-blur-sm overflow-hidden hover:border-brand-glow/40 transition-colors"
+    className="relative mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#101218]/95 p-6 shadow-xl backdrop-blur-xs overflow-hidden hover:border-brand-glow/40 transition-colors"
   >
     <div
       aria-hidden

@@ -93,7 +93,7 @@ export default function BlogPage({ allPostsData }: Props) {
               </h1>
               <div
                 aria-hidden="true"
-                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-sm"
+                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-xs"
               >
                 <span className="text-brand-glow">$</span>
                 <span className="text-white/80">ls posts/</span>
@@ -124,7 +124,7 @@ export default function BlogPage({ allPostsData }: Props) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder='"search posts…"'
-                  className="w-full rounded-lg border border-white/10 bg-black/60 pl-20 pr-4 py-3 font-mono text-sm text-white placeholder-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow focus:border-brand-glow/60 transition-colors"
+                  className="w-full rounded-lg border border-white/10 bg-black/60 pl-20 pr-4 py-3 font-mono text-sm text-white placeholder-white/40 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow focus:border-brand-glow/60 transition-colors"
                 />
               </div>
               <p className="mt-2 text-center font-mono text-[11px] text-white/60">

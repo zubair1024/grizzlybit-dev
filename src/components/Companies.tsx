@@ -71,7 +71,7 @@ const CompanyStar = ({
               'radial-gradient(circle, rgba(242,140,24,0.35), transparent 70%)',
           }}
         />
-        <div className="relative flex h-24 w-24 md:h-28 md:w-28 items-center justify-center rounded-full border border-white/10 bg-[#0d0f14]/80 p-3 backdrop-blur-sm shadow-xl">
+        <div className="relative flex h-24 w-24 md:h-28 md:w-28 items-center justify-center rounded-full border border-white/10 bg-[#0d0f14]/80 p-3 backdrop-blur-xs shadow-xl">
           <Image
             src={img}
             height={120}

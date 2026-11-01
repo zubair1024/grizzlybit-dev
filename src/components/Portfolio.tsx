@@ -26,7 +26,7 @@ export const PortfolioCardItem = (props: {
     >
       <div>
         <div className="relative mb-5 ml-5 group ">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+          <div className="absolute -inset-0.5 bg-linear-to-r/srgb from-pink-500 to-purple-500 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
           <Image
             src={item.img}
             alt={`${item.title} - ${item.desc}`}
@@ -139,7 +139,7 @@ const PortfolioCard = ({
 
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"
+              className="absolute inset-0 bg-linear-to-t/srgb from-black/95 via-black/40 to-transparent"
             />
 
             <div

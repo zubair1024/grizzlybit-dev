@@ -17,7 +17,7 @@ const Footer = () => {
     <footer className="relative border-t border-white/10 bg-black text-white/80">
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-glow/50 to-transparent"
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r/srgb from-transparent via-brand-glow/50 to-transparent"
       />
 
       <div className="mx-auto max-w-7xl px-6 py-12 grid gap-10 md:grid-cols-4">
@@ -80,7 +80,7 @@ const Footer = () => {
                       location: 'footer',
                     })
                   }
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:border-brand-glow/60 hover:bg-brand-glow/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:border-brand-glow/60 hover:bg-brand-glow/10 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
                 >
                   <Image src={s.img} height={18} width={18} alt={s.name} />
                 </Link>

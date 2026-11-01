@@ -62,7 +62,7 @@ export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
               </h1>
               <div
                 aria-hidden="true"
-                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-sm"
+                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-xs"
               >
                 <span className="text-brand-glow">$</span>
                 <span className="text-white/80">
@@ -82,7 +82,7 @@ export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
               <p className="mt-4 font-mono text-sm">
                 <Link
                   href="/blog"
-                  className="text-white/70 hover:text-brand-glow focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
+                  className="text-white/70 hover:text-brand-glow focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
                 >
                   ← back to /blog
                 </Link>

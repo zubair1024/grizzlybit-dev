@@ -106,7 +106,7 @@ const BlogSection = ({ allPostsData }: Props) => {
             <MButton
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              className="group relative rounded-lg border border-white/15 bg-black/40 px-6 py-3 font-mono text-sm text-white backdrop-blur-sm overflow-hidden"
+              className="group relative rounded-lg border border-white/15 bg-black/40 px-6 py-3 font-mono text-sm text-white backdrop-blur-xs overflow-hidden"
             >
               <span className="relative flex items-center gap-2">
                 <span className="text-brand-glow">$</span>
