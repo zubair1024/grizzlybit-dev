@@ -55,7 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
     init('G-ZD3BELKQE2');
-    hotjar.initialize(3372547, 6);
+    hotjar.initialize({ id: 3372547, sv: 6 });
   }, []);
 
   return (
