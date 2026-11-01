@@ -1,5 +1,5 @@
 import portfolio, { IPortfolioItem } from 'data/portfolio';
-import { useMotionValue, useSpring } from 'framer-motion';
+import { useMotionValue, useSpring } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, useRef, useState } from 'react';

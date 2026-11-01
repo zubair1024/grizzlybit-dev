@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AnimatePresence, LayoutGroup } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, type Variants } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoHome } from 'react-icons/io5';
@@ -18,7 +18,7 @@ async function sendMessage({ name, email, message }: IContactFormValues) {
   return axios.post(`/api/contact`, { name, email, message });
 }
 
-const fieldVariants = {
+const fieldVariants: Variants = {
   hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({
     opacity: 1,

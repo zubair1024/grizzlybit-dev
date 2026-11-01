@@ -1,6 +1,6 @@
 import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
 import '@/styles/globals.css';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'motion/react';
 import type { AppProps } from 'next/app';
 import type { NextWebVitalsMetric } from 'next/app';
 import { useEffect } from 'react';

@@ -1,5 +1,5 @@
 import toolBelt from 'data/toolbelt';
-import { useAnimationControls } from 'framer-motion';
+import { useAnimationControls } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useCapabilities } from './fx/CapabilityProvider';

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ReactNode } from 'react';
 import Footer from './Footer';
 import Header from './Header';

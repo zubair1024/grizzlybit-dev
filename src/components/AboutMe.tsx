@@ -4,7 +4,7 @@ import {
   useScroll,
   useTransform,
   animate,
-} from 'framer-motion';
+} from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import BadgesSection from './BadgesSection';

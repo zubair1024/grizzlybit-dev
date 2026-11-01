@@ -2,7 +2,7 @@ import {
   useMotionTemplate,
   useMotionValue,
   useSpring,
-} from 'framer-motion';
+} from 'motion/react';
 import Image from 'next/image';
 import { MouseEvent, useRef } from 'react';
 import { useCapabilities } from './fx/CapabilityProvider';
