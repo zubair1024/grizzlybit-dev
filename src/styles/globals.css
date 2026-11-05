@@ -84,52 +84,12 @@
   border-bottom: 2px solid var(--border);
 }
 
-/* Social and stat SVGs are white-only; darken them on light surfaces */
-.hero-social img,
-.hero-stat-figure img {
+/* Social SVGs are white-only; darken them on light surfaces */
+.hero-social img {
   filter: invert(1);
 }
-.dark .hero-social img,
-.dark .hero-stat-figure img {
+.dark .hero-social img {
   filter: none;
-}
-
-.hero-stat {
-  display: inline-grid;
-  grid-template-columns: repeat(1, 1fr);
-  column-gap: 1rem;
-  width: 100%;
-  padding: 1rem 1.5rem;
-}
-.hero-stat-figure {
-  grid-row: 1 / span 3;
-  grid-column-start: 2;
-  place-self: center flex-end;
-}
-.hero-stat-title,
-.hero-stat-desc {
-  grid-column-start: 1;
-  text-wrap: balance;
-  color: var(--muted-foreground);
-}
-.hero-stat-title {
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-@media (width >= 48rem) {
-  /* keep values on one baseline when a label wraps to two lines */
-  .hero-stat-title {
-    min-height: 3rem;
-  }
-}
-.hero-stat-desc {
-  font-size: 0.75rem;
-}
-.hero-stat-value {
-  grid-column-start: 1;
-  white-space: nowrap;
-  font-size: 2rem;
-  font-weight: 700;
 }
 
 .circles {
