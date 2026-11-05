@@ -4,6 +4,7 @@ import BlogSection from '@/components/BlogSection';
 import Companies from '@/components/Companies';
 import Contact from '@/components/Contact';
 import CustomHead from '@/components/CustomHead';
+import GithubActivity from '@/components/GithubActivity';
 import Layout from '@/components/Layout';
 import Portfolio from '@/components/Portfolio';
 import OrganizationSchema from '@/components/schemas/OrganizationSchema';
@@ -13,9 +14,11 @@ import WebSiteSchema from '@/components/schemas/WebSiteSchema';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
 import Toolbelt from '@/components/Toolbelt';
+import { getGithubContributions } from '@/util/github';
 import { getBlogPostData } from '@/util/posts';
 import { getLinkableTagSlugs } from '@/util/tags';
 import { PostData } from '@/util/types';
+import type { ContributionDay } from '@/components/ui/contribution-skyline';
 import defaultTags from 'data/defaultTags';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
@@ -26,7 +29,13 @@ const ScrollSignal = dynamic(
   { ssr: false },
 );
 
-function Home({ allPostsData }: { allPostsData: PostData[] }) {
+function Home({
+  allPostsData,
+  githubContributions,
+}: {
+  allPostsData: PostData[];
+  githubContributions: ContributionDay[] | null;
+}) {
   return (
     <>
       <CustomHead
@@ -46,6 +55,9 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
           <Services />
           <Toolbelt />
           <AboutMe />
+          {githubContributions && (
+            <GithubActivity data={githubContributions} />
+          )}
           <Portfolio />
           <Companies />
           <Testimonials />
@@ -58,11 +70,17 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = await getBlogPostData();
+  const [posts, githubContributions] = await Promise.all([
+    getBlogPostData(),
+    getGithubContributions(),
+  ]);
   return {
+    // Refresh the GitHub graph daily without a redeploy.
+    revalidate: 86400,
     props: {
       allPostsData: posts.filter((p) => p.showOnHome === true),
       linkableTags: getLinkableTagSlugs(posts),
+      githubContributions,
     },
   };
 };
