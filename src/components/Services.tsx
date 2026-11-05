@@ -10,7 +10,7 @@ const Services = () => (
     intro="From the first wireframe to production APIs, I help teams design, build and ship web, mobile and IoT products."
   >
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {services.map(({ title, description, tools, icon: Icon }, i) => (
+      {services.map(({ title, description, points, tools, icon: Icon }, i) => (
         <li key={title}>
           <Reveal delay={i * 0.07} className="h-full">
             <Card className="h-full">
@@ -27,6 +27,17 @@ const Services = () => (
                 <p className="text-base text-pretty text-muted-foreground">
                   {description}
                 </p>
+                <ul className="space-y-2 text-sm">
+                  {points.map((point) => (
+                    <li key={point} className="flex gap-2">
+                      <span
+                        aria-hidden
+                        className="mt-1.5 size-2 shrink-0 border-2 border-border bg-secondary"
+                      />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
                 <ul
                   aria-label={`${title} tools`}
                   className="mt-auto flex flex-wrap gap-2"

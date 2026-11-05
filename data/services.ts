@@ -3,6 +3,7 @@ import { Code, type LucideIcon, PenTool, Server, Users } from 'lucide-react';
 export interface IServiceItem {
   title: string;
   description: string;
+  points: string[];
   tools: string[];
   icon: LucideIcon;
 }
@@ -11,28 +12,46 @@ const services: IServiceItem[] = [
   {
     title: 'Front-end development',
     description:
-      'I bring ideas to life in the browser, from SEO-optimised landing pages to complex web applications. Interfaces are built from scratch in React and Next.js, typed end to end with TypeScript.',
+      'Fast, accessible web interfaces, from marketing sites to complex applications.',
+    points: [
+      'SEO-optimised landing pages and web apps',
+      'Custom React and Next.js interfaces, built from scratch',
+      'End-to-end type safety with TypeScript',
+    ],
     tools: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
     icon: Code,
   },
   {
     title: 'Back-end & APIs',
     description:
-      'I turn complex ideas into efficient, reliable back-end systems that power products people rely on every day. Node.js services, APIs and data models designed to stay maintainable as they grow.',
+      'Reliable back-end systems that power products used every day.',
+    points: [
+      'Node.js services and well-documented APIs',
+      'Data models designed to scale with the product',
+      'Maintainable architecture that stays easy to change',
+    ],
     tools: ['Node.js', 'Express', 'Mongoose', 'Prisma'],
     icon: Server,
   },
   {
     title: 'Product & UI design',
-    description:
-      "I design clear, user-friendly interfaces guided by Jakob's Law and familiar UX patterns. Work moves from Figma to design tokens and systems that hand off cleanly to code.",
+    description: 'Clear, intuitive interfaces grounded in proven UX patterns.',
+    points: [
+      "User flows guided by Jakob's Law and familiar conventions",
+      'Figma designs backed by tokens and design systems',
+      'Clean hand-off from design to production code',
+    ],
     tools: ['Figma', 'Tokens', 'Systems'],
     icon: PenTool,
   },
   {
     title: 'Mentoring & technical leadership',
-    description:
-      'I enjoy sharing what I know and helping engineers reach their full potential. In leadership roles I have mentored multiple cross-functional teams through coaching, code review and architecture.',
+    description: 'Helping engineers and teams do their best work.',
+    points: [
+      'Mentoring for cross-functional engineering teams',
+      'Code reviews that raise the quality bar',
+      'Architecture guidance and technical direction',
+    ],
     tools: ['Coaching', 'Code review', 'Architecture'],
     icon: Users,
   },
