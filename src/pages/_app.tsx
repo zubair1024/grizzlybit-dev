@@ -1,8 +1,14 @@
 import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
 import '@/styles/globals.css';
+import { Toaster } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ReactLenis, useLenis } from 'lenis/react';
 import { AnimatePresence } from 'motion/react';
 import type { AppProps } from 'next/app';
 import type { NextWebVitalsMetric } from 'next/app';
+import { DM_Sans, Space_Mono } from 'next/font/google';
+import { useRouter } from 'next/router';
+import { ThemeProvider } from 'next-themes';
 import { useEffect } from 'react';
 import { hotjar } from 'react-hotjar';
 import { init } from '../util/ga';
@@ -42,6 +48,27 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
   // - Custom backend endpoint
 }
 
+const sans = DM_Sans({ subsets: ['latin'], display: 'swap' });
+const mono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+});
+
+// Lenis owns scrolling, so reset it ourselves on non-hash navigations.
+function ScrollReset() {
+  const lenis = useLenis();
+  const router = useRouter();
+  useEffect(() => {
+    const onDone = (url: string) => {
+      if (!url.includes('#')) lenis?.scrollTo(0, { immediate: true });
+    };
+    router.events.on('routeChangeComplete', onDone);
+    return () => router.events.off('routeChangeComplete', onDone);
+  }, [lenis, router.events]);
+  return null;
+}
+
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     document
@@ -60,34 +87,30 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {/*
-        Font Optimization:
-        - Using system fonts via Tailwind/DaisyUI for optimal performance
-        - System fonts load instantly without network requests
-        - If custom fonts are needed, use next/font with font-display: swap
-
-        Example with next/font:
-        ```typescript
-        import { Inter } from 'next/font/google';
-
-        const inter = Inter({
-          subsets: ['latin'],
-          display: 'swap', // Prevents layout shift
-          variable: '--font-inter',
-        });
-
-        <div className={inter.variable}>
-          ...
-        </div>
-        ```
-      */}
-      <div data-theme="halloween">
-        <CapabilityProvider>
-          <AnimatePresence mode="wait" initial={false}>
-            <Component {...pageProps} />
-          </AnimatePresence>
-        </CapabilityProvider>
-      </div>
+      {/* Pages Router: expose next/font families as CSS vars on :root so portals inherit them */}
+      <style jsx global>{`
+        :root {
+          --font-dm-sans: ${sans.style.fontFamily};
+          --font-space-mono: ${mono.style.fontFamily};
+        }
+      `}</style>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem={false}
+        disableTransitionOnChange
+      >
+        <ReactLenis root options={{ lerp: 0.1, anchors: { offset: -80 } }} />
+        <ScrollReset />
+        <TooltipProvider>
+          <CapabilityProvider>
+            <AnimatePresence mode="wait" initial={false}>
+              <Component {...pageProps} />
+            </AnimatePresence>
+          </CapabilityProvider>
+        </TooltipProvider>
+        <Toaster />
+      </ThemeProvider>
     </>
   );
 }

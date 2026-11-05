@@ -12,19 +12,17 @@ const Layout = (props: ILayoutProps) => {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-100 focus:px-4 focus:py-2 focus:rounded-md focus:bg-brand-glow focus:text-black focus:font-mono focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-100 focus:px-4 focus:py-2 focus:rounded-md focus:bg-primary focus:text-primary-foreground focus:border-2 focus:border-border focus:font-mono focus:text-sm"
       >
         Skip to content
       </a>
       <motion.div
-        initial={{ x: 300, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: 300, opacity: 0 }}
-        transition={{
-          type: 'spring',
-          stiffness: 260,
-          damping: 20,
-        }}
+        // Opacity-only, and _app's AnimatePresence has initial={false},
+        // so server HTML is fully visible for crawlers and LCP.
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
       >
         <Header></Header>
         <div className="antialiased">{props.children}</div>

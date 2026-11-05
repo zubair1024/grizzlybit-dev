@@ -10,7 +10,7 @@ type Data = {
   };
   stackOverflow?: {
     reputation: number;
-    up_vote_count: number;
+    badges: number;
   };
 };
 
@@ -27,7 +27,10 @@ async function getStackOverflowStats() {
   const user = responseData.data?.items?.[0] ?? {};
   return {
     reputation: user.reputation ?? 0,
-    up_vote_count: user.up_vote_count ?? 0,
+    badges:
+      (user.badge_counts?.gold ?? 0) +
+      (user.badge_counts?.silver ?? 0) +
+      (user.badge_counts?.bronze ?? 0),
   };
 }
 

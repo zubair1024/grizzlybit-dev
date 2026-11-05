@@ -30,11 +30,8 @@ const info = {
 const Banner = () => {
   return (
     <>
-      <div className=" min-h-screen flex flex-col justify-center items-center bg-linear-to-b/srgb from-black to-[#212121] pt-20">
+      <div className="hero min-h-screen flex flex-col justify-center items-center pt-20">
         <motion.div
-          style={{
-            boxShadow: 'white 0px 0px 2px 0px',
-          }}
           initial={{ y: 300, opacity: 0 }}
           whileInView={{
             y: 0,
@@ -44,7 +41,7 @@ const Banner = () => {
             },
           }}
         >
-          <div className="z-40 card w-96 backdrop-blur-lg">
+          <div className="z-40 hero-card w-96 backdrop-blur-lg">
           <div className="flex items-center justify-center w-40 mx-auto mt-5">
             <Image
               src="/zubair_avatar.png"
@@ -54,7 +51,7 @@ const Banner = () => {
               priority
             />
           </div>
-          <div className="text-center card-body text-base">
+          <div className="text-center hero-card-body text-base">
             <h1 className="text-2xl font-semibold tracking-wider text-center">
               Zubair Ahmed
               <span className="sr-only">
@@ -65,7 +62,7 @@ const Banner = () => {
             <p className="text-sm font-light">{info.roles.join(' | ')}</p>
             <div>
               {info.badges.map((i) => (
-                <span key={i} className="mx-1 badge glass">
+                <span key={i} className="mx-1 hero-badge">
                   {i}
                 </span>
               ))}
@@ -74,7 +71,7 @@ const Banner = () => {
               {socialLinks.map((i) => {
                 return (
                   <div
-                    className="tooltip tooltip-bottom "
+                    className="hero-tooltip"
                     data-tip={i.name}
                     key={i.name}
                   >
@@ -90,7 +87,7 @@ const Banner = () => {
                           location: 'banner',
                         })
                       }
-                      className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow"
+                      className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring"
                     >
                       <motion.div whileHover={{ scale: 1.5 }}>
                         <Image
@@ -112,7 +109,7 @@ const Banner = () => {
           <Statistics></Statistics>
         </div>
       </div>
-      <div className="area" aria-hidden="true">
+      <div aria-hidden="true">
         <ul className="circles">
           <li></li>
           <li></li>

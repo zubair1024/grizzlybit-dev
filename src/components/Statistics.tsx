@@ -6,18 +6,14 @@ import { useEffect, useState } from 'react';
 const MEDIUM_FOLLOWERS = 58;
 const MEDIUM_POSTS = 19;
 
+// Last known values so the server HTML never shows zeros; refreshed on the client.
+const SEED = {
+  github: { followers: 29, public_repos: 172 },
+  stackOverflow: { reputation: 853, badges: 32 },
+};
+
 const Statistics = () => {
-  const [stats, setStats] = useState({
-    github: {
-      followers: 0,
-      public_repos: 0,
-      public_gists: 0,
-    },
-    stackOverflow: {
-      reputation: 0,
-      up_vote_count: 0,
-    },
-  });
+  const [stats, setStats] = useState(SEED);
 
   useEffect(() => {
     axios
@@ -36,71 +32,50 @@ const Statistics = () => {
       });
   }, []);
 
+  const items = [
+    {
+      icon: '/statistics/medium.svg',
+      label: 'Medium',
+      title: 'Medium followers',
+      value: MEDIUM_FOLLOWERS,
+      desc: `${MEDIUM_POSTS} articles published`,
+    },
+    {
+      icon: '/statistics/github.svg',
+      label: 'GitHub',
+      title: 'GitHub followers',
+      value: stats.github.followers,
+      desc: `${stats.github.public_repos} public repositories`,
+    },
+    {
+      icon: '/statistics/stack-overflow-new.svg',
+      label: 'Stack Overflow',
+      title: 'Stack Overflow reputation',
+      value: stats.stackOverflow.reputation,
+      desc: `${stats.stackOverflow.badges} badges earned`,
+    },
+    {
+      icon: '/statistics/figma.svg',
+      label: 'Figma Community',
+      title: 'Figma file copies',
+      value: '1,049',
+      desc: '17 community likes',
+    },
+  ];
+
   return (
-    <div className="px-2 my-10 rounded-md shadow-sm grid grid-flow-row grid-cols-2 md:grid-cols-4 bg-[#181818]">
-      <div className="stat b-0">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/medium.svg"
-            height="40"
-            width="40"
-            alt="medium"
-          ></Image>
+    <dl className="hero-stats px-2 my-10 rounded-md border border-border shadow-sm grid grid-flow-row grid-cols-2 md:grid-cols-4">
+      {items.map((i) => (
+        <div key={i.title} className="hero-stat">
+          <div className="hero-stat-figure">
+            <Image src={i.icon} height="40" width="40" alt={`${i.label} logo`} />
+          </div>
+          <dt className="hero-stat-title">{i.title}</dt>
+          <dd className="hero-stat-value">{i.value}</dd>
+          <dd className="hero-stat-desc">{i.desc}</dd>
         </div>
-        <div className="stat-title">Medium Followers</div>
-        <div className="stat-value">{MEDIUM_FOLLOWERS}</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>{MEDIUM_POSTS}</b> Posts
-        </div>
-      </div>
-
-      <div className="stat">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/github.svg"
-            height="40"
-            width="40"
-            alt="github"
-          ></Image>
-        </div>
-        <div className="stat-title">Github Followers</div>
-        <div className="stat-value">{stats.github.followers}</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>{stats.github.public_repos}</b> Public Repos
-        </div>
-      </div>
-
-      <div className="stat">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/stack-overflow-new.svg"
-            height="40"
-            width="40"
-            alt="stack-overflow"
-          ></Image>
-        </div>
-        <div className="stat-title">StackOverflow Rep.</div>
-        <div className="stat-value">{stats.stackOverflow.reputation}</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>{stats.stackOverflow.up_vote_count}</b> Up-votes
-        </div>
-      </div>
-      <div className="stat">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/figma.svg"
-            height="40"
-            width="40"
-            alt="figma"
-          ></Image>
-        </div>
-        <div className="stat-title">Figma Copies</div>
-        <div className="stat-value">1,049</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>17</b> Likes
-        </div>
-      </div>
-    </div>
+      ))}
+    </dl>
   );
 };
 
