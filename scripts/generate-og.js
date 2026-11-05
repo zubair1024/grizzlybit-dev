@@ -8,7 +8,7 @@
  *   public/og-images/default.png                 site-wide fallback
  *   public/og-images/blog/<slug>.png             one per src/posts/*.mdx
  *   public/og-images/portfolio/<slug>.png        one per src/data/portfolioMetadata.ts entry
- *   public/blog/whats-new-in-nodejs-24/cover.png in-post cover for the Node 24 post
+ *   public/blog/<slug>/cover.png                 in-post cover + card thumbnail per post
  *
  * Re-run after adding a post or project and commit the PNGs.
  */
@@ -227,19 +227,200 @@ async function portfolioCard(title, screenshot) {
   return [svgDoc(W, H, body), [{ input: img, left: sx + 6, top: sy + 6 }]];
 }
 
-async function node24Cover() {
-  // Same 1012x362 ratio as the other post covers, rendered at 2x.
+// In-post covers (also the blog card thumbnails): 1012x362 ratio at 2x.
+// kicker = topic chip, title = short headline (≤2 lines), glyph = big side
+// panel text, sub = mono tagline. Panel colour groups topics.
+const COVERS = {
+  'whats-new-in-nodejs-24': [
+    'NODE.JS',
+    'What’s new in Node.js',
+    '24',
+    'features · breaking changes · upgrade guide',
+  ],
+  'nodejs-util-promisify': [
+    'NODE.JS',
+    'util.promisify()',
+    '8',
+    'callbacks · promises · async/await',
+  ],
+  'increase-nodejs-memory-limit': [
+    'NODE.JS',
+    'Increase the Node.js memory limit',
+    'RAM',
+    'max-old-space-size · v8 · pm2',
+  ],
+  'how-to-ssh-using-nodejs': [
+    'NODE.JS',
+    'SSH using Node.js',
+    'SSH',
+    'node-ssh · remote commands · automation',
+  ],
+  'how-send-csv-files-with-nodemailer': [
+    'NODE.JS',
+    'Send CSV files with Nodemailer',
+    'CSV',
+    'nodemailer · attachments · smtp',
+  ],
+  'easy-pgp-encryption-using-nodejs': [
+    'NODE.JS',
+    'Easy PGP encryption',
+    'PGP',
+    'openpgp · keys · encrypt & decrypt',
+  ],
+  'easy-remote-debugging-nodejs-using-vscode': [
+    'NODE.JS',
+    'Remote debugging with VS Code',
+    'VS',
+    'inspector · ssh tunnel · breakpoints',
+  ],
+  'javascript-promises-promise-all-promise-allsettled-promise-race-promise-any':
+    [
+      'JAVASCRIPT',
+      'Promise all, allSettled, race & any',
+      'JS',
+      'promises · async · combinators',
+    ],
+  'get-query-string-parameters': [
+    'JAVASCRIPT',
+    'GET query string parameters',
+    '?=',
+    'urls · parsing · utility function',
+  ],
+  'yarn-on-the-rise': [
+    'JAVASCRIPT',
+    'Yarn on the rise',
+    'yarn',
+    'package managers · npm · dependencies',
+  ],
+  'how-to-create-an-ssh-tarpit': [
+    'SECURITY',
+    'Create an SSH tarpit',
+    '22',
+    'endlessh · linux · slow down bots',
+  ],
+  'how-to-generate-keys-for-mutual-tls-authentication': [
+    'SECURITY',
+    'Keys for mutual TLS authentication',
+    'mTLS',
+    'openssl · certificates · client auth',
+  ],
+  'how-to-install-openvpn-using-docker': [
+    'DEVOPS',
+    'Install OpenVPN using Docker',
+    'VPN',
+    'openvpn · docker · self-hosted',
+  ],
+  'install-docker-on-ubuntu-18': [
+    'DEVOPS',
+    'Install Docker on Ubuntu',
+    '18.04',
+    'docker · ubuntu · containers',
+  ],
+  'setup-openstreemaps-tile-server-on-ubuntu': [
+    'MAPS',
+    'OpenStreetMap tile server',
+    'OSM',
+    'ubuntu · tiles · self-hosted maps',
+  ],
+  'how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal': [
+    'LINUX',
+    'Detach and reattach with screen',
+    '^A',
+    'screen · sessions · terminal',
+  ],
+  'how-to-use-tee-on-linux': [
+    'LINUX',
+    'How to use tee on Linux',
+    'tee',
+    'stdout · files · pipelines',
+  ],
+  'my-terminal-setup': [
+    'TOOLS',
+    'My terminal setup',
+    '~$',
+    'iterm2 · zsh · powerlevel10k',
+  ],
+  'optimal-seo-performance-for-nextjs': [
+    'NEXT.JS',
+    'Optimal SEO performance for Next.js',
+    'SEO',
+    'meta tags · ssr · core web vitals',
+  ],
+  'use-hook-in-react': [
+    'REACT',
+    'The use hook in React',
+    'use',
+    'hooks · promises · suspense',
+  ],
+  'addressing-business-with-the-right-innovation-iot': [
+    'IOT',
+    'The right innovation for business',
+    'IoT',
+    'sensors · data · business value',
+  ],
+  'truth-about-being-a-full-stack-developer': [
+    'CAREER',
+    'The truth about being full-stack',
+    'FS',
+    'front end · back end · trade-offs',
+  ],
+  'importance-of-teaching-children-to-code': [
+    'CAREER',
+    'Teaching children to code',
+    '</>',
+    'education · stem · problem solving',
+  ],
+  'rick-and-morty-if-you-havent-watched-it': [
+    'OFF TOPIC',
+    'Rick and Morty',
+    'C-137',
+    'animation · sci-fi · watch it',
+  ],
+};
+const PANEL = {
+  'NODE.JS': C.yellow,
+  JAVASCRIPT: C.yellow,
+  SECURITY: C.blue,
+  DEVOPS: C.blue,
+  MAPS: C.blue,
+  LINUX: C.blue,
+};
+
+// Full-bleed (no frame/shadow): the site's Card and the post header supply
+// the border, so the image doesn't render as a card inside a card.
+async function postCover([tag, title, glyph, sub]) {
   const w = 2024;
   const h = 724;
-  const body =
-    box(56, 56, w - 140, h - 140, C.card, { border: 10, shadow: 28 }) +
-    `<rect x="${w - 84 - 360}" y="56" width="360" height="${h - 140}" fill="${C.yellow}" stroke="${C.ink}" stroke-width="10"/>` +
-    `<text x="${w - 84 - 180}" y="${h / 2 + 52}" text-anchor="middle" font-family="${SANS}" font-weight="700" font-size="200" fill="${C.ink}">24</text>` +
-    `<rect x="136" y="136" width="230" height="76" fill="${C.red}" stroke="${C.ink}" stroke-width="6"/>` +
-    `<text x="164" y="188" font-family="${MONO}" font-weight="700" font-size="40" fill="${C.ink}">NODE.JS</text>` +
-    `<text x="136" y="${h / 2 + 70}" font-family="${SANS}" font-weight="700" font-size="112" fill="${C.ink}">What’s new in Node.js</text>` +
-    `<text x="136" y="${h - 150}" font-family="${MONO}" font-weight="700" font-size="44" fill="${C.ink}">features · breaking changes · upgrade guide</text>`;
-  return svgDoc(w, h, body);
+  const pad = 112;
+  const panelW = 440;
+  const panelX = w - panelW;
+  const panel = PANEL[tag] ?? C.red;
+  const chip = panel === C.red ? C.yellow : C.red;
+  const maxW = panelX - pad * 2;
+  // One big line if it fits, else two smaller lines so chip/tagline breathe.
+  const { lines, size } = await fitTitle(title, maxW, [120, 108], 1).catch(() =>
+    fitTitle(title, maxW, [92, 84, 78], 2),
+  );
+  const chipBottom = pad + 84;
+  const subTop = h - pad - 48;
+  const blockH = size * 1.12 * (lines.length - 1) + size;
+  const ty = Math.round(
+    chipBottom + (subTop - chipBottom - blockH) / 2 + size * 0.8,
+  );
+  let gs = 220;
+  while (gs > 90 && (await textWidth(glyph, gs)) > panelW - 120) gs -= 10;
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">` +
+    `<rect width="${w}" height="${h}" fill="${C.card}"/>` +
+    `<rect x="${panelX}" y="0" width="${panelW}" height="${h}" fill="${panel}"/>` +
+    `<rect x="${panelX - 6}" y="0" width="12" height="${h}" fill="${C.ink}"/>` +
+    `<text x="${panelX + panelW / 2}" y="${Math.round(h / 2 + gs * 0.36)}" text-anchor="middle" font-family="${SANS}" font-weight="700" font-size="${gs}" fill="${C.ink}">${esc(glyph)}</text>` +
+    `<rect x="${pad}" y="${pad}" width="${Math.round(tag.length * 26.5 + 60)}" height="84" fill="${chip}" stroke="${C.ink}" stroke-width="6"/>` +
+    `<text x="${pad + 30}" y="${pad + 57}" font-family="${MONO}" font-weight="700" font-size="44" fill="${C.ink}">${esc(tag)}</text>` +
+    titleTspans(lines, pad, ty, size) +
+    `<text x="${pad}" y="${h - pad}" font-family="${MONO}" font-weight="700" font-size="46" fill="${C.ink}">${esc(sub)}</text>` +
+    `</svg>`
+  );
 }
 
 async function main() {
@@ -298,10 +479,19 @@ async function main() {
   }
 
   if (!only || only === 'cover') {
-    await writePng(
-      path.join(PUBLIC, 'blog/whats-new-in-nodejs-24/cover.png'),
-      await node24Cover(),
-    );
+    // Writes to the post's frontmatter `image` (or /blog/<slug>/cover.png).
+    const postsDir = path.join(ROOT, 'src/posts');
+    for (const file of fs
+      .readdirSync(postsDir)
+      .filter((f) => f.endsWith('.mdx'))) {
+      const slug = file.replace(/\.mdx$/, '');
+      if (!COVERS[slug]) throw new Error(`No cover spec in COVERS for ${slug}`);
+      const { data } = matter(
+        fs.readFileSync(path.join(postsDir, file), 'utf8'),
+      );
+      const out = data.image ?? `/blog/${slug}/cover.png`;
+      await writePng(path.join(PUBLIC, out), await postCover(COVERS[slug]));
+    }
   }
 }
 

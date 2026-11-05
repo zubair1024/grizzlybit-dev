@@ -36,15 +36,15 @@ export const PostCard = ({
         <Image
           src={data.image}
           alt=""
-          width={800}
-          height={350}
+          width={1012}
+          height={362}
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          className="aspect-[16/7] w-full border-b-2 border-border object-cover"
+          className="aspect-[1012/362] w-full border-b-2 border-border object-cover"
         />
       ) : (
         <div
           aria-hidden="true"
-          className="flex aspect-[16/7] w-full items-center justify-center border-b-2 border-border bg-muted text-muted-foreground"
+          className="flex aspect-[1012/362] w-full items-center justify-center border-b-2 border-border bg-muted text-muted-foreground"
         >
           <FileTextIcon className="size-12" strokeWidth={1.5} />
         </div>
