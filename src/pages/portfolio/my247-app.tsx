@@ -35,6 +35,7 @@ const My247PortfolioScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/my247/my247_main.webp"
             alt="My247 home cover app shown on a smartphone"
             width={400}

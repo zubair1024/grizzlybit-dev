@@ -35,6 +35,7 @@ const SmartBoilerMobilePortfolioScreen = () => {
         visual={
           <ImageRow>
             <PortfolioImage
+              priority
               src="/portfolio/razrboiler/razrboiler_login.svg"
               alt="Smart boiler mobile app login screen"
               width={260}

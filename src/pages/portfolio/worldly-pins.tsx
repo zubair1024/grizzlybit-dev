@@ -38,6 +38,7 @@ const WorldlyPinsScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/worldlypins/worldly-pins.png"
             alt="Worldly Pins interactive world map with visited countries pinned"
           />

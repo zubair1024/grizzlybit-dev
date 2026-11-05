@@ -27,6 +27,7 @@ const TISPortfolioScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/tis/tis-website.jpg"
             alt="Screenshot of the TIS thermal insulation website homepage"
           />

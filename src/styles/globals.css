@@ -190,6 +190,7 @@
 }
 .dark .hero-stats {
   border-color: transparent;
+  box-shadow: none;
 }
 .hero-stat {
   display: inline-grid;
@@ -212,6 +213,12 @@
 .hero-stat-title {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+@media (width >= 48rem) {
+  /* keep values on one baseline when a label wraps to two lines */
+  .hero-stat-title {
+    min-height: 3rem;
+  }
 }
 .hero-stat-desc {
   font-size: 0.75rem;

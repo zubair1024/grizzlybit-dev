@@ -66,6 +66,7 @@ const MyCarloAppScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/mycarlo/mycarlo-logo.jpg"
             alt="MyCarlo logo"
             width={420}

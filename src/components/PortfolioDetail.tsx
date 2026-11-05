@@ -96,10 +96,7 @@ export const PortfolioDetailShell = ({
                 </BreadcrumbList>
               </Breadcrumb>
 
-              <p className="mt-6 inline-block border-2 border-border bg-secondary px-2 py-0.5 font-mono text-xs font-bold text-secondary-foreground">
-                Case study
-              </p>
-              <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight text-balance md:text-6xl">
+              <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight text-balance md:text-6xl">
                 {metadata.heading}
               </h1>
               <p className="mt-5 max-w-3xl text-lg text-pretty text-muted-foreground">
@@ -306,7 +303,7 @@ export const CaseStudySummary = ({
     { heading: 'Outcome', body: outcome, tall: false },
   ].filter((b) => b.body);
   return (
-    <DetailSection kicker="Case study" title={`${name} case study summary`}>
+    <DetailSection kicker="Summary" title={`${name} case study summary`}>
       <div
         className={cn(
           'grid grid-cols-1 gap-6',
@@ -369,9 +366,11 @@ export const PortfolioImage = ({
   width = 700,
   height = 700,
   caption,
+  priority = false,
 }: {
   src: string;
   alt: string;
+  priority?: boolean;
   width?: number;
   height?: number;
   caption?: string;
@@ -384,7 +383,7 @@ export const PortfolioImage = ({
         width={width}
         height={height}
         className="h-auto max-w-full"
-        loading="lazy"
+        priority={priority}
       />
     </div>
     {caption && (

@@ -31,6 +31,7 @@ const ToolsGrizzlyScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/tools-grizzly/tools-grizzlybit-dev.png"
             alt="Screenshot of the Grizzly Tools developer utilities web app"
           />

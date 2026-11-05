@@ -30,6 +30,7 @@ const VehicleApplicationMobilePortfolioScreen = () => {
         visual={
           <ImageRow>
             <PortfolioImage
+              priority
               src="/portfolio/razrtrack_mobile/razrtrack_mobile_login.svg"
               alt="Vehicle tracking mobile app login screen"
               width={260}

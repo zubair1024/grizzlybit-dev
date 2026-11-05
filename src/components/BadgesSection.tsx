@@ -23,7 +23,7 @@ const BadgesSection = () => (
                   width={48}
                   height={48}
                   alt={`${item.title} ${item.kind === 'award' ? 'award' : 'badge'}`}
-                  className="size-12 object-contain"
+                  className="h-12 w-auto max-w-12 object-contain"
                 />
               </span>
               <span className="text-base leading-snug font-bold">

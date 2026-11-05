@@ -34,6 +34,7 @@ const HeavyEquipmentMonitoringPortfolioScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/he/he_overview.jpg"
             alt="Heavy equipment monitoring dashboard showing the fleet overview"
           />

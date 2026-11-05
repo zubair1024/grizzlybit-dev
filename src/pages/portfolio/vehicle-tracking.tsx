@@ -36,6 +36,7 @@ const VehicleApplicationPortfolioScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/razrtrack/razrtrack_overview.png"
             alt="Fleet tracking dashboard with all vehicles on a live map"
           />

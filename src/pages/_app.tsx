@@ -94,7 +94,7 @@ export default function App({ Component, pageProps }: AppProps) {
         disableTransitionOnChange
       >
         {!reduceMotion && (
-          <ReactLenis root options={{ lerp: 0.1, anchors: { offset: -80 } }} />
+          <ReactLenis root options={{ lerp: 0.1, anchors: true }} />
         )}
         <ScrollReset />
         <MotionConfig reducedMotion="user">

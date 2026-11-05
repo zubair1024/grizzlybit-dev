@@ -34,6 +34,7 @@ const CovidTrackingPortfolioScreen = () => {
         }
         visual={
           <PortfolioImage
+            priority
             src="/portfolio/razrlibre/razrlibre_main.svg"
             alt="COVID-19 patient tracking app home screen"
             width={400}

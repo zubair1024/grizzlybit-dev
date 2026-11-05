@@ -27,7 +27,10 @@ const menu = [
 
 // Only real pages get a current state; section anchors never do.
 const isCurrent = (url: string, pathname: string) =>
-  url === '/' ? pathname === '/' : url === '/blog' && pathname.startsWith('/blog');
+  url === '/'
+    ? pathname === '/'
+    : (url === '/blog' && pathname.startsWith('/blog')) ||
+      (url === '/#my-portfolio' && pathname.startsWith('/portfolio'));
 
 const currentClass =
   'aria-[current=page]:underline aria-[current=page]:decoration-primary aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[6px]';

@@ -7,6 +7,7 @@ import Link from 'next/link';
 const WORDS: Record<string, string> = {
   aws: 'AWS',
   devops: 'DevOps',
+  lts: 'LTS',
   docker: 'Docker',
   es6: 'ES6',
   iot: 'IoT',

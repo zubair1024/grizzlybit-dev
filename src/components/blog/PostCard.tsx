@@ -26,7 +26,12 @@ export const PostCard = ({
   className,
 }: Props) => (
   <article className={cn('h-full', className)}>
-    <Card className="relative h-full gap-4 transition-all focus-within:ring-3 focus-within:ring-ring hover:shadow-none motion-safe:hover:translate-x-1 motion-safe:hover:translate-y-1">
+    <Card
+      className={cn(
+        'relative h-full gap-4 transition-all focus-within:ring-3 focus-within:ring-ring hover:shadow-none motion-safe:hover:translate-x-1 motion-safe:hover:translate-y-1',
+        !data.image && 'pt-0',
+      )}
+    >
       {data.image ? (
         <Image
           src={data.image}
