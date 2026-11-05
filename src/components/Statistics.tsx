@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { SiFigma, SiGithub, SiMedium, SiStackoverflow } from 'react-icons/si';
+import { FaMediumM } from 'react-icons/fa';
+import { SiFigma, SiGithub, SiStackoverflow } from 'react-icons/si';
 import { useEffect, useState } from 'react';
 
 // Manual: Medium killed public follower counts and Cloudflare blocks scraping.
@@ -34,7 +35,7 @@ const Statistics = () => {
 
   const items = [
     {
-      Icon: SiMedium,
+      Icon: FaMediumM,
       title: 'Medium followers',
       value: MEDIUM_FOLLOWERS,
       desc: `${MEDIUM_POSTS} articles published`,
