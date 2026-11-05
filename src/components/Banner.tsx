@@ -1,17 +1,25 @@
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { trackEvent } from '@/util/ga';
 import socialLinks from 'data/socialLinks';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { trackEvent } from '@/util/ga';
 import Statistics from './Statistics';
 
 const info = {
   name: 'Zubair Ahmed',
   roles: [
-    'Software Engineer',
+    'Software engineer',
     'Entrepreneur',
-    'JavaScript Developer',
-    'Node.js Developer',
+    'JavaScript developer',
+    'Node.js developer',
   ],
   badges: [
     'JavaScript',
@@ -19,7 +27,7 @@ const info = {
     'React',
     'Next.js',
     'Node.js',
-    'TailwindCSS',
+    'Tailwind CSS',
     'MongoDB',
     'MSSQL',
     'Docker',
@@ -30,83 +38,78 @@ const info = {
 const Banner = () => {
   return (
     <>
-      <div className="hero min-h-screen flex flex-col justify-center items-center pt-20">
+      <div className="hero flex min-h-screen flex-col items-center justify-center pt-20">
         <motion.div
+          className="z-40 w-full max-w-[26rem] px-4"
           initial={{ y: 300, opacity: 0 }}
-          whileInView={{
-            y: 0,
-            opacity: 1,
-            transition: {
-              duration: 1,
-            },
-          }}
+          whileInView={{ y: 0, opacity: 1, transition: { duration: 1 } }}
         >
-          <div className="z-40 hero-card w-96 backdrop-blur-lg">
-          <div className="flex items-center justify-center w-40 mx-auto mt-5">
-            <Image
-              src="/zubair_avatar.png"
-              alt="Zubair Ahmed - Software Engineer and Entrepreneur"
-              width="200"
-              height="200"
-              priority
-            />
-          </div>
-          <div className="text-center hero-card-body text-base">
-            <h1 className="text-2xl font-semibold tracking-wider text-center">
+          <Card className="w-full items-center gap-4 px-6 py-8 text-center shadow-md">
+            <div className="size-40 overflow-hidden border-2 border-border bg-secondary shadow">
+              <Image
+                src="/zubair_avatar.png"
+                alt="Zubair Ahmed - Software Engineer and Entrepreneur"
+                width="200"
+                height="200"
+                priority
+                className="size-full object-cover"
+              />
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight">
               Zubair Ahmed
               <span className="sr-only">
-                {' '}— Full-stack software engineer & CTO at RAZRLAB. Node.js,
-                React, TypeScript, and IoT.
+                {' '}
+                — Full-stack software engineer & CTO at RAZRLAB. Node.js, React,
+                TypeScript, and IoT.
               </span>
             </h1>
-            <p className="text-sm font-light">{info.roles.join(' | ')}</p>
-            <div>
+            <p className="text-sm text-muted-foreground text-balance">
+              {info.roles.join(' · ')}
+            </p>
+            <ul className="flex flex-wrap justify-center gap-2">
               {info.badges.map((i) => (
-                <span key={i} className="mx-1 hero-badge">
-                  {i}
-                </span>
+                <li key={i}>
+                  <Badge variant="outline">{i}</Badge>
+                </li>
               ))}
-            </div>
-            <div className="hero-social flex justify-between mx-4 mt-6">
-              {socialLinks.map((i) => {
-                return (
-                  <div
-                    className="hero-tooltip"
-                    data-tip={i.name}
-                    key={i.name}
-                  >
-                    <Link
-                      target={'_blank'}
-                      href={i.url}
-                      rel="noopener noreferrer"
-                      aria-label={`${i.name} profile`}
-                      onClick={() =>
-                        trackEvent('social_click', {
-                          network: i.name,
-                          url: i.url,
-                          location: 'banner',
-                        })
-                      }
-                      className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-md focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring"
-                    >
-                      <motion.div whileHover={{ scale: 1.5 }}>
-                        <Image
-                          src={i.img}
-                          height={32}
-                          width={32}
-                          alt=""
-                        ></Image>
-                      </motion.div>
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          </div>
+            </ul>
+            <ul className="hero-social mt-2 flex w-full justify-between">
+              {socialLinks.map((i) => (
+                <li key={i.name}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="icon"
+                        className="size-11"
+                      >
+                        <Link
+                          target="_blank"
+                          href={i.url}
+                          rel="noopener noreferrer"
+                          aria-label={`${i.name} profile`}
+                          onClick={() =>
+                            trackEvent('social_click', {
+                              network: i.name,
+                              url: i.url,
+                              location: 'banner',
+                            })
+                          }
+                        >
+                          <Image src={i.img} height={22} width={22} alt="" />
+                        </Link>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">{i.name}</TooltipContent>
+                  </Tooltip>
+                </li>
+              ))}
+            </ul>
+          </Card>
         </motion.div>
-        <div className="z-50 flex items-center justify-center pt-10">
-          <Statistics></Statistics>
+        <div className="z-50 flex w-full items-center justify-center pt-10">
+          <Statistics />
         </div>
       </div>
       <div aria-hidden="true">

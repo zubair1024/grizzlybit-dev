@@ -54,7 +54,7 @@ The project uses Husky with lint-staged to automatically format code on commit:
 - Light mode default, dark via `next-themes` (`.dark` class, `ThemeToggle` in the header)
 - Homepage sections use `Section` / `Reveal` from `src/components/Section.tsx`; `Reveal` is a CSS scroll-driven animation (`.reveal`)
 - Lenis smooth scroll (`_app.tsx`, disabled for reduced motion); Motion (`motion/react`) for small interactions
-- Hero (`Banner.tsx`, `Statistics.tsx`, `src/components/fx/`) uses local `.hero-*` classes in `globals.css`
+- Hero (`Banner.tsx`, `Statistics.tsx`) uses shadcn Card/Badge/Tooltip; only the backdrop, icon inversion and stat grid are `.hero*` classes in `globals.css`
 
 ### External Integrations
 - **Analytics**: Google Analytics 4 (gtag.js bootstrapped in `src/util/ga.ts`) and Hotjar

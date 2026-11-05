@@ -77,105 +77,14 @@
 }
 
 /* ---------- Hero (Banner + Statistics) ----------
-   Ported from the daisyUI 5 card/badge/glass/tooltip/stat classes so the
-   hero looks identical without daisy. Only surface/text colors follow the
-   theme via the --hero-* tokens. */
-:root {
-  --hero-from: oklch(0.98 0 0);
-  --hero-to: oklch(0.93 0 0);
-  --hero-fg: var(--foreground);
-  --hero-glow: oklch(0 0 0 / 0.35);
-  --hero-surface: var(--card);
-  --hero-glass: 0%;
-  --hero-badge-ring: oklch(0 0 0 / 60%);
-}
-.dark {
-  --hero-from: #000;
-  --hero-to: #212121;
-  --hero-fg: hsl(0 0% 82.588%);
-  --hero-glow: #fff;
-  --hero-surface: #181818;
-  --hero-glass: 30%;
-  --hero-badge-ring: oklch(100% 0 0 / 20%);
-}
-
+   Card, badges, tooltips and stats use the shadcn primitives; only the
+   backdrop gradient, icon inversion and stat grid live here. */
 .hero {
-  color: var(--hero-fg);
-  background-image: linear-gradient(to bottom, var(--hero-from), var(--hero-to));
+  background-image: linear-gradient(to bottom, var(--background), var(--muted));
   border-bottom: 2px solid var(--border);
 }
 
-.hero-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  max-width: calc(100vw - 2rem);
-  border-radius: 1rem;
-  box-shadow: var(--hero-glow) 0 0 2px 0;
-}
-.hero-card-body {
-  display: flex;
-  flex: auto;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem;
-}
-
-.hero-badge {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  width: fit-content;
-  height: 1.5rem;
-  padding-inline: calc(0.75rem - 1px);
-  border-radius: 1.9rem;
-  font-size: 0.875rem;
-  backdrop-filter: blur(40px);
-  background-color: transparent;
-  background-image:
-    linear-gradient(135deg, oklch(100% 0 0 / var(--hero-glass)) 0%, oklch(0% 0 0 / 0) 100%),
-    linear-gradient(100deg, oklch(100% 0 0 / 5%) 25%, oklch(0% 0 0 / 0) 25%);
-  box-shadow:
-    0 0 0 1px var(--hero-badge-ring) inset,
-    0 0 0 2px oklch(0% 0 0 / 0.05);
-}
-
-.hero-tooltip {
-  position: relative;
-  display: inline-block;
-}
-.hero-tooltip[data-tip]::before {
-  content: attr(data-tip);
-  position: absolute;
-  inset: calc(100% + 0.5rem) auto auto 50%;
-  z-index: 2;
-  width: max-content;
-  max-width: 20rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  background: var(--popover);
-  color: var(--popover-foreground);
-  font-size: 0.875rem;
-  line-height: 1.25;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-50%) translateY(-0.25rem);
-  transition:
-    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1) 75ms,
-    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 75ms;
-}
-.dark .hero-tooltip[data-tip]::before {
-  background: hsl(180 3.5714% 10.98%);
-  color: hsl(180 4.8458% 82.196%);
-}
-.hero-tooltip:hover::before,
-.hero-tooltip:has(:focus-visible)::before {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
+/* Social and stat SVGs are white-only; darken them on light surfaces */
 .hero-social img,
 .hero-stat-figure img {
   filter: invert(1);
@@ -185,13 +94,6 @@
   filter: none;
 }
 
-.hero-stats {
-  background: var(--hero-surface);
-}
-.dark .hero-stats {
-  border-color: transparent;
-  box-shadow: none;
-}
 .hero-stat {
   display: inline-grid;
   grid-template-columns: repeat(1, 1fr);
@@ -208,7 +110,7 @@
 .hero-stat-desc {
   grid-column-start: 1;
   text-wrap: balance;
-  color: color-mix(in oklab, var(--hero-fg) 60%, transparent);
+  color: var(--muted-foreground);
 }
 .hero-stat-title {
   font-size: 1rem;
@@ -227,7 +129,7 @@
   grid-column-start: 1;
   white-space: nowrap;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .circles {
