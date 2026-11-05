@@ -16,6 +16,26 @@ const initials = (name: string) =>
     .join('')
     .toUpperCase();
 
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// Wraps the given phrases in a low highlighter stroke; the text itself is untouched.
+const highlight = (text: string, phrases: string[] = []) => {
+  if (!phrases.length) return text;
+  const pattern = new RegExp(`(${phrases.map(escapeRegExp).join('|')})`);
+  return text.split(pattern).map((part, i) =>
+    i % 2 ? (
+      <mark
+        key={i}
+        className="bg-transparent bg-linear-to-b from-transparent from-82% to-secondary/80 to-82% text-inherit dark:to-secondary/35"
+      >
+        {part}
+      </mark>
+    ) : (
+      part
+    ),
+  );
+};
+
 // Clamping is CSS only: the full quote is always in the HTML. The toggle
 // appears only when the quote actually overflows its clamp.
 const TestimonialCard = ({
@@ -48,11 +68,11 @@ const TestimonialCard = ({
             id={id}
             className={cn(
               'space-y-3 text-base leading-relaxed text-pretty',
-              !expanded && 'line-clamp-[8] md:line-clamp-6',
+              !expanded && 'line-clamp-[8] md:line-clamp-none',
             )}
           >
             {item.message.split(/\n+/).map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+              <p key={paragraph}>{highlight(paragraph, item.highlights)}</p>
             ))}
           </blockquote>
           {(overflows || expanded) && (
@@ -106,7 +126,7 @@ const TestimonialCard = ({
 };
 
 // Mobile: horizontal scroll-snap row (keeps the page short). md+: masonry
-// columns. Long quotes are clamped in both layouts.
+// columns. Long quotes are clamped on mobile only; desktop shows them in full.
 const Testimonials = () => (
   <Section
     id="my-testimonials"

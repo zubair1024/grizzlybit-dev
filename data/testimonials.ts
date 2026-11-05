@@ -6,6 +6,8 @@ export interface ITestimonialItem {
   imageUrl: string;
   linkedIn: string;
   message: string;
+  // Exact phrases from `message` to highlight; wording is never changed.
+  highlights?: string[];
 }
 
 const testimonials: ITestimonialItem[] = [
@@ -17,6 +19,10 @@ const testimonials: ITestimonialItem[] = [
     imageUrl: '/testimonials/fahd.jpeg',
     linkedIn: 'https://www.linkedin.com/in/fahd-helwani/',
     message: `I had the pleasure of working with Zubair on few projects and to me he was always someone who manages to get the job done. There is no "I can't" in Zubair's dictionary and that makes him a valuable asset to any team or company he joins. Going above and beyond to understand the problem at hand and provide a suitable solution considering all the circumstances is something that differentiates Zubair from lots of people I worked with.`,
+    highlights: [
+      'always someone who manages to get the job done',
+      `There is no "I can't" in Zubair's dictionary`,
+    ],
   },
   {
     name: 'Rizky Farhan',
@@ -28,6 +34,10 @@ const testimonials: ITestimonialItem[] = [
     message: `The first impression I had of Zubair was that he "has the potential to change the world for the better". His strong can-do attitude can be overwhelming and borderline superhuman. He is an expert in his craft; a master in architecting software solutions, be that in JavaScript or anything he has his hands on.
 
 His positive attitude at work is contagious - it encourages others to have the same.`,
+    highlights: [
+      '"has the potential to change the world for the better"',
+      'a master in architecting software solutions',
+    ],
   },
   {
     name: 'Rani Hazeem',
@@ -43,6 +53,10 @@ The most that I personally admire about him is that his organizational citizensh
 Whenever you see a happy customer, positive energy in the air, unparalleled creative work, or innovative solution, you know that Zubair has been there.
 
 I wish you all the best in your new journey and I’m so sure that RAZRLAB will deliver unprecedented solutions to the world.`,
+    highlights: [
+      'combines the cherries of both technical and interpersonal worlds',
+      'always goes the extra mile',
+    ],
   },
   {
     name: 'Lulu Sarnam',
@@ -58,6 +72,10 @@ I had the pleasure of working with Zubair, a SW genius who is always reliable an
 During my 2 years with him, I never saw him missing any deadlines. He is easy going and at the same time very careful and cautious about his work.
 
 As a Software engineer or a leader, Zubair earns my highest recommendation.`,
+    highlights: [
+      'Zubair makes things happen!',
+      'I never saw him missing any deadlines',
+    ],
   },
 
   {
@@ -72,6 +90,10 @@ As a Software engineer or a leader, Zubair earns my highest recommendation.`,
 Their guidance and mentorship has been invaluable in my own personal and professional development. He has a talent for organizing and delegating tasks effectively, which contributed to the success of our product team.
 
 Zubair has the technical skills and the leadership abilities to excel in any role, so I would highly recommend him as both a developer and a leader.`,
+    highlights: [
+      'guidance and mentorship has been invaluable',
+      'as both a developer and a leader',
+    ],
   },
   {
     name: 'Louis Christopher',
@@ -87,6 +109,10 @@ I’ve learned a lot watching him lead both the technical side and the managemen
 Brainstorming with him is always a pleasure, no problem feels too difficult!
 
 Zubair is one of those people I can always rely on, I’m sure he’ll find success in any endeavour he pursues.`,
+    highlights: [
+      'lead both the technical side and the management side',
+      'no problem feels too difficult!',
+    ],
   },
   {
     name: 'Amritendu Bhattacharjee',
@@ -96,6 +122,10 @@ Zubair is one of those people I can always rely on, I’m sure he’ll find succ
     imageUrl: '/testimonials/amrit.jpg',
     linkedIn: `https://www.linkedin.com/in/xeonray/`,
     message: `One of the best CTOs I have worked with. He is an eccentric developer who can create innovative solutions. A natural leader who does not compromise on quality. I learnt a lot from him during my tenure at Razrlab working under him.`,
+    highlights: [
+      'One of the best CTOs I have worked with',
+      'A natural leader who does not compromise on quality',
+    ],
   },
   {
     name: 'Sumit Kumar',
@@ -111,6 +141,10 @@ One great thing about Zubair was his trust in the team & we always enjoyed the c
 He would always go the extra mile to make sure the work always remained on track.
 
 I highly recommend Zubair.`,
+    highlights: [
+      'exceptional in both managing and the technical aspects',
+      'go the extra mile',
+    ],
   },
   {
     name: 'Shaheel Ali',
@@ -120,6 +154,10 @@ I highly recommend Zubair.`,
     imageUrl: '/testimonials/shaheel.jpeg',
     linkedIn: `https://www.linkedin.com/in/shahba/`,
     message: `He was very enthusiastic and passionate on whichever tasks that he undertook. His good interpersonal skills helped him to easily get along well with others. With his qualities, I am sure that he would attain further greater heights in his career. I wish him all the best for his career and keep having a smiling face.`,
+    highlights: [
+      'very enthusiastic and passionate',
+      'good interpersonal skills',
+    ],
   },
   {
     name: 'Md. Akram',
@@ -129,6 +167,10 @@ I highly recommend Zubair.`,
     imageUrl: '/testimonials/akram.jpeg',
     linkedIn: `https://www.linkedin.com/in/mohdakram`,
     message: `Fantastic CTO who supports his team while giving them the space to innovate. Working with Zubair was a great pleasure and a highlight of my career. A brilliant architect with an eye for pragmatism and good design, for whom no problem is too complex to tackle, and at a rapid pace too. Zubair motivates the team to be more ambitious and driven to solve the hard problems, and he does it with a smile.`,
+    highlights: [
+      'supports his team while giving them the space to innovate',
+      'A brilliant architect with an eye for pragmatism and good design',
+    ],
   },
 ];
 
