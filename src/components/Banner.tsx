@@ -45,16 +45,14 @@ const Banner = () => {
           whileInView={{ y: 0, opacity: 1, transition: { duration: 1 } }}
         >
           <Card className="w-full items-center gap-4 px-6 py-8 text-center shadow-md">
-            <div className="size-40 overflow-hidden border-2 border-border bg-secondary shadow">
-              <Image
-                src="/zubair_avatar.png"
-                alt="Zubair Ahmed - Software Engineer and Entrepreneur"
-                width="200"
-                height="200"
-                priority
-                className="size-full object-cover"
-              />
-            </div>
+            <Image
+              src="/zubair_avatar.png"
+              alt="Zubair Ahmed - Software Engineer and Entrepreneur"
+              width="200"
+              height="200"
+              priority
+              className="w-40"
+            />
             <h1 className="text-3xl font-bold tracking-tight">
               Zubair Ahmed
               <span className="sr-only">
