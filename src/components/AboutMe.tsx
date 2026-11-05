@@ -13,7 +13,6 @@ const AboutMe = () => {
   return (
     <Section
       id="about-me"
-      eyebrow="About"
       title="About Zubair Ahmed, CTO and full-stack engineer in Dubai"
     >
       <div className="grid items-start gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">

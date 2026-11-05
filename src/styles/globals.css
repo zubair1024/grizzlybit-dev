@@ -24,18 +24,6 @@
   --color-brand-haze: #a991f7;
   --color-brand-deep: #1a1a1a;
 
-  --animate-caret: caret 1s steps(1) infinite;
-
-  @keyframes caret {
-    0%,
-    49% {
-      opacity: 1;
-    }
-    50%,
-    100% {
-      opacity: 0;
-    }
-  }
 }
 
 @layer base {
@@ -109,12 +97,14 @@
 .hero {
   color: var(--hero-fg);
   background-image: linear-gradient(to bottom, var(--hero-from), var(--hero-to));
+  border-bottom: 2px solid var(--border);
 }
 
 .hero-card {
   position: relative;
   display: flex;
   flex-direction: column;
+  max-width: calc(100vw - 2rem);
   border-radius: 1rem;
   box-shadow: var(--hero-glow) 0 0 2px 0;
 }
@@ -209,7 +199,7 @@
 .hero-stat-title,
 .hero-stat-desc {
   grid-column-start: 1;
-  white-space: nowrap;
+  text-wrap: balance;
   color: color-mix(in oklab, var(--hero-fg) 60%, transparent);
 }
 .hero-stat-title {
@@ -444,10 +434,10 @@
   --popover: oklch(1.0000 0 0);
   --popover-foreground: oklch(0 0 0);
   --primary: oklch(0.6489 0.2370 26.9728);
-  --primary-foreground: oklch(1.0000 0 0);
+  --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.9680 0.2110 109.7692);
   --secondary-foreground: oklch(0 0 0);
-  --muted: oklch(0.9551 0 0);
+  --muted: oklch(0.955 0.025 100);
   --muted-foreground: oklch(0.3211 0 0);
   --accent: oklch(0.5635 0.2408 260.8178);
   --accent-foreground: oklch(1.0000 0 0);
@@ -492,19 +482,19 @@
 .dark {
   --background: oklch(0 0 0);
   --foreground: oklch(1.0000 0 0);
-  --card: oklch(0.3211 0 0);
+  --card: oklch(0.18 0 0);
   --card-foreground: oklch(1.0000 0 0);
-  --popover: oklch(0.3211 0 0);
+  --popover: oklch(0.18 0 0);
   --popover-foreground: oklch(1.0000 0 0);
   --primary: oklch(0.7044 0.1872 23.1858);
   --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.9691 0.2005 109.6228);
   --secondary-foreground: oklch(0 0 0);
-  --muted: oklch(0.2178 0 0);
+  --muted: oklch(0.14 0 0);
   --muted-foreground: oklch(0.8452 0 0);
   --accent: oklch(0.6755 0.1765 252.2592);
   --accent-foreground: oklch(0 0 0);
-  --destructive: oklch(0.7 0.19 23);
+  --destructive: oklch(0.76 0.16 23);
   --border: oklch(1.0000 0 0);
   --input: oklch(1.0000 0 0);
   --ring: oklch(0.7044 0.1872 23.1858);

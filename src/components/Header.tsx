@@ -8,12 +8,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { trackEvent } from '@/util/ga';
 import { Download, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Same links everywhere; section anchors are absolute so they work off-home.
 const menu = [
@@ -45,27 +44,16 @@ const ResumeButton = ({ className }: { className?: string }) => (
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   return (
     <header
       id="header"
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b-2 border-border bg-background/90 backdrop-blur transition-shadow',
-        scrolled && 'shadow',
-      )}
+      className="fixed inset-x-0 top-0 z-50 border-b-2 border-border bg-background/90 backdrop-blur"
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-sm font-bold text-lg tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+          className="flex items-center gap-2 rounded-sm font-bold text-lg tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring"
         >
           <Image
             src="/grizzlybit-dev-only-logo.svg"
@@ -105,7 +93,9 @@ const Header = () => {
             </SheetTrigger>
             <SheetContent side="right" className="border-l-2 border-border">
               <SheetHeader>
-                <SheetTitle className="text-lg font-bold">Grizzlybit</SheetTitle>
+                <SheetTitle className="text-lg font-bold">
+                  Grizzlybit
+                </SheetTitle>
                 <SheetDescription>Site navigation</SheetDescription>
               </SheetHeader>
               <nav aria-label="Mobile" className="px-4">
@@ -117,10 +107,7 @@ const Header = () => {
                         variant="ghost"
                         className="h-12 w-full justify-start text-base"
                       >
-                        <Link
-                          href={i.url}
-                          onClick={() => setMobileOpen(false)}
-                        >
+                        <Link href={i.url} onClick={() => setMobileOpen(false)}>
                           {i.title}
                         </Link>
                       </Button>

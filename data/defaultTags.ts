@@ -2,7 +2,7 @@ const defaultTags = {
   title: 'Zubair Ahmed — Full-Stack Engineer & CTO (Dubai)',
   titleTemplate: '%s | Grizzlybit',
   description:
-    'Zubair Ahmed (Grizzlybit) — full-stack software engineer and CTO building Node.js, React, TypeScript, and IoT products in Dubai. Portfolio, case studies, and engineering blog.',
+    'Zubair Ahmed, full-stack engineer and CTO in Dubai, builds Node.js, React, TypeScript and IoT products. Portfolio, case studies and engineering blog.',
   fullTitle: "Grizzlybit — Zubair Ahmed's Portfolio",
   tagline: 'Portfolio and blog of Zubair Ahmed, CTO at RAZRLAB',
   author: 'Zubair Ahmed',
@@ -11,7 +11,7 @@ const defaultTags = {
   imageWidth: 1200,
   imageHeight: 630,
   imageType: 'image/png',
-  imageAlt: 'Grizzlybit - Zubair Ahmed\'s Portfolio Logo',
+  imageAlt: "Grizzlybit - Zubair Ahmed's Portfolio Logo",
   websiteUrl: 'https://www.grizzlybit.dev',
   locale: 'en_US',
   siteName: 'Grizzlybit',

@@ -16,6 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 import { trackEvent } from '@/util/ga';
 import { PostData } from '@/util/types';
 import { getMDXComponent } from 'mdx-bundler/client';
@@ -27,13 +28,14 @@ import {
   getAllPostSlugs,
   getBlogPostData,
   getPostData,
+  getRelatedPosts,
 } from '../../util/posts';
 import { calculateReadingTime } from '../../util/readingTime';
 
 type Frontmatter = {
   title: string;
   publishedAt: string;
-  description: string;
+  description?: string;
   summary: string;
   image: string;
   keywords?: string[];
@@ -42,8 +44,19 @@ type Frontmatter = {
 };
 
 // The page owns the only H1; demote any H1 written in a post body.
+// Code blocks scroll horizontally, so make them keyboard-focusable.
 const mdxComponents = {
   h1: (props: ComponentProps<'h2'>) => <h2 {...props} />,
+  pre: ({ className, ...props }: ComponentProps<'pre'>) => (
+    <pre
+      tabIndex={0}
+      className={cn(
+        'outline-none focus-visible:ring-3 focus-visible:ring-ring',
+        className,
+      )}
+      {...props}
+    />
+  ),
 };
 
 type Props = {
@@ -51,7 +64,7 @@ type Props = {
   frontmatter: Frontmatter;
   slug: string;
   readingTime: string;
-  allPosts: PostData[];
+  relatedPosts: PostData[];
 };
 
 export default function BlogPost({
@@ -59,10 +72,11 @@ export default function BlogPost({
   frontmatter,
   slug,
   readingTime,
-  allPosts,
+  relatedPosts,
 }: Props) {
   const Component = useMemo(() => getMDXComponent(code), [code]);
   const author = frontmatter.author || 'Zubair Ahmed';
+  const description = frontmatter.description ?? frontmatter.summary;
 
   useEffect(() => {
     let fired = false;
@@ -110,7 +124,7 @@ export default function BlogPost({
     <>
       <CustomHead
         title={frontmatter.title}
-        description={frontmatter.summary}
+        description={description}
         canonical={`https://www.grizzlybit.dev/blog/${slug}`}
         ogType="article"
         ogImage={frontmatter.image}
@@ -121,7 +135,7 @@ export default function BlogPost({
       />
       <BlogPostingSchema
         title={frontmatter.title}
-        description={frontmatter.summary}
+        description={description}
         publishedAt={frontmatter.publishedAt}
         modifiedAt={frontmatter.lastModified}
         image={frontmatter.image}
@@ -189,7 +203,7 @@ export default function BlogPost({
               )}
             </header>
 
-            <div className="mx-auto mt-10 max-w-[72ch] prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:font-semibold prose-a:text-foreground prose-a:underline prose-a:decoration-primary prose-a:decoration-2 prose-a:underline-offset-4 hover:prose-a:decoration-4 prose-pre:overflow-x-auto prose-pre:rounded-none prose-img:border-2 prose-img:border-border [&_:not(pre)>code]:border [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-muted [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-normal [&_:not(pre)>code]:before:content-none [&_:not(pre)>code]:after:content-none">
+            <div className="mx-auto mt-10 max-w-[72ch] prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:font-semibold prose-a:text-foreground prose-a:underline prose-a:decoration-primary prose-a:decoration-2 prose-a:underline-offset-4 hover:prose-a:decoration-4 prose-pre:overflow-x-auto prose-pre:rounded-none prose-img:border-2 prose-img:border-border prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:border-2 [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-secondary/40 [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-normal [&_:not(pre)>code]:text-foreground">
               <Component components={mdxComponents} />
             </div>
 
@@ -225,11 +239,7 @@ export default function BlogPost({
 
           <div className="mx-auto max-w-6xl px-4 pb-20 md:px-6">
             <Separator className="mb-12 h-0.5!" />
-            <RelatedPosts
-              currentSlug={slug}
-              currentKeywords={frontmatter.keywords}
-              allPosts={allPosts}
-            />
+            <RelatedPosts posts={relatedPosts} />
           </div>
         </main>
       </Layout>
@@ -252,8 +262,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Calculate reading time from raw MDX body (not compiled JS)
   const readingTime = calculateReadingTime(postData.body);
 
-  // Get all posts for related posts functionality
-  const allPosts = await getBlogPostData();
+  const relatedPosts = getRelatedPosts(
+    await getBlogPostData(),
+    slug,
+    postData.frontmatter.keywords,
+  );
 
   return {
     props: {
@@ -261,7 +274,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       frontmatter: postData.frontmatter,
       code: postData.code,
       readingTime,
-      allPosts,
+      relatedPosts,
     },
   };
 };

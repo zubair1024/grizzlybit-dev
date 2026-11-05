@@ -1,6 +1,7 @@
 ---
 title: 'How to generate keys for Mutual TLS Authentication 🔑'
 publishedAt: '2020-10-02'
+description: 'Create a CA plus server and client certificates with OpenSSL, then use them for mutual TLS (mTLS) authentication between a client and a server.'
 summary: 'Mutual TLS authentication is a process that ensures that traffic between entities is secure and trusted in both directions between a client and a server. It essentially takes place through a TSL handshake. Here is a quickie on how to generate certificates and perform Mutual TLS Authentication between a client and a server.'
 image: '/blog/how-send-csv-files-with-nodemailer/cover.png'
 keywords:
@@ -138,6 +139,6 @@ openssl verify -CAfile ca-crt.pem client1-crt.pem
 
 Now, you can use the keys to perform Mutually Authenticated communication between your client and the server.
 
-I have also setup an example repository using Node.js-based clients and server leveraging Mutual TLS Authentication to send messages. [Click here](https://github.com/zubair1024/mutual-tls-authentication) to view the repository.
+I have also setup an example repository using Node.js-based clients and server leveraging Mutual TLS Authentication to send messages. View the [mutual TLS authentication example repository on GitHub](https://github.com/zubair1024/mutual-tls-authentication).
 
 Happy Grizzly Coding 🐻

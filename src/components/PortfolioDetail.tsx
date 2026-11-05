@@ -1,4 +1,5 @@
 import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
+import CreativeWorkSchema from '@/components/schemas/CreativeWorkSchema';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import { Reveal } from '@/components/Section';
@@ -55,9 +56,15 @@ export const PortfolioDetailShell = ({
           structured trail is Home > project; the visible trail keeps Portfolio. */}
       <BreadcrumbListSchema
         items={[
-          { name: 'Home', url: 'https://www.grizzlybit.dev/' },
+          { name: 'Home', url: 'https://www.grizzlybit.dev' },
           { name: title, url: canonical },
         ]}
+      />
+      <CreativeWorkSchema
+        name={title}
+        description={metadata.description}
+        url={canonical}
+        image={metadata.ogImage}
       />
       <Layout>
         <main id="main" className="min-h-screen bg-background">
@@ -145,7 +152,7 @@ export const PortfolioDetailShell = ({
 };
 
 const crumbLinkClass =
-  'inline-flex min-h-11 items-center underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/60 focus-visible:outline-none';
+  'inline-flex min-h-11 items-center underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none';
 
 const SectionHeading = ({
   id,
@@ -277,6 +284,52 @@ export const FeaturesSection = ({
   );
 };
 
+// Role / challenge / outcome summary. Each block renders only when the page has
+// sourced facts for it; never pad these with assumptions.
+export const CaseStudySummary = ({
+  role,
+  challenge,
+  outcome,
+}: {
+  role?: ReactNode;
+  challenge?: ReactNode;
+  outcome?: ReactNode;
+}) => {
+  const name = useContext(ProjectName);
+  const blocks = [
+    { heading: "Zubair's role", body: role },
+    { heading: 'Challenge and approach', body: challenge },
+    { heading: 'Outcome', body: outcome },
+  ].filter((b) => b.body);
+  return (
+    <DetailSection kicker="Case study" title={`${name} case study summary`}>
+      <div
+        className={cn(
+          'grid grid-cols-1 gap-6',
+          blocks.length > 1 && 'md:grid-cols-2',
+        )}
+      >
+        {blocks.map((b) => (
+          <div
+            key={b.heading}
+            className={cn(
+              'border-2 border-border bg-card p-6 shadow-md',
+              b.heading === 'Challenge and approach' &&
+                blocks.length === 3 &&
+                'md:row-span-2',
+            )}
+          >
+            <h3 className="text-xl font-bold">{b.heading}</h3>
+            <div className="mt-3 max-w-prose space-y-3 text-base leading-relaxed">
+              {b.body}
+            </div>
+          </div>
+        ))}
+      </div>
+    </DetailSection>
+  );
+};
+
 const FeatureList = ({ items }: { items: string[] }) => (
   <ul className="space-y-3">
     {items.map((item) => (
@@ -366,7 +419,7 @@ export const ExternalLinkButton = ({
 );
 
 const OtherProjectCard = ({ item }: { item: IPortfolioItem }) => (
-  <Card className="relative h-full gap-0 py-0 transition-transform focus-within:ring-3 focus-within:ring-ring/60 hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
+  <Card className="relative h-full gap-0 py-0 transition-transform focus-within:ring-3 focus-within:ring-ring hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
     <article className="flex h-full flex-col">
       <div className="relative aspect-video border-b-2 border-border bg-muted">
         <Image

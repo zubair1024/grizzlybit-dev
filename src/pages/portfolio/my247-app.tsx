@@ -1,5 +1,6 @@
 import {
   AboutSection,
+  CaseStudySummary,
   FeaturesSection,
   ImageRow,
   PortfolioDetailShell,
@@ -39,6 +40,23 @@ const My247PortfolioScreen = () => {
             width={400}
             height={400}
           />
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              Customers of 24|7 Home Rescue, the 4th largest boiler service
+              company in the UK, needed to get help, make a claim, book a
+              service and check their cover from a smartphone.
+            </p>
+            <p>
+              My247 is a free Ionic and TypeScript app on a Node.js and Express
+              back end. Cover plan details are stored on the device, so a claim
+              or a support call is a few taps away.
+            </p>
+          </>
         }
       />
 

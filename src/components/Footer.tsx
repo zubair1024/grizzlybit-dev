@@ -31,17 +31,17 @@ const socialIcons: Record<string, IconType> = {
   'Stack Overflow': FaStackOverflow,
 };
 
-const headingClass = 'font-mono text-sm font-bold text-muted-foreground';
+const labelClass = 'font-mono text-sm font-bold text-muted-foreground';
 
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t-2 border-border bg-muted text-foreground">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <Link
             href="/"
-            className="inline-flex items-center gap-3 rounded-sm text-xl font-bold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+            className="inline-flex items-center gap-3 rounded-sm text-xl font-bold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring"
           >
             <Image
               src="/grizzlybit-dev-only-logo.svg"
@@ -66,13 +66,13 @@ const Footer = () => {
           className="grid gap-10 sm:grid-cols-2 md:col-span-2"
         >
           <div>
-            <h2 className={headingClass}>Navigate</h2>
+            <p className={labelClass}>Navigate</p>
             <ul className="mt-4 space-y-1">
               {navLinks.map((n) => (
                 <li key={n.href}>
                   <Link
                     href={n.href}
-                    className="inline-flex min-h-11 items-center font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+                    className="inline-flex min-h-11 items-center font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring"
                   >
                     {n.label}
                   </Link>
@@ -82,7 +82,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h2 className={headingClass}>Connect</h2>
+            <p className={labelClass}>Connect</p>
             <ul className="mt-4 flex flex-wrap gap-3">
               {socialLinks.map((s) => {
                 const Icon = socialIcons[s.name];
@@ -122,7 +122,7 @@ const Footer = () => {
                   address: 'primary',
                 })
               }
-              className="mt-5 inline-flex min-h-11 items-center gap-2 font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+              className="mt-5 inline-flex min-h-11 items-center gap-2 font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring"
             >
               <Mail aria-hidden="true" className="size-4" />
               za@grizzlybit.dev
@@ -132,7 +132,7 @@ const Footer = () => {
       </div>
 
       <div className="border-t-2 border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 font-mono text-xs text-muted-foreground md:flex-row">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 md:px-6 font-mono text-xs text-muted-foreground md:flex-row">
           <p>© {year} Zubair Ahmed. All rights reserved.</p>
           <p>Built with Next.js and Tailwind CSS.</p>
         </div>

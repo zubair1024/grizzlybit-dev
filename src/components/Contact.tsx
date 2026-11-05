@@ -104,7 +104,7 @@ const Contact = () => {
                         address: key,
                       })
                     }
-                    className="inline-flex min-h-11 items-center text-base font-medium break-all underline decoration-2 underline-offset-4 hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+                    className="inline-flex min-h-11 items-center text-base font-medium break-all underline decoration-2 underline-offset-4 hover:text-primary focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
                   >
                     {address}
                   </a>
@@ -117,7 +117,17 @@ const Contact = () => {
         <Reveal delay={0.1}>
           <Card>
             <CardContent>
-              <form noValidate onSubmit={handleSubmit(onSubmit)}>
+              <p
+                id="contact-form-note"
+                className="mb-6 text-sm text-muted-foreground"
+              >
+                All fields are required.
+              </p>
+              <form
+                noValidate
+                aria-describedby="contact-form-note"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <FieldGroup>
                   <Field data-invalid={errors.name ? true : undefined}>
                     <FieldLabel htmlFor="contact-name">Name</FieldLabel>
@@ -197,7 +207,7 @@ const Contact = () => {
                   )}
 
                   {sent && (
-                    <p role="status" className="text-base font-medium">
+                    <p className="text-base font-medium">
                       Thanks, your message is on its way. I&apos;ll reply by
                       email.
                     </p>

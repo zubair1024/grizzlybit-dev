@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ReactLenis, useLenis } from 'lenis/react';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, MotionConfig, useReducedMotion } from 'motion/react';
 import type { AppProps } from 'next/app';
 import type { NextWebVitalsMetric } from 'next/app';
 import { DM_Sans, Space_Mono } from 'next/font/google';
@@ -70,14 +70,7 @@ function ScrollReset() {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    document
-      .querySelectorAll('style[data-next-hide-fouc]')
-      .forEach((el) => el.remove());
-    if (document.body.style.display === 'none') {
-      document.body.style.display = '';
-    }
-  }, []);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
@@ -100,15 +93,21 @@ export default function App({ Component, pageProps }: AppProps) {
         enableSystem={false}
         disableTransitionOnChange
       >
-        <ReactLenis root options={{ lerp: 0.1, anchors: { offset: -80 } }} />
+        {!reduceMotion && (
+          <ReactLenis root options={{ lerp: 0.1, anchors: { offset: -80 } }} />
+        )}
         <ScrollReset />
-        <TooltipProvider>
-          <CapabilityProvider>
-            <AnimatePresence mode="wait" initial={false}>
-              <Component {...pageProps} />
-            </AnimatePresence>
-          </CapabilityProvider>
-        </TooltipProvider>
+        <MotionConfig reducedMotion="user">
+          <TooltipProvider>
+            <CapabilityProvider>
+              {/* initial={false}: skip mount animations on first load so the
+                  server HTML (hero included) is visible without JS */}
+              <AnimatePresence initial={false}>
+                <Component {...pageProps} />
+              </AnimatePresence>
+            </CapabilityProvider>
+          </TooltipProvider>
+        </MotionConfig>
         <Toaster />
       </ThemeProvider>
     </>

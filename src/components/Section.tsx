@@ -9,6 +9,7 @@ type SectionProps = {
   children: ReactNode;
   className?: string;
   muted?: boolean;
+  compact?: boolean;
 };
 
 // Shared homepage section shell: one H2 per section, labelled by its heading.
@@ -20,18 +21,20 @@ export const Section = ({
   children,
   className,
   muted,
+  compact,
 }: SectionProps) => (
   <section
     id={id}
     aria-labelledby={`${id}-title`}
     className={cn(
-      'scroll-mt-20 border-b-2 border-border py-20 md:py-28',
+      'scroll-mt-20 border-b-2 border-border',
+      compact ? 'py-16 md:py-20' : 'py-20 md:py-28',
       muted ? 'bg-muted' : 'bg-background',
       className,
     )}
   >
     <div className="mx-auto max-w-6xl px-4 md:px-6">
-      <Reveal className="mb-12 max-w-3xl">
+      <Reveal className={cn('max-w-3xl', compact ? 'mb-8 md:mb-10' : 'mb-12')}>
         {eyebrow && (
           <p className="mb-3 inline-block border-2 border-border bg-secondary px-2 py-0.5 font-mono text-xs font-bold text-secondary-foreground">
             {eyebrow}

@@ -1,5 +1,6 @@
 import {
   AboutSection,
+  CaseStudySummary,
   ExternalLinkButton,
   PortfolioDetailShell,
   PortfolioImage,
@@ -33,6 +34,22 @@ const ToolsGrizzlyScreen = () => {
             src="/portfolio/tools-grizzly/tools-grizzlybit-dev.png"
             alt="Screenshot of the Grizzly Tools developer utilities web app"
           />
+        }
+      />
+
+      <CaseStudySummary
+        role={
+          <p>
+            Grizzly Tools runs on Zubair&apos;s own grizzlybit.dev domain at
+            tools.grizzlybit.dev.
+          </p>
+        }
+        challenge={
+          <p>
+            Developers often need a quick utility for a small task. Grizzly
+            Tools collects these online tools in one Next.js and TypeScript web
+            app.
+          </p>
         }
       />
 

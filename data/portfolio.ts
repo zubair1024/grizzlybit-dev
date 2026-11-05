@@ -10,19 +10,19 @@ const portfolio: IPortfolioItem[] = [
     img: '/portfolio/razrtrack.jpg',
     url: '/portfolio/vehicle-tracking',
     desc: 'Real-time GPS fleet management dashboard for tracking vehicles and scheduling jobs',
-    title: 'Vehicle Tracking Application',
+    title: 'Vehicle tracking application',
   },
   {
     img: '/portfolio/razrtrack-mobile.jpg',
     url: '/portfolio/vehicle-tracking-mobile',
     desc: 'Mobile app for live vehicle telemetry, driver work orders and push alerts',
-    title: 'Vehicle Tracking Mobile Application',
+    title: 'Vehicle tracking mobile application',
   },
   {
     img: '/portfolio/razrlibre.jpg',
     url: '/portfolio/covid-tracker',
     desc: 'Remote COVID-19 patient health monitoring app with BLE oximeter readings',
-    title: 'COVID Tracking Mobile Application',
+    title: 'COVID tracking mobile application',
   },
   {
     img: '/portfolio/my247.jpg',
@@ -40,13 +40,13 @@ const portfolio: IPortfolioItem[] = [
     img: '/portfolio/razrboiler.jpg',
     url: '/portfolio/boiler-mobile',
     desc: 'IoT mobile app to control your thermostat and boiler from anywhere',
-    title: 'Smart Boiler Mobile App',
+    title: 'Smart boiler mobile app',
   },
   {
     img: '/portfolio/he.jpg',
     url: '/portfolio/he-app',
     desc: 'IoT dashboard to monitor heavy equipment and gensets in construction',
-    title: 'Heavy Equipment Monitoring',
+    title: 'Heavy equipment monitoring',
   },
   {
     img: '/portfolio/worldlypins.jpg',

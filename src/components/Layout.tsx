@@ -17,11 +17,10 @@ const Layout = (props: ILayoutProps) => {
         Skip to content
       </a>
       <motion.div
-        // Opacity-only, and _app's AnimatePresence has initial={false},
-        // so server HTML is fully visible for crawlers and LCP.
+        // Fades in on client navigations only; _app's AnimatePresence
+        // initial={false} keeps the first (server) render fully visible.
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       >
         <Header></Header>

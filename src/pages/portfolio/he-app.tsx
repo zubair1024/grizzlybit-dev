@@ -1,12 +1,13 @@
 import {
   AboutSection,
+  CaseStudySummary,
   FeaturesSection,
   PortfolioDetailShell,
   PortfolioImage,
   TechStackSection,
 } from '@/components/PortfolioDetail';
 
-const title = 'Heavy Equipment Monitoring';
+const title = 'Heavy equipment monitoring';
 
 const HeavyEquipmentMonitoringPortfolioScreen = () => {
   return (
@@ -36,6 +37,24 @@ const HeavyEquipmentMonitoringPortfolioScreen = () => {
             src="/portfolio/he/he_overview.jpg"
             alt="Heavy equipment monitoring dashboard showing the fleet overview"
           />
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              Operators and managers of gensets and other heavy equipment in
+              construction, industrial and commercial settings need to track
+              performance, maintenance and health, and act on issues quickly.
+            </p>
+            <p>
+              The platform is a React web app on a Node.js and Express back end,
+              with RabbitMQ and Redis in the stack. It streams real-time data
+              and alerts, schedules maintenance, keeps historical data, and lets
+              teams start, stop and control a genset remotely.
+            </p>
+          </>
         }
       />
 

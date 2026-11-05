@@ -1,14 +1,16 @@
 import {
   AboutSection,
+  CaseStudySummary,
   DetailSection,
   FeaturesSection,
   PortfolioDetailShell,
   PortfolioImage,
   TechStackSection,
 } from '@/components/PortfolioDetail';
+import Link from 'next/link';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
 
-const title = 'Vehicle Tracking Application';
+const title = 'Vehicle tracking application';
 
 const VehicleApplicationPortfolioScreen = () => {
   return (
@@ -37,6 +39,37 @@ const VehicleApplicationPortfolioScreen = () => {
             src="/portfolio/razrtrack/razrtrack_overview.png"
             alt="Fleet tracking dashboard with all vehicles on a live map"
           />
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              Fleet operators need to see where every vehicle is in real time,
+              drill into speed, fuel level and route history, and react to
+              events such as route deviation or speeding.
+            </p>
+            <p>
+              The answer is a React web dashboard on a Node.js and Express back
+              end, with RabbitMQ and Redis in the stack, maps from Leaflet, an
+              OpenStreetMap tile layer and Google Maps, OSRM routing and Google
+              OR-Tools. A{' '}
+              <Link
+                href="/portfolio/vehicle-tracking-mobile"
+                className="font-bold underline underline-offset-4"
+              >
+                companion mobile app
+              </Link>{' '}
+              covers fleet operations on iOS and Android.
+            </p>
+          </>
+        }
+        outcome={
+          <p>
+            The vehicle tracking work was recognised by Dubai Police with a
+            certificate of appreciation, shown below.
+          </p>
         }
       />
 

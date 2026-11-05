@@ -7,12 +7,12 @@ const PersonSchema = () => {
     '@type': 'Person',
     '@id': 'https://www.grizzlybit.dev/#person',
     name: 'Zubair Ahmed',
-    alternateName: 'Grizzlybit',
     jobTitle: 'Chief Technology Officer',
     worksFor: {
       '@type': 'Organization',
       '@id': 'https://www.grizzlybit.dev/#razrlab',
       name: 'RAZRLAB',
+      url: 'https://razrlab.com',
     },
     url: 'https://www.grizzlybit.dev',
     sameAs: socialLinks.map((link) => link.url),

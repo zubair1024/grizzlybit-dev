@@ -64,15 +64,15 @@ const Statistics = () => {
   ];
 
   return (
-    <dl className="hero-stats px-2 my-10 rounded-md border border-border shadow-sm grid grid-flow-row grid-cols-2 md:grid-cols-4">
+    <dl className="hero-stats mx-4 my-10 grid grid-cols-1 gap-y-2 rounded-md border border-border px-2 py-2 shadow-sm sm:grid-cols-2 md:grid-cols-4">
       {items.map((i) => (
         <div key={i.title} className="hero-stat">
-          <div className="hero-stat-figure">
-            <Image src={i.icon} height="40" width="40" alt={`${i.label} logo`} />
-          </div>
           <dt className="hero-stat-title">{i.title}</dt>
           <dd className="hero-stat-value">{i.value}</dd>
           <dd className="hero-stat-desc">{i.desc}</dd>
+          <dd className="hero-stat-figure">
+            <Image src={i.icon} height="40" width="40" alt={`${i.label} logo`} />
+          </dd>
         </div>
       ))}
     </dl>

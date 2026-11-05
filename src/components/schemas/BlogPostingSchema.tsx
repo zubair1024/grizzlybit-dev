@@ -44,16 +44,11 @@ const BlogPostingSchema = ({
       name: author.name,
       url: author.url,
     },
+    // Same entity as WebSite.publisher; name inline because this page has no Person node
     publisher: {
-      '@type': 'Organization',
-      '@id': 'https://www.grizzlybit.dev/#organization',
-      name: 'Grizzlybit',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://www.grizzlybit.dev/grizzlybit-logo-square.png',
-        width: 512,
-        height: 512,
-      },
+      '@type': 'Person',
+      '@id': 'https://www.grizzlybit.dev/#person',
+      name: 'Zubair Ahmed',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

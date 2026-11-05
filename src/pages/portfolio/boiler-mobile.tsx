@@ -1,5 +1,6 @@
 import {
   AboutSection,
+  CaseStudySummary,
   FeaturesSection,
   ImageRow,
   PortfolioDetailShell,
@@ -7,7 +8,7 @@ import {
   TechStackSection,
 } from '@/components/PortfolioDetail';
 
-const title = 'Smart Boiler Mobile App';
+const title = 'Smart boiler mobile app';
 
 const SmartBoilerMobilePortfolioScreen = () => {
   return (
@@ -46,6 +47,23 @@ const SmartBoilerMobilePortfolioScreen = () => {
               height={260}
             />
           </ImageRow>
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              Customers wanted to control their home or office heating from
+              anywhere and understand their energy use to cut heating costs.
+            </p>
+            <p>
+              The Ionic and Cordova app, on a Node.js and Express back end,
+              controls the thermostat and boiler remotely, runs heating
+              schedules, tracks energy history and sends alerts through
+              OneSignal.
+            </p>
+          </>
         }
       />
 

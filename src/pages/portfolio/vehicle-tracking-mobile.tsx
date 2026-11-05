@@ -1,13 +1,15 @@
 import {
   AboutSection,
+  CaseStudySummary,
   FeaturesSection,
   ImageRow,
   PortfolioDetailShell,
   PortfolioImage,
   TechStackSection,
 } from '@/components/PortfolioDetail';
+import Link from 'next/link';
 
-const title = 'Vehicle Tracking Mobile Application';
+const title = 'Vehicle tracking mobile application';
 
 const VehicleApplicationMobilePortfolioScreen = () => {
   return (
@@ -40,6 +42,30 @@ const VehicleApplicationMobilePortfolioScreen = () => {
               height={260}
             />
           </ImageRow>
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              Fleet users need the current location and movement of their
+              vehicles, and the work orders drivers are completing, as they
+              happen.
+            </p>
+            <p>
+              The app is the mobile companion to the{' '}
+              <Link
+                href="/portfolio/vehicle-tracking"
+                className="font-bold underline underline-offset-4"
+              >
+                vehicle tracking web application
+              </Link>
+              . It is built with Ionic and TypeScript for iOS and Android, runs
+              on a Node.js and Express back end and sends push notifications
+              through OneSignal.
+            </p>
+          </>
         }
       />
 

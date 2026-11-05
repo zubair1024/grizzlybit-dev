@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio and blog website for Zubair Ahmed (grizzlybit.dev) built with Next.js 16 (Pages Router), React 19, TypeScript, Tailwind CSS 4 with daisyUI 5, and MDX for blog content.
+Personal portfolio and blog website for Zubair Ahmed (grizzlybit.dev) built with Next.js 16 (Pages Router), React 19, TypeScript, Tailwind CSS 4, shadcn/ui (Radix), and MDX for blog content.
 
 ## Commands
 
@@ -30,7 +30,7 @@ The project uses Husky with lint-staged to automatically format code on commit:
 ## Architecture
 
 ### Pages Router Structure
-- **Homepage (`src/pages/index.tsx`)**: Dynamically rendered (`ssr: false`) with multiple sections (Banner, Services, AboutMe, BlogSection, Toolbelt, Portfolio, Companies, Testimonials, Contact)
+- **Homepage (`src/pages/index.tsx`)**: Statically generated (`getStaticProps`) with multiple sections (Banner, Services, AboutMe, BlogSection, Toolbelt, Portfolio, Companies, Testimonials, Contact)
 - **Blog Posts (`src/pages/blog/[slug].tsx`)**: Static generation using MDX files from `src/posts/`
 - **Portfolio Pages (`src/pages/portfolio/*.tsx`)**: Individual static pages for each project
 - **API Routes (`src/pages/api/`)**:
@@ -43,15 +43,18 @@ The project uses Husky with lint-staged to automatically format code on commit:
 - **Post utilities (`src/util/posts.ts`)**: Functions for reading MDX files, extracting frontmatter, and bundling with rehype-prism-plus (syntax highlighting) and remark-gfm (GitHub Flavored Markdown)
 
 ### Key Components
-- **Layout (`src/components/Layout.tsx`)**: Wraps all pages with Header/Footer and Motion (motion/react) page transitions
+- **Layout (`src/components/Layout.tsx`)**: Wraps all pages with Header/Footer and an opacity-only Motion fade on client navigations (first render stays visible for SEO)
 - **Section Components**: Self-contained components for each homepage section (AboutMe, Banner, BlogSection, Companies, Contact, Portfolio, Services, Statistics, Testimonials, Toolbelt)
 - **CustomHead**: SEO metadata management with next-seo
 
 ### Styling
-- Tailwind CSS 4, configured CSS-first in `src/styles/globals.css` (`@theme`, `@plugin`); no `tailwind.config.js`
-- daisyUI 5 "halloween" theme, pinned to its daisyUI 2 palette via `@plugin 'daisyui/theme'` in `globals.css`
-- Motion (`motion/react`) for page transitions and animations
-- Custom CSS modules for specific pages (Home.module.css, Portfolio.module.css)
+- Tailwind CSS 4, configured CSS-first in `src/styles/globals.css` (`@theme`, `@theme inline`); no `tailwind.config.js`
+- shadcn/ui (`components.json`, style `radix-nova`, `rsc: false`); primitives in `src/components/ui/`, add more with `npx shadcn@latest add <name>`
+- tweakcn "neo-brutalism" theme: tokens in `:root` / `.dark` in `globals.css` (radius 0, 2px borders, hard offset shadows; DM Sans + Space Mono via `next/font` in `_app.tsx`)
+- Light mode default, dark via `next-themes` (`.dark` class, `ThemeToggle` in the header)
+- Homepage sections use `Section` / `Reveal` from `src/components/Section.tsx`; `Reveal` is a CSS scroll-driven animation (`.reveal`)
+- Lenis smooth scroll (`_app.tsx`, disabled for reduced motion); Motion (`motion/react`) for small interactions
+- Hero (`Banner.tsx`, `Statistics.tsx`, `src/components/fx/`) uses local `.hero-*` classes in `globals.css`
 
 ### External Integrations
 - **Analytics**: Google Analytics 4 (gtag.js bootstrapped in `src/util/ga.ts`) and Hotjar

@@ -1,5 +1,6 @@
 import {
   AboutSection,
+  CaseStudySummary,
   FeaturesSection,
   ImageRow,
   PortfolioDetailShell,
@@ -7,7 +8,7 @@ import {
   TechStackSection,
 } from '@/components/PortfolioDetail';
 
-const title = 'COVID Tracking Mobile Application';
+const title = 'COVID tracking mobile application';
 
 const CovidTrackingPortfolioScreen = () => {
   return (
@@ -38,6 +39,23 @@ const CovidTrackingPortfolioScreen = () => {
             width={400}
             height={400}
           />
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              During the pandemic, COVID-19 patients needed to be monitored
+              remotely: symptoms, medications, test results and blood oxygen
+              levels.
+            </p>
+            <p>
+              The Ionic mobile app, backed by Node.js and Express, lets patients
+              log symptoms and medication, sets reminders, and reads SpO₂ from a
+              pulse oximeter over Bluetooth Low Energy (BLE).
+            </p>
+          </>
         }
       />
 

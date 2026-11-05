@@ -20,10 +20,8 @@ type Props = {
 export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
   const label = formatTag(tagLabel);
   const count = `${posts.length} ${posts.length === 1 ? 'article' : 'articles'}`;
-  const title = `${tagLabel} — Engineering posts`;
-  const description = `${posts.length} engineering post${
-    posts.length === 1 ? '' : 's'
-  } tagged ${tagLabel} by Zubair Ahmed (Grizzlybit).`;
+  const title = `${label} articles and tutorials`;
+  const description = `Browse ${count} on ${label} by Zubair Ahmed, full-stack engineer and CTO, from the Grizzlybit engineering blog.`;
   const canonical = `https://www.grizzlybit.dev/blog/tag/${tagSlug}`;
   // Avoid crawl-budget dilution on single-post tag pages
   const isThin = posts.length < 2;
@@ -41,7 +39,7 @@ export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
         items={[
           { name: 'Home', url: 'https://www.grizzlybit.dev' },
           { name: 'Blog', url: 'https://www.grizzlybit.dev/blog' },
-          { name: tagLabel, url: canonical },
+          { name: title, url: canonical },
         ]}
       />
       <Layout>
@@ -53,7 +51,7 @@ export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
             <div className="mx-auto max-w-6xl px-4 md:px-6">
               <Link
                 href="/blog"
-                className="inline-flex min-h-11 items-center gap-2 font-bold underline decoration-primary decoration-2 underline-offset-4 outline-none hover:decoration-4 focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="inline-flex min-h-11 items-center gap-2 font-bold underline decoration-primary decoration-2 underline-offset-4 outline-none hover:decoration-4 focus-visible:ring-3 focus-visible:ring-ring"
               >
                 <ArrowLeftIcon aria-hidden="true" className="size-4" />
                 All engineering articles

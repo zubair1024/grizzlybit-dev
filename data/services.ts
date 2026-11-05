@@ -33,7 +33,7 @@ const services: IServiceItem[] = [
     title: 'Mentoring & technical leadership',
     description:
       'I enjoy sharing what I know and helping engineers reach their full potential. In leadership roles I have mentored multiple cross-functional teams through coaching, code review and architecture.',
-    tools: ['Coaching', 'Code Review', 'Architecture'],
+    tools: ['Coaching', 'Code review', 'Architecture'],
     icon: Users,
   },
 ];

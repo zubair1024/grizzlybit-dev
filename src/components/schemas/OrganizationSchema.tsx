@@ -6,7 +6,6 @@ const OrganizationSchema = () => {
     '@type': 'Organization',
     '@id': 'https://www.grizzlybit.dev/#organization',
     name: 'Grizzlybit',
-    alternateName: 'Grizzlybit — Zubair Ahmed',
     url: 'https://www.grizzlybit.dev',
     logo: {
       '@type': 'ImageObject',
@@ -16,11 +15,7 @@ const OrganizationSchema = () => {
     },
     description:
       'Grizzlybit is the personal practice of Zubair Ahmed — full-stack software engineering, Node.js, React, TypeScript, and IoT product builds in Dubai.',
-    founder: {
-      '@type': 'Person',
-      '@id': 'https://www.grizzlybit.dev/#person',
-      name: 'Zubair Ahmed',
-    },
+    founder: { '@id': 'https://www.grizzlybit.dev/#person' },
     foundingDate: '2017-03-01',
     address: {
       '@type': 'PostalAddress',
@@ -33,11 +28,6 @@ const OrganizationSchema = () => {
       contactType: 'Customer Service',
       url: 'https://www.grizzlybit.dev/#contact-form',
     },
-    sameAs: [
-      'https://www.linkedin.com/in/zubair1024/',
-      'https://twitter.com/zubair1024',
-      'https://github.com/zubair1024',
-    ],
   };
 
   return (

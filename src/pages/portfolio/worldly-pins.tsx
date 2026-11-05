@@ -1,5 +1,6 @@
 import {
   AboutSection,
+  CaseStudySummary,
   ExternalLinkButton,
   PortfolioDetailShell,
   PortfolioImage,
@@ -40,6 +41,22 @@ const WorldlyPinsScreen = () => {
             src="/portfolio/worldlypins/worldly-pins.png"
             alt="Worldly Pins interactive world map with visited countries pinned"
           />
+        }
+      />
+
+      <CaseStudySummary
+        role={
+          <p>
+            Worldly Pins is Zubair&apos;s own open-source project, published on
+            his GitHub account.
+          </p>
+        }
+        challenge={
+          <p>
+            Travellers want a simple way to remember where they have been. The
+            app pins visited countries and cities on an interactive map, built
+            with Next.js and TypeScript on a Postgres database through Prisma.
+          </p>
         }
       />
 

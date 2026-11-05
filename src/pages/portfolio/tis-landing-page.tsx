@@ -1,5 +1,6 @@
 import {
   AboutSection,
+  CaseStudySummary,
   PortfolioDetailShell,
   PortfolioImage,
   TechStackSection,
@@ -29,6 +30,17 @@ const TISPortfolioScreen = () => {
             src="/portfolio/tis/tis-website.jpg"
             alt="Screenshot of the TIS thermal insulation website homepage"
           />
+        }
+      />
+
+      <CaseStudySummary
+        challenge={
+          <p>
+            A Dubai thermal insulation cladding company needed an entry point
+            for visitors that gives a quick overview of the business and its
+            services and drives enquiries and quote requests. The landing page
+            is built with Next.js, React and TypeScript.
+          </p>
         }
       />
 

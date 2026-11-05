@@ -85,8 +85,12 @@ const CustomHead = (props: CustomHeadProps) => {
   const isHomepage =
     !title || normalize(canonicalUrl) === normalize(defaultTags.websiteUrl);
   const resolvedTitle = title ?? defaultTags.title;
+  // Drop the brand suffix when it would push the title past ~60 chars (SERP truncation).
+  const fitsSuffix =
+    defaultTags.titleTemplate.replace('%s', resolvedTitle).length <= 60;
   // '%s' (not undefined): next-seo keeps the last titleTemplate module-wide
-  const titleTemplate = isHomepage ? '%s' : defaultTags.titleTemplate;
+  const titleTemplate =
+    isHomepage || !fitsSuffix ? '%s' : defaultTags.titleTemplate;
 
   return (
     <>

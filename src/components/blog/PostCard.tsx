@@ -1,8 +1,10 @@
 import { PostDate } from '@/components/blog/PostDate';
 import { TagLink } from '@/components/blog/TagLink';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { trackEvent } from '@/util/ga';
 import { PostData } from '@/util/types';
+import { FileTextIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,6 +13,7 @@ type Props = {
   index?: number;
   location?: string;
   headingLevel?: 'h2' | 'h3';
+  className?: string;
 };
 
 // Stretched title link covers the card; tag links sit above it (z-10) so
@@ -20,10 +23,11 @@ export const PostCard = ({
   index = 0,
   location = 'blog_index',
   headingLevel: Heading = 'h3',
+  className,
 }: Props) => (
-  <article className="h-full">
-    <Card className="relative h-full gap-4 transition-[translate,box-shadow] focus-within:ring-3 focus-within:ring-ring/50 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-md">
-      {data.image && (
+  <article className={cn('h-full', className)}>
+    <Card className="relative h-full gap-4 transition-[translate,box-shadow] focus-within:ring-3 focus-within:ring-ring hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-lg motion-reduce:transition-none">
+      {data.image ? (
         <Image
           src={data.image}
           alt=""
@@ -32,6 +36,13 @@ export const PostCard = ({
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           className="aspect-[16/7] w-full border-b-2 border-border object-cover"
         />
+      ) : (
+        <div
+          aria-hidden="true"
+          className="flex aspect-[16/7] w-full items-center justify-center border-b-2 border-border bg-secondary text-secondary-foreground"
+        >
+          <FileTextIcon className="size-12" strokeWidth={1.5} />
+        </div>
       )}
       <CardContent className="flex flex-1 flex-col gap-3">
         <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
