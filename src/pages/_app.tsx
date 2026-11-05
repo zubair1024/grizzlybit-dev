@@ -1,5 +1,6 @@
 import { LinkableTagsContext } from '@/components/blog/TagLink';
 import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
+import PageLoader from '@/components/PageLoader';
 import '@/styles/globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -35,7 +36,9 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
     // Check if gtag is available
     if (window.gtag) {
       window.gtag('event', metric.name, {
-        value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+        value: Math.round(
+          metric.name === 'CLS' ? metric.value * 1000 : metric.value,
+        ),
         event_label: metric.id,
         non_interaction: true,
       });
@@ -113,6 +116,7 @@ export default function App({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </AnimatePresence>
               </LinkableTagsContext.Provider>
+              <PageLoader />
             </CapabilityProvider>
           </TooltipProvider>
         </MotionConfig>
