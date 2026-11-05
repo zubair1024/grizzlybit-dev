@@ -67,7 +67,7 @@ const Banner = () => {
                 </span>
               ))}
             </div>
-            <div className="flex justify-between mx-4 mt-6">
+            <div className="hero-social flex justify-between mx-4 mt-6">
               {socialLinks.map((i) => {
                 return (
                   <div
