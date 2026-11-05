@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
-import { motion, useReducedMotion } from 'motion/react';
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 type SectionProps = {
   id: string;
@@ -55,7 +54,10 @@ export const Section = ({
   </section>
 );
 
-// Fade-up on first view; skipped entirely for reduced motion.
+// Fade-up as it scrolls into view. Native CSS scroll-driven animation
+// (see .reveal in globals.css): no JS, content is fully visible in the
+// server HTML and wherever animation-timeline is unsupported.
+// `delay` (0–0.3) shifts the start within the entry range for stagger.
 export const Reveal = ({
   children,
   className,
@@ -64,18 +66,11 @@ export const Reveal = ({
   children: ReactNode;
   className?: string;
   delay?: number;
-}) => {
-  const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay }}
-    >
-      {children}
-    </motion.div>
-  );
-};
+}) => (
+  <div
+    className={cn('reveal', className)}
+    style={{ '--reveal-delay': delay } as CSSProperties}
+  >
+    {children}
+  </div>
+);

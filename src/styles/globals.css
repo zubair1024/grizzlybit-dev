@@ -65,6 +65,24 @@
   }
 }
 
+/* Scroll-driven reveal (Section.tsx <Reveal>) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--reveal-delay, 0) * 100%)
+        entry calc(70% + var(--reveal-delay, 0) * 100%);
+    }
+  }
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
 /* ---------- Hero (Banner + Statistics) ----------
    Ported from the daisyUI 5 card/badge/glass/tooltip/stat classes so the
    hero looks identical without daisy. Only surface/text colors follow the
