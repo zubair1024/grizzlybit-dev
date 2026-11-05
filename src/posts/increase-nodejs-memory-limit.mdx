@@ -16,8 +16,6 @@ keywords:
 author: "Zubair Ahmed"
 ---
 
-![My Terminal Setup: iTerm2 + ZSH + Powerlevel10k](/blog/increase-nodejs-memory-limit/cover.png)
-
 [Node.js](https://nodejs.org/en/) has memory limitations that you can hit quite easily in production. By default, Node.js (up to 11.x ) uses a maximum heap size of 700MB and 1400MB on 32-bit and 64-bit platforms, respectively. You’ll know this if you ever tried to load a large data file into your Node.js application. How do we work-around this limit?
 
 In Node.js, we don't explicitly manage the memory, we rather leave it to v8 garbage collector to do that for us. But it might not have the wiggle room to crunch the data we want it to. Hence, we might end up with a **FATAL ERROR** like below:

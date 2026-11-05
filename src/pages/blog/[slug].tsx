@@ -18,11 +18,14 @@ import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { trackEvent } from '@/util/ga';
+import { getLinkableTagSlugs } from '@/util/tags';
 import { PostData } from '@/util/types';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import path from 'path';
 import { ComponentProps, useEffect, useMemo } from 'react';
 import {
   getAllPostSlugs,
@@ -67,8 +70,12 @@ const mdxComponents = {
   ),
 };
 
+// Cover rendered in the post header (the LCP element), with intrinsic size.
+type Cover = { src: string; width: number; height: number };
+
 type Props = {
   code: string;
+  cover: Cover | null;
   frontmatter: Frontmatter;
   slug: string;
   readingTime: string;
@@ -77,6 +84,7 @@ type Props = {
 
 export default function BlogPost({
   code,
+  cover,
   frontmatter,
   slug,
   readingTime,
@@ -85,6 +93,7 @@ export default function BlogPost({
   const Component = useMemo(() => getMDXComponent(code), [code]);
   const author = frontmatter.author || 'Zubair Ahmed';
   const description = frontmatter.description ?? frontmatter.summary;
+  const ogImage = `/og-images/blog/${slug}.png`;
 
   useEffect(() => {
     let fired = false;
@@ -135,7 +144,11 @@ export default function BlogPost({
         description={description}
         canonical={`https://www.grizzlybit.dev/blog/${slug}`}
         ogType="article"
-        ogImage={frontmatter.image}
+        ogImage={ogImage}
+        ogImageWidth={1200}
+        ogImageHeight={630}
+        ogImageType="image/png"
+        ogImageAlt={frontmatter.title}
         publishedTime={frontmatter.publishedAt}
         modifiedTime={frontmatter.lastModified}
         author={author}
@@ -146,12 +159,21 @@ export default function BlogPost({
         description={description}
         publishedAt={frontmatter.publishedAt}
         modifiedAt={frontmatter.lastModified}
-        image={frontmatter.image}
+        image={ogImage}
+        coverImage={cover?.src}
         slug={slug}
         keywords={frontmatter.keywords}
         author={{ name: author, url: 'https://www.grizzlybit.dev' }}
       />
       <BreadcrumbListSchema items={breadcrumbItems} />
+      <Head>
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href={`/blog/${slug}.md`}
+          title="Markdown version"
+        />
+      </Head>
       <Layout>
         <main id="main" className="min-h-screen bg-background">
           <article className="mx-auto max-w-6xl px-4 pt-28 pb-12 md:px-6 md:pt-32">
@@ -210,6 +232,24 @@ export default function BlogPost({
                 </ul>
               )}
             </header>
+
+            {cover && (
+              // text-lg matches the prose-lg column, so 72ch is the same width
+              <div className="mx-auto mt-10 max-w-[72ch] text-lg">
+                <Image
+                  src={cover.src}
+                  width={cover.width}
+                  height={cover.height}
+                  alt={frontmatter.title}
+                  // LCP: in the SSR HTML, so eager + high priority beats a
+                  // preload (`priority` is deprecated in Next 16).
+                  loading="eager"
+                  fetchPriority="high"
+                  sizes="(max-width: 920px) calc(100vw - 2rem), 890px"
+                  className="h-auto w-full border-2 border-border"
+                />
+              </div>
+            )}
 
             <div className="mx-auto mt-10 max-w-[72ch] prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:font-semibold prose-a:text-foreground prose-a:underline prose-a:decoration-primary prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:decoration-foreground prose-li:marker:text-primary prose-pre:overflow-x-auto prose-pre:rounded-none prose-img:border-2 prose-img:border-border prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:border-2 [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-secondary/40 [&_:not(pre)>code]:box-decoration-clone [&_:not(pre)>code]:wrap-break-word [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-normal [&_:not(pre)>code]:text-foreground [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full">
               <Component components={mdxComponents} />
@@ -270,19 +310,33 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // Calculate reading time from raw MDX body (not compiled JS)
   const readingTime = calculateReadingTime(postData.body);
 
+  const allPosts = await getBlogPostData();
   const relatedPosts = getRelatedPosts(
-    await getBlogPostData(),
+    allPosts,
     slug,
     postData.frontmatter.keywords,
   );
+
+  // Intrinsic cover size so next/image reserves space (no CLS).
+  let cover: Cover | null = null;
+  const coverSrc: string | undefined = postData.frontmatter.image;
+  if (coverSrc?.startsWith('/')) {
+    const { default: sharp } = await import('sharp');
+    const { width, height } = await sharp(
+      path.join(process.cwd(), 'public', coverSrc),
+    ).metadata();
+    if (width && height) cover = { src: coverSrc, width, height };
+  }
 
   return {
     props: {
       slug,
       frontmatter: postData.frontmatter,
       code: postData.code,
+      cover,
       readingTime,
       relatedPosts,
+      linkableTags: getLinkableTagSlugs(allPosts),
     },
   };
 };

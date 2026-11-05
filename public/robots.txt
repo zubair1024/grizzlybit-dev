@@ -1,18 +1,92 @@
 # *
 User-agent: *
 Allow: /
-Disallow: /api/*
+Disallow: /api/
 
-# Googlebot
-User-agent: Googlebot
+# GPTBot
+User-agent: GPTBot
 Allow: /
-Disallow: /api/*
+Disallow: /api/
+
+# OAI-SearchBot
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+
+# ClaudeBot
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+
+# Claude-SearchBot
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+
+# Claude-User
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+
+# PerplexityBot
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+# Perplexity-User
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+
+# Google-Extended
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+
+# Applebot
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+
+# Applebot-Extended
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
 
 # Bingbot
 User-agent: Bingbot
 Allow: /
-Disallow: /api/*
-Crawl-delay: 1
+Disallow: /api/
+
+# DuckAssistBot
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /api/
+
+# meta-externalagent
+User-agent: meta-externalagent
+Allow: /
+Disallow: /api/
+
+# Amazonbot
+User-agent: Amazonbot
+Allow: /
+Disallow: /api/
+
+# MistralAI-User
+User-agent: MistralAI-User
+Allow: /
+Disallow: /api/
+
+# CCBot
+User-agent: CCBot
+Allow: /
+Disallow: /api/
 
 
 # Sitemaps

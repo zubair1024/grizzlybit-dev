@@ -2,10 +2,12 @@ import { PostCard } from '@/components/blog/PostCard';
 import { TagLink } from '@/components/blog/TagLink';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
+import BlogSchema from '@/components/schemas/BlogSchema';
+import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
 import { Reveal } from '@/components/Section';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { buildTagIndex } from '@/util/tags';
+import { buildTagIndex, getLinkableTagSlugs } from '@/util/tags';
 import { PostData } from '@/util/types';
 import { SearchIcon } from 'lucide-react';
 import { GetStaticProps } from 'next';
@@ -16,13 +18,18 @@ import { getBlogPostData } from '../../util/posts';
 type Props = {
   allPostsData: PostData[];
   popularTags: string[];
+  linkableTags: string[];
 };
+
+const BLOG_TITLE = 'Engineering Blog — Node.js, React & TypeScript';
+const BLOG_DESCRIPTION =
+  'Practical engineering posts by Zubair Ahmed: Node.js, React, TypeScript, DevOps, SSH, Docker, performance, and full-stack patterns.';
 
 export default function BlogPage({ allPostsData, popularTags }: Props) {
   const router = useRouter();
   const [query, setQuery] = useState('');
 
-  // Wire ?search= URL param so the WebSite SearchAction schema actually works
+  // Honour ?search= so filtered views can be linked/shared
   useEffect(() => {
     if (!router.isReady) return;
     const raw = router.query.search;
@@ -47,8 +54,8 @@ export default function BlogPage({ allPostsData, popularTags }: Props) {
   return (
     <>
       <CustomHead
-        title="Engineering Blog — Node.js, React & TypeScript"
-        description="Practical engineering posts by Zubair Ahmed: Node.js, React, TypeScript, DevOps, SSH, Docker, performance, and full-stack patterns."
+        title={BLOG_TITLE}
+        description={BLOG_DESCRIPTION}
         canonical="https://www.grizzlybit.dev/blog"
         keywords={[
           'Node.js blog',
@@ -59,6 +66,17 @@ export default function BlogPage({ allPostsData, popularTags }: Props) {
           'Grizzlybit',
           'full-stack tutorials',
         ]}
+      />
+      <BreadcrumbListSchema
+        items={[
+          { name: 'Home', url: 'https://www.grizzlybit.dev' },
+          { name: 'Blog', url: 'https://www.grizzlybit.dev/blog' },
+        ]}
+      />
+      <BlogSchema
+        name="Grizzlybit engineering blog"
+        description={BLOG_DESCRIPTION}
+        posts={allPostsData}
       />
       <Layout>
         <main id="main" className="min-h-screen bg-background">
@@ -167,6 +185,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       allPostsData,
       popularTags,
+      linkableTags: getLinkableTagSlugs(allPostsData),
     },
   };
 };

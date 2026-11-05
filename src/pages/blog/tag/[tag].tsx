@@ -5,7 +5,11 @@ import Layout from '@/components/Layout';
 import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
 import { Reveal } from '@/components/Section';
 import { getBlogPostData } from '@/util/posts';
-import { buildTagIndex, getAllTagSlugs } from '@/util/tags';
+import {
+  buildTagIndex,
+  getAllTagSlugs,
+  getLinkableTagSlugs,
+} from '@/util/tags';
 import { PostData } from '@/util/types';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ArrowLeftIcon } from 'lucide-react';
@@ -15,6 +19,7 @@ type Props = {
   tagSlug: string;
   tagLabel: string;
   posts: PostData[];
+  linkableTags: string[];
 };
 
 export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
@@ -112,6 +117,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     props: {
       tagSlug,
       tagLabel: bucket.label,
+      linkableTags: getLinkableTagSlugs(allPosts),
       posts: bucket.posts.sort(
         (a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt),
       ),

@@ -12,15 +12,6 @@ const WebSiteSchema = () => {
     description:
       'Personal portfolio and blog of Zubair Ahmed, Chief Technology Officer at RAZRLAB. Showcasing software development projects, blog posts, and technical expertise.',
     author: { '@id': 'https://www.grizzlybit.dev/#person' },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate:
-          'https://www.grizzlybit.dev/blog?search={search_term_string}',
-      },
-      'query-input': 'required name=search_term_string',
-    },
     inLanguage: 'en-US',
   };
 

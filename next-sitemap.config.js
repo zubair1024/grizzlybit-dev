@@ -12,15 +12,34 @@ const tagToSlug = (t) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
-const { postLastmods, tagLastmods } = (() => {
+const SITE = process.env.SITE_URL || 'https://www.grizzlybit.dev';
+
+// Content dates for portfolio pages (first-added commit of each page), so
+// lastmod doesn't churn on every build. Bump when a case study changes.
+const portfolioLastmods = {
+  'boiler-mobile': '2023-01-28T03:09:00+04:00',
+  'covid-tracker': '2023-01-28T03:09:00+04:00',
+  'he-app': '2023-01-28T03:38:10+04:00',
+  'my247-app': '2023-01-28T03:38:10+04:00',
+  'mycarlo-app': '2023-03-12T20:44:00+01:00',
+  'tis-landing-page': '2023-01-28T03:38:10+04:00',
+  'tools-grizzly': '2023-02-26T20:37:03+01:00',
+  'vehicle-tracking-mobile': '2023-01-28T03:09:00+04:00',
+  'vehicle-tracking': '2023-01-28T02:35:26+04:00',
+  'worldly-pins': '2023-03-26T14:41:08+02:00',
+};
+const PORTFOLIO_FALLBACK_LASTMOD = '2023-03-26T12:41:08.000Z';
+
+const { postLastmods, postImages, tagLastmods } = (() => {
   const posts = {};
+  const images = {};
   const tags = {};
   let files = [];
   try {
     files = fs.readdirSync(postsDir).filter((f) => f.endsWith('.mdx'));
   } catch (e) {
     console.warn('[sitemap] posts dir unreadable:', e.message);
-    return { postLastmods: posts, tagLastmods: tags };
+    return { postLastmods: posts, postImages: images, tagLastmods: tags };
   }
 
   for (const f of files) {
@@ -39,6 +58,13 @@ const { postLastmods, tagLastmods } = (() => {
       ? fileMtime
       : d.toISOString();
     posts[slug] = iso;
+    if (typeof data.image === 'string' && data.image) {
+      try {
+        images[slug] = new URL(data.image, SITE);
+      } catch (e) {
+        console.warn(`[sitemap] bad cover image for ${f}:`, e.message);
+      }
+    }
 
     const kws = Array.isArray(data.keywords) ? data.keywords : [];
     for (const raw of kws) {
@@ -49,17 +75,19 @@ const { postLastmods, tagLastmods } = (() => {
       if (tags[ts].lastmod < iso) tags[ts].lastmod = iso;
     }
   }
-  return { postLastmods: posts, tagLastmods: tags };
+  return { postLastmods: posts, postImages: images, tagLastmods: tags };
 })();
+
+const newestPostLastmod = Object.values(postLastmods).sort().pop();
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://www.grizzlybit.dev',
+  siteUrl: SITE,
   generateRobotsTxt: true,
   sitemapSize: 7000,
   changefreq: 'daily',
   priority: 0.5,
-  autoLastmod: true,
+  autoLastmod: false,
 
   // Exclude API routes, admin paths, AND thin (single-post) tag pages
   exclude: [
@@ -74,19 +102,22 @@ module.exports = {
   transform: async (config, urlPath) => {
     let priority = 0.5;
     let changefreq = 'weekly';
-    let lastmod = new Date().toISOString();
-    // Normalize so sitemap homepage <loc> matches canonical (trailing slash)
-    let loc = urlPath === '/' ? '/' : urlPath;
+    // Content-derived dates only; never the build time (avoids lastmod churn)
+    let lastmod;
+    let images;
+    // urlPath is relative ('/'); next-sitemap joins it with siteUrl
+    const loc = urlPath;
 
     if (urlPath === '/') {
       priority = 1.0;
       changefreq = 'weekly';
+      // Homepage lists the latest posts, so the newest post drives it
+      lastmod = newestPostLastmod;
     } else if (urlPath === '/blog') {
       priority = 0.9;
       changefreq = 'daily';
       // Newest post drives blog index freshness
-      const newest = Object.values(postLastmods).sort().pop();
-      if (newest) lastmod = newest;
+      lastmod = newestPostLastmod;
     } else if (urlPath.startsWith('/blog/tag/')) {
       // Must precede the generic '/blog/' branch, which would otherwise match
       priority = 0.6;
@@ -100,9 +131,13 @@ module.exports = {
       changefreq = 'monthly';
       const slug = urlPath.replace('/blog/', '');
       if (postLastmods[slug]) lastmod = postLastmods[slug];
+      if (postImages[slug]) images = [{ loc: postImages[slug] }];
     } else if (urlPath.startsWith('/portfolio')) {
       priority = 0.7;
       changefreq = 'yearly';
+      const slug = urlPath.replace('/portfolio/', '');
+      const d = portfolioLastmods[slug];
+      lastmod = d ? new Date(d).toISOString() : PORTFOLIO_FALLBACK_LASTMOD;
     }
 
     return {
@@ -110,6 +145,7 @@ module.exports = {
       changefreq,
       priority,
       lastmod,
+      ...(images ? { images } : {}),
       alternateRefs: config.alternateRefs ?? [],
     };
   },

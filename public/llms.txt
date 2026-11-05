@@ -8,6 +8,7 @@ Identity:
 - Name: Zubair Ahmed
 - Site name: Grizzlybit (Zubair's personal portfolio and blog)
 - Role: CTO, RAZRLAB
+- Experience: Building software since 2014; CTO at RAZRLAB since 2017
 - Location: Dubai, UAE
 - Site: https://www.grizzlybit.dev
 - Contact: za@grizzlybit.dev

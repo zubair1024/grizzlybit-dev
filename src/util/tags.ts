@@ -34,3 +34,12 @@ export function buildTagIndex(posts: PostData[]): Record<string, TagBucket> {
 export function getAllTagSlugs(posts: PostData[]): string[] {
   return Object.keys(buildTagIndex(posts));
 }
+
+// Tags with 2+ posts get an indexable tag page; single-post tag pages are
+// noindex, so they shouldn't be linked. Pages pass this as `linkableTags`.
+export function getLinkableTagSlugs(posts: PostData[]): string[] {
+  return Object.values(buildTagIndex(posts))
+    .filter((t) => t.count > 1)
+    .map((t) => t.slug)
+    .sort();
+}

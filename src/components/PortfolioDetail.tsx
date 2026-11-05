@@ -50,6 +50,12 @@ export const PortfolioDetailShell = ({
         description={metadata.description}
         canonical={canonical}
         ogImage={metadata.ogImage}
+        {...(metadata.ogImage && {
+          ogImageWidth: 1200,
+          ogImageHeight: 630,
+          ogImageType: 'image/png',
+          ogImageAlt: `${title} case study by Zubair Ahmed`,
+        })}
         keywords={metadata.keywords}
       />
       {/* No crawlable /portfolio index exists (only a homepage fragment), so the

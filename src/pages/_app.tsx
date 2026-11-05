@@ -1,3 +1,4 @@
+import { LinkableTagsContext } from '@/components/blog/TagLink';
 import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
 import '@/styles/globals.css';
 import { Toaster } from '@/components/ui/sonner';
@@ -9,7 +10,7 @@ import type { NextWebVitalsMetric } from 'next/app';
 import { DM_Sans, Space_Mono } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'next-themes';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { hotjar } from 'react-hotjar';
 import { init } from '../util/ga';
 
@@ -71,6 +72,11 @@ function ScrollReset() {
 
 export default function App({ Component, pageProps }: AppProps) {
   const reduceMotion = useReducedMotion();
+  const linkableTagList: string[] | undefined = pageProps?.linkableTags;
+  const linkableTags = useMemo(
+    () => (linkableTagList ? new Set(linkableTagList) : null),
+    [linkableTagList],
+  );
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
@@ -102,9 +108,11 @@ export default function App({ Component, pageProps }: AppProps) {
             <CapabilityProvider>
               {/* initial={false}: skip mount animations on first load so the
                   server HTML (hero included) is visible without JS */}
-              <AnimatePresence initial={false}>
-                <Component {...pageProps} />
-              </AnimatePresence>
+              <LinkableTagsContext.Provider value={linkableTags}>
+                <AnimatePresence initial={false}>
+                  <Component {...pageProps} />
+                </AnimatePresence>
+              </LinkableTagsContext.Provider>
             </CapabilityProvider>
           </TooltipProvider>
         </MotionConfig>
