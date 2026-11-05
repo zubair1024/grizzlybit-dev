@@ -1,13 +1,63 @@
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import { tagToSlug } from '@/util/tags';
 import Link from 'next/link';
 
-export const TagLink = ({ tag }: { tag: string }) => (
-  <Link
-    href={`/blog/tag/${tagToSlug(tag)}`}
-    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 font-mono text-[12px] text-white/80 hover:border-brand-glow/60 hover:text-brand-glow hover:bg-brand-glow/5 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
+// Proper casing for tech words that sentence case alone gets wrong.
+const WORDS: Record<string, string> = {
+  aws: 'AWS',
+  devops: 'DevOps',
+  docker: 'Docker',
+  es6: 'ES6',
+  iot: 'IoT',
+  javascript: 'JavaScript',
+  linux: 'Linux',
+  nextjs: 'Next.js',
+  nodejs: 'Node.js',
+  openvpn: 'OpenVPN',
+  osm: 'OSM',
+  pgp: 'PGP',
+  pki: 'PKI',
+  pm2: 'PM2',
+  react: 'React',
+  seo: 'SEO',
+  smtp: 'SMTP',
+  ssh: 'SSH',
+  ssr: 'SSR',
+  tls: 'TLS',
+  typescript: 'TypeScript',
+  ubuntu: 'Ubuntu',
+  v8: 'V8',
+  vpn: 'VPN',
+  vscode: 'VS Code',
+};
+
+export const formatTag = (tag: string) => {
+  const label = tag
+    .trim()
+    .split(/\s+/)
+    .map((w) => WORDS[w.toLowerCase()] ?? w)
+    .join(' ');
+  return label.charAt(0).toUpperCase() + label.slice(1);
+};
+
+export const TagLink = ({
+  tag,
+  className,
+}: {
+  tag: string;
+  className?: string;
+}) => (
+  <Badge
+    asChild
+    variant="outline"
+    className={cn(
+      'h-auto min-h-9 px-3 font-mono text-xs focus-visible:ring-ring',
+      className,
+    )}
   >
-    #{tag}
-  </Link>
+    <Link href={`/blog/tag/${tagToSlug(tag)}`}>{formatTag(tag)}</Link>
+  </Badge>
 );
 
 export default TagLink;

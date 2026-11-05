@@ -9,32 +9,36 @@ const title = 'TIS';
 
 const TISPortfolioScreen = () => {
   return (
-    <PortfolioDetailShell slug="tis-landing-page" title={title} command="open tis">
+    <PortfolioDetailShell
+      slug="tis-landing-page"
+      title={title}
+      badges={['Landing page', 'Next.js', 'Dubai']}
+    >
       <AboutSection
         copy={
           <p>
-            A Next.JS based landing page created for a client whose expertise
-            is in Thermal Insulation Cladding Solutions for buildings. The
-            standalone web page serves as the entry point for visitors — a
-            quick overview of the construction business and its services,
-            designed to drive contact, quote requests, and deeper navigation.
+            A Next.js landing page for a Dubai client specialising in thermal
+            insulation cladding solutions for buildings. The page is the entry
+            point for visitors: a quick overview of the construction business
+            and its services, designed to drive enquiries, quote requests and
+            deeper browsing.
           </p>
         }
         visual={
           <PortfolioImage
             src="/portfolio/tis/tis-website.jpg"
-            alt="TIS website screenshot"
+            alt="Screenshot of the TIS thermal insulation website homepage"
           />
         }
       />
 
       <TechStackSection
         tech={[
-          'Next.JS',
+          'Next.js',
           'TypeScript',
           'JavaScript',
           'React',
-          'Node.JS',
+          'Node.js',
           'Express',
         ]}
       />

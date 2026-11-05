@@ -11,7 +11,7 @@ const PersonSchema = () => {
     jobTitle: 'Chief Technology Officer',
     worksFor: {
       '@type': 'Organization',
-      '@id': 'https://www.grizzlybit.dev/#organization',
+      '@id': 'https://www.grizzlybit.dev/#razrlab',
       name: 'RAZRLAB',
     },
     url: 'https://www.grizzlybit.dev',

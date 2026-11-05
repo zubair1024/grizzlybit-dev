@@ -1,9 +1,9 @@
 import {
   AboutSection,
+  DetailSection,
   FeaturesSection,
   PortfolioDetailShell,
   PortfolioImage,
-  SectionHeading,
   TechStackSection,
 } from '@/components/PortfolioDetail';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
@@ -12,22 +12,30 @@ const title = 'Vehicle Tracking Application';
 
 const VehicleApplicationPortfolioScreen = () => {
   return (
-    <PortfolioDetailShell slug="vehicle-tracking" title={title} command="open razrtrack">
+    <PortfolioDetailShell
+      slug="vehicle-tracking"
+      title={title}
+      badges={['Web app', 'Fleet management', 'GPS tracking']}
+    >
       <AboutSection
         copy={
-          <p>
-            A software tool that allows users to monitor the location and
-            movement of vehicles in real-time. The application is accessed via
-            a web browser and displays a map view showing every tracked
-            vehicle. Users can drill into each vehicle for speed, fuel level,
-            and route history, and receive alerts for events such as route
-            deviation or speed-limit violations.
-          </p>
+          <>
+            <p>
+              A web-based fleet management application for monitoring the
+              location and movement of vehicles in real time. A live map shows
+              every tracked vehicle.
+            </p>
+            <p>
+              Users drill into each vehicle for speed, fuel level and route
+              history, and get alerts for events such as route deviation or
+              speeding.
+            </p>
+          </>
         }
         visual={
           <PortfolioImage
             src="/portfolio/razrtrack/razrtrack_overview.png"
-            alt="razrtrack overview"
+            alt="Fleet tracking dashboard with all vehicles on a live map"
           />
         }
       />
@@ -35,52 +43,52 @@ const VehicleApplicationPortfolioScreen = () => {
       <FeaturesSection
         reverse
         features={[
-          'Tracking and monitoring of vehicle location and usage.',
+          'Real-time tracking of vehicle location and usage.',
           'Scheduling and dispatching of vehicles and drivers.',
           'Maintenance and repair tracking.',
           'Fuel consumption and cost tracking.',
           'Driver performance monitoring and evaluation.',
           'Compliance with regulations and safety standards.',
-          'Reporting and data analysis capabilities.',
-          'Integration with ERP / CRM systems for shared data and automation.',
+          'Reporting and data analysis.',
+          'ERP and CRM integration for shared data and automation.',
         ]}
         visual={
           <PortfolioImage
             src="/portfolio/razrtrack/razrtrack_vehicle.png"
-            alt="razrtrack vehicle detail"
+            alt="Vehicle detail view with speed, fuel level and route history"
           />
         }
       />
 
-      <div>
-        <SectionHeading kicker="Watch" title="Product advertisement" />
-        <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
+      <DetailSection kicker="Watch" title="Vehicle tracking product video">
+        <div className="border-2 border-border bg-card shadow-md">
           <YoutubeEmbed
             videoId="USNzRm6Tae4"
-            title="Vehicle Tracking Application advertisement"
+            title="Vehicle tracking application product advertisement"
           />
         </div>
-      </div>
+      </DetailSection>
 
-      <div>
-        <SectionHeading kicker="Recognition" title="Dubai Police certificate" />
+      <DetailSection
+        kicker="Recognition"
+        title="Dubai Police certificate of appreciation"
+      >
         <div className="flex justify-center">
           <PortfolioImage
             src="/dp_certificate.webp"
             alt="Dubai Police certificate of appreciation"
             width={1600}
             height={1134}
-            caption="Dubai Police — certificate of appreciation"
           />
         </div>
-      </div>
+      </DetailSection>
 
       <TechStackSection
         tech={[
           'TypeScript',
           'JavaScript',
           'React',
-          'Node.JS',
+          'Node.js',
           'Express',
           'RabbitMQ',
           'Redis',
@@ -90,7 +98,7 @@ const VehicleApplicationPortfolioScreen = () => {
           'OSRM',
           'OSM Tile Layer',
           'Google Maps',
-          'Google OR Tools',
+          'Google OR-Tools',
         ]}
       />
     </PortfolioDetailShell>

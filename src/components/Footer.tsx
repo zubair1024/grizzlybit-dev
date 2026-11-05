@@ -1,9 +1,20 @@
+import { Button } from '@/components/ui/button';
+import { trackEvent } from '@/util/ga';
 import socialLinks from 'data/socialLinks';
+import { Mail } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { trackEvent } from '@/util/ga';
+import type { IconType } from 'react-icons';
+import {
+  FaGithub,
+  FaLinkedin,
+  FaMedium,
+  FaStackOverflow,
+  FaXTwitter,
+} from 'react-icons/fa6';
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/#about-me', label: 'About' },
   { href: '/#my-portfolio', label: 'Portfolio' },
   { href: '/#my-testimonials', label: 'Testimonials' },
@@ -11,104 +22,119 @@ const navLinks = [
   { href: '/#contact-form', label: 'Contact' },
 ];
 
+// currentColor icons so they follow the theme (the /social SVGs are white-only)
+const socialIcons: Record<string, IconType> = {
+  LinkedIn: FaLinkedin,
+  Twitter: FaXTwitter,
+  GitHub: FaGithub,
+  Medium: FaMedium,
+  'Stack Overflow': FaStackOverflow,
+};
+
+const headingClass = 'font-mono text-sm font-bold text-muted-foreground';
+
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative border-t border-white/10 bg-black text-white/80">
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-linear-to-r/srgb from-transparent via-brand-glow/50 to-transparent"
-      />
-
-      <div className="mx-auto max-w-7xl px-6 py-12 grid gap-10 md:grid-cols-4">
+    <footer className="border-t-2 border-border bg-muted text-foreground">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4">
         <div className="md:col-span-2">
-          <Link href="/" className="inline-flex items-center gap-3">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 rounded-sm text-xl font-bold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+          >
             <Image
               src="/grizzlybit-dev-only-logo.svg"
-              height={36}
-              width={36}
-              alt="Grizzlybit"
+              height={40}
+              width={40}
+              alt=""
+              className="rounded-full border-2 border-border"
             />
-            <span className="font-mono text-lg tracking-wider text-white">
-              GRIZZLYBIT
-            </span>
+            Grizzlybit
           </Link>
-          <p className="mt-4 max-w-sm font-mono text-sm text-white/60 leading-relaxed">
-            Zubair Ahmed — Software engineer, entrepreneur, and CTO at RAZRLAB.
-            Building products at the intersection of Node.js, React, and
-            TypeScript.
+          <p className="mt-4 max-w-prose text-base leading-relaxed text-muted-foreground">
+            Zubair Ahmed, full-stack software engineer and CTO at RAZRLAB.
+            Building Node.js, React, TypeScript and IoT products on AWS.
           </p>
-          <p className="mt-3 font-mono text-xs text-white/60">
+          <address className="mt-3 text-sm not-italic text-muted-foreground">
             Dubai, United Arab Emirates
-          </p>
+          </address>
         </div>
 
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.3em] text-brand-glow uppercase">
-            Navigate
-          </p>
-          <ul className="mt-4 space-y-2 font-mono text-sm">
-            {navLinks.map((n) => (
-              <li key={n.href}>
-                <Link
-                  href={n.href}
-                  className="text-white/70 hover:text-brand-glow transition-colors"
-                >
-                  {n.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <nav
+          aria-label="Footer"
+          className="grid gap-10 sm:grid-cols-2 md:col-span-2"
+        >
+          <div>
+            <h2 className={headingClass}>Navigate</h2>
+            <ul className="mt-4 space-y-1">
+              {navLinks.map((n) => (
+                <li key={n.href}>
+                  <Link
+                    href={n.href}
+                    className="inline-flex min-h-11 items-center font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+                  >
+                    {n.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.3em] text-brand-glow uppercase">
-            Connect
-          </p>
-          <ul className="mt-4 flex flex-wrap gap-3">
-            {socialLinks.map((s) => (
-              <li key={s.name}>
-                <Link
-                  target="_blank"
-                  href={s.url}
-                  rel="noopener noreferrer"
-                  aria-label={s.name}
-                  onClick={() =>
-                    trackEvent('social_click', {
-                      network: s.name,
-                      url: s.url,
-                      location: 'footer',
-                    })
-                  }
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 hover:border-brand-glow/60 hover:bg-brand-glow/10 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow transition-colors"
-                >
-                  <Image src={s.img} height={18} width={18} alt={s.name} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <a
-            href="mailto:za@grizzlybit.dev"
-            onClick={() =>
-              trackEvent('email_click', {
-                location: 'footer',
-                address: 'primary',
-              })
-            }
-            className="mt-5 inline-block font-mono text-sm text-white/70 hover:text-brand-glow transition-colors"
-          >
-            za@grizzlybit.dev
-          </a>
-        </div>
+          <div>
+            <h2 className={headingClass}>Connect</h2>
+            <ul className="mt-4 flex flex-wrap gap-3">
+              {socialLinks.map((s) => {
+                const Icon = socialIcons[s.name];
+                return (
+                  <li key={s.name}>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="icon"
+                      className="size-11"
+                    >
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Zubair Ahmed on ${s.name} (opens in a new tab)`}
+                        onClick={() =>
+                          trackEvent('social_click', {
+                            network: s.name,
+                            url: s.url,
+                            location: 'footer',
+                          })
+                        }
+                      >
+                        {Icon && <Icon aria-hidden="true" className="size-5" />}
+                      </a>
+                    </Button>
+                  </li>
+                );
+              })}
+            </ul>
+            <a
+              href="mailto:za@grizzlybit.dev"
+              onClick={() =>
+                trackEvent('email_click', {
+                  location: 'footer',
+                  address: 'primary',
+                })
+              }
+              className="mt-5 inline-flex min-h-11 items-center gap-2 font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/60"
+            >
+              <Mail aria-hidden="true" className="size-4" />
+              za@grizzlybit.dev
+            </a>
+          </div>
+        </nav>
       </div>
 
-      <div className="border-t border-white/5">
-        <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-xs text-white/60">
+      <div className="border-t-2 border-border">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 font-mono text-xs text-muted-foreground md:flex-row">
           <p>© {year} Zubair Ahmed. All rights reserved.</p>
-          <p>
-            Built with <span className="text-brand-glow">Next.js</span> &
-            <span className="text-brand-glow"> Tailwind</span>.
-          </p>
+          <p>Built with Next.js and Tailwind CSS.</p>
         </div>
       </div>
     </footer>

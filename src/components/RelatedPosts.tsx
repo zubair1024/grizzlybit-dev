@@ -1,6 +1,5 @@
+import { PostCard } from '@/components/blog/PostCard';
 import { PostData } from '@/util/types';
-import Link from 'next/link';
-import Image from 'next/image';
 
 interface RelatedPostsProps {
   currentSlug: string;
@@ -54,41 +53,20 @@ export default function RelatedPosts({
   }
 
   return (
-    <div className="my-10">
-      <h2 className="mb-6 text-2xl font-bold">Related Posts</h2>
-      <div className="grid gap-6 md:grid-cols-3">
-        {relatedPosts.map((post) => (
-          <Link
-            key={post.slug}
-            href={`/blog/${post.slug}`}
-            className="transition-transform no-underline hover:scale-105"
-          >
-            <div className="overflow-hidden bg-base-200 rounded-lg shadow-md">
-              {post.image && (
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  width={400}
-                  height={200}
-                  className="object-cover w-full h-32"
-                />
-              )}
-              <div className="p-4">
-                <h3 className="mb-2 text-lg font-semibold line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="mb-2 text-sm text-base-content/70 line-clamp-2">
-                  {post.summary}
-                </p>
-                <div className="flex items-center justify-between text-xs text-base-content/60">
-                  <span>{post.publishedAt}</span>
-                  {post.readingTime && <span>{post.readingTime}</span>}
-                </div>
-              </div>
-            </div>
-          </Link>
+    <section aria-labelledby="related-title">
+      <h2
+        id="related-title"
+        className="mb-6 text-2xl font-bold tracking-tight md:text-3xl"
+      >
+        Related articles
+      </h2>
+      <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {relatedPosts.map((post, i) => (
+          <li key={post.slug}>
+            <PostCard data={post} index={i} location="related_posts" />
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

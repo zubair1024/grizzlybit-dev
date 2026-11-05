@@ -11,23 +11,31 @@ const title = 'My247';
 
 const My247PortfolioScreen = () => {
   return (
-    <PortfolioDetailShell slug="my247-app" title={title} command="open my247">
+    <PortfolioDetailShell
+      slug="my247-app"
+      title={title}
+      badges={['Mobile app', 'Home services', 'UK']}
+    >
       <AboutSection
         copy={
-          <p>
-            24|7 Home Rescue app lets customers get help, make a claim,
-            complete their eligibility, book a service, and use their cover
-            from the convenience of a smartphone. My247 is free to download
-            and keeps cover plan details on the device for peace of mind —
-            should something go wrong, customers can view coverage, make a
-            claim, book a service, complete eligibility, and call support in a
-            few clicks.
-          </p>
+          <>
+            <p>
+              My247 is the free customer app for 24|7 Home Rescue, the 4th
+              largest boiler service company in the UK. Customers can get help,
+              make a claim, complete their eligibility, book a service and use
+              their cover from a smartphone.
+            </p>
+            <p>
+              Cover plan details are stored on the device, so if something goes
+              wrong customers can check their coverage, make a claim or call
+              support in a few taps.
+            </p>
+          </>
         }
         visual={
           <PortfolioImage
             src="/portfolio/my247/my247_main.webp"
-            alt="My247 main screen"
+            alt="My247 home cover app shown on a smartphone"
             width={400}
             height={400}
           />
@@ -37,25 +45,25 @@ const My247PortfolioScreen = () => {
       <FeaturesSection
         reverse
         features={[
-          'View your product details.',
+          'View your cover plan and product details.',
           'Make a claim.',
-          'Call in one click.',
+          'Call support in one tap.',
           'Book a service.',
-          'See latest offers.',
-          'Complete eligibility.',
-          'Keep all documents in one place.',
+          'See the latest offers.',
+          'Complete your eligibility check.',
+          'Keep all your documents in one place.',
         ]}
         visual={
           <ImageRow>
             <PortfolioImage
               src="/portfolio/my247/my247_home.webp"
-              alt="My247 home"
+              alt="My247 app home screen"
               width={220}
               height={220}
             />
             <PortfolioImage
               src="/portfolio/my247/my247_eligibility.webp"
-              alt="My247 eligibility"
+              alt="My247 eligibility check screen"
               width={220}
               height={220}
             />
@@ -66,20 +74,20 @@ const My247PortfolioScreen = () => {
       <ImageRow>
         <PortfolioImage
           src="/portfolio/my247/my247_docs.webp"
-          alt="My247 docs"
+          alt="My247 documents screen"
           width={260}
           height={260}
         />
         <PortfolioImage
           src="/portfolio/my247/my247_book.webp"
-          alt="My247 book"
+          alt="My247 service booking screen"
           width={260}
           height={260}
         />
       </ImageRow>
 
       <TechStackSection
-        tech={['TypeScript', 'JavaScript', 'Ionic', 'Node.JS', 'Express']}
+        tech={['TypeScript', 'JavaScript', 'Ionic', 'Node.js', 'Express']}
       />
     </PortfolioDetailShell>
   );

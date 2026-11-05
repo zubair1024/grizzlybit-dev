@@ -87,18 +87,19 @@ module.exports = {
       // Newest post drives blog index freshness
       const newest = Object.values(postLastmods).sort().pop();
       if (newest) lastmod = newest;
-    } else if (urlPath.startsWith('/blog/')) {
-      priority = 0.8;
-      changefreq = 'monthly';
-      const slug = urlPath.replace('/blog/', '');
-      if (postLastmods[slug]) lastmod = postLastmods[slug];
     } else if (urlPath.startsWith('/blog/tag/')) {
+      // Must precede the generic '/blog/' branch, which would otherwise match
       priority = 0.6;
       changefreq = 'weekly';
       const tag = urlPath.replace('/blog/tag/', '');
       // Skip thin tag pages (single post) to align with runtime noindex
       if (!tagLastmods[tag] || tagLastmods[tag].count < 2) return null;
       lastmod = tagLastmods[tag].lastmod;
+    } else if (urlPath.startsWith('/blog/')) {
+      priority = 0.8;
+      changefreq = 'monthly';
+      const slug = urlPath.replace('/blog/', '');
+      if (postLastmods[slug]) lastmod = postLastmods[slug];
     } else if (urlPath.startsWith('/portfolio')) {
       priority = 0.7;
       changefreq = 'yearly';

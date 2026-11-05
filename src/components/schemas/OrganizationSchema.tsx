@@ -31,7 +31,7 @@ const OrganizationSchema = () => {
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Service',
-      url: 'https://www.grizzlybit.dev/#contact',
+      url: 'https://www.grizzlybit.dev/#contact-form',
     },
     sameAs: [
       'https://www.linkedin.com/in/zubair1024/',

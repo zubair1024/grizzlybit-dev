@@ -9,6 +9,7 @@ const ThemeToggle = () => {
     <Button
       variant="outline"
       size="icon"
+      className="size-11"
       aria-label="Toggle dark mode"
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
     >

@@ -5,7 +5,7 @@ export interface IToolBeltItem {
 const toolBelt: IToolBeltItem[] = [
   { img: '/toolbelt/javascript.svg', name: 'JavaScript' },
   { img: '/toolbelt/typescript.svg', name: 'TypeScript' },
-  { img: '/toolbelt/node-js.svg', name: 'Node.JS' },
+  { img: '/toolbelt/node-js.svg', name: 'Node.js' },
   { img: '/toolbelt/react-native.svg', name: 'React' },
   { img: '/toolbelt/docker.svg', name: 'Docker' },
   { img: '/toolbelt/github.svg', name: 'GitHub' },

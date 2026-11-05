@@ -17,7 +17,7 @@ const socialLinks: ISocialLink[] = [
   },
   {
     img: '/social/github.svg',
-    name: 'Github',
+    name: 'GitHub',
     url: 'https://github.com/zubair1024',
   },
   {
@@ -27,7 +27,7 @@ const socialLinks: ISocialLink[] = [
   },
   {
     img: '/social/stack-overflow.svg',
-    name: 'Stack-Overflow',
+    name: 'Stack Overflow',
     url: 'https://stackoverflow.com/users/3779309/zubair1024',
   },
 ];

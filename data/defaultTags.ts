@@ -34,8 +34,9 @@ const defaultTags = {
     'RAZRLAB',
     'Engineering Blog',
   ],
-  themeColor: '#1f2937',
-  backgroundColor: '#1f2937',
+  themeColorLight: '#ffffff',
+  themeColorDark: '#000000',
+  backgroundColor: '#ffffff',
 };
 
 export default defaultTags;

@@ -65,13 +65,6 @@
   }
 }
 
-.bg-toolBelt {
-  background-image: url('/toolbelt/coding-screen.jpeg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 /* ---------- Hero (Banner + Statistics) ----------
    Ported from the daisyUI 5 card/badge/glass/tooltip/stat classes so the
    hero looks identical without daisy. Only surface/text colors follow the

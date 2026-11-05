@@ -31,6 +31,7 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
         title={defaultTags.title}
         description={defaultTags.description}
         canonical="https://www.grizzlybit.dev"
+        keywords={defaultTags.keywords}
       />
       <OrganizationSchema />
       <PersonSchema />
@@ -41,9 +42,7 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
           <Banner />
           <Services />
           <Toolbelt />
-          <div className="mx-auto max-w-[1200px] px-4">
-            <AboutMe />
-          </div>
+          <AboutMe />
           <Portfolio />
           <Companies />
           <Testimonials />

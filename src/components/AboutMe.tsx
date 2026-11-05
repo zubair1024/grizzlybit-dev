@@ -1,138 +1,66 @@
-import {
-  useInView,
-  useMotionValue,
-  useScroll,
-  useTransform,
-  animate,
-} from 'motion/react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
 import BadgesSection from './BadgesSection';
-import { useCapabilities } from './fx/CapabilityProvider';
-import { MDiv } from './fx/m';
+import { Reveal, Section } from './Section';
 
-const Counter = ({ to }: { to: number }) => {
-  const ref = useRef<HTMLSpanElement | null>(null);
-  const inView = useInView(ref as React.RefObject<Element>, {
-    once: true,
-    amount: 0.5,
-  });
-  const value = useMotionValue(0);
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(value, to, {
-      duration: 1.4,
-      ease: 'easeOut',
-      onUpdate: (v) => setDisplay(Math.round(v)),
-    });
-    return controls.stop;
-  }, [inView, to, value]);
-
-  return (
-    <span
-      ref={ref}
-      className="font-mono text-brand-glow tabular-nums"
-      style={{ fontVariantNumeric: 'tabular-nums' }}
-    >
-      {display}
-    </span>
-  );
-};
+const COMPANY_START_YEAR = 2017;
+const JOURNEY_START_YEAR = 2014;
 
 const AboutMe = () => {
-  const companyStartDate = new Date('2017-03-01');
-  const journeyStartDate = new Date('2014-01-01');
-  const now = new Date();
-  const yearsSinceJourneyStart =
-    now.getFullYear() - journeyStartDate.getFullYear();
-  const yearsSinceCompany = now.getFullYear() - companyStartDate.getFullYear();
-
-  const { reducedMotion } = useCapabilities();
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef as React.RefObject<HTMLElement>,
-    offset: ['start end', 'end start'],
-  });
-  const photoYRaw = useTransform(scrollYProgress, [0, 1], [40, -60]);
-  const textYRaw = useTransform(scrollYProgress, [0, 1], [-20, 30]);
-  const zero = useMotionValue(0);
-  const photoY = reducedMotion ? zero : photoYRaw;
-  const textY = reducedMotion ? zero : textYRaw;
+  const year = new Date().getFullYear();
+  const yearsAtCompany = year - COMPANY_START_YEAR;
+  const yearsInSoftware = year - JOURNEY_START_YEAR;
 
   return (
-    <section
-      ref={sectionRef}
+    <Section
       id="about-me"
-      className="relative my-6 scroll-m-10"
+      eyebrow="About"
+      title="About Zubair Ahmed, CTO and full-stack engineer in Dubai"
     >
-      <div className="relative py-12 px-6">
-        <div className="text-center mb-8">
-          <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-            About
+      <div className="grid items-start gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+        <Reveal className="order-2 max-w-prose space-y-6 text-lg leading-relaxed text-pretty md:order-1">
+          <p>
+            I&apos;m a developer, entrepreneur, author and traveller with a
+            habit of tinkering and scrutinising the details. I&apos;ve been the
+            Chief Technology Officer at RAZRLAB for about{' '}
+            <strong className="bg-secondary px-1 text-secondary-foreground tabular-nums">
+              {yearsAtCompany} years
+            </strong>
+            .
           </p>
-          <h2 className="font-mono text-2xl md:text-3xl tracking-wider uppercase mt-2">
-            A little about me
-          </h2>
-        </div>
+          <p>
+            Since starting out as a software engineer over{' '}
+            <strong className="bg-secondary px-1 text-secondary-foreground tabular-nums">
+              {yearsInSoftware} years
+            </strong>{' '}
+            ago, I&apos;ve worked remotely for agencies, consulted for startups
+            and collaborated with talented people to build digital products for
+            businesses and consumers.
+          </p>
+          <p>
+            I&apos;m quietly confident, naturally curious and always sharpening
+            my skills, one coding problem at a time.
+          </p>
+        </Reveal>
 
-        <div className="flex flex-col-reverse justify-between md:flex-row md:gap-10 items-center">
-          <MDiv
-            style={{ y: textY }}
-            className="max-w-xl py-6 font-mono text-lg md:text-xl text-white/90"
-          >
-            <p>
-              I&apos;m a developer, an entrepreneur, an ambitious tweaker,
-              author, traveller and over-scrutinizer 😝 . I work at RAZRLAB as
-              the Chief Technology Officer for about{' '}
-              <Counter to={yearsSinceCompany} /> years now.
-            </p>
-            <p className="mt-6">
-              Since beginning my journey as a software engineer over{' '}
-              <Counter to={yearsSinceJourneyStart} /> years ago, I&apos;ve done
-              remote work for agencies, consulted for startups, and collaborated
-              with talented people to create digital products for both business
-              and consumer use. I&apos;m quietly confident, naturally curious,
-              and perpetually working on improving my chops one coding problem
-              at a time.
-            </p>
-            <BadgesSection />
-          </MDiv>
-
-          <MDiv
-            style={{ y: photoY }}
-            initial={{ opacity: 0, scale: 0.92 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ type: 'spring', stiffness: 110, damping: 16 }}
-            className="relative"
-          >
-            <div
-              aria-hidden
-              className="absolute -inset-3 rounded-2xl"
-              style={{
-                background:
-                  'conic-gradient(from var(--angle,0deg), #f28c18, #a991f7, #37cdbe, #f28c18)',
-                filter: 'blur(28px)',
-                opacity: 0.55,
-                animation: 'borderSpin 8s linear infinite',
-              }}
+        <Reveal
+          delay={0.1}
+          className="order-1 mx-auto w-full max-w-xs md:order-2 md:max-w-none"
+        >
+          <div className="border-2 border-border bg-card p-2 shadow-lg">
+            <Image
+              src="/zubair_2.webp"
+              width={900}
+              height={1200}
+              sizes="(min-width: 768px) 352px, 320px"
+              alt="Portrait of Zubair Ahmed, CTO and full-stack engineer"
+              className="h-auto w-full"
             />
-            <div className="relative flex items-center justify-center p-2 rounded-2xl bg-black/40 backdrop-blur-xs">
-              <Image
-                src="/zubair_2.webp"
-                width={400}
-                height={500}
-                alt="Zubair Ahmed - Software Engineer profile photo"
-                className="rounded-xl"
-                loading="lazy"
-              />
-            </div>
-          </MDiv>
-        </div>
+          </div>
+        </Reveal>
       </div>
-    </section>
+
+      <BadgesSection />
+    </Section>
   );
 };
 

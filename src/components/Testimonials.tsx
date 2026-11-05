@@ -1,103 +1,73 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import testimonials from 'data/testimonials';
-import Image from 'next/image';
-import Link from 'next/link';
-import { MDiv } from './fx/m';
+import { FaLinkedinIn } from 'react-icons/fa';
+import { Reveal, Section } from './Section';
 
-interface ITestimonialData {
-  name: string;
-  company: string;
-  designation: string;
-  place: string;
-  imageUrl: string;
-  linkedIn: string;
-  message: string;
-}
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
 
-const TestimonialCard = ({
-  data,
-  index,
-}: {
-  data: ITestimonialData;
-  index: number;
-}) => (
-  <MDiv
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.1 }}
-    transition={{
-      delay: (index % 6) * 0.08,
-      type: 'spring',
-      stiffness: 130,
-      damping: 18,
-    }}
-    className="relative mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#101218]/95 p-6 shadow-xl backdrop-blur-xs overflow-hidden hover:border-brand-glow/40 transition-colors"
+const Testimonials = () => (
+  <Section
+    id="my-testimonials"
+    eyebrow="Testimonials"
+    title="What clients and colleagues say"
+    intro="Recommendations from engineers, managers and partners I've worked with, from Dubai and Bangalore to Prague, Melbourne and Toronto."
+    muted
   >
-    <div
-      aria-hidden
-      className="absolute -top-10 -left-6 font-mono text-[140px] leading-none text-brand-glow/15 select-none pointer-events-none"
-    >
-      &ldquo;
-    </div>
-
-    <div className="relative flex items-start justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <Image
-          src={data.imageUrl}
-          height={56}
-          width={56}
-          alt={`${data.name} - ${data.designation} at ${data.company}`}
-          className="mask mask-circle h-14 w-14 object-cover"
-          loading="lazy"
-        />
-        <div className="text-left">
-          <p className="font-mono font-bold text-white text-sm">{data.name}</p>
-          <p className="font-mono text-xs text-white/70">{data.designation}</p>
-          <p className="font-mono text-xs text-brand-glow/90">{data.company}</p>
-          <p className="font-mono text-[10px] text-white/60">{data.place}</p>
-        </div>
-      </div>
-      <Link
-        target="_blank"
-        href={data.linkedIn}
-        className="shrink-0"
-        aria-label={`${data.name} on LinkedIn`}
-      >
-        <Image
-          src="/social/linkedin.svg"
-          width={20}
-          height={20}
-          alt={`View ${data.name}'s LinkedIn profile`}
-        />
-      </Link>
-    </div>
-
-    <p className="relative mt-4 font-mono text-sm leading-relaxed text-white/80 whitespace-pre-line">
-      {data.message}
-    </p>
-  </MDiv>
+    <ul className="gap-6 md:columns-2 lg:columns-3">
+      {testimonials.map((item, i) => (
+        <li key={item.name} className="mb-6 break-inside-avoid">
+          <Reveal delay={(i % 3) * 0.08}>
+            <Card className="gap-0 p-6">
+              <figure className="flex flex-col gap-6">
+                <blockquote className="text-base leading-relaxed whitespace-pre-line text-pretty">
+                  {item.message}
+                </blockquote>
+                <figcaption className="flex items-center gap-3 border-t-2 border-border pt-4">
+                  <Avatar className="size-12 border-2 border-border">
+                    <AvatarImage
+                      src={item.imageUrl}
+                      alt={`Photo of ${item.name}`}
+                    />
+                    <AvatarFallback className="font-bold">
+                      {initials(item.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold">{item.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.designation} at {item.company}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.place}
+                    </p>
+                  </div>
+                  <Button asChild variant="outline" size="icon-lg">
+                    <a
+                      href={item.linkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${item.name} on LinkedIn`}
+                    >
+                      <FaLinkedinIn aria-hidden />
+                    </a>
+                  </Button>
+                </figcaption>
+              </figure>
+            </Card>
+          </Reveal>
+        </li>
+      ))}
+    </ul>
+  </Section>
 );
-
-const Testimonials = () => {
-  return (
-    <section
-      id="my-testimonials"
-      className="relative py-16 overflow-hidden"
-    >
-      <div className="text-center mb-10 px-4">
-        <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-          Words
-        </p>
-        <h2 className="mt-2 font-mono text-2xl md:text-3xl tracking-wider uppercase text-white">
-          Testimonials
-        </h2>
-      </div>
-      <div className="mx-auto max-w-7xl px-5 columns-1 md:columns-2 lg:columns-3 gap-5">
-        {testimonials.map((item, i) => (
-          <TestimonialCard key={item.name} data={item} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-};
 
 export default Testimonials;

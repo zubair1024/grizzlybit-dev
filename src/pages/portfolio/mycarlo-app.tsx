@@ -1,30 +1,44 @@
 import {
   AboutSection,
+  DetailSection,
   FeaturesSection,
   ImageRow,
   PortfolioDetailShell,
   PortfolioImage,
-  SectionHeading,
   TechStackSection,
 } from '@/components/PortfolioDetail';
 import YoutubeEmbed from '@/components/YoutubeEmbed';
-import dynamic from 'next/dynamic';
 
 const title = 'MyCarlo';
 
+const videoFrame = 'border-2 border-border bg-card shadow-md';
+
+const testimonials = [
+  { id: 'sblwR6jRkIs', title: 'MyCarlo customer testimonial video 1' },
+  { id: 'fG3KcTQOows', title: 'MyCarlo customer testimonial video 2' },
+  { id: 'v-ZVyJ3e7eM', title: 'MyCarlo customer testimonial video 3' },
+];
+
 const MyCarloAppScreen = () => {
   return (
-    <PortfolioDetailShell slug="mycarlo-app" title={title} command="open mycarlo">
+    <PortfolioDetailShell
+      slug="mycarlo-app"
+      title={title}
+      badges={['Mobile app', 'iOS and Android', 'Vehicle tracking']}
+    >
       <AboutSection
         copy={
-          <p>
-            MyCarlo is a consumer vehicle tracking mobile application — a
-            real-time GPS tracker that lets you watch the location of your
-            vehicle at all times. It also includes custom geo-fencing, vehicle
-            health monitoring, driving history, and an emergency response
-            button. The user-friendly interface makes every feature accessible
-            in a couple of taps.
-          </p>
+          <>
+            <p>
+              MyCarlo is a consumer vehicle tracking app: a real-time GPS
+              tracker that shows where your car is at all times.
+            </p>
+            <p>
+              It adds custom geofencing, vehicle health monitoring, driving
+              history and an emergency response button, each a couple of taps
+              away.
+            </p>
+          </>
         }
         visual={
           <PortfolioImage
@@ -39,21 +53,21 @@ const MyCarloAppScreen = () => {
       <FeaturesSection
         reverse
         features={[
-          'Find My Car.',
-          'Fault Detection.',
-          'Car Insight Information.',
+          'Find my car.',
+          'Fault detection.',
+          'Car insight information.',
           'Book a service.',
-          'Vehicle Service Reminders.',
-          'Battery Health.',
-          'Movement Detection.',
-          'Geofence Notification.',
-          'Crash Detection.',
-          'Eco Score / Driving Behavior.',
+          'Vehicle service reminders.',
+          'Battery health.',
+          'Movement detection.',
+          'Geofence notifications.',
+          'Crash detection.',
+          'Eco score and driving behaviour.',
         ]}
         visual={
           <PortfolioImage
             src="/portfolio/mycarlo/mycarlo-features.jpg"
-            alt="MyCarlo features"
+            alt="Overview of MyCarlo car tracking app features"
             width={420}
             height={420}
           />
@@ -63,60 +77,59 @@ const MyCarloAppScreen = () => {
       <ImageRow>
         <PortfolioImage
           src="/portfolio/mycarlo/mycarlo-find-my-car.jpg"
-          alt="MyCarlo Find My Car"
+          alt="MyCarlo find my car screen showing the vehicle on a map"
           width={260}
           height={260}
         />
         <PortfolioImage
           src="/portfolio/mycarlo/mycarlo-mot-reminder.jpg"
-          alt="MyCarlo MOT reminder"
+          alt="MyCarlo MOT reminder screen"
           width={260}
           height={260}
         />
         <PortfolioImage
           src="/portfolio/mycarlo/mycarlo-trip-report.jpg"
-          alt="MyCarlo trip report"
+          alt="MyCarlo trip report screen"
           width={260}
           height={260}
         />
       </ImageRow>
 
-      <div>
-        <SectionHeading kicker="Watch" title="Product video" />
-        <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
-          <YoutubeEmbed videoId="T4W6pCBWShE" title="MyCarlo product video" />
+      <DetailSection kicker="Watch" title="MyCarlo product video">
+        <div className={videoFrame}>
+          <YoutubeEmbed
+            videoId="T4W6pCBWShE"
+            title="MyCarlo car tracking app product video"
+          />
         </div>
-      </div>
+      </DetailSection>
 
-      <div>
-        <SectionHeading kicker="Voices" title="Product testimonials" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
-            <YoutubeEmbed videoId="sblwR6jRkIs" />
-          </div>
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
-            <YoutubeEmbed videoId="fG3KcTQOows" />
-          </div>
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
-            <YoutubeEmbed videoId="v-ZVyJ3e7eM" />
-          </div>
+      <DetailSection kicker="Customers" title="MyCarlo customer testimonials">
+        <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {testimonials.map((t) => (
+            <li key={t.id} className={videoFrame}>
+              <YoutubeEmbed videoId={t.id} title={t.title} />
+            </li>
+          ))}
+        </ul>
+      </DetailSection>
+
+      <DetailSection kicker="Comparison" title="How MyCarlo compares">
+        <div className="flex justify-center">
+          <PortfolioImage
+            src="/portfolio/mycarlo/mycarlo-competition.jpg"
+            alt="Feature comparison table of MyCarlo against Car Genie, Carlock and Vodafone V Auto"
+            width={1024}
+            height={715}
+          />
         </div>
-      </div>
-
-      <div className="flex justify-center">
-        <PortfolioImage
-          src="/portfolio/mycarlo/mycarlo-competition.jpg"
-          alt="MyCarlo competition"
-          width={520}
-          height={520}
-        />
-      </div>
+      </DetailSection>
 
       <TechStackSection
-        tech={['TypeScript', 'JavaScript', 'Ionic', 'Node.JS', 'Express']}
+        tech={['TypeScript', 'JavaScript', 'Ionic', 'Node.js', 'Express']}
       />
     </PortfolioDetailShell>
   );
 };
 
-export default dynamic(() => Promise.resolve(MyCarloAppScreen), { ssr: false });
+export default MyCarloAppScreen;

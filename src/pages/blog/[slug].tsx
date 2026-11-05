@@ -1,17 +1,33 @@
+import { PostDate } from '@/components/blog/PostDate';
+import { TagLink } from '@/components/blog/TagLink';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import RelatedPosts from '@/components/RelatedPosts';
 import BlogPostingSchema from '@/components/schemas/BlogPostingSchema';
 import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { trackEvent } from '@/util/ga';
 import { PostData } from '@/util/types';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useMemo } from 'react';
-import { TagLink } from '@/components/blog/TagLink';
-import { getAllPostSlugs, getBlogPostData, getPostData } from '../../util/posts';
+import { ComponentProps, useEffect, useMemo } from 'react';
+import {
+  getAllPostSlugs,
+  getBlogPostData,
+  getPostData,
+} from '../../util/posts';
 import { calculateReadingTime } from '../../util/readingTime';
 
 type Frontmatter = {
@@ -23,6 +39,11 @@ type Frontmatter = {
   keywords?: string[];
   author?: string;
   lastModified?: string;
+};
+
+// The page owns the only H1; demote any H1 written in a post body.
+const mdxComponents = {
+  h1: (props: ComponentProps<'h2'>) => <h2 {...props} />,
 };
 
 type Props = {
@@ -110,63 +131,100 @@ export default function BlogPost({
       />
       <BreadcrumbListSchema items={breadcrumbItems} />
       <Layout>
-        <main id="main" className="max-w-full prose prose-md">
-          <div className="bg-fixed bg-toolBelt">
-            <div className="py-10 overflow-hidden text-white bg-black/50 shadow-lg toolBelt-content backdrop-blur-lg">
-              <h1 className="p-16 text-center md:grid-cols-4">
+        <main id="main" className="min-h-screen bg-background">
+          <article className="mx-auto max-w-6xl px-4 pt-28 pb-12 md:px-6 md:pt-32">
+            <header className="mx-auto max-w-[72ch]">
+              <Breadcrumb aria-label="Breadcrumb">
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                      <Link href="/">Home</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                      <Link href="/blog">Blog</Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem className="min-w-0">
+                    <BreadcrumbPage className="line-clamp-1">
+                      {frontmatter.title}
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+              <h1 className="mt-6 text-4xl font-bold tracking-tight text-balance md:text-5xl">
                 {frontmatter.title}
               </h1>
+              <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-base text-muted-foreground">
+                <span>
+                  By {author} · Published{' '}
+                  <PostDate date={frontmatter.publishedAt} />
+                </span>
+                {frontmatter.lastModified && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>
+                      Updated <PostDate date={frontmatter.lastModified} />
+                    </span>
+                  </>
+                )}
+                {readingTime && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>{readingTime}</span>
+                  </>
+                )}
+              </p>
+              {frontmatter.keywords && frontmatter.keywords.length > 0 && (
+                <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tags">
+                  {frontmatter.keywords.map((k) => (
+                    <li key={k}>
+                      <TagLink tag={k} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </header>
+
+            <div className="mx-auto mt-10 max-w-[72ch] prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:font-semibold prose-a:text-foreground prose-a:underline prose-a:decoration-primary prose-a:decoration-2 prose-a:underline-offset-4 hover:prose-a:decoration-4 prose-pre:overflow-x-auto prose-pre:rounded-none prose-img:border-2 prose-img:border-border [&_:not(pre)>code]:border [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-muted [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-normal [&_:not(pre)>code]:before:content-none [&_:not(pre)>code]:after:content-none">
+              <Component components={mdxComponents} />
             </div>
-          </div>
-          <div className="max-w-[900px] mx-auto py-10 px-10 bg-base-300">
-            <nav aria-label="Breadcrumb" className="text-sm breadcrumbs">
-              <ul>
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-                <li>
-                  <Link href="/blog">Blog</Link>
-                </li>
-                <li aria-current="page">{frontmatter.title}</li>
-              </ul>
-            </nav>
-            {frontmatter.keywords && frontmatter.keywords.length > 0 && (
-              <div className="not-prose flex flex-wrap gap-2 mb-6">
-                {frontmatter.keywords.map((k) => (
-                  <TagLink key={k} tag={k} />
-                ))}
-              </div>
-            )}
-            <Component />
-            <div className="divider"></div>
-            <div className="flex items-center justify-center space-x-5">
-              <div>
+
+            <footer className="mx-auto mt-12 max-w-[72ch]">
+              <Separator className="h-0.5!" />
+              <Card className="mt-10 flex-col gap-6 px-6 sm:flex-row sm:items-start">
                 <Image
                   src="/zubair_2.webp"
-                  height={200}
-                  width={200}
-                  alt="Zubair Ahmed"
-                  className="w-96 rounded-xl"
-                ></Image>
-              </div>
-              <div className="text-sm">
-                <p>
-                  Published on {frontmatter.publishedAt} • {readingTime}
-                </p>
-                <p className="font-semibold text-lg m-0">{author}</p>
-                <p>
-                  I&apos;m a developer, an entrepreneur, an ambitious tweaker,
-                  author, traveller and over-scrutinizer. I work at RAZRLAB as
-                  the Chief Technology Officer.
-                </p>
-                <Link href={'/'} className="no-underline">
-                  <button className="btn-sm btn btn-accent">
-                    Visit Homepage
-                  </button>
-                </Link>
-              </div>
-            </div>
-            <div className="divider"></div>
+                  width={96}
+                  height={96}
+                  alt="Zubair Ahmed, CTO at RAZRLAB"
+                  className="size-24 shrink-0 rounded-full border-2 border-border object-cover object-top"
+                />
+                <div>
+                  <h2 className="text-xl font-bold">Written by {author}</h2>
+                  <p className="mt-2 text-base text-muted-foreground">
+                    I&apos;m a developer, entrepreneur, tinkerer, author and
+                    traveller. I work at RAZRLAB as the Chief Technology
+                    Officer.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Button asChild size="lg">
+                      <Link href="/#about-me">About the author</Link>
+                    </Button>
+                    <Button asChild size="lg" variant="outline">
+                      <Link href="/#contact-form">Get in touch</Link>
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </footer>
+          </article>
+
+          <div className="mx-auto max-w-6xl px-4 pb-20 md:px-6">
+            <Separator className="mb-12 h-0.5!" />
             <RelatedPosts
               currentSlug={slug}
               currentKeywords={frontmatter.keywords}

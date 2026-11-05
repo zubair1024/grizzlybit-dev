@@ -1,6 +1,6 @@
 import {
   AboutSection,
-  ExternalLinkChip,
+  ExternalLinkButton,
   PortfolioDetailShell,
   PortfolioImage,
   TechStackSection,
@@ -10,30 +10,34 @@ const title = 'Grizzly Tools';
 
 const ToolsGrizzlyScreen = () => {
   return (
-    <PortfolioDetailShell slug="tools-grizzly" title={title} command="open grizzly-tools">
+    <PortfolioDetailShell
+      slug="tools-grizzly"
+      title={title}
+      badges={['Web app', 'Next.js', 'Developer tools']}
+    >
       <AboutSection
         copy={
           <>
             <p>
-              A Next.JS based application that consists of a collection of
-              tools for developers to use to get quick jobs done.
+              A Next.js web app with a collection of online tools that help
+              developers get quick jobs done.
             </p>
-            <ExternalLinkChip
+            <ExternalLinkButton
               href="https://tools.grizzlybit.dev"
-              label="Visit web application"
+              label="Visit tools.grizzlybit.dev"
             />
           </>
         }
         visual={
           <PortfolioImage
             src="/portfolio/tools-grizzly/tools-grizzlybit-dev.png"
-            alt="Tools Grizzlybit screenshot"
+            alt="Screenshot of the Grizzly Tools developer utilities web app"
           />
         }
       />
 
       <TechStackSection
-        tech={['Next.JS', 'TypeScript', 'JavaScript', 'React', 'Node.JS']}
+        tech={['Next.js', 'TypeScript', 'JavaScript', 'React', 'Node.js']}
       />
     </PortfolioDetailShell>
   );
