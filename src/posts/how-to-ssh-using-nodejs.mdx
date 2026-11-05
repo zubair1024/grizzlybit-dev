@@ -1,6 +1,7 @@
 ---
 title: 'How to SSH using Node.js'
 publishedAt: '2020-09-25'
+description: 'Use node-ssh to connect to servers over SSH from Node.js and run remote commands, automating tasks such as installing Redis on an Ubuntu machine.'
 summary: 'Quick tip on how to build an application that will SSH to servers and run commands using Node.js for automation of commands and complex deployments.'
 image: '/blog/how-to-ssh-using-nodejs/cover.png'
 keywords:
@@ -12,8 +13,6 @@ keywords:
   - remote execution
 author: 'Zubair Ahmed'
 ---
-
-![How to SSH using Node.js](/blog/how-to-ssh-using-nodejs/cover.png)
 
 I build IoT applications on a daily basis at [RAZRLAB](https://razrlab.com/), and every once in awhile, I do need the internal tools to perform some functions on servers, be it executing commands or forwarding ports. For this, I found a neat little tool `node-ssh` which helps establish ssh tunnels to servers with key authentication.
 
@@ -36,7 +35,7 @@ We are going to use the following dependencies:
 
 We will create our SSH tunnel using private key authentication for that we will create SSH key pair with a passphrase.
 
-I would recommend using your cloud providers SSH key access management to securely manage access to your servers. [Click here](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/) to know how to manage SSH key access through Digital Ocean.
+I would recommend using your cloud providers SSH key access management to securely manage access to your servers. Read [DigitalOcean's guide to managing SSH key access](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
 
 Now, let's specify paths and information in the `.env` file
 

@@ -5,7 +5,9 @@ interface BlogPostingSchemaProps {
   description: string;
   publishedAt: string;
   modifiedAt?: string;
+  // 1200x630 Open Graph card
   image: string;
+  coverImage?: string;
   slug: string;
   keywords?: string[];
   author?: {
@@ -20,46 +22,56 @@ const BlogPostingSchema = ({
   publishedAt,
   modifiedAt,
   image,
+  coverImage,
   slug,
   keywords,
   author = { name: 'Zubair Ahmed', url: 'https://www.grizzlybit.dev' },
 }: BlogPostingSchemaProps) => {
-  const imageUrl = image
-    ? image.startsWith('http')
-      ? image
-      : `https://www.grizzlybit.dev${image}`
-    : 'https://www.grizzlybit.dev/grizzlybit-logo-image.png';
+  const site = 'https://www.grizzlybit.dev';
+  const toAbsolute = (u: string) => (u.startsWith('http') ? u : `${site}${u}`);
+  const url = `${site}/blog/${slug}`;
+  // Date-only frontmatter gets midnight Dubai time so it's a full ISO 8601 datetime.
+  const toDateTime = (d: string) =>
+    /^\d{4}-\d{2}-\d{2}$/.test(d) ? `${d}T00:00:00+04:00` : d;
+
+  const images: Array<Record<string, unknown>> = [
+    {
+      '@type': 'ImageObject',
+      url: toAbsolute(image),
+      width: 1200,
+      height: 630,
+    },
+  ];
+  if (coverImage)
+    images.push({ '@type': 'ImageObject', url: toAbsolute(coverImage) });
 
   const blogPostingSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    isPartOf: { '@id': `${site}/#website` },
     headline: title,
     description,
-    image: imageUrl,
-    datePublished: publishedAt,
-    dateModified: modifiedAt || publishedAt,
+    image: images,
+    datePublished: toDateTime(publishedAt),
+    dateModified: toDateTime(modifiedAt || publishedAt),
     author: {
       '@type': 'Person',
-      '@id': 'https://www.grizzlybit.dev/#person',
+      '@id': `${site}/#person`,
       name: author.name,
-      url: author.url,
+      url: author.url ?? site,
     },
+    // Same entity as WebSite.publisher; name inline because this page has no Person node
     publisher: {
-      '@type': 'Organization',
-      '@id': 'https://www.grizzlybit.dev/#organization',
-      name: 'Grizzlybit',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://www.grizzlybit.dev/grizzlybit-logo-square.png',
-        width: 512,
-        height: 512,
-      },
+      '@type': 'Person',
+      '@id': 'https://www.grizzlybit.dev/#person',
+      name: 'Zubair Ahmed',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://www.grizzlybit.dev/blog/${slug}`,
+      '@id': url,
     },
-    url: `https://www.grizzlybit.dev/blog/${slug}`,
+    url,
     ...(keywords && keywords.length > 0 && { keywords: keywords.join(', ') }),
     inLanguage: 'en-US',
   };

@@ -1,103 +1,142 @@
-import testimonials from 'data/testimonials';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import testimonials, { ITestimonialItem } from 'data/testimonials';
 import Image from 'next/image';
-import Link from 'next/link';
-import { MDiv } from './fx/m';
+import { useEffect, useRef, useState } from 'react';
+import { FaLinkedinIn } from 'react-icons/fa';
+import { Reveal, Section } from './Section';
 
-interface ITestimonialData {
-  name: string;
-  company: string;
-  designation: string;
-  place: string;
-  imageUrl: string;
-  linkedIn: string;
-  message: string;
-}
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
 
+// Clamping is CSS only: the full quote is always in the HTML. The toggle
+// appears only when the quote actually overflows its clamp.
 const TestimonialCard = ({
-  data,
-  index,
+  item,
+  id,
 }: {
-  data: ITestimonialData;
-  index: number;
-}) => (
-  <MDiv
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.1 }}
-    transition={{
-      delay: (index % 6) * 0.08,
-      type: 'spring',
-      stiffness: 130,
-      damping: 18,
-    }}
-    className="relative mb-5 break-inside-avoid rounded-2xl border border-white/10 bg-[#101218]/95 p-6 shadow-xl backdrop-blur-xs overflow-hidden hover:border-brand-glow/40 transition-colors"
-  >
-    <div
-      aria-hidden
-      className="absolute -top-10 -left-6 font-mono text-[140px] leading-none text-brand-glow/15 select-none pointer-events-none"
-    >
-      &ldquo;
-    </div>
+  item: ITestimonialItem;
+  id: string;
+}) => {
+  const quoteRef = useRef<HTMLQuoteElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [overflows, setOverflows] = useState(false);
 
-    <div className="relative flex items-start justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <Image
-          src={data.imageUrl}
-          height={56}
-          width={56}
-          alt={`${data.name} - ${data.designation} at ${data.company}`}
-          className="mask mask-circle h-14 w-14 object-cover"
-          loading="lazy"
-        />
-        <div className="text-left">
-          <p className="font-mono font-bold text-white text-sm">{data.name}</p>
-          <p className="font-mono text-xs text-white/70">{data.designation}</p>
-          <p className="font-mono text-xs text-brand-glow/90">{data.company}</p>
-          <p className="font-mono text-[10px] text-white/60">{data.place}</p>
-        </div>
-      </div>
-      <Link
-        target="_blank"
-        href={data.linkedIn}
-        className="shrink-0"
-        aria-label={`${data.name} on LinkedIn`}
-      >
-        <Image
-          src="/social/linkedin.svg"
-          width={20}
-          height={20}
-          alt={`View ${data.name}'s LinkedIn profile`}
-        />
-      </Link>
-    </div>
+  useEffect(() => {
+    const el = quoteRef.current;
+    if (!el || expanded) return;
+    const measure = () => setOverflows(el.scrollHeight > el.clientHeight + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [expanded]);
 
-    <p className="relative mt-4 font-mono text-sm leading-relaxed text-white/80 whitespace-pre-line">
-      {data.message}
-    </p>
-  </MDiv>
-);
-
-const Testimonials = () => {
   return (
-    <section
-      id="my-testimonials"
-      className="relative py-16 overflow-hidden"
-    >
-      <div className="text-center mb-10 px-4">
-        <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-          Words
-        </p>
-        <h2 className="mt-2 font-mono text-2xl md:text-3xl tracking-wider uppercase text-white">
-          Testimonials
-        </h2>
-      </div>
-      <div className="mx-auto max-w-7xl px-5 columns-1 md:columns-2 lg:columns-3 gap-5">
-        {testimonials.map((item, i) => (
-          <TestimonialCard key={item.name} data={item} index={i} />
-        ))}
-      </div>
-    </section>
+    <Card className="gap-0 p-6">
+      <figure className="flex flex-col gap-6">
+        <div>
+          <blockquote
+            ref={quoteRef}
+            id={id}
+            className={cn(
+              'space-y-3 text-base leading-relaxed text-pretty',
+              !expanded && 'line-clamp-[8] md:line-clamp-6',
+            )}
+          >
+            {item.message.split(/\n+/).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </blockquote>
+          {(overflows || expanded) && (
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls={id}
+              onClick={() => setExpanded((v) => !v)}
+              className="mt-2 inline-flex min-h-11 items-center font-bold underline decoration-primary decoration-2 underline-offset-4 hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              {expanded ? 'Show less' : 'Read more'}
+              <span className="sr-only"> from {item.name}</span>
+            </button>
+          )}
+        </div>
+        <figcaption className="flex items-center gap-3 border-t-2 border-border pt-4">
+          <span className="relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-muted font-bold">
+            {item.imageUrl ? (
+              <Image
+                src={item.imageUrl}
+                alt={`Photo of ${item.name}`}
+                width={48}
+                height={48}
+                className="size-full object-cover"
+              />
+            ) : (
+              <span aria-hidden="true">{initials(item.name)}</span>
+            )}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="font-bold">{item.name}</p>
+            <p className="text-sm text-muted-foreground">
+              {item.designation} at {item.company}
+            </p>
+            <p className="text-sm text-muted-foreground">{item.place}</p>
+          </div>
+          <Button asChild variant="outline" size="icon-lg">
+            <a
+              href={item.linkedIn}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${item.name} on LinkedIn (opens in a new tab)`}
+            >
+              <FaLinkedinIn aria-hidden />
+            </a>
+          </Button>
+        </figcaption>
+      </figure>
+    </Card>
   );
 };
+
+// Mobile: horizontal scroll-snap row (keeps the page short). md+: masonry
+// columns. Long quotes are clamped in both layouts.
+const Testimonials = () => (
+  <Section
+    id="my-testimonials"
+    title="What clients and colleagues say"
+    intro="Recommendations from engineers, managers and partners I've worked with, from Dubai and Bangalore to Prague, Melbourne and Toronto."
+    muted
+  >
+    <p
+      aria-hidden="true"
+      className="-mt-6 mb-4 font-mono text-sm text-muted-foreground md:hidden"
+    >
+      Swipe for more →
+    </p>
+    <ul
+      tabIndex={0}
+      aria-label="Testimonials"
+      className="-mx-4 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto scroll-px-4 px-4 pb-4 outline-none focus-visible:ring-3 focus-visible:ring-ring md:mx-0 md:block md:snap-none md:columns-2 md:gap-6 md:overflow-visible md:p-0 lg:columns-3"
+    >
+      {testimonials.map((item, i) => (
+        <li
+          key={item.name}
+          className="w-[80vw] shrink-0 snap-start md:mb-6 md:w-auto md:break-inside-avoid"
+        >
+          <Reveal delay={(i % 3) * 0.08}>
+            <TestimonialCard item={item} id={`testimonial-${i}-quote`} />
+          </Reveal>
+        </li>
+      ))}
+    </ul>
+  </Section>
+);
 
 export default Testimonials;

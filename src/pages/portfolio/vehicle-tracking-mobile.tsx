@@ -1,39 +1,44 @@
 import {
   AboutSection,
+  CaseStudySummary,
   FeaturesSection,
   ImageRow,
   PortfolioDetailShell,
   PortfolioImage,
   TechStackSection,
 } from '@/components/PortfolioDetail';
+import Link from 'next/link';
 
-const title = 'Vehicle Tracking Mobile Application';
+const title = 'Vehicle tracking mobile application';
 
 const VehicleApplicationMobilePortfolioScreen = () => {
   return (
-    <PortfolioDetailShell slug="vehicle-tracking-mobile" title={title} command="open razrtrack-mobile">
+    <PortfolioDetailShell
+      slug="vehicle-tracking-mobile"
+      title={title}
+      badges={['Mobile app', 'Fleet management', 'Push notifications']}
+    >
       <AboutSection
         copy={
           <p>
-            The mobile application is a powerful tool for tracking and
-            monitoring vehicles in real-time. With its easy-to-use interface,
-            users can quickly view the current location and movement of their
-            vehicles, plus detailed information about the work orders being
-            completed by drivers in real-time, with push notification
-            capability.
+            A fleet management mobile app for tracking and monitoring vehicles
+            in real time. Users see the current location and movement of their
+            vehicles, follow the work orders drivers are completing as they
+            happen, and get push notifications along the way.
           </p>
         }
         visual={
           <ImageRow>
             <PortfolioImage
+              priority
               src="/portfolio/razrtrack_mobile/razrtrack_mobile_login.svg"
-              alt="login screen"
+              alt="Vehicle tracking mobile app login screen"
               width={260}
               height={260}
             />
             <PortfolioImage
               src="/portfolio/razrtrack_mobile/razrtrack_mobile_list.svg"
-              alt="list screen"
+              alt="List of tracked vehicles in the mobile app"
               width={260}
               height={260}
             />
@@ -41,28 +46,52 @@ const VehicleApplicationMobilePortfolioScreen = () => {
         }
       />
 
+      <CaseStudySummary
+        challenge={
+          <>
+            <p>
+              Fleet users need the current location and movement of their
+              vehicles, and the work orders drivers are completing, as they
+              happen.
+            </p>
+            <p>
+              The app is the mobile companion to the{' '}
+              <Link
+                href="/portfolio/vehicle-tracking"
+                className="font-bold underline underline-offset-4"
+              >
+                vehicle tracking web application
+              </Link>
+              . It is built with Ionic and TypeScript for iOS and Android, runs
+              on a Node.js and Express back end and sends push notifications
+              through OneSignal.
+            </p>
+          </>
+        }
+      />
+
       <FeaturesSection
         reverse
         features={[
-          'Tracking and monitoring of vehicle location and usage.',
+          'Real-time tracking of vehicle location and usage.',
           'Scheduling and dispatching of vehicles and drivers.',
           'Maintenance and repair tracking.',
           'Fuel consumption and cost tracking.',
           'Driver performance monitoring and evaluation.',
-          'Multiple-stop work order monitoring with time-window and distance constraints.',
-          'Estimated vs actual monitoring for stop-over arrival and departure.',
+          'Multi-stop work order monitoring with time-window and distance constraints.',
+          'Estimated vs actual arrival and departure times at each stop.',
         ]}
         visual={
           <ImageRow>
             <PortfolioImage
               src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo.svg"
-              alt="work orders"
+              alt="Driver work orders list screen"
               width={220}
               height={220}
             />
             <PortfolioImage
               src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single.svg"
-              alt="work order detail"
+              alt="Work order detail screen with stops"
               width={220}
               height={220}
             />
@@ -73,7 +102,7 @@ const VehicleApplicationMobilePortfolioScreen = () => {
       <div className="flex justify-center">
         <PortfolioImage
           src="/portfolio/razrtrack_mobile/razrtrack_mobile_wo_single_status.svg"
-          alt="work order status"
+          alt="Work order status screen showing estimated vs actual stop times"
           width={300}
           height={300}
         />
@@ -84,7 +113,7 @@ const VehicleApplicationMobilePortfolioScreen = () => {
           'TypeScript',
           'JavaScript',
           'Ionic',
-          'Node.JS',
+          'Node.js',
           'Express',
           'OneSignal',
         ]}

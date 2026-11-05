@@ -11,6 +11,11 @@ interface CustomHeadProps {
   canonical?: string;
   ogType?: 'website' | 'article';
   ogImage?: string;
+  // Only pass dimensions/type you know; they're omitted for custom images otherwise.
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogImageType?: string;
+  ogImageAlt?: string;
   cardType?: 'summary' | 'summary_large_image' | 'app' | 'player';
   publishedTime?: string;
   modifiedTime?: string;
@@ -26,6 +31,10 @@ const CustomHead = (props: CustomHeadProps) => {
     canonical,
     ogType = 'website',
     ogImage,
+    ogImageWidth,
+    ogImageHeight,
+    ogImageType,
+    ogImageAlt,
     cardType = 'summary_large_image',
     publishedTime,
     modifiedTime,
@@ -34,18 +43,28 @@ const CustomHead = (props: CustomHeadProps) => {
     noindex,
   } = props;
 
-  const imageUrl = ogImage ?? defaultTags.image;
+  const toAbsolute = (u: string) =>
+    u.startsWith('http') ? u : `${defaultTags.websiteUrl}${u}`;
+  const imageUrl = ogImage ? toAbsolute(ogImage) : defaultTags.image;
+  const ogImageMeta = ogImage
+    ? {
+        width: ogImageWidth,
+        height: ogImageHeight,
+        type: ogImageType,
+        alt: ogImageAlt ?? title ?? defaultTags.imageAlt,
+      }
+    : {
+        width: defaultTags.imageWidth,
+        height: defaultTags.imageHeight,
+        type: defaultTags.imageType,
+        alt: defaultTags.imageAlt,
+      };
   const canonicalUrl = canonical ?? defaultTags.websiteUrl;
 
-  // Build additional meta tags for articles
   const additionalMetaTags = [
     {
       name: 'msapplication-TileColor',
-      content: defaultTags.themeColor,
-    },
-    {
-      name: 'theme-color',
-      content: defaultTags.themeColor,
+      content: defaultTags.themeColorLight,
     },
     {
       name: 'author',
@@ -53,34 +72,11 @@ const CustomHead = (props: CustomHeadProps) => {
     },
   ];
 
-  // Add keywords meta tag if provided
   if (keywords && keywords.length > 0) {
     additionalMetaTags.push({
       name: 'keywords',
       content: keywords.join(', '),
     });
-  }
-
-  // Add article-specific meta tags when ogType is 'article'
-  if (ogType === 'article') {
-    if (publishedTime) {
-      additionalMetaTags.push({
-        name: 'article:published_time',
-        content: publishedTime,
-      });
-    }
-    if (modifiedTime) {
-      additionalMetaTags.push({
-        name: 'article:modified_time',
-        content: modifiedTime,
-      });
-    }
-    if (author) {
-      additionalMetaTags.push({
-        name: 'article:author',
-        content: author,
-      });
-    }
   }
 
   // Apply brand suffix on every child page; leave homepage title untouched.
@@ -89,8 +85,12 @@ const CustomHead = (props: CustomHeadProps) => {
   const isHomepage =
     !title || normalize(canonicalUrl) === normalize(defaultTags.websiteUrl);
   const resolvedTitle = title ?? defaultTags.title;
+  // Drop the brand suffix when it would push the title past ~60 chars (SERP truncation).
+  const fitsSuffix =
+    defaultTags.titleTemplate.replace('%s', resolvedTitle).length <= 60;
   // '%s' (not undefined): next-seo keeps the last titleTemplate module-wide
-  const titleTemplate = isHomepage ? '%s' : defaultTags.titleTemplate;
+  const titleTemplate =
+    isHomepage || !fitsSuffix ? '%s' : defaultTags.titleTemplate;
 
   return (
     <>
@@ -101,30 +101,27 @@ const CustomHead = (props: CustomHeadProps) => {
         description={description ?? defaultTags.description}
         canonical={canonicalUrl}
         noindex={noindex}
+        robotsProps={{
+          maxSnippet: -1,
+          maxImagePreview: 'large',
+          maxVideoPreview: -1,
+        }}
         openGraph={{
           type: ogType,
           url: canonicalUrl,
           title: resolvedTitle,
           description: description ?? defaultTags.description,
-          images: [
-            {
-              url: imageUrl,
-              width: defaultTags.imageWidth,
-              height: defaultTags.imageHeight,
-              alt: defaultTags.imageAlt,
-              type: defaultTags.imageType,
-            },
-          ],
+          images: [{ url: imageUrl, ...ogImageMeta }],
           siteName: defaultTags.siteName,
           locale: defaultTags.locale,
-          ...(ogType === 'article' &&
-            publishedTime && {
-              article: {
-                publishedTime: publishedTime,
-                ...(modifiedTime && { modifiedTime: modifiedTime }),
-                ...(author && { authors: [author] }),
-              },
-            }),
+          // next-seo emits these as <meta property="article:*">
+          ...(ogType === 'article' && {
+            article: {
+              ...(publishedTime && { publishedTime }),
+              ...(modifiedTime && { modifiedTime }),
+              ...(author && { authors: [author] }),
+            },
+          }),
         }}
         twitter={{
           handle: defaultTags.twitterHandle,
@@ -161,7 +158,21 @@ const CustomHead = (props: CustomHeadProps) => {
           },
         ]}
       />
-      {/* <GoogleAnalytics /> */}
+      {/* next-seo's MetaTag type has no `media`, so theme-color lives here */}
+      <Head>
+        <meta
+          key="theme-color-light"
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content={defaultTags.themeColorLight}
+        />
+        <meta
+          key="theme-color-dark"
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content={defaultTags.themeColorDark}
+        />
+      </Head>
     </>
   );
 };

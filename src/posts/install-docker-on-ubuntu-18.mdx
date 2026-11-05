@@ -1,6 +1,7 @@
 ---
 title: 'Install Docker on Ubuntu 18.04 (Bionic Beaver) 🐳'
 publishedAt: '2020-04-11'
+description: 'Install Docker on Ubuntu 18.04 (Bionic Beaver) step by step: update repositories, remove old versions, install docker.io and verify that it runs.'
 summary: 'One of the most beautiful sights to see is a smooth running development and production environment. Docker makes this a reality with ease 😁.  This is one of the main reason docker usage just skyrocketed in a the past couple of years. Well, are you wondering how to get started with installing docker? Look no further, here is a quick tutorial for the most widely use Linux Distro!'
 image: '/blog/install-docker-on-ubuntu-18/cover.png'
 keywords:
@@ -13,8 +14,6 @@ keywords:
 author: 'Zubair Ahmed'
 ---
 
-![Install Docker on Ubuntu 18.04](/blog/install-docker-on-ubuntu-18/cover.png)
-
 One of the most beautiful sights to see is a smooth-running development and production environment. Docker makes this a reality with ease 😁. This is one of the main reasons docker usage just skyrocketed in the past couple of years. Well, are you wondering how to get started with installing docker? Look no further, here is a quick tutorial for the most widely used Linux Distro!
 
 Before we start with the installation setups, we will need some prerequisites to be in place. They are:
@@ -23,7 +22,7 @@ Before we start with the installation setups, we will need some prerequisites to
 - A user account with `sudo` access rights
 - Though it’s a given, you’ll need a terminal to run the installation commands 😋
 
-### Step 1 Update repositories
+## Step 1 Update repositories
 
 If you’re any familiar with the Ubuntu distro, you’ll know that it is always a good idea to update the local repositories before getting started with any software installation process. Hence, just run the following command:
 
@@ -33,7 +32,7 @@ sudo apt-get update
 
 Now, you ahead a get yourself a candy bar 🍫 and wait to let the process complete.
 
-### Step 2 Uninstall Old version of Docker
+## Step 2 Uninstall Old version of Docker
 
 Since we will be doing a fresh installation of docker, let’s make sure all old installations (or attempts) are removed:
 
@@ -43,7 +42,7 @@ sudo apt-get remove docker docker-engine docker.io
 
 This should be fairly quick. How does your candy bar taste, I bet it’s tasty 🤤.
 
-### Step 3 Install Docker 🐳
+## Step 3 Install Docker 🐳
 
 Let’s use the `docker.io` repo to install Docker onto the machine:
 
@@ -53,7 +52,7 @@ sudo apt install docker.io
 
 If the command works without any errors, congratulations you have successfully installed docker. Wasn’t it easy!
 
-### Step 4 Start Docker service and setup to run on Startup
+## Step 4 Start Docker service and setup to run on Startup
 
 Now, that the service has been successfully installed. Let’s start the daemon and have it run on startup:
 
@@ -86,7 +85,7 @@ You should see a response like below:
            └─22527 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
 
-### Step 5 Run docker commands without `sudo` (Optional)
+## Step 5 Run docker commands without `sudo` (Optional)
 
 Let’s begin with adding `docker` group if it doesn’t already exist
 
@@ -108,7 +107,7 @@ sudo usermod -aG docker $USER
 
 Now you might have to logout and log back for the changes to take affect with a new session.
 
-### Step 6 Test by running `hello-world` docker container
+## Step 6 Test by running `hello-world` docker container
 
 Finally, to make sure everything has been installed and configured correctly, just run the `hello-world` container
 

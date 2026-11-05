@@ -1,38 +1,11 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import 'lenis/dist/lenis.css';
+
+@custom-variant dark (&:is(.dark *));
 
 @plugin '@tailwindcss/typography';
-@plugin 'daisyui' {
-  themes: halloween --default;
-}
-
-/* Pin halloween to its daisyUI 2 palette; daisyUI 5 redesigned the theme */
-@plugin 'daisyui/theme' {
-  name: 'halloween';
-  default: true;
-  --color-base-100: hsl(0 0% 12.941%);
-  --color-base-200: hsl(0 0% 11.647%);
-  --color-base-300: hsl(0 0% 10.482%);
-  --color-base-content: hsl(0 0% 82.588%);
-  --color-primary: hsl(31.927 89.344% 52.157%);
-  --color-primary-content: hsl(180 7.3171% 8.0392%);
-  --color-secondary: hsl(271.22 45.794% 41.961%);
-  --color-secondary-content: hsl(271.22 100% 88.392%);
-  --color-accent: hsl(91.071 100% 32.941%);
-  --color-accent-content: hsl(91.071 100% 6.5882%);
-  --color-neutral: hsl(180 3.5714% 10.98%);
-  --color-neutral-content: hsl(180 4.8458% 82.196%);
-  --color-info: hsl(221.21 83.193% 53.333%);
-  --color-info-content: hsl(221.21 100% 90.667%);
-  --color-success: hsl(142.13 76.216% 36.275%);
-  --color-success-content: hsl(142.13 100% 87.255%);
-  --color-warning: hsl(32.133 94.619% 43.725%);
-  --color-warning-content: hsl(32.133 100% 8.7451%);
-  --color-error: hsl(0 72.222% 50.588%);
-  --color-error-content: hsl(0 100% 90.118%);
-  --radius-selector: 1.9rem;
-  --size-field: 0.3rem;
-  --depth: 0;
-}
 
 @theme {
   /* Tailwind v3 fixed line-heights; v4's unitless ratios shrink nested text */
@@ -51,107 +24,28 @@
   --color-brand-haze: #a991f7;
   --color-brand-deep: #1a1a1a;
 
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  --animate-scan: scan 4s linear infinite;
-  --animate-shimmer: shimmer 3s ease-in-out infinite;
-  --animate-borderSpin: borderSpin 6s linear infinite;
-  --animate-floatY: floatY 4s ease-in-out infinite;
-  --animate-caret: caret 1s steps(1) infinite;
-  --animate-gridFlow: gridFlow 8s linear infinite;
-  --animate-sheen: sheen 2.5s ease-in-out infinite;
-
-  @keyframes scan {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(100%);
-    }
-  }
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-  @keyframes borderSpin {
-    0% {
-      --angle: 0deg;
-    }
-    100% {
-      --angle: 360deg;
-    }
-  }
-  @keyframes floatY {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-  @keyframes caret {
-    0%,
-    49% {
-      opacity: 1;
-    }
-    50%,
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes gridFlow {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 40px 40px;
-    }
-  }
-  @keyframes sheen {
-    0% {
-      transform: translateX(-150%) skewX(-20deg);
-    }
-    100% {
-      transform: translateX(250%) skewX(-20deg);
-    }
-  }
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+  * {
+    @apply border-border outline-ring;
   }
-}
-
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+  /* Default focus indicator for anything without its own ring (links, regions) */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -164,82 +58,38 @@ html {
   }
 }
 
-.crt-scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.04) 0px,
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  pointer-events: none;
+/* Scroll-driven reveal (Section.tsx <Reveal>) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--reveal-delay, 0) * 100%)
+        entry calc(70% + var(--reveal-delay, 0) * 100%);
+    }
+  }
 }
-
-.holo-foil {
-  background: conic-gradient(
-    from var(--angle, 0deg) at 50% 50%,
-    rgba(242, 140, 24, 0.0) 0deg,
-    rgba(169, 145, 247, 0.35) 90deg,
-    rgba(55, 205, 190, 0.35) 180deg,
-    rgba(255, 120, 71, 0.35) 270deg,
-    rgba(242, 140, 24, 0.0) 360deg
-  );
-  filter: blur(28px);
-  animation: borderSpin 6s linear infinite;
-}
-
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-auto-rows: 180px;
-  gap: 1rem;
-}
-
-@media (max-width: 768px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 200px;
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
 }
 
-.terminal-window {
-  background: linear-gradient(180deg, #0f1115 0%, #14171d 100%);
-  border: 1px solid rgba(169, 145, 247, 0.18);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
-    0 8px 30px rgba(0, 0, 0, 0.5);
+/* ---------- Hero (Banner + Statistics) ----------
+   Card, badges, tooltips and stats use the shadcn primitives; only the
+   backdrop gradient, icon inversion and stat grid live here. */
+.hero {
+  background-image: linear-gradient(to bottom, var(--background), var(--muted));
+  border-bottom: 2px solid var(--border);
 }
 
-.terminal-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 9999px;
-  display: inline-block;
+/* Social SVGs are white-only; darken them on light surfaces */
+.hero-social img {
+  filter: invert(1);
 }
-
-@keyframes blobA {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(8%, -6%) scale(1.15); }
-  66% { transform: translate(-5%, 5%) scale(0.9); }
-}
-
-@keyframes blobB {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-7%, 5%) scale(0.85); }
-  66% { transform: translate(6%, -4%) scale(1.18); }
-}
-
-@keyframes blobC {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(5%, -8%) scale(1.1); }
-  66% { transform: translate(-6%, 6%) scale(0.95); }
-}
-
-.bg-toolBelt {
-  background-image: url('/toolbelt/coding-screen.jpeg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.dark .hero-social img {
+  filter: none;
 }
 
 .circles {
@@ -382,45 +232,232 @@ html {
   }
 }
 
-.background-animate {
-  background-size: 400%;
 
-  -webkit-animation: AnimationName 3s ease infinite;
-  -moz-animation: AnimationName 3s ease infinite;
-  animation: AnimationName 3s ease infinite;
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --radius: 0px;
+  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+  --tracking-normal: var(--tracking-normal);
+  --shadow-2xl: var(--shadow-2xl);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-md: var(--shadow-md);
+  --shadow: var(--shadow);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-2xs: var(--shadow-2xs);
+  --spacing: var(--spacing);
+  --letter-spacing: var(--letter-spacing);
+  --shadow-offset-y: var(--shadow-offset-y);
+  --shadow-offset-x: var(--shadow-offset-x);
+  --shadow-spread: var(--shadow-spread);
+  --shadow-blur: var(--shadow-blur);
+  --shadow-opacity: var(--shadow-opacity);
+  --color-shadow-color: var(--shadow-color);
+  --color-destructive-foreground: var(--destructive-foreground);
 }
 
-@keyframes AnimationName {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+:root {
+  --background: oklch(1.0000 0 0);
+  --foreground: oklch(0 0 0);
+  --card: oklch(1.0000 0 0);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(1.0000 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0.6489 0.2370 26.9728);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.9680 0.2110 109.7692);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.955 0.025 100);
+  --muted-foreground: oklch(0.3211 0 0);
+  --accent: oklch(0.5635 0.2408 260.8178);
+  --accent-foreground: oklch(1.0000 0 0);
+  --destructive: oklch(0.55 0.22 27);
+  --border: oklch(0 0 0);
+  --input: oklch(0 0 0);
+  --ring: oklch(0.6489 0.2370 26.9728);
+  --chart-1: oklch(0.6489 0.2370 26.9728);
+  --chart-2: oklch(0.9680 0.2110 109.7692);
+  --chart-3: oklch(0.5635 0.2408 260.8178);
+  --chart-4: oklch(0.7323 0.2492 142.4953);
+  --chart-5: oklch(0.5931 0.2726 328.3634);
+  --radius: 0px;
+  --sidebar: oklch(0.9551 0 0);
+  --sidebar-foreground: oklch(0 0 0);
+  --sidebar-primary: oklch(0.6489 0.2370 26.9728);
+  --sidebar-primary-foreground: oklch(1.0000 0 0);
+  --sidebar-accent: oklch(0.5635 0.2408 260.8178);
+  --sidebar-accent-foreground: oklch(1.0000 0 0);
+  --sidebar-border: oklch(0 0 0);
+  --sidebar-ring: oklch(0.6489 0.2370 26.9728);
+  --destructive-foreground: oklch(1.0000 0 0);
+  --shadow-color: hsl(0 0% 0%);
+  --shadow-opacity: 1;
+  --shadow-blur: 0px;
+  --shadow-spread: 0px;
+  --shadow-offset-x: 4px;
+  --shadow-offset-y: 4px;
+  --letter-spacing: 0em;
+  --spacing: 0.25rem;
+  --shadow-2xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.50);
+  --shadow-xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.50);
+  --shadow-sm: 4px 4px 0px 0px hsl(0 0% 0% / 1.00), 4px 1px 2px -1px hsl(0 0% 0% / 1.00);
+  --shadow: 4px 4px 0px 0px hsl(0 0% 0% / 1.00), 4px 1px 2px -1px hsl(0 0% 0% / 1.00);
+  --shadow-md: 4px 4px 0px 0px hsl(0 0% 0% / 1.00), 4px 2px 4px -1px hsl(0 0% 0% / 1.00);
+  --shadow-lg: 4px 4px 0px 0px hsl(0 0% 0% / 1.00), 4px 4px 6px -1px hsl(0 0% 0% / 1.00);
+  --shadow-xl: 4px 4px 0px 0px hsl(0 0% 0% / 1.00), 4px 8px 10px -1px hsl(0 0% 0% / 1.00);
+  --shadow-2xl: 4px 4px 0px 0px hsl(0 0% 0% / 1.00);
+  --tracking-normal: 0em;
 }
 
-.portfolio-card-bg:hover {
-  /* background: linear-gradient(
-    45deg,
-    rgb(0, 0, 0) 0%,
-    rgb(0, 0, 0, 0.8) 46%,
-    rgb(70, 70, 70, 0.5) 98%
-  ); */
+.dark {
+  --background: oklch(0 0 0);
+  --foreground: oklch(1.0000 0 0);
+  --card: oklch(0.18 0 0);
+  --card-foreground: oklch(1.0000 0 0);
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(1.0000 0 0);
+  --primary: oklch(0.7044 0.1872 23.1858);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.9691 0.2005 109.6228);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.8452 0 0);
+  --accent: oklch(0.6755 0.1765 252.2592);
+  --accent-foreground: oklch(0 0 0);
+  --destructive: oklch(0.76 0.16 23);
+  --border: oklch(1.0000 0 0);
+  --input: oklch(1.0000 0 0);
+  --ring: oklch(0.7044 0.1872 23.1858);
+  --chart-1: oklch(0.7044 0.1872 23.1858);
+  --chart-2: oklch(0.9691 0.2005 109.6228);
+  --chart-3: oklch(0.6755 0.1765 252.2592);
+  --chart-4: oklch(0.7395 0.2268 142.8504);
+  --chart-5: oklch(0.6131 0.2458 328.0714);
+  --sidebar: oklch(0 0 0);
+  --sidebar-foreground: oklch(1.0000 0 0);
+  --sidebar-primary: oklch(0.7044 0.1872 23.1858);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.6755 0.1765 252.2592);
+  --sidebar-accent-foreground: oklch(0 0 0);
+  --sidebar-border: oklch(1.0000 0 0);
+  --sidebar-ring: oklch(0.7044 0.1872 23.1858);
+  --destructive-foreground: oklch(0 0 0);
+  --radius: 0px;
+  --shadow-color: hsl(0 0% 100%);
+  --shadow-opacity: 1;
+  --shadow-blur: 0px;
+  --shadow-spread: 0px;
+  --shadow-offset-x: 4px;
+  --shadow-offset-y: 4px;
+  --letter-spacing: 0em;
+  --spacing: 0.25rem;
+  --shadow-2xs: 4px 4px 0px 0px hsl(0 0% 100% / 0.50);
+  --shadow-xs: 4px 4px 0px 0px hsl(0 0% 100% / 0.50);
+  --shadow-sm: 4px 4px 0px 0px hsl(0 0% 100% / 1.00), 4px 1px 2px -1px hsl(0 0% 100% / 1.00);
+  --shadow: 4px 4px 0px 0px hsl(0 0% 100% / 1.00), 4px 1px 2px -1px hsl(0 0% 100% / 1.00);
+  --shadow-md: 4px 4px 0px 0px hsl(0 0% 100% / 1.00), 4px 2px 4px -1px hsl(0 0% 100% / 1.00);
+  --shadow-lg: 4px 4px 0px 0px hsl(0 0% 100% / 1.00), 4px 4px 6px -1px hsl(0 0% 100% / 1.00);
+  --shadow-xl: 4px 4px 0px 0px hsl(0 0% 100% / 1.00), 4px 8px 10px -1px hsl(0 0% 100% / 1.00);
+  --shadow-2xl: 4px 4px 0px 0px hsl(0 0% 100% / 1.00);
 }
 
-/* Keep the daisyUI 2 look: uppercase buttons, stats without dividers.
-   daisyUI 5 lives in a sub-layer of utilities, so this beats it;
-   :where() keeps specificity at 0 so utilities still override */
-@layer utilities {
-  :where(.btn) {
-    text-transform: uppercase;
-  }
-  :where(.stat) {
-    border: 0;
-  }
-  :where(.stat-title) {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
+/* ---------- Code blocks (rehype-prism-plus) ---------- */
+.prose pre {
+  border: 2px solid var(--border);
+  border-radius: 0;
+  box-shadow: var(--shadow);
+  background: oklch(0.18 0 0);
+  color: oklch(0.93 0 0);
+}
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: oklch(0.65 0 0);
+  font-style: italic;
+}
+.token.punctuation {
+  color: oklch(0.8 0 0);
+}
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: oklch(0.78 0.16 25);
+}
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: oklch(0.88 0.17 110);
+}
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable {
+  color: oklch(0.85 0.05 250);
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: oklch(0.75 0.14 255);
+}
+.token.function,
+.token.class-name {
+  color: oklch(0.8 0.15 145);
+}
+.token.regex,
+.token.important {
+  color: oklch(0.8 0.15 70);
 }

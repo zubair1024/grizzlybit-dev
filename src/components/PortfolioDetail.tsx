@@ -1,189 +1,212 @@
 import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
+import CreativeWorkSchema from '@/components/schemas/CreativeWorkSchema';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
-import { MDiv } from '@/components/fx/m';
+import { Badge } from '@/components/ui/badge';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import {
   getPortfolioCanonicalUrl,
   getPortfolioMetadata,
 } from '@/data/portfolioMetadata';
+import { cn } from '@/lib/utils';
 import portfolio, { IPortfolioItem } from 'data/portfolio';
+import { ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import { ReactNode, createContext, useContext } from 'react';
+
+// Short project name, used to make every section heading project-specific.
+const ProjectName = createContext('');
 
 export const PortfolioDetailShell = ({
   slug,
   title,
-  command,
+  badges,
   children,
 }: {
   slug: string;
   title: string;
-  command?: string;
+  badges?: string[];
   children: ReactNode;
 }) => {
   const metadata = getPortfolioMetadata(slug);
   const canonical = getPortfolioCanonicalUrl(metadata.slug);
-  const otherProjects = portfolio.filter((i) => i.title !== title);
+  const otherProjects = portfolio.filter((i) => i.url !== `/portfolio/${slug}`);
 
   return (
-    <>
+    <ProjectName.Provider value={title}>
       <CustomHead
         title={metadata.title}
         description={metadata.description}
         canonical={canonical}
         ogImage={metadata.ogImage}
-        ogType="article"
+        {...(metadata.ogImage && {
+          ogImageWidth: 1200,
+          ogImageHeight: 630,
+          ogImageType: 'image/png',
+          ogImageAlt: `${title} case study by Zubair Ahmed`,
+        })}
         keywords={metadata.keywords}
       />
+      {/* No crawlable /portfolio index exists (only a homepage fragment), so the
+          structured trail is Home > project; the visible trail keeps Portfolio. */}
       <BreadcrumbListSchema
         items={[
           { name: 'Home', url: 'https://www.grizzlybit.dev' },
-          {
-            name: 'Portfolio',
-            url: 'https://www.grizzlybit.dev/#my-portfolio',
-          },
           { name: title, url: canonical },
         ]}
       />
+      <CreativeWorkSchema
+        name={title}
+        description={metadata.description}
+        url={canonical}
+        image={metadata.ogImage}
+      />
       <Layout>
-        <main id="main" className="min-h-screen pb-20">
-          <PortfolioHero
-            title={title}
-            slug={slug}
-            command={command ?? `open ${slug}`}
-          />
+        <main id="main" className="min-h-screen bg-background">
+          <header className="border-b-2 border-border bg-muted pt-28 pb-12 md:pt-32 md:pb-16">
+            <div className="mx-auto max-w-6xl px-4 md:px-6">
+              <Breadcrumb aria-label="Breadcrumb">
+                <BreadcrumbList className="flex-nowrap text-base">
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                      <Link href="/" className={crumbLinkClass}>
+                        Home
+                      </Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink asChild>
+                      <Link href="/#my-portfolio" className={crumbLinkClass}>
+                        Portfolio
+                      </Link>
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem className="min-w-0">
+                    <BreadcrumbPage className="block max-w-[16ch] truncate font-bold sm:max-w-none">
+                      {title}
+                    </BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
 
-          <div className="mx-auto max-w-6xl px-5">
-            <Breadcrumbs title={title} />
-
-            <div className="mt-8 flex flex-col gap-16">{children}</div>
-
-            <div className="mt-20">
-              <SectionHeading kicker="Cross-Pollination" title="Other projects" />
-              <OtherProjectsGrid items={otherProjects} />
+              <h1 className="mt-6 max-w-4xl text-4xl font-bold tracking-tight text-balance md:text-6xl">
+                {metadata.heading}
+              </h1>
+              <p className="mt-5 max-w-3xl text-lg text-pretty text-muted-foreground">
+                {metadata.description}
+              </p>
+              {badges && badges.length > 0 && (
+                <ul
+                  className="mt-6 flex flex-wrap gap-2"
+                  aria-label="Project details"
+                >
+                  {badges.map((b) => (
+                    <li key={b}>
+                      <Badge variant="outline" className="h-7 px-3 text-sm">
+                        {b}
+                      </Badge>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
+          </header>
+
+          <div className="mx-auto flex max-w-6xl flex-col gap-20 px-4 py-16 md:gap-28 md:px-6 md:py-24">
+            {children}
           </div>
+
+          <section
+            aria-labelledby="more-case-studies"
+            className="border-t-2 border-border bg-muted py-16 md:py-24"
+          >
+            <div className="mx-auto max-w-6xl px-4 md:px-6">
+              <SectionHeading
+                id="more-case-studies"
+                kicker="Portfolio"
+                title="More case studies"
+              />
+              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {otherProjects.map((item, i) => (
+                  <li
+                    key={item.url}
+                    className={cn(i >= 3 && 'hidden md:block')}
+                  >
+                    <OtherProjectCard item={item} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
         </main>
       </Layout>
-    </>
+    </ProjectName.Provider>
   );
 };
 
-const PortfolioHero = ({
-  title,
-  slug,
-  command,
-}: {
-  title: string;
-  slug: string;
-  command: string;
-}) => (
-  <section className="relative pt-24 pb-12 overflow-hidden">
-    <div
-      aria-hidden
-      className="absolute inset-0 -z-10 opacity-[0.12] pointer-events-none"
-      style={{
-        backgroundImage:
-          'linear-gradient(rgba(169,145,247,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(169,145,247,0.5) 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
-        maskImage:
-          'radial-gradient(circle at 50% 30%, black 30%, transparent 80%)',
-      }}
-    />
-    <div className="mx-auto max-w-4xl px-5 text-center">
-      <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-        Case study
-      </p>
-      <MDiv
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mt-3 font-mono text-2xl md:text-4xl tracking-wider uppercase text-white"
-      >
-        {title}
-      </MDiv>
-      <MDiv
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-xs"
-      >
-        <span className="text-brand-glow">$</span>
-        <span className="text-white/80">{command}</span>
-        <span className="ml-1 inline-block w-2 h-4 bg-brand-glow align-middle animate-caret" />
-        <span className="ml-3 text-white/30">→</span>
-        <span className="text-brand-cool">{slug}</span>
-      </MDiv>
-    </div>
-  </section>
-);
+const crumbLinkClass =
+  'inline-flex min-h-11 items-center underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none';
 
-const Breadcrumbs = ({ title }: { title: string }) => (
-  <nav
-    aria-label="Breadcrumb"
-    className="font-mono text-xs text-white/60 flex items-center gap-2 flex-wrap"
-  >
-    <Link href="/" className="hover:text-brand-glow transition-colors">
-      /
-    </Link>
-    <span>›</span>
-    <Link
-      href="/#my-portfolio"
-      className="hover:text-brand-glow transition-colors"
-    >
-      portfolio
-    </Link>
-    <span>›</span>
-    <span className="text-white/70 truncate">{title}</span>
-  </nav>
-);
-
-export const SectionHeading = ({
+const SectionHeading = ({
+  id,
   kicker,
   title,
 }: {
-  kicker: string;
+  id: string;
+  kicker?: string;
   title: string;
 }) => (
-  <div className="mb-6">
-    <p className="font-mono text-[11px] tracking-[0.3em] text-brand-glow uppercase">
-      {kicker}
-    </p>
-    <h2 className="mt-2 font-mono text-2xl md:text-3xl tracking-wider uppercase text-white">
+  <div className="mb-8">
+    {kicker && (
+      <p className="mb-3 inline-block border-2 border-border bg-secondary px-2 py-0.5 font-mono text-xs font-bold text-secondary-foreground">
+        {kicker}
+      </p>
+    )}
+    <h2
+      id={id}
+      className="text-3xl font-bold tracking-tight text-balance md:text-4xl"
+    >
       {title}
     </h2>
   </div>
 );
 
-export const PortfolioSection = ({
+const toId = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+// A titled <section> (H2) for page-specific blocks such as videos.
+export const DetailSection = ({
   kicker,
   title,
-  reverse = false,
   children,
 }: {
-  kicker: string;
+  kicker?: string;
   title: string;
-  reverse?: boolean;
   children: ReactNode;
-}) => (
-  <MDiv
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.15 }}
-    transition={{ type: 'spring', stiffness: 110, damping: 18 }}
-    className={`flex flex-col-reverse items-center gap-10 md:flex-row md:items-start ${
-      reverse ? 'md:flex-row-reverse' : ''
-    }`}
-  >
-    <div className="flex-1 min-w-0 w-full">
-      <SectionHeading kicker={kicker} title={title} />
-      <div className="font-mono text-sm md:text-base text-white/80 leading-relaxed space-y-3">
-        {children}
-      </div>
-    </div>
-  </MDiv>
-);
+}) => {
+  const id = toId(title);
+  return (
+    <section aria-labelledby={id}>
+      <SectionHeading id={id} kicker={kicker} title={title} />
+      {children}
+    </section>
+  );
+};
 
 const SectionSplit = ({
   kicker,
@@ -197,25 +220,26 @@ const SectionSplit = ({
   copy: ReactNode;
   visual: ReactNode;
   reverse?: boolean;
-}) => (
-  <MDiv
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.15 }}
-    transition={{ type: 'spring', stiffness: 110, damping: 18 }}
-    className={`flex flex-col-reverse items-center gap-10 md:gap-12 md:flex-row md:items-center ${
-      reverse ? 'md:flex-row-reverse' : ''
-    }`}
-  >
-    <div className="flex-1 min-w-0 w-full">
-      <SectionHeading kicker={kicker} title={title} />
-      <div className="font-mono text-sm md:text-base text-white/80 leading-relaxed space-y-3">
-        {copy}
+}) => {
+  const id = toId(title);
+  return (
+    <section
+      aria-labelledby={id}
+      className={cn(
+        'flex flex-col gap-10 md:items-center md:gap-12',
+        reverse ? 'md:flex-row-reverse' : 'md:flex-row',
+      )}
+    >
+      <div className="w-full min-w-0 flex-1">
+        <SectionHeading id={id} kicker={kicker} title={title} />
+        <div className="max-w-prose space-y-4 text-base leading-relaxed md:text-lg">
+          {copy}
+        </div>
       </div>
-    </div>
-    <div className="flex-1 min-w-0 w-full flex justify-center">{visual}</div>
-  </MDiv>
-);
+      <div className="flex w-full min-w-0 flex-1 justify-center">{visual}</div>
+    </section>
+  );
+};
 
 export const AboutSection = ({
   copy,
@@ -225,15 +249,18 @@ export const AboutSection = ({
   copy: ReactNode;
   visual: ReactNode;
   reverse?: boolean;
-}) => (
-  <SectionSplit
-    kicker="Overview"
-    title="About"
-    copy={copy}
-    visual={visual}
-    reverse={reverse}
-  />
-);
+}) => {
+  const name = useContext(ProjectName);
+  return (
+    <SectionSplit
+      kicker="Overview"
+      title={`About ${name}`}
+      copy={copy}
+      visual={visual}
+      reverse={reverse}
+    />
+  );
+};
 
 export const FeaturesSection = ({
   features,
@@ -243,58 +270,94 @@ export const FeaturesSection = ({
   features: string[];
   visual: ReactNode;
   reverse?: boolean;
-}) => (
-  <SectionSplit
-    kicker="Functionality"
-    title="Key features"
-    reverse={reverse}
-    copy={<FeatureList items={features} />}
-    visual={visual}
-  />
-);
+}) => {
+  const name = useContext(ProjectName);
+  return (
+    <SectionSplit
+      kicker="Features"
+      title={`${name} key features`}
+      reverse={reverse}
+      copy={<FeatureList items={features} />}
+      visual={visual}
+    />
+  );
+};
 
-export const FeatureList = ({ items }: { items: string[] }) => (
-  <ul className="space-y-2 font-mono text-sm text-white/80">
-    {items.map((item, i) => (
-      <MDiv
-        key={i}
-        initial={{ opacity: 0, x: -10 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.3, delay: i * 0.04 }}
-        className="flex gap-2 leading-relaxed"
+// Role / challenge / outcome summary. Each block renders only when the page has
+// sourced facts for it; never pad these with assumptions.
+export const CaseStudySummary = ({
+  role,
+  challenge,
+  outcome,
+}: {
+  role?: ReactNode;
+  challenge?: ReactNode;
+  outcome?: ReactNode;
+}) => {
+  const name = useContext(ProjectName);
+  // `tall` spans both rows beside the two shorter blocks when all three exist.
+  const blocks = [
+    { heading: "Zubair's role", body: role, tall: false },
+    { heading: 'Challenge and approach', body: challenge, tall: true },
+    { heading: 'Outcome', body: outcome, tall: false },
+  ].filter((b) => b.body);
+  return (
+    <DetailSection kicker="Summary" title={`${name} case study summary`}>
+      <div
+        className={cn(
+          'grid grid-cols-1 gap-6',
+          blocks.length > 1 && 'md:grid-cols-2',
+        )}
       >
-        <span className="shrink-0 text-brand-glow">›</span>
+        {blocks.map((b) => (
+          <div
+            key={b.heading}
+            className={cn(
+              'border-2 border-border bg-card p-6 shadow-md',
+              b.tall && blocks.length === 3 && 'md:row-span-2',
+            )}
+          >
+            <h3 className="text-xl font-bold">{b.heading}</h3>
+            <div className="mt-3 max-w-prose space-y-3 text-base leading-relaxed">
+              {b.body}
+            </div>
+          </div>
+        ))}
+      </div>
+    </DetailSection>
+  );
+};
+
+const FeatureList = ({ items }: { items: string[] }) => (
+  <ul className="space-y-3">
+    {items.map((item) => (
+      <li key={item} className="flex gap-3">
+        <span
+          aria-hidden
+          className="mt-2 size-2.5 shrink-0 border-2 border-border bg-primary"
+        />
         <span>{item}</span>
-      </MDiv>
+      </li>
     ))}
   </ul>
 );
 
-export const TechStackSection = ({ tech }: { tech: string[] }) => (
-  <MDiv
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ type: 'spring', stiffness: 110, damping: 18 }}
-  >
-    <SectionHeading kicker="Built with" title="Tech stack" />
-    <div className="flex flex-wrap gap-2">
-      {tech.map((t, i) => (
-        <MDiv
-          key={t}
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.25, delay: i * 0.03 }}
-          className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 font-mono text-xs text-white/80 hover:border-brand-glow/50 hover:text-brand-glow transition-colors"
-        >
-          {t}
-        </MDiv>
-      ))}
-    </div>
-  </MDiv>
-);
+export const TechStackSection = ({ tech }: { tech: string[] }) => {
+  const name = useContext(ProjectName);
+  return (
+    <DetailSection kicker="Built with" title={`${name} tech stack`}>
+      <ul className="flex flex-wrap gap-3">
+        {tech.map((t) => (
+          <li key={t}>
+            <Badge variant="outline" className="h-8 px-3 text-sm">
+              {t}
+            </Badge>
+          </li>
+        ))}
+      </ul>
+    </DetailSection>
+  );
+};
 
 export const PortfolioImage = ({
   src,
@@ -302,137 +365,83 @@ export const PortfolioImage = ({
   width = 700,
   height = 700,
   caption,
+  priority = false,
 }: {
   src: string;
   alt: string;
+  priority?: boolean;
   width?: number;
   height?: number;
   caption?: string;
 }) => (
-  <MDiv
-    initial={{ opacity: 0, scale: 0.95 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ type: 'spring', stiffness: 110, damping: 18 }}
-    className="group relative inline-block"
-  >
-    <div
-      aria-hidden
-      className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
-      style={{
-        background:
-          'linear-gradient(120deg, #f28c18, #a991f7 40%, #37cdbe 80%)',
-      }}
-    />
-    <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0d0f14] p-2 shadow-xl">
+  <figure className="max-w-full">
+    <div className="border-2 border-border bg-card p-2 shadow-md">
       <Image
         src={src}
         alt={alt}
         width={width}
         height={height}
-        className="rounded-lg transition-transform duration-700 group-hover:scale-[1.03]"
-        loading="lazy"
-      />
-      <div
-        aria-hidden
-        className="crt-scanlines absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none"
+        className="h-auto max-w-full"
+        priority={priority}
       />
     </div>
     {caption && (
-      <p className="mt-2 text-center font-mono text-[11px] text-white/50">
+      <figcaption className="mt-3 text-center text-sm text-muted-foreground">
         {caption}
-      </p>
+      </figcaption>
     )}
-  </MDiv>
+  </figure>
 );
 
 export const ImageRow = ({ children }: { children: ReactNode }) => (
-  <div className="flex flex-wrap items-center justify-center gap-4">
+  <div className="flex flex-wrap items-start justify-center gap-6">
     {children}
   </div>
 );
 
-export const ExternalLinkChip = ({
+export const ExternalLinkButton = ({
   href,
   label,
   icon,
 }: {
   href: string;
   label: string;
-  icon?: string;
+  icon?: ReactNode;
 }) => (
-  <Link
-    href={href}
-    target="_blank"
-    rel="noreferrer"
-    className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 font-mono text-sm text-white/80 hover:border-brand-glow/60 hover:text-brand-glow hover:bg-brand-glow/5 transition-colors"
-  >
-    {icon && (
-      <Image src={icon} alt="" width={18} height={18} className="opacity-80" />
-    )}
-    <span>{label}</span>
-    <span className="text-brand-glow">→</span>
-  </Link>
+  <Button asChild variant="outline" size="lg">
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {icon}
+      {label}
+      <ExternalLink aria-hidden />
+      <span className="sr-only">(opens in a new tab)</span>
+    </a>
+  </Button>
 );
 
-const OtherProjectsGrid = ({ items }: { items: IPortfolioItem[] }) => (
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-    {items.map((item, i) => (
-      <OtherProjectCard key={item.title} item={item} index={i} />
-    ))}
-  </div>
-);
-
-const OtherProjectCard = ({
-  item,
-  index,
-}: {
-  item: IPortfolioItem;
-  index: number;
-}) => (
-  <MDiv
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ delay: (index % 5) * 0.05, type: 'spring', stiffness: 130 }}
-  >
-    <Link href={item.url} className="block">
-      <div className="group relative aspect-[1/1.2] overflow-hidden rounded-xl border border-white/10 bg-[#0d0f14]">
-        <div
-          aria-hidden
-          className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
-          style={{
-            background:
-              'linear-gradient(120deg, #f28c18, #a991f7 40%, #37cdbe 80%)',
-          }}
+const OtherProjectCard = ({ item }: { item: IPortfolioItem }) => (
+  <Card className="relative h-full gap-0 py-0 transition-transform focus-within:ring-3 focus-within:ring-ring hover:translate-x-1 hover:translate-y-1 hover:shadow-none">
+    <article className="flex h-full flex-col">
+      <div className="relative aspect-video border-b-2 border-border bg-muted">
+        <Image
+          src={item.img}
+          alt={`${item.title} project preview`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover"
+          loading="lazy"
         />
-        <div className="relative h-full w-full overflow-hidden rounded-xl">
-          <Image
-            src={item.img}
-            alt={`${item.title} - ${item.desc}`}
-            fill
-            sizes="(max-width: 768px) 50vw, 20vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
-          />
-          <div
-            aria-hidden
-            className="crt-scanlines absolute inset-0 opacity-25 mix-blend-overlay"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-linear-to-t/srgb from-black/95 via-black/40 to-transparent"
-          />
-          <div className="absolute inset-x-0 bottom-0 p-3">
-            <p className="font-mono text-[9px] tracking-[0.25em] text-brand-glow uppercase">
-              0{index + 1}
-            </p>
-            <h3 className="mt-1 font-mono text-xs md:text-sm text-white leading-tight line-clamp-2 group-hover:text-brand-glow transition-colors">
-              {item.title}
-            </h3>
-          </div>
-        </div>
       </div>
-    </Link>
-  </MDiv>
+      <div className="flex flex-1 flex-col gap-2 p-5">
+        <h3 className="text-lg leading-snug font-bold">
+          <Link
+            href={item.url}
+            className="after:absolute after:inset-0 focus-visible:outline-none"
+          >
+            {item.title}
+          </Link>
+        </h3>
+        <p className="text-base text-muted-foreground">{item.desc}</p>
+      </div>
+    </article>
+  </Card>
 );

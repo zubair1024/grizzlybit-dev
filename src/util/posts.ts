@@ -81,6 +81,30 @@ export async function getBlogPostData(): Promise<PostData[]> {
   );
 }
 
+/**
+ * Rank other posts by shared keywords, newest first on ties.
+ */
+export function getRelatedPosts(
+  allPosts: PostData[],
+  slug: string,
+  keywords: string[] = [],
+  max = 3,
+): PostData[] {
+  return allPosts
+    .filter((post) => post.slug !== slug)
+    .map((post) => ({
+      post,
+      score: keywords.filter((k) => post.keywords?.includes(k)).length,
+    }))
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        +new Date(b.post.publishedAt) - +new Date(a.post.publishedAt),
+    )
+    .slice(0, max)
+    .map(({ post }) => post);
+}
+
 export async function getBlogPostDataForHome(): Promise<PostData[]> {
   const allPostsData = await getBlogPostData();
 

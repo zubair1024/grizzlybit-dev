@@ -2,7 +2,7 @@ export interface CompaniesItem {
   name: string;
   img: string;
 }
-export const companies = [
+export const companies: CompaniesItem[] = [
   {
     name: 'ATLAS Security',
     img: '/companies/atlas.png',

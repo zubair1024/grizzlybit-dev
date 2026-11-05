@@ -1,9 +1,17 @@
+import { LinkableTagsContext } from '@/components/blog/TagLink';
 import { CapabilityProvider } from '@/components/fx/CapabilityProvider';
+import PageLoader from '@/components/PageLoader';
 import '@/styles/globals.css';
-import { AnimatePresence } from 'motion/react';
+import { Toaster } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ReactLenis, useLenis } from 'lenis/react';
+import { AnimatePresence, MotionConfig, useReducedMotion } from 'motion/react';
 import type { AppProps } from 'next/app';
 import type { NextWebVitalsMetric } from 'next/app';
-import { useEffect } from 'react';
+import { DM_Sans, Space_Mono } from 'next/font/google';
+import { useRouter } from 'next/router';
+import { ThemeProvider } from 'next-themes';
+import { useEffect, useMemo } from 'react';
 import { hotjar } from 'react-hotjar';
 import { init } from '../util/ga';
 
@@ -28,7 +36,9 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
     // Check if gtag is available
     if (window.gtag) {
       window.gtag('event', metric.name, {
-        value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+        value: Math.round(
+          metric.name === 'CLS' ? metric.value * 1000 : metric.value,
+        ),
         event_label: metric.id,
         non_interaction: true,
       });
@@ -42,15 +52,34 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
   // - Custom backend endpoint
 }
 
-export default function App({ Component, pageProps }: AppProps) {
+const sans = DM_Sans({ subsets: ['latin'], display: 'swap' });
+const mono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+});
+
+// Lenis owns scrolling, so reset it ourselves on non-hash navigations.
+function ScrollReset() {
+  const lenis = useLenis();
+  const router = useRouter();
   useEffect(() => {
-    document
-      .querySelectorAll('style[data-next-hide-fouc]')
-      .forEach((el) => el.remove());
-    if (document.body.style.display === 'none') {
-      document.body.style.display = '';
-    }
-  }, []);
+    const onDone = (url: string) => {
+      if (!url.includes('#')) lenis?.scrollTo(0, { immediate: true });
+    };
+    router.events.on('routeChangeComplete', onDone);
+    return () => router.events.off('routeChangeComplete', onDone);
+  }, [lenis, router.events]);
+  return null;
+}
+
+export default function App({ Component, pageProps }: AppProps) {
+  const reduceMotion = useReducedMotion();
+  const linkableTagList: string[] | undefined = pageProps?.linkableTags;
+  const linkableTags = useMemo(
+    () => (linkableTagList ? new Set(linkableTagList) : null),
+    [linkableTagList],
+  );
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
@@ -60,34 +89,39 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {/*
-        Font Optimization:
-        - Using system fonts via Tailwind/DaisyUI for optimal performance
-        - System fonts load instantly without network requests
-        - If custom fonts are needed, use next/font with font-display: swap
-
-        Example with next/font:
-        ```typescript
-        import { Inter } from 'next/font/google';
-
-        const inter = Inter({
-          subsets: ['latin'],
-          display: 'swap', // Prevents layout shift
-          variable: '--font-inter',
-        });
-
-        <div className={inter.variable}>
-          ...
-        </div>
-        ```
-      */}
-      <div data-theme="halloween">
-        <CapabilityProvider>
-          <AnimatePresence mode="wait" initial={false}>
-            <Component {...pageProps} />
-          </AnimatePresence>
-        </CapabilityProvider>
-      </div>
+      {/* Pages Router: expose next/font families as CSS vars on :root so portals inherit them */}
+      <style jsx global>{`
+        :root {
+          --font-dm-sans: ${sans.style.fontFamily};
+          --font-space-mono: ${mono.style.fontFamily};
+        }
+      `}</style>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem={false}
+        disableTransitionOnChange
+      >
+        {!reduceMotion && (
+          <ReactLenis root options={{ lerp: 0.1, anchors: true }} />
+        )}
+        <ScrollReset />
+        <MotionConfig reducedMotion="user">
+          <TooltipProvider>
+            <CapabilityProvider>
+              {/* initial={false}: skip mount animations on first load so the
+                  server HTML (hero included) is visible without JS */}
+              <LinkableTagsContext.Provider value={linkableTags}>
+                <AnimatePresence initial={false}>
+                  <Component {...pageProps} />
+                </AnimatePresence>
+              </LinkableTagsContext.Provider>
+              <PageLoader />
+            </CapabilityProvider>
+          </TooltipProvider>
+        </MotionConfig>
+        <Toaster />
+      </ThemeProvider>
     </>
   );
 }

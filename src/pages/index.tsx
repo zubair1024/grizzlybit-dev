@@ -8,11 +8,13 @@ import Layout from '@/components/Layout';
 import Portfolio from '@/components/Portfolio';
 import OrganizationSchema from '@/components/schemas/OrganizationSchema';
 import PersonSchema from '@/components/schemas/PersonSchema';
+import ProfilePageSchema from '@/components/schemas/ProfilePageSchema';
 import WebSiteSchema from '@/components/schemas/WebSiteSchema';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
 import Toolbelt from '@/components/Toolbelt';
-import { getBlogPostDataForHome } from '@/util/posts';
+import { getBlogPostData } from '@/util/posts';
+import { getLinkableTagSlugs } from '@/util/tags';
 import { PostData } from '@/util/types';
 import defaultTags from 'data/defaultTags';
 import { GetStaticProps } from 'next';
@@ -31,19 +33,19 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
         title={defaultTags.title}
         description={defaultTags.description}
         canonical="https://www.grizzlybit.dev"
+        keywords={defaultTags.keywords}
       />
       <OrganizationSchema />
       <PersonSchema />
       <WebSiteSchema />
+      <ProfilePageSchema />
       <Layout>
         <ScrollSignal />
         <main id="main">
           <Banner />
           <Services />
           <Toolbelt />
-          <div className="mx-auto max-w-[1200px] px-4">
-            <AboutMe />
-          </div>
+          <AboutMe />
           <Portfolio />
           <Companies />
           <Testimonials />
@@ -56,10 +58,11 @@ function Home({ allPostsData }: { allPostsData: PostData[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = await getBlogPostDataForHome();
+  const posts = await getBlogPostData();
   return {
     props: {
-      allPostsData,
+      allPostsData: posts.filter((p) => p.showOnHome === true),
+      linkableTags: getLinkableTagSlugs(posts),
     },
   };
 };

@@ -1,68 +1,38 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface IProps {
   videoId: string;
-  autoPlay?: boolean;
-  title?: string;
+  // Required: iframes need an accessible name
+  title: string;
+  // 'portrait' for vertical YouTube Shorts, so they aren't letterboxed in 16:9
+  aspect?: 'video' | 'portrait';
+  className?: string;
 }
 
-const YoutubeEmbed: React.FC<IProps> = (props) => {
-  const { videoId, autoPlay, title } = props;
-  const videoURL = `https://www.youtube.com/embed/${videoId}${
-    autoPlay ? '?autoplay=1' : ''
-  }`;
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const defaultHeight = 495;
-  const [videoHeight, setVideoHeight] = useState<number>(
-    iframeRef.current ? iframeRef.current.offsetWidth * 0.5625 : defaultHeight,
-  );
-
-  const handleChangeVideoWidth = useCallback(() => {
-    const ratio =
-      window.innerWidth > 990
-        ? 1.0
-        : window.innerWidth > 522
-        ? 1.2
-        : window.innerWidth > 400
-        ? 1.45
-        : 1.85;
-    const height = iframeRef.current
-      ? iframeRef.current.offsetWidth * 0.5625
-      : defaultHeight;
-    return setVideoHeight(Math.floor(height * ratio));
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleChangeVideoWidth);
-    const ratio =
-      window.innerWidth > 990
-        ? 1.0
-        : window.innerWidth > 522
-        ? 1.2
-        : window.innerWidth > 400
-        ? 1.45
-        : 1.85;
-    const height = iframeRef.current
-      ? iframeRef.current.offsetWidth * 0.5625
-      : defaultHeight;
-    setVideoHeight(Math.floor(height * ratio));
-    return function cleanup() {
-      window.removeEventListener('resize', handleChangeVideoWidth);
-    };
-  }, [videoHeight, handleChangeVideoWidth]);
-
-  return (
+// SSR-safe, privacy-enhanced YouTube embed; the iframe loads only near the viewport.
+const YoutubeEmbed = ({
+  videoId,
+  title,
+  aspect = 'video',
+  className,
+}: IProps) => (
+  <div
+    className={cn(
+      'relative w-full',
+      aspect === 'portrait' ? 'aspect-[9/16] max-w-[280px]' : 'aspect-video',
+      className,
+    )}
+  >
     <iframe
-      ref={iframeRef}
       title={title}
-      width="100%"
-      height={`${videoHeight}px`}
-      src={videoURL}
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+      loading="lazy"
+      className="absolute inset-0 size-full border-0"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      referrerPolicy="strict-origin-when-cross-origin"
       allowFullScreen
     />
-  );
-};
+  </div>
+);
 
 export default YoutubeEmbed;

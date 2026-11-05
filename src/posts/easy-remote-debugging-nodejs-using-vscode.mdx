@@ -2,6 +2,7 @@
 title: "Easy Remote Debugging Node.js using VS Code"
 publishedAt: "2020-10-23"
 lastModified: "2020-12-15"
+description: "Debug a Node.js app running on a remote headless server from VS Code using the Remote - SSH extension and an SSH tunnel, with setup steps for each OS."
 summary: "In this post, we will see how to perform remote debugging on a server running heedlessly leveraging the power of an SSH tunnel."
 image: "/blog/easy-remote-debugging-nodejs-using-vscode/cover.png"
 showOnHome: true
@@ -14,8 +15,6 @@ keywords:
   - development
 author: "Zubair Ahmed"
 ---
-
-![Easy Remote Debugging Node.js using VS Code](/blog/easy-remote-debugging-nodejs-using-vscode/cover.png)
 
 If you haven't been using VS Code, you have no idea what you have been missing. This editor with its speed, customization, and an immense sea of plugins, has become my go-to for everything I do. But one of the most under-rated features of VS Code is its debugging capability. In this post, we will see how to perform remote debugging on a server running heedlessly leveraging the power of an SSH tunnel.
 
@@ -38,8 +37,8 @@ This extension will allow us to access remote servers using ssh tunnel for serve
 - x86_64 Debian 8+, Ubuntu 16.04+, CentOS / RHEL 7+ Linux.
 - ARMv7l (AArch32) Raspbian Stretch/9+ (32-bit).
 - ARMv8l (AArch64) Ubuntu 18.04+ (64-bit).
-- Windows 10 / Server 2016/2019 (1803+) using the [official OpenSSH Server](https://docs.microsoft.com/windows-server/administration/openssh/openssh_install_firstuse).
-- macOS 10.14+ (Mojave) SSH hosts with [Remote Login enabled](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac).
+- Windows 10 / Server 2016/2019 (1803+) using the [official OpenSSH Server](https://docs.microsoft.com/windows-server/administration/openssh/openssh_install_firstuse).
+- macOS 10.14+ (Mojave) SSH hosts with [Remote Login enabled](https://support.apple.com/guide/mac-help/allow-a-remote-computer-to-access-your-mac-mchlp1066/mac).
 
 Other `glibc` based Linux distributions for x86_64, ARMv7l (AArch32), and ARMv8l (AArch64) should work if they have the needed prerequisites. See the Remote Development with Linux article for information prerequisites and tips for getting community-supported distributions up and running.
 

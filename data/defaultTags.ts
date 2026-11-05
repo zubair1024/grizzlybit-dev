@@ -2,16 +2,16 @@ const defaultTags = {
   title: 'Zubair Ahmed — Full-Stack Engineer & CTO (Dubai)',
   titleTemplate: '%s | Grizzlybit',
   description:
-    'Zubair Ahmed (Grizzlybit) — full-stack software engineer and CTO building Node.js, React, TypeScript, and IoT products in Dubai. Portfolio, case studies, and engineering blog.',
+    'Zubair Ahmed, full-stack engineer and CTO in Dubai, builds Node.js, React, TypeScript and IoT products. Portfolio, case studies and engineering blog.',
   fullTitle: "Grizzlybit — Zubair Ahmed's Portfolio",
   tagline: 'Portfolio and blog of Zubair Ahmed, CTO at RAZRLAB',
   author: 'Zubair Ahmed',
   authorRole: 'CTO at RAZRLAB',
-  image: 'https://www.grizzlybit.dev/grizzlybit-logo-image.png',
+  image: 'https://www.grizzlybit.dev/og-images/default.png',
   imageWidth: 1200,
   imageHeight: 630,
   imageType: 'image/png',
-  imageAlt: 'Grizzlybit - Zubair Ahmed\'s Portfolio Logo',
+  imageAlt: 'Zubair Ahmed, full-stack engineer and CTO in Dubai',
   websiteUrl: 'https://www.grizzlybit.dev',
   locale: 'en_US',
   siteName: 'Grizzlybit',
@@ -34,8 +34,9 @@ const defaultTags = {
     'RAZRLAB',
     'Engineering Blog',
   ],
-  themeColor: '#1f2937',
-  backgroundColor: '#1f2937',
+  themeColorLight: '#ffffff',
+  themeColorDark: '#000000',
+  backgroundColor: '#ffffff',
 };
 
 export default defaultTags;

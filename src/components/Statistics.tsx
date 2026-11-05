@@ -1,23 +1,20 @@
 import axios from 'axios';
-import Image from 'next/image';
+import { FaMediumM } from 'react-icons/fa';
+import { SiFigma, SiGithub, SiStackoverflow } from 'react-icons/si';
 import { useEffect, useState } from 'react';
 
 // Manual: Medium killed public follower counts and Cloudflare blocks scraping.
 const MEDIUM_FOLLOWERS = 58;
 const MEDIUM_POSTS = 19;
 
+// Last known values so the server HTML never shows zeros; refreshed on the client.
+const SEED = {
+  github: { followers: 29, public_repos: 172 },
+  stackOverflow: { reputation: 853, badges: 32 },
+};
+
 const Statistics = () => {
-  const [stats, setStats] = useState({
-    github: {
-      followers: 0,
-      public_repos: 0,
-      public_gists: 0,
-    },
-    stackOverflow: {
-      reputation: 0,
-      up_vote_count: 0,
-    },
-  });
+  const [stats, setStats] = useState(SEED);
 
   useEffect(() => {
     axios
@@ -36,70 +33,51 @@ const Statistics = () => {
       });
   }, []);
 
+  const items = [
+    {
+      Icon: FaMediumM,
+      title: 'Medium followers',
+      value: MEDIUM_FOLLOWERS,
+      desc: `${MEDIUM_POSTS} articles published`,
+    },
+    {
+      Icon: SiGithub,
+      title: 'GitHub followers',
+      value: stats.github.followers,
+      desc: `${stats.github.public_repos} public repositories`,
+    },
+    {
+      Icon: SiStackoverflow,
+      title: 'Stack Overflow rep',
+      value: stats.stackOverflow.reputation,
+      desc: `${stats.stackOverflow.badges} badges earned`,
+    },
+    {
+      Icon: SiFigma,
+      title: 'Figma file copies',
+      value: '1,049',
+      desc: '17 community likes',
+    },
+  ];
+
   return (
-    <div className="px-2 my-10 rounded-md shadow-sm grid grid-flow-row grid-cols-2 md:grid-cols-4 bg-[#181818]">
-      <div className="stat b-0">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/medium.svg"
-            height="40"
-            width="40"
-            alt="medium"
-          ></Image>
-        </div>
-        <div className="stat-title">Medium Followers</div>
-        <div className="stat-value">{MEDIUM_FOLLOWERS}</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>{MEDIUM_POSTS}</b> Posts
-        </div>
-      </div>
-
-      <div className="stat">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/github.svg"
-            height="40"
-            width="40"
-            alt="github"
-          ></Image>
-        </div>
-        <div className="stat-title">Github Followers</div>
-        <div className="stat-value">{stats.github.followers}</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>{stats.github.public_repos}</b> Public Repos
-        </div>
-      </div>
-
-      <div className="stat">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/stack-overflow-new.svg"
-            height="40"
-            width="40"
-            alt="stack-overflow"
-          ></Image>
-        </div>
-        <div className="stat-title">StackOverflow Rep.</div>
-        <div className="stat-value">{stats.stackOverflow.reputation}</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>{stats.stackOverflow.up_vote_count}</b> Up-votes
-        </div>
-      </div>
-      <div className="stat">
-        <div className="stat-figure">
-          <Image
-            src="/statistics/figma.svg"
-            height="40"
-            width="40"
-            alt="figma"
-          ></Image>
-        </div>
-        <div className="stat-title">Figma Copies</div>
-        <div className="stat-value">1,049</div>
-        <div className="stat-desc">
-          ↗︎ Over <b>17</b> Likes
-        </div>
-      </div>
+    <div className="mx-auto my-10 w-full max-w-6xl px-4 md:px-6">
+      <dl className="grid grid-cols-1 gap-y-2 border-2 border-border bg-card px-2 py-2 text-card-foreground shadow-md sm:grid-cols-2 md:grid-cols-4">
+        {items.map((i) => (
+          <div key={i.title} className="flex flex-col gap-1 px-4 py-4 md:px-6">
+            <dt className="flex items-center gap-3 text-muted-foreground">
+              <span className="flex size-9 shrink-0 items-center justify-center border-2 border-border bg-secondary text-secondary-foreground">
+                <i.Icon className="size-4" aria-hidden="true" />
+              </span>
+              {i.title}
+            </dt>
+            <dd className="mt-2 text-4xl font-bold tracking-tight">
+              {i.value}
+            </dd>
+            <dd className="text-sm text-muted-foreground">{i.desc}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 };

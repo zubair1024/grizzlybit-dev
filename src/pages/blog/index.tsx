@@ -1,7 +1,15 @@
 import { PostCard } from '@/components/blog/PostCard';
+import { TagLink } from '@/components/blog/TagLink';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
+import BlogSchema from '@/components/schemas/BlogSchema';
+import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
+import { Reveal } from '@/components/Section';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { buildTagIndex, getLinkableTagSlugs } from '@/util/tags';
 import { PostData } from '@/util/types';
+import { SearchIcon } from 'lucide-react';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -9,30 +17,19 @@ import { getBlogPostData } from '../../util/posts';
 
 type Props = {
   allPostsData: PostData[];
+  popularTags: string[];
+  linkableTags: string[];
 };
 
-const EmptyState = ({ term }: { term: string }) => (
-  <div className="terminal-window mx-auto max-w-xl rounded-xl p-6 font-mono text-sm">
-    <div className="text-white/60">
-      <span className="text-brand-glow">$</span>{' '}
-      <span className="text-white">grep -r {JSON.stringify(term)} posts/</span>
-    </div>
-    <div className="mt-3 text-white/70">
-      <span className="text-red-400">zsh:</span> no matches found:{' '}
-      <span className="text-white">{term}</span>
-    </div>
-    <div className="mt-2 text-white/60">
-      <span className="text-brand-glow">$</span>{' '}
-      <span className="inline-block w-2 h-4 bg-brand-glow align-middle animate-caret" />
-    </div>
-  </div>
-);
+const BLOG_TITLE = 'Engineering Blog — Node.js, React & TypeScript';
+const BLOG_DESCRIPTION =
+  'Practical engineering posts by Zubair Ahmed: Node.js, React, TypeScript, DevOps, SSH, Docker, performance, and full-stack patterns.';
 
-export default function BlogPage({ allPostsData }: Props) {
+export default function BlogPage({ allPostsData, popularTags }: Props) {
   const router = useRouter();
   const [query, setQuery] = useState('');
 
-  // Wire ?search= URL param so the WebSite SearchAction schema actually works
+  // Honour ?search= so filtered views can be linked/shared
   useEffect(() => {
     if (!router.isReady) return;
     const raw = router.query.search;
@@ -57,8 +54,8 @@ export default function BlogPage({ allPostsData }: Props) {
   return (
     <>
       <CustomHead
-        title="Engineering Blog — Node.js, React & TypeScript"
-        description="Practical engineering posts by Zubair Ahmed: Node.js, React, TypeScript, DevOps, SSH, Docker, performance, and full-stack patterns."
+        title={BLOG_TITLE}
+        description={BLOG_DESCRIPTION}
         canonical="https://www.grizzlybit.dev/blog"
         keywords={[
           'Node.js blog',
@@ -70,79 +67,104 @@ export default function BlogPage({ allPostsData }: Props) {
           'full-stack tutorials',
         ]}
       />
+      <BreadcrumbListSchema
+        items={[
+          { name: 'Home', url: 'https://www.grizzlybit.dev' },
+          { name: 'Blog', url: 'https://www.grizzlybit.dev/blog' },
+        ]}
+      />
+      <BlogSchema
+        name="Grizzlybit engineering blog"
+        description={BLOG_DESCRIPTION}
+        posts={allPostsData}
+      />
       <Layout>
-        <main id="main" className="min-h-screen">
-          <section className="relative pt-24 pb-10 overflow-hidden">
-            <div
-              aria-hidden
-              className="absolute inset-0 -z-10 opacity-[0.15] pointer-events-none"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(169,145,247,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(169,145,247,0.5) 1px, transparent 1px)',
-                backgroundSize: '40px 40px',
-                maskImage:
-                  'radial-gradient(circle at 50% 30%, black 30%, transparent 80%)',
-              }}
-            />
-            <div className="mx-auto max-w-3xl px-5 text-center">
-              <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-                Writing
-              </p>
-              <h1 className="mt-3 font-mono text-3xl md:text-5xl tracking-wider uppercase text-white">
+        <main id="main" className="min-h-screen bg-background">
+          <section
+            aria-labelledby="blog-title"
+            className="border-b-2 border-border bg-muted pt-28 pb-12 md:pt-32"
+          >
+            <div className="mx-auto max-w-6xl px-4 md:px-6">
+              <p className="mb-3 inline-block border-2 border-border bg-secondary px-2 py-0.5 font-mono text-xs font-bold text-secondary-foreground">
                 Blog
-              </h1>
-              <div
-                aria-hidden="true"
-                className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/50 px-4 py-2 font-mono text-sm backdrop-blur-xs"
-              >
-                <span className="text-brand-glow">$</span>
-                <span className="text-white/80">ls posts/</span>
-                <span className="text-white/40">|</span>
-                <span className="text-brand-cool">wc -l</span>
-                <span className="text-white/30">→</span>
-                <span className="text-brand-haze tabular-nums">
-                  {allPostsData.length}
-                </span>
-              </div>
-              <p className="sr-only">{allPostsData.length} posts total</p>
-            </div>
-
-            <div className="mx-auto mt-10 max-w-2xl px-5">
-              <label htmlFor="blog-search" className="sr-only">
-                Search posts
-              </label>
-              <div className="relative">
-                <div
-                  aria-hidden="true"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-sm text-brand-glow pointer-events-none"
-                >
-                  $ grep
-                </div>
-                <input
-                  id="blog-search"
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder='"search posts…"'
-                  className="w-full rounded-lg border border-white/10 bg-black/60 pl-20 pr-4 py-3 font-mono text-sm text-white placeholder-white/40 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-brand-glow focus:border-brand-glow/60 transition-colors"
-                />
-              </div>
-              <p className="mt-2 text-center font-mono text-[11px] text-white/60">
-                {posts.length} of {allPostsData.length}{' '}
-                {posts.length === 1 ? 'post' : 'posts'}
               </p>
+              <h1
+                id="blog-title"
+                className="max-w-3xl text-4xl font-bold tracking-tight text-balance md:text-6xl"
+              >
+                Engineering blog: Node.js, React and TypeScript
+              </h1>
+              <p className="mt-4 max-w-prose text-lg text-pretty text-muted-foreground">
+                Practical write-ups by Zubair Ahmed, full-stack engineer and
+                CTO, on Node.js, React, TypeScript, Linux, DevOps and security:
+                the fixes, tools and patterns worth keeping from real projects.
+              </p>
+
+              <div className="mt-8 max-w-xl">
+                <Label htmlFor="blog-search" className="sr-only">
+                  Search articles
+                </Label>
+                <div className="relative">
+                  <SearchIcon
+                    aria-hidden="true"
+                    className="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-muted-foreground"
+                  />
+                  <Input
+                    id="blog-search"
+                    type="search"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search by title, summary or tag"
+                    className="h-12 pl-11 text-base md:text-base"
+                  />
+                </div>
+                <p
+                  className="mt-2 text-sm text-muted-foreground"
+                  aria-live="polite"
+                >
+                  Showing {posts.length} of {allPostsData.length}{' '}
+                  {allPostsData.length === 1 ? 'article' : 'articles'}
+                </p>
+              </div>
+
+              {popularTags.length > 0 && (
+                <nav aria-label="Popular topics" className="mt-6">
+                  <ul className="flex flex-wrap gap-2">
+                    {popularTags.map((tag) => (
+                      <li key={tag}>
+                        <TagLink tag={tag} className="min-h-11 sm:min-h-8" />
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
             </div>
           </section>
 
-          <section className="mx-auto max-w-7xl px-5 pb-20">
+          <section
+            aria-label="Articles"
+            className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16"
+          >
             {posts.length === 0 ? (
-              <EmptyState term={query} />
-            ) : (
-              <div className="columns-1 md:columns-2 lg:columns-3 gap-5">
-                {posts.map((p, i) => (
-                  <PostCard key={p.slug} data={p} index={i} />
-                ))}
+              <div className="max-w-prose border-2 border-border bg-card p-6 shadow">
+                <p className="text-lg font-bold">
+                  No articles match &ldquo;{query.trim()}&rdquo;
+                </p>
+                <p className="mt-2 text-base text-muted-foreground">
+                  Try a broader term like Node.js, React or Docker, or pick a
+                  topic above.
+                </p>
               </div>
+            ) : (
+              <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {posts.map((p, i) => (
+                  <li key={p.slug}>
+                    <Reveal className="h-full" delay={(i % 3) * 0.06}>
+                      <PostCard data={p} index={i} headingLevel="h2" />
+                    </Reveal>
+                  </li>
+                ))}
+              </ul>
             )}
           </section>
         </main>
@@ -153,9 +175,17 @@ export default function BlogPage({ allPostsData }: Props) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = await getBlogPostData();
+  // Only tags with 2+ posts: single-post tag pages are noindex.
+  const popularTags = Object.values(buildTagIndex(allPostsData))
+    .filter((t) => t.count > 1)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8)
+    .map((t) => t.label);
   return {
     props: {
       allPostsData,
+      popularTags,
+      linkableTags: getLinkableTagSlugs(allPostsData),
     },
   };
 };

@@ -1,198 +1,85 @@
-import portfolio, { IPortfolioItem } from 'data/portfolio';
-import { useMotionValue, useSpring } from 'motion/react';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { trackEvent } from '@/util/ga';
+import portfolio from 'data/portfolio';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MouseEvent, useRef, useState } from 'react';
-import { trackEvent } from '@/util/ga';
-import { useCapabilities } from './fx/CapabilityProvider';
-import { MDiv, MP } from './fx/m';
+import { Reveal, Section } from './Section';
 
-export const PortfolioCardItem = (props: {
-  data: IPortfolioItem;
-  textSize?: 'text-sm' | 'text-md';
-}) => {
-  const item = props.data;
-  const textSize = props.textSize ?? 'text-md';
-  return (
-    <Link
-      href={item.url}
-      onClick={() =>
-        trackEvent('portfolio_view', {
-          project: item.title,
-          url: item.url,
-          location: 'card_item',
-        })
-      }
-    >
-      <div>
-        <div className="relative mb-5 ml-5 group ">
-          <div className="absolute -inset-0.5 bg-linear-to-r/srgb from-pink-500 to-purple-500 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-          <Image
-            src={item.img}
-            alt={`${item.title} - ${item.desc}`}
-            width={350}
-            height={350}
-            className="relative"
-            loading="lazy"
-          />
-          <div className="absolute top-0 z-40 w-full h-full overflow-hidden opacity-0 hover:opacity-100 hover:bg-black">
-            <div className="flex flex-col items-center justify-center h-full font-bold text-white">
-              <p className={`${textSize} text-center`}>{item.title}</p>
-              <p className={`max-w-xs font-light text-center ${textSize}`}>
-                {item.desc}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Link>
-  );
-};
+// 10 items: two featured (wide on lg) + 8 fill a 4-column grid evenly;
+// 2 columns from sm to lg; below sm, one compact horizontal card per row.
+const FEATURED = 2;
 
-const PortfolioCard = ({
-  item,
-  index,
-}: {
-  item: IPortfolioItem;
-  index: number;
-}) => {
-  const { coarsePointer, reducedMotion } = useCapabilities();
-  const ref = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
-
-  const rx = useSpring(useMotionValue(0), { stiffness: 200, damping: 18 });
-  const ry = useSpring(useMotionValue(0), { stiffness: 200, damping: 18 });
-
-  const interactive = !coarsePointer && !reducedMotion;
-
-  const onMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!ref.current || !interactive) return;
-    const rect = ref.current.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    ry.set((px - 0.5) * 8);
-    rx.set(-(py - 0.5) * 8);
-  };
-
-  const onLeave = () => {
-    rx.set(0);
-    ry.set(0);
-    setHovered(false);
-  };
-
-  return (
-    <MDiv
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ delay: index * 0.05, type: 'spring', stiffness: 100 }}
-      className="relative aspect-[1/1.414]"
-      style={{ perspective: 1200 }}
-    >
-      <Link
-        href={item.url}
-        className="block h-full"
-        onClick={() =>
-          trackEvent('portfolio_view', {
-            project: item.title,
-            url: item.url,
-            position: index + 1,
-            location: 'portfolio_grid',
-          })
-        }
-      >
-        <MDiv
-          ref={ref}
-          onMouseMove={onMove}
-          onMouseLeave={onLeave}
-          onMouseEnter={() => setHovered(true)}
-          style={{
-            rotateX: rx,
-            rotateY: ry,
-            transformStyle: 'preserve-3d',
-          }}
-          className="group relative h-full w-full"
-        >
-          <div
-            aria-hidden
-            className="absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
-            style={{
-              background:
-                'linear-gradient(120deg, #f28c18, #a991f7 40%, #37cdbe 80%)',
-            }}
-          />
-
-          <div className="relative h-full w-full overflow-hidden rounded-xl border border-white/10 bg-[#0d0f14]">
-            <Image
-              src={item.img}
-              alt={`${item.title} - ${item.desc}`}
-              fill
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
-
-            <div
-              aria-hidden
-              className="crt-scanlines absolute inset-0 opacity-25 mix-blend-overlay"
-            />
-
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-linear-to-t/srgb from-black/95 via-black/40 to-transparent"
-            />
-
-            <div
-              className="absolute inset-x-0 bottom-0 p-4"
-              style={{ transform: 'translateZ(30px)' }}
-            >
-              <p className="font-mono text-[10px] tracking-[0.25em] text-brand-glow uppercase">
-                Project / 0{index + 1}
-              </p>
-              <h3 className="mt-1 font-mono text-base md:text-lg text-white leading-tight">
-                {item.title}
-              </h3>
-              <MP
-                initial={false}
-                animate={{
-                  opacity: hovered ? 1 : 0,
-                  y: hovered ? 0 : 6,
-                  height: hovered ? 'auto' : 0,
-                }}
-                transition={{ duration: 0.25 }}
-                className="overflow-hidden font-mono text-[11px] text-white/70 max-w-md mt-1"
-              >
-                {item.desc}
-              </MP>
-            </div>
-          </div>
-        </MDiv>
-      </Link>
-    </MDiv>
-  );
-};
-
-const Portfolio = () => {
-  return (
-    <section
-      className="relative mx-auto my-12 max-w-7xl px-5 scroll-m-20"
-      id="my-portfolio"
-    >
-      <div className="mb-10 text-center">
-        <p className="font-mono text-xs tracking-[0.3em] text-brand-glow uppercase">
-          Selected work
-        </p>
-        <h2 className="mt-2 font-mono text-2xl md:text-3xl tracking-wider uppercase text-white">
-          Some of my works
-        </h2>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {portfolio.map((item, i) => (
-          <PortfolioCard key={item.title} item={item} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-};
+const Portfolio = () => (
+  <Section
+    id="my-portfolio"
+    title="Portfolio: web, mobile and IoT case studies"
+    intro="Selected products I've designed and engineered, from fleet tracking dashboards to consumer mobile apps."
+    muted
+  >
+    <ul className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+      {portfolio.map((item, i) => {
+        const featured = i < FEATURED;
+        return (
+          <li key={item.url} className={cn(featured && 'lg:col-span-2')}>
+            <Reveal delay={Math.min(i * 0.03, 0.3)} className="h-full">
+              <article className="h-full">
+                <Card className="relative h-full flex-row gap-0 py-0 transition-all focus-within:ring-3 focus-within:ring-ring hover:shadow-none motion-safe:hover:translate-x-1 motion-safe:hover:translate-y-1 sm:flex-col">
+                  <div
+                    className={cn(
+                      'relative min-h-28 w-28 shrink-0 overflow-hidden border-r-2 border-border bg-muted sm:aspect-[4/3] sm:min-h-0 sm:w-auto sm:border-r-0 sm:border-b-2',
+                      featured && 'lg:aspect-[16/8]',
+                    )}
+                  >
+                    <Image
+                      src={item.img}
+                      alt={`Screenshot of ${item.title}`}
+                      fill
+                      sizes={
+                        featured
+                          ? '(min-width: 1024px) 560px, (min-width: 640px) 50vw, 112px'
+                          : '(min-width: 1024px) 270px, (min-width: 640px) 50vw, 112px'
+                      }
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col gap-1.5 p-4 sm:gap-2 sm:p-5">
+                    <h3 className="text-base leading-snug font-bold text-balance sm:text-xl">
+                      <Link
+                        href={item.url}
+                        className="outline-none after:absolute after:inset-0"
+                        onClick={() =>
+                          trackEvent('portfolio_view', {
+                            project: item.title,
+                            url: item.url,
+                            position: i + 1,
+                            location: 'portfolio_grid',
+                          })
+                        }
+                      >
+                        {item.title}
+                      </Link>
+                    </h3>
+                    <p className="line-clamp-2 text-base text-pretty text-muted-foreground sm:line-clamp-none">
+                      {item.desc}
+                    </p>
+                    <p
+                      aria-hidden="true"
+                      className="mt-auto hidden items-center justify-between pt-2 font-mono text-xs text-muted-foreground sm:flex"
+                    >
+                      Case study
+                      <ArrowRight className="size-4" />
+                    </p>
+                  </div>
+                </Card>
+              </article>
+            </Reveal>
+          </li>
+        );
+      })}
+    </ul>
+  </Section>
+);
 
 export default Portfolio;

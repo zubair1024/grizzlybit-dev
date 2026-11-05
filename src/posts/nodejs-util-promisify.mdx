@@ -1,6 +1,7 @@
 ---
 title: 'Node.js 8: util.promisify() 💡'
 publishedAt: '2017-09-29'
+description: 'How util.promisify() in Node.js 8 turns callback-based functions into promise-based ones, including multi-argument callbacks and a polyfill.'
 summary: 'Node.js 8 has a new utility function: util.promisify(). It converts a callback-based function to a Promise-based one. Since we are on this topic I would like to highlight one of the most straight forward explanation for promises that I have come across by Jecelyn Yeen...'
 image: '/blog/nodejs-util-promisify/cover.png'
 keywords:
@@ -13,13 +14,11 @@ keywords:
 author: 'Zubair Ahmed'
 ---
 
-![Importance of Teaching Children to Code](/blog/nodejs-util-promisify/cover.png)
-
 Node.js 8 has a new utility function: util.promisify(). It converts a callback-based function to a Promise-based one. Since we are on this topic I would like to highlight one of the most straight forward explanation for promises that I have come across by [Jecelyn Yeen](https://scotch.io/@jecelyn)
 
 > Imagine you are a kid. Your mom promises you that she'll get you a new phone next week. You don't know if you will get that phone until next week. Your mom can either really buy you a brand new phone, or stand you up and withhold the phone if she is not happy :(. <cite>Jecelyn Yeen</cite>
 
-##### So now, what does util.promisify do?
+## So now, what does util.promisify do?
 
 In a very abstract way, it does the following:
 
@@ -46,7 +45,7 @@ But at the same time you can couple this with async to avoid the callback hell e
 
 ![Callback Hell](/blog/nodejs-util-promisify/callback.jpg)
 
-##### Lets see it in action
+## Lets see it in action
 
 ```js
 const { promisify } = require('util');
@@ -89,7 +88,7 @@ main();
 
 There are a few changes and qwirks you should adher to before implementing promisify, they are:
 
-###### Promisifying functions whose callbacks have more than two parameters
+### Promisifying functions whose callbacks have more than two parameters
 
 callbacks of the following functions receive more than one result value (in addition to the error value):
 
@@ -117,7 +116,7 @@ lookupAsync('nodejs.org').then((obj) => console.log(obj));
 // { address: '104.20.23.46', family: 4 }
 ```
 
-###### A polyfill for older versions of Node.js
+### A polyfill for older versions of Node.js
 
 There is a polyfill avaliable to take care of the older version of node servers you'll be running your application on. It can be installed via npm in the following manner:
 

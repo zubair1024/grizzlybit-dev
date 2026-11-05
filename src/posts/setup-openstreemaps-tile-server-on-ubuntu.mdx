@@ -1,6 +1,7 @@
 ---
 title: 'Setup OpenStreetMap Tile Server on Ubuntu 20.x 🗺'
 publishedAt: '2020-11-13'
+description: "Set up your own OpenStreetMap tile server on Ubuntu 20 with PostGIS, osm2pgsql, Mapnik, OSM Carto, mod_tile and renderd instead of paying for tiles."
 summary: "Every wanted tour own Map server so that you don't have to pay those hefty unchecked prices from map tile providers; you can do so and have your own server using OpenStreetMaps. In this article, we are going to learn how to setup OpenStreetMaps OSM Carto as a tile server."
 image: '/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png'
 keywords:
@@ -13,8 +14,6 @@ keywords:
   - gis
 author: 'Zubair Ahmed'
 ---
-
-![Setup OpenStreetMap Tile Server on Ubuntu](/blog/setup-openstreemaps-tile-server-on-ubuntu/cover.png)
 
 ## Introduction
 
@@ -135,7 +134,7 @@ osm2pgsql --slim -d gis --hstore --multi-geometry --number-processes 2 --tag-tra
 
 Note: The `-C` option should be used in a way that it matches the amount of RAM on your PC/Virtual Machine and `--number-processes` matches the number of CPU cores.
 
-Since this process will take quite a bit of time. It is recommended to run the entire process using a `screen` multiplex session. For a quickie on `screen` please [click here](https://grizzlybit.dev/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal). 👈
+Since this process will take quite a bit of time. It is recommended to run the entire process using a `screen` multiplex session. For a quickie on `screen` please [click here](/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal). 👈
 
 Now we use the `osm` user and go into the directory where we had cloned the `openstreetmap-carto` repository and run the python script that loads the shapefiles from the internet
 

@@ -1,46 +1,40 @@
-import type { Variants } from 'motion/react';
 import badges from 'data/badges';
 import Image from 'next/image';
-import Link from 'next/link';
-import { MDiv } from './fx/m';
+import { Reveal } from './Section';
 
-const itemVariants: Variants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: (i: number) => ({
-    y: 0,
-    opacity: 1,
-    transition: { delay: i * 0.06, type: 'spring', stiffness: 220 },
-  }),
-};
-
-const BadgesSection = () => {
-  return (
-    <MDiv
-      className="grid grid-cols-3 gap-2 py-10"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-    >
+const BadgesSection = () => (
+  <div className="mt-16">
+    <h3 className="mb-6 text-2xl font-bold tracking-tight">
+      Certifications and awards
+    </h3>
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {badges.map((item, i) => (
-        <MDiv key={item.title} custom={i} variants={itemVariants}>
-          <Link target={'_blank'} href={item.url}>
-            <div className="flex flex-col items-center justify-center space-x-2 text-center md:flex-row md:text-left transition-transform hover:scale-105">
-              <Image
-                src={item.imageUrl}
-                height={50}
-                width={50}
-                alt={`${item.title} certification badge`}
-                loading="lazy"
-              />
-              <div className="text-[12px] py-2 tracking-tight leading-tight">
+        <li key={item.title}>
+          <Reveal delay={Math.min(i * 0.03, 0.3)} className="h-full">
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-full min-h-11 items-center gap-4 border-2 border-border bg-card p-3 text-card-foreground shadow-sm transition-all hover:shadow-none motion-safe:hover:translate-x-1 motion-safe:hover:translate-y-1 focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              <span className="flex size-14 shrink-0 items-center justify-center border-2 border-border bg-white p-1">
+                <Image
+                  src={item.imageUrl}
+                  width={48}
+                  height={48}
+                  alt={`${item.title} ${item.kind === 'award' ? 'award' : 'badge'}`}
+                  className="h-12 w-auto max-w-12 object-contain"
+                />
+              </span>
+              <span className="text-base leading-snug font-bold">
                 {item.title}
-              </div>
-            </div>
-          </Link>
-        </MDiv>
+              </span>
+            </a>
+          </Reveal>
+        </li>
       ))}
-    </MDiv>
-  );
-};
+    </ul>
+  </div>
+);
 
 export default BadgesSection;
