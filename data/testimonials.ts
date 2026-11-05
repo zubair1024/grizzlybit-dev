@@ -26,6 +26,7 @@ const testimonials: ITestimonialItem[] = [
     imageUrl: '/testimonials/rizky.jpeg',
     linkedIn: 'https://www.linkedin.com/in/rizky-farhan-0780474/',
     message: `The first impression I had of Zubair was that he "has the potential to change the world for the better". His strong can-do attitude can be overwhelming and borderline superhuman. He is an expert in his craft; a master in architecting software solutions, be that in JavaScript or anything he has his hands on.
+
 His positive attitude at work is contagious - it encourages others to have the same.`,
   },
   {
@@ -53,6 +54,7 @@ I wish you all the best in your new journey and I’m so sure that RAZRLAB will 
     message: `Zubair makes things happen!
 
 I had the pleasure of working with Zubair, a SW genius who is always reliable and responsive. I was always amazed by his ability to fix things in a matter of seconds when it was needed the most. I still remember one instance when I was in Angola on the last day of my project and some application functionalities were not working. I had 3 hours before my flight departs and as a last resort, I made a call to Dubai Office to get Zubair. Mr.Genius pulled the rabbit out of the hat and saved me from spending another day in Angola. :)
+
 During my 2 years with him, I never saw him missing any deadlines. He is easy going and at the same time very careful and cautious about his work.
 
 As a Software engineer or a leader, Zubair earns my highest recommendation.`,
@@ -79,8 +81,11 @@ Zubair has the technical skills and the leadership abilities to excel in any rol
     imageUrl: '/testimonials/louis.jpeg',
     linkedIn: `https://www.linkedin.com/in/louis-christopher-092a9b11a/`,
     message: `Working in fast paced startup means wearing many hats and I’m thankful Zubair trusted me from day one to own multiple pieces of the stack.
+
 I’ve learned a lot watching him lead both the technical side and the management side of things.
+
 Brainstorming with him is always a pleasure, no problem feels too difficult!
+
 Zubair is one of those people I can always rely on, I’m sure he’ll find success in any endeavour he pursues.`,
   },
   {
@@ -100,8 +105,11 @@ Zubair is one of those people I can always rely on, I’m sure he’ll find succ
     imageUrl: '/testimonials/sumit.jpeg',
     linkedIn: `https://www.linkedin.com/in/skumar93/`,
     message: `Working under Zubair's leadership for close to 4 years had been such a great experience. He is exceptional in both managing and the technical aspects related to all projects & we could always rely on his guidance when stuck.
+
 One great thing about Zubair was his trust in the team & we always enjoyed the creative freedom to improve the product and the codebase.
+
 He would always go the extra mile to make sure the work always remained on track.
+
 I highly recommend Zubair.`,
   },
   {

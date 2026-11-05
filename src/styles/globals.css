@@ -28,7 +28,12 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring;
+  }
+  /* Default focus indicator for anything without its own ring (links, regions) */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
   }
   body {
     @apply bg-background text-foreground;
@@ -171,10 +176,12 @@
   transform: translateX(-50%) translateY(0);
 }
 
-.hero-social img {
+.hero-social img,
+.hero-stat-figure img {
   filter: invert(1);
 }
-.dark .hero-social img {
+.dark .hero-social img,
+.dark .hero-stat-figure img {
   filter: none;
 }
 
@@ -490,7 +497,7 @@
   --primary-foreground: oklch(0 0 0);
   --secondary: oklch(0.9691 0.2005 109.6228);
   --secondary-foreground: oklch(0 0 0);
-  --muted: oklch(0.14 0 0);
+  --muted: oklch(0.2 0 0);
   --muted-foreground: oklch(0.8452 0 0);
   --accent: oklch(0.6755 0.1765 252.2592);
   --accent-foreground: oklch(0 0 0);

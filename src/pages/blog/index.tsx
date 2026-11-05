@@ -114,7 +114,7 @@ export default function BlogPage({ allPostsData, popularTags }: Props) {
                   <ul className="flex flex-wrap gap-2">
                     {popularTags.map((tag) => (
                       <li key={tag}>
-                        <TagLink tag={tag} />
+                        <TagLink tag={tag} className="min-h-11 sm:min-h-8" />
                       </li>
                     ))}
                   </ul>

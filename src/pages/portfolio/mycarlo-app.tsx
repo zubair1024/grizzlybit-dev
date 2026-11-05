@@ -174,7 +174,7 @@ const MyCarloAppScreen = () => {
         </p>
         <figure>
           <div
-            className="overflow-x-auto border-2 border-border bg-card shadow-md"
+            className="relative overflow-x-auto border-2 border-border bg-card shadow-md outline-hidden focus-visible:ring-3 focus-visible:ring-ring"
             tabIndex={0}
             role="region"
             aria-label="MyCarlo feature comparison table (scrolls horizontally)"

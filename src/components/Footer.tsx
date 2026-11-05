@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/util/ga';
 import socialLinks from 'data/socialLinks';
 import { Mail } from 'lucide-react';
@@ -30,33 +29,38 @@ const socialIcons: Record<string, IconType> = {
   Medium: FaMedium,
   'Stack Overflow': FaStackOverflow,
 };
+const socialLabels: Record<string, string> = { Twitter: 'X (Twitter)' };
 
-const labelClass = 'font-mono text-sm font-bold text-muted-foreground';
+// Inverted surface (foreground/background swapped), so focus rings use the
+// page background colour to stay visible in both themes.
+const focusClass =
+  'rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-background';
+const labelClass = 'font-mono text-sm font-bold text-background/70';
 
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t-2 border-border bg-muted text-foreground">
+    <footer className="bg-foreground text-background">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <Link
             href="/"
-            className="inline-flex items-center gap-3 rounded-sm text-xl font-bold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring"
+            className={`inline-flex items-center gap-3 text-xl font-bold tracking-tight ${focusClass}`}
           >
             <Image
               src="/grizzlybit-dev-only-logo.svg"
               height={40}
               width={40}
               alt=""
-              className="rounded-full border-2 border-border"
+              className="rounded-full border-2 border-background"
             />
             Grizzlybit
           </Link>
-          <p className="mt-4 max-w-prose text-base leading-relaxed text-muted-foreground">
+          <p className="mt-4 max-w-prose text-base leading-relaxed text-background/80">
             Zubair Ahmed, full-stack software engineer and CTO at RAZRLAB.
             Building Node.js, React, TypeScript and IoT products on AWS.
           </p>
-          <address className="mt-3 text-sm not-italic text-muted-foreground">
+          <address className="mt-3 text-sm not-italic text-background/80">
             Dubai, United Arab Emirates
           </address>
         </div>
@@ -67,12 +71,12 @@ const Footer = () => {
         >
           <div>
             <p className={labelClass}>Navigate</p>
-            <ul className="mt-4 space-y-1">
+            <ul className="mt-4 space-y-1 md:space-y-0">
               {navLinks.map((n) => (
                 <li key={n.href}>
                   <Link
                     href={n.href}
-                    className="inline-flex min-h-11 items-center font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring"
+                    className={`inline-flex min-h-11 items-center font-medium underline-offset-4 hover:underline md:min-h-0 md:py-1 ${focusClass}`}
                   >
                     {n.label}
                   </Link>
@@ -83,33 +87,29 @@ const Footer = () => {
 
           <div>
             <p className={labelClass}>Connect</p>
-            <ul className="mt-4 flex flex-wrap gap-3">
+            <ul className="mt-4 grid max-w-xs grid-cols-5 gap-3">
               {socialLinks.map((s) => {
                 const Icon = socialIcons[s.name];
+                const label = socialLabels[s.name] ?? s.name;
                 return (
                   <li key={s.name}>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="icon"
-                      className="size-11"
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Zubair Ahmed on ${label} (opens in a new tab)`}
+                      title={label}
+                      onClick={() =>
+                        trackEvent('social_click', {
+                          network: s.name,
+                          url: s.url,
+                          location: 'footer',
+                        })
+                      }
+                      className={`flex size-11 items-center justify-center border-2 border-background bg-foreground text-background shadow-[3px_3px_0_0_var(--background)] transition-all hover:shadow-none motion-safe:hover:translate-x-[3px] motion-safe:hover:translate-y-[3px] ${focusClass}`}
                     >
-                      <a
-                        href={s.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Zubair Ahmed on ${s.name} (opens in a new tab)`}
-                        onClick={() =>
-                          trackEvent('social_click', {
-                            network: s.name,
-                            url: s.url,
-                            location: 'footer',
-                          })
-                        }
-                      >
-                        {Icon && <Icon aria-hidden="true" className="size-5" />}
-                      </a>
-                    </Button>
+                      {Icon && <Icon aria-hidden="true" className="size-5" />}
+                    </a>
                   </li>
                 );
               })}
@@ -122,7 +122,7 @@ const Footer = () => {
                   address: 'primary',
                 })
               }
-              className="mt-5 inline-flex min-h-11 items-center gap-2 font-medium underline-offset-4 hover:underline rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring"
+              className={`mt-5 inline-flex min-h-11 items-center gap-2 font-medium underline decoration-primary decoration-2 underline-offset-4 hover:decoration-background ${focusClass}`}
             >
               <Mail aria-hidden="true" className="size-4" />
               za@grizzlybit.dev
@@ -131,8 +131,8 @@ const Footer = () => {
         </nav>
       </div>
 
-      <div className="border-t-2 border-border">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 md:px-6 font-mono text-xs text-muted-foreground md:flex-row">
+      <div className="border-t-2 border-background/30">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 font-mono text-xs text-background/70 md:flex-row md:px-6">
           <p>© {year} Zubair Ahmed. All rights reserved.</p>
           <p>Built with Next.js and Tailwind CSS.</p>
         </div>

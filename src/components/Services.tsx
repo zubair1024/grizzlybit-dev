@@ -6,7 +6,6 @@ import { Reveal, Section } from './Section';
 const Services = () => (
   <Section
     id="services"
-    eyebrow="Services"
     title="Full-stack development, consulting and mentoring"
     intro="From the first wireframe to production APIs, I help teams design, build and ship web, mobile and IoT products."
   >

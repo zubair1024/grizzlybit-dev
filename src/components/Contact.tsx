@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { CircleAlert, Loader2, Mail, MapPin } from 'lucide-react';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -73,24 +73,23 @@ const Contact = () => {
     <Section
       id="contact-form"
       muted
-      eyebrow="Contact"
       title="Hire a full-stack engineer in Dubai"
       intro="Planning a product build, need CTO-level technical consulting, or looking for hands-on Node.js and React work? Tell me about your project and I'll get back to you."
     >
       <div className="grid gap-10 md:grid-cols-[2fr_3fr] md:gap-12">
         <Reveal>
-          <address className="flex flex-col gap-6 not-italic">
-            <div className="flex items-start gap-3">
-              <span className="flex size-11 shrink-0 items-center justify-center border-2 border-border bg-secondary text-secondary-foreground shadow">
-                <MapPin aria-hidden="true" className="size-5" />
-              </span>
-              <div>
-                <p className="font-mono text-sm font-bold">Location</p>
-                <p className="text-base">Dubai, United Arab Emirates</p>
-              </div>
+          <address className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-6 not-italic">
+            <span className="flex size-11 shrink-0 items-center justify-center border-2 border-border bg-secondary text-secondary-foreground shadow">
+              <MapPin aria-hidden="true" className="size-5" />
+            </span>
+            <div>
+              <p className="font-mono text-sm font-bold">Location</p>
+              <p className="flex min-h-11 items-center text-base">
+                Dubai, United Arab Emirates
+              </p>
             </div>
             {emails.map(({ label, address, key }) => (
-              <div key={key} className="flex items-start gap-3">
+              <Fragment key={key}>
                 <span className="flex size-11 shrink-0 items-center justify-center border-2 border-border bg-accent text-accent-foreground shadow">
                   <Mail aria-hidden="true" className="size-5" />
                 </span>
@@ -104,12 +103,12 @@ const Contact = () => {
                         address: key,
                       })
                     }
-                    className="inline-flex min-h-11 items-center text-base font-medium break-all underline decoration-2 underline-offset-4 hover:text-primary focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
+                    className="inline-flex min-h-11 items-center text-base font-medium break-all underline decoration-primary decoration-2 underline-offset-4 hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
                   >
                     {address}
                   </a>
                 </div>
-              </div>
+              </Fragment>
             ))}
           </address>
         </Reveal>

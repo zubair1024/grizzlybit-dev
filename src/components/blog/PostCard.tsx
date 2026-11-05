@@ -26,7 +26,7 @@ export const PostCard = ({
   className,
 }: Props) => (
   <article className={cn('h-full', className)}>
-    <Card className="relative h-full gap-4 transition-[translate,box-shadow] focus-within:ring-3 focus-within:ring-ring hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-lg motion-reduce:transition-none">
+    <Card className="relative h-full gap-4 transition-all focus-within:ring-3 focus-within:ring-ring hover:shadow-none motion-safe:hover:translate-x-1 motion-safe:hover:translate-y-1">
       {data.image ? (
         <Image
           src={data.image}
@@ -39,7 +39,7 @@ export const PostCard = ({
       ) : (
         <div
           aria-hidden="true"
-          className="flex aspect-[16/7] w-full items-center justify-center border-b-2 border-border bg-secondary text-secondary-foreground"
+          className="flex aspect-[16/7] w-full items-center justify-center border-b-2 border-border bg-muted text-muted-foreground"
         >
           <FileTextIcon className="size-12" strokeWidth={1.5} />
         </div>
@@ -65,7 +65,7 @@ export const PostCard = ({
                 location,
               })
             }
-            className="outline-none after:absolute after:inset-0 hover:underline hover:decoration-primary hover:decoration-2 hover:underline-offset-4"
+            className="outline-none after:absolute after:inset-0"
           >
             {data.title}
           </Link>

@@ -15,7 +15,7 @@ const AboutMe = () => {
       id="about-me"
       title="About Zubair Ahmed, CTO and full-stack engineer in Dubai"
     >
-      <div className="grid items-start gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+      <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:items-center">
         <Reveal className="order-2 max-w-prose space-y-6 text-lg leading-relaxed text-pretty md:order-1">
           <p>
             I&apos;m a developer, entrepreneur, author and traveller with a
@@ -50,7 +50,7 @@ const AboutMe = () => {
               src="/zubair_2.webp"
               width={900}
               height={1200}
-              sizes="(min-width: 768px) 352px, 320px"
+              sizes="(min-width: 768px) 320px, 320px"
               alt="Portrait of Zubair Ahmed, CTO and full-stack engineer"
               className="h-auto w-full"
             />

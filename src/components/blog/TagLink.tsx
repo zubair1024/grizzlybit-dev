@@ -51,10 +51,7 @@ export const TagLink = ({
   <Badge
     asChild
     variant="outline"
-    className={cn(
-      'h-auto min-h-9 px-3 font-mono text-xs focus-visible:ring-ring',
-      className,
-    )}
+    className={cn('h-auto min-h-8 px-3 text-sm', className)}
   >
     <Link href={`/blog/tag/${tagToSlug(tag)}`}>{formatTag(tag)}</Link>
   </Badge>

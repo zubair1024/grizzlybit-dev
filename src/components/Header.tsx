@@ -12,6 +12,7 @@ import { trackEvent } from '@/util/ga';
 import { Download, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 // Same links everywhere; section anchors are absolute so they work off-home.
@@ -23,6 +24,13 @@ const menu = [
   { title: 'Blog', url: '/blog' },
   { title: 'Contact', url: '/#contact-form' },
 ];
+
+// Only real pages get a current state; section anchors never do.
+const isCurrent = (url: string, pathname: string) =>
+  url === '/' ? pathname === '/' : url === '/blog' && pathname.startsWith('/blog');
+
+const currentClass =
+  'aria-[current=page]:underline aria-[current=page]:decoration-primary aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-[6px]';
 
 const ResumeButton = ({ className }: { className?: string }) => (
   <Button asChild className={className}>
@@ -44,6 +52,9 @@ const ResumeButton = ({ className }: { className?: string }) => (
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useRouter();
+  const current = (url: string) =>
+    isCurrent(url, pathname) ? ('page' as const) : undefined;
 
   return (
     <header
@@ -69,8 +80,10 @@ const Header = () => {
           <ul className="flex items-center gap-1">
             {menu.map((i) => (
               <li key={i.title}>
-                <Button asChild variant="ghost">
-                  <Link href={i.url}>{i.title}</Link>
+                <Button asChild variant="ghost" className={currentClass}>
+                  <Link href={i.url} aria-current={current(i.url)}>
+                    {i.title}
+                  </Link>
                 </Button>
               </li>
             ))}
@@ -98,16 +111,20 @@ const Header = () => {
                 </SheetTitle>
                 <SheetDescription>Site navigation</SheetDescription>
               </SheetHeader>
-              <nav aria-label="Mobile" className="px-4">
+              <nav aria-label="Mobile">
                 <ul className="flex flex-col gap-1">
                   {menu.map((i) => (
                     <li key={i.title}>
                       <Button
                         asChild
                         variant="ghost"
-                        className="h-12 w-full justify-start text-base"
+                        className={`h-12 w-full justify-start rounded-none px-4 text-base ${currentClass}`}
                       >
-                        <Link href={i.url} onClick={() => setMobileOpen(false)}>
+                        <Link
+                          href={i.url}
+                          aria-current={current(i.url)}
+                          onClick={() => setMobileOpen(false)}
+                        >
                           {i.title}
                         </Link>
                       </Button>
@@ -115,7 +132,7 @@ const Header = () => {
                   ))}
                 </ul>
               </nav>
-              <div className="mt-auto p-4">
+              <div className="mt-auto px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
                 <ResumeButton className="h-12 w-full" />
               </div>
             </SheetContent>

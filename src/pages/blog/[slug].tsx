@@ -34,6 +34,7 @@ import { calculateReadingTime } from '../../util/readingTime';
 
 type Frontmatter = {
   title: string;
+  seoTitle?: string;
   publishedAt: string;
   description?: string;
   summary: string;
@@ -44,18 +45,25 @@ type Frontmatter = {
 };
 
 // The page owns the only H1; demote any H1 written in a post body.
-// Code blocks scroll horizontally, so make them keyboard-focusable.
+// Code blocks and tables scroll horizontally, so make them keyboard-focusable.
+// `relative` keeps sr-only/absolute descendants from widening the page.
+const scrollRegion =
+  'relative overflow-x-auto outline-hidden focus-visible:ring-3 focus-visible:ring-ring';
 const mdxComponents = {
   h1: (props: ComponentProps<'h2'>) => <h2 {...props} />,
   pre: ({ className, ...props }: ComponentProps<'pre'>) => (
-    <pre
+    <pre tabIndex={0} className={cn(scrollRegion, className)} {...props} />
+  ),
+  table: (props: ComponentProps<'table'>) => (
+    <div
+      role="region"
+      aria-label="Table (scrolls horizontally)"
       tabIndex={0}
-      className={cn(
-        'outline-none focus-visible:ring-3 focus-visible:ring-ring',
-        className,
-      )}
-      {...props}
-    />
+      className={scrollRegion}
+      data-lenis-prevent
+    >
+      <table {...props} />
+    </div>
   ),
 };
 
@@ -123,7 +131,7 @@ export default function BlogPost({
   return (
     <>
       <CustomHead
-        title={frontmatter.title}
+        title={frontmatter.seoTitle ?? frontmatter.title}
         description={description}
         canonical={`https://www.grizzlybit.dev/blog/${slug}`}
         ogType="article"
@@ -196,14 +204,14 @@ export default function BlogPost({
                 <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tags">
                   {frontmatter.keywords.map((k) => (
                     <li key={k}>
-                      <TagLink tag={k} />
+                      <TagLink tag={k} className="min-h-11 sm:min-h-8" />
                     </li>
                   ))}
                 </ul>
               )}
             </header>
 
-            <div className="mx-auto mt-10 max-w-[72ch] prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:font-semibold prose-a:text-foreground prose-a:underline prose-a:decoration-primary prose-a:decoration-2 prose-a:underline-offset-4 hover:prose-a:decoration-4 prose-pre:overflow-x-auto prose-pre:rounded-none prose-img:border-2 prose-img:border-border prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:border-2 [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-secondary/40 [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-normal [&_:not(pre)>code]:text-foreground">
+            <div className="mx-auto mt-10 max-w-[72ch] prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-a:font-semibold prose-a:text-foreground prose-a:underline prose-a:decoration-primary prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:decoration-foreground prose-li:marker:text-primary prose-pre:overflow-x-auto prose-pre:rounded-none prose-img:border-2 prose-img:border-border prose-code:before:content-none prose-code:after:content-none [&_:not(pre)>code]:border-2 [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-secondary/40 [&_:not(pre)>code]:box-decoration-clone [&_:not(pre)>code]:wrap-break-word [&_:not(pre)>code]:px-1 [&_:not(pre)>code]:font-normal [&_:not(pre)>code]:text-foreground [&_iframe]:aspect-video [&_iframe]:h-auto [&_iframe]:w-full">
               <Component components={mdxComponents} />
             </div>
 

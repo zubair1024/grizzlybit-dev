@@ -14,7 +14,7 @@ const Toolbelt = () => (
       {toolBelt.map((tool, i) => (
         <li key={tool.name}>
           <Reveal delay={Math.min(i * 0.025, 0.3)} className="h-full">
-            <div className="flex h-full flex-col items-center gap-2 border-2 border-border bg-card p-3 text-card-foreground md:gap-3 md:p-4 shadow-sm transition-transform duration-200 hover:-translate-y-1">
+            <div className="flex h-full flex-col items-center gap-2 border-2 border-border bg-card p-3 text-card-foreground md:gap-3 md:p-4 shadow-sm">
               <Image
                 src={tool.img}
                 width={48}

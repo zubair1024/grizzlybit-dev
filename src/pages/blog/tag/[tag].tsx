@@ -51,7 +51,7 @@ export default function TagPage({ tagSlug, tagLabel, posts }: Props) {
             <div className="mx-auto max-w-6xl px-4 md:px-6">
               <Link
                 href="/blog"
-                className="inline-flex min-h-11 items-center gap-2 font-bold underline decoration-primary decoration-2 underline-offset-4 outline-none hover:decoration-4 focus-visible:ring-3 focus-visible:ring-ring"
+                className="inline-flex min-h-11 items-center gap-2 font-bold underline decoration-primary decoration-2 underline-offset-4 outline-hidden hover:decoration-foreground focus-visible:ring-3 focus-visible:ring-ring"
               >
                 <ArrowLeftIcon aria-hidden="true" className="size-4" />
                 All engineering articles

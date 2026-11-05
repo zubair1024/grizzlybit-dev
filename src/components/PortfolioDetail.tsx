@@ -71,7 +71,7 @@ export const PortfolioDetailShell = ({
           <header className="border-b-2 border-border bg-muted pt-28 pb-12 md:pt-32 md:pb-16">
             <div className="mx-auto max-w-6xl px-4 md:px-6">
               <Breadcrumb aria-label="Breadcrumb">
-                <BreadcrumbList className="text-base">
+                <BreadcrumbList className="flex-nowrap text-base">
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
                       <Link href="/" className={crumbLinkClass}>
@@ -88,8 +88,8 @@ export const PortfolioDetailShell = ({
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage className="font-bold">
+                  <BreadcrumbItem className="min-w-0">
+                    <BreadcrumbPage className="block max-w-[16ch] truncate font-bold sm:max-w-none">
                       {title}
                     </BreadcrumbPage>
                   </BreadcrumbItem>
@@ -137,8 +137,11 @@ export const PortfolioDetailShell = ({
                 title="More case studies"
               />
               <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {otherProjects.map((item) => (
-                  <li key={item.url}>
+                {otherProjects.map((item, i) => (
+                  <li
+                    key={item.url}
+                    className={cn(i >= 3 && 'hidden md:block')}
+                  >
                     <OtherProjectCard item={item} />
                   </li>
                 ))}
@@ -296,10 +299,11 @@ export const CaseStudySummary = ({
   outcome?: ReactNode;
 }) => {
   const name = useContext(ProjectName);
+  // `tall` spans both rows beside the two shorter blocks when all three exist.
   const blocks = [
-    { heading: "Zubair's role", body: role },
-    { heading: 'Challenge and approach', body: challenge },
-    { heading: 'Outcome', body: outcome },
+    { heading: "Zubair's role", body: role, tall: false },
+    { heading: 'Challenge and approach', body: challenge, tall: true },
+    { heading: 'Outcome', body: outcome, tall: false },
   ].filter((b) => b.body);
   return (
     <DetailSection kicker="Case study" title={`${name} case study summary`}>
@@ -314,9 +318,7 @@ export const CaseStudySummary = ({
             key={b.heading}
             className={cn(
               'border-2 border-border bg-card p-6 shadow-md',
-              b.heading === 'Challenge and approach' &&
-                blocks.length === 3 &&
-                'md:row-span-2',
+              b.tall && blocks.length === 3 && 'md:row-span-2',
             )}
           >
             <h3 className="text-xl font-bold">{b.heading}</h3>
@@ -351,7 +353,7 @@ export const TechStackSection = ({ tech }: { tech: string[] }) => {
       <ul className="flex flex-wrap gap-3">
         {tech.map((t) => (
           <li key={t}>
-            <Badge variant="outline" className="h-8 px-3 font-mono text-sm">
+            <Badge variant="outline" className="h-8 px-3 text-sm">
               {t}
             </Badge>
           </li>

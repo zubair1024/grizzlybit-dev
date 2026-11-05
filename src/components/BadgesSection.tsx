@@ -15,7 +15,7 @@ const BadgesSection = () => (
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-full min-h-11 items-center gap-4 border-2 border-border bg-card p-3 text-card-foreground shadow-sm transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
+              className="flex h-full min-h-11 items-center gap-4 border-2 border-border bg-card p-3 text-card-foreground shadow-sm transition-all hover:shadow-none motion-safe:hover:translate-x-1 motion-safe:hover:translate-y-1 focus-visible:ring-3 focus-visible:ring-ring focus-visible:outline-none"
             >
               <span className="flex size-14 shrink-0 items-center justify-center border-2 border-border bg-white p-1">
                 <Image
