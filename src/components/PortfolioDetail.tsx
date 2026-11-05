@@ -2,7 +2,6 @@ import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
 import CreativeWorkSchema from '@/components/schemas/CreativeWorkSchema';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
-import { Reveal } from '@/components/Section';
 import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
@@ -202,12 +201,10 @@ export const DetailSection = ({
 }) => {
   const id = toId(title);
   return (
-    <Reveal>
-      <section aria-labelledby={id}>
-        <SectionHeading id={id} kicker={kicker} title={title} />
-        {children}
-      </section>
-    </Reveal>
+    <section aria-labelledby={id}>
+      <SectionHeading id={id} kicker={kicker} title={title} />
+      {children}
+    </section>
   );
 };
 
@@ -226,25 +223,21 @@ const SectionSplit = ({
 }) => {
   const id = toId(title);
   return (
-    <Reveal>
-      <section
-        aria-labelledby={id}
-        className={cn(
-          'flex flex-col gap-10 md:items-center md:gap-12',
-          reverse ? 'md:flex-row-reverse' : 'md:flex-row',
-        )}
-      >
-        <div className="w-full min-w-0 flex-1">
-          <SectionHeading id={id} kicker={kicker} title={title} />
-          <div className="max-w-prose space-y-4 text-base leading-relaxed md:text-lg">
-            {copy}
-          </div>
+    <section
+      aria-labelledby={id}
+      className={cn(
+        'flex flex-col gap-10 md:items-center md:gap-12',
+        reverse ? 'md:flex-row-reverse' : 'md:flex-row',
+      )}
+    >
+      <div className="w-full min-w-0 flex-1">
+        <SectionHeading id={id} kicker={kicker} title={title} />
+        <div className="max-w-prose space-y-4 text-base leading-relaxed md:text-lg">
+          {copy}
         </div>
-        <div className="flex w-full min-w-0 flex-1 justify-center">
-          {visual}
-        </div>
-      </section>
-    </Reveal>
+      </div>
+      <div className="flex w-full min-w-0 flex-1 justify-center">{visual}</div>
+    </section>
   );
 };
 

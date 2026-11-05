@@ -54,13 +54,24 @@ const { postLastmods, postImages, tagLastmods } = (() => {
     const fileMtime = fs.statSync(fullPath).mtime.toISOString();
     const candidate = data.lastModified || data.publishedAt || fileMtime;
     const d = new Date(candidate);
-    const iso = Number.isNaN(d.getTime())
-      ? fileMtime
-      : d.toISOString();
+    // Date-only frontmatter = midnight Dubai, same as BlogPostingSchema.
+    // YAML parses unquoted dates as UTC-midnight Date objects.
+    const day =
+      candidate instanceof Date
+        ? candidate.toISOString().slice(0, 10)
+        : String(candidate);
+    const iso = /^\d{4}-\d{2}-\d{2}$/.test(day)
+      ? `${day}T00:00:00+04:00`
+      : Number.isNaN(d.getTime())
+        ? fileMtime
+        : d.toISOString();
     posts[slug] = iso;
-    if (typeof data.image === 'string' && data.image) {
+    {
       try {
-        images[slug] = new URL(data.image, SITE);
+        images[slug] = new URL(
+          data.image || `/og-images/blog/${slug}.png`,
+          SITE,
+        );
       } catch (e) {
         console.warn(`[sitemap] bad cover image for ${f}:`, e.message);
       }

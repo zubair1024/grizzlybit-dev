@@ -54,6 +54,13 @@ const scrollRegion =
   'relative overflow-x-auto outline-hidden focus-visible:ring-3 focus-visible:ring-ring';
 const mdxComponents = {
   h1: (props: ComponentProps<'h2'>) => <h2 {...props} />,
+  // GFM task-list checkboxes are read-only markers; give them a name.
+  input: (props: ComponentProps<'input'>) =>
+    props.type === 'checkbox' ? (
+      <input {...props} aria-label={props.checked ? 'Done' : 'To do'} />
+    ) : (
+      <input {...props} />
+    ),
   pre: ({ className, ...props }: ComponentProps<'pre'>) => (
     <pre tabIndex={0} className={cn(scrollRegion, className)} {...props} />
   ),
