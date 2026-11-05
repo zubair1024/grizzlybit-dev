@@ -128,24 +128,28 @@ module.exports = {
 
   // Advanced robots.txt configuration
   robotsTxtOptions: {
+    // Explicit allow for AI search/assistant crawlers so a future `*` rule
+    // can't silently block them; the site wants to be cited.
     policies: [
-      {
-        userAgent: '*',
-        allow: '/',
-        disallow: ['/api/*'],
-      },
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: ['/api/*'],
-      },
-      {
-        userAgent: 'Bingbot',
-        allow: '/',
-        disallow: ['/api/*'],
-        crawlDelay: 1,
-      },
-    ],
+      '*',
+      'GPTBot',
+      'OAI-SearchBot',
+      'ChatGPT-User',
+      'ClaudeBot',
+      'Claude-SearchBot',
+      'Claude-User',
+      'PerplexityBot',
+      'Perplexity-User',
+      'Google-Extended',
+      'Applebot',
+      'Applebot-Extended',
+      'Bingbot',
+      'DuckAssistBot',
+      'meta-externalagent',
+      'Amazonbot',
+      'MistralAI-User',
+      'CCBot',
+    ].map((userAgent) => ({ userAgent, allow: '/', disallow: ['/api/'] })),
     additionalSitemaps: [
       // You can add separate sitemaps here if needed
       // `${process.env.SITE_URL || 'https://www.grizzlybit.dev'}/blog-sitemap.xml`,

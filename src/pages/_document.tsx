@@ -7,15 +7,11 @@ export default function Document() {
         {/* DNS Prefetch for external resources - establishes early connections */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        <link rel="dns-prefetch" href="https://static.hotjar.com" />
-        <link rel="dns-prefetch" href="https://script.hotjar.com" />
 
         {/* Preconnect to critical domains for faster resource loading */}
         {/* Performs DNS lookup, TCP handshake, and TLS negotiation early */}
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://static.hotjar.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://script.hotjar.com" crossOrigin="anonymous" />
 
         {/* RSS feed autodiscovery */}
         <link

@@ -101,6 +101,11 @@ const CustomHead = (props: CustomHeadProps) => {
         description={description ?? defaultTags.description}
         canonical={canonicalUrl}
         noindex={noindex}
+        robotsProps={{
+          maxSnippet: -1,
+          maxImagePreview: 'large',
+          maxVideoPreview: -1,
+        }}
         openGraph={{
           type: ogType,
           url: canonicalUrl,

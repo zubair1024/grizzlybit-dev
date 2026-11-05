@@ -32,11 +32,15 @@ const posts = fs
   .filter((f) => f.endsWith('.mdx'))
   .map((file) => {
     const slug = file.replace(/\.mdx$/, '');
-    const { data } = matter(fs.readFileSync(path.join(postsDir, file), 'utf8'));
+    const { data, content } = matter(
+      fs.readFileSync(path.join(postsDir, file), 'utf8'),
+    );
     return {
       slug,
       title: data.title || slug,
       summary: data.summary || data.description || '',
+      description: data.description || data.summary || '',
+      content,
       publishedAt: data.publishedAt,
       lastModified: data.lastModified,
       author: data.author || 'Zubair Ahmed',
@@ -99,6 +103,39 @@ ${items}
 
 fs.writeFileSync(path.join(publicDir, 'rss.xml'), rss);
 console.log(`Wrote rss.xml with ${posts.length} items.`);
+
+// AI-readable copies: llms.txt (index), llms-full.txt (every post) and a
+// Markdown twin per post at /blog/<slug>.md (linked from the post <head>).
+const isoDate = (d) => new Date(d).toISOString().slice(0, 10);
+const toMarkdown = (p) =>
+  `# ${p.title}\n\nBy ${p.author} · Published ${isoDate(p.publishedAt)}${
+    p.lastModified ? ` · Updated ${isoDate(p.lastModified)}` : ''
+  }\nSource: ${SITE}/blog/${p.slug}\n\n${p.content
+    .trim()
+    .replace(/\]\(\//g, `](${SITE}/`)}\n`;
+
+const blogDir = path.join(publicDir, 'blog');
+for (const p of posts) {
+  fs.writeFileSync(path.join(blogDir, `${p.slug}.md`), toMarkdown(p));
+}
+fs.writeFileSync(
+  path.join(publicDir, 'llms-full.txt'),
+  posts.map(toMarkdown).join('\n---\n\n'),
+);
+
+// ponytail: posts before 2018 go under "Optional" (llmstxt.org: skippable)
+const postLine = (p) =>
+  `- [${p.title}](${SITE}/blog/${p.slug}.md): ${p.description}`;
+const recent = posts.filter((p) => new Date(p.publishedAt).getFullYear() >= 2018);
+const older = posts.filter((p) => new Date(p.publishedAt).getFullYear() < 2018);
+const header = fs.readFileSync(path.join(__dirname, 'llms-header.md'), 'utf8');
+fs.writeFileSync(
+  path.join(publicDir, 'llms.txt'),
+  `${header.trim()}\n\n## Blog\n\n${recent.map(postLine).join('\n')}\n${
+    older.length ? `\n## Optional\n\n${older.map(postLine).join('\n')}\n` : ''
+  }`,
+);
+console.log(`Wrote llms.txt, llms-full.txt and ${posts.length} post .md files.`);
 
 // Strip deprecated `Host:` directive that next-sitemap hardcodes.
 const robotsPath = path.join(publicDir, 'robots.txt');

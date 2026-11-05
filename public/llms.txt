@@ -2,7 +2,6 @@
 
 > Personal portfolio and engineering blog of Zubair Ahmed, full-stack software engineer and Chief Technology Officer at RAZRLAB. Based in Dubai, United Arab Emirates. Focus areas: Node.js, React, TypeScript, Next.js, IoT, fleet management, mobile (Ionic), Linux, and cloud architecture.
 
-Last updated: 2026-11-05
 License: Content © Zubair Ahmed. Quoting with attribution allowed. Code samples in blog posts are MIT unless otherwise stated.
 
 Identity:
@@ -21,12 +20,13 @@ Identity:
 - [Home](https://www.grizzlybit.dev/): Overview, services, portfolio, testimonials, contact.
 - [Blog](https://www.grizzlybit.dev/blog): Engineering articles on Node.js, React, TypeScript, Linux, security, DevOps.
 - [Resume / CV](https://www.grizzlybit.dev/zubair_cv.pdf): Downloadable PDF.
+- [Full text of every blog post](https://www.grizzlybit.dev/llms-full.txt): All articles as Markdown in one file.
 - [Sitemap](https://www.grizzlybit.dev/sitemap.xml)
 - [RSS feed](https://www.grizzlybit.dev/rss.xml)
 
 ## Portfolio case studies
 
-- [Vehicle tracking application](https://www.grizzlybit.dev/portfolio/vehicle-tracking): Real-time fleet management web app — React, Node.js, RabbitMQ, Redis, Leaflet, OSRM. Recognized by Dubai Police.
+- [Vehicle tracking application](https://www.grizzlybit.dev/portfolio/vehicle-tracking): Real-time fleet management web app — React, Node.js, RabbitMQ, Redis, Leaflet, Google Maps, OSRM. Recognized by Dubai Police.
 - [Vehicle tracking mobile application](https://www.grizzlybit.dev/portfolio/vehicle-tracking-mobile): Ionic/TypeScript mobile companion for fleet ops (iOS and Android), with work order monitoring and OneSignal push notifications.
 - [COVID tracking mobile application](https://www.grizzlybit.dev/portfolio/covid-tracker): Remote health monitoring with BLE oxygen meter integration.
 - [My247](https://www.grizzlybit.dev/portfolio/my247-app): App for UK's 4th-largest boiler service company.
@@ -37,23 +37,36 @@ Identity:
 - [Grizzly Tools](https://www.grizzlybit.dev/portfolio/tools-grizzly): Collection of developer utilities.
 - [TIS landing page](https://www.grizzlybit.dev/portfolio/tis-landing-page): Marketing site for a Dubai thermal-insulation company.
 
-## Notable blog posts
-
-- [What's New in Node.js 24](https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24)
-- [Optimal SEO Performance for Next.js](https://www.grizzlybit.dev/blog/optimal-seo-performance-for-nextjs)
-- [JavaScript Promises: all vs allSettled vs race vs any](https://www.grizzlybit.dev/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any)
-- [Easy Remote Debugging Node.js using VS Code](https://www.grizzlybit.dev/blog/easy-remote-debugging-nodejs-using-vscode)
-- [How to generate keys for Mutual TLS Authentication](https://www.grizzlybit.dev/blog/how-to-generate-keys-for-mutual-tls-authentication)
-- [How to create an SSH tarpit](https://www.grizzlybit.dev/blog/how-to-create-an-ssh-tarpit)
-- [Setup OpenStreetMap Tile Server on Ubuntu](https://www.grizzlybit.dev/blog/setup-openstreemaps-tile-server-on-ubuntu)
-- [How to install OpenVPN using Docker](https://www.grizzlybit.dev/blog/how-to-install-openvpn-using-docker)
-- [Increase Node.js Memory Limit (Bonus: PM2)](https://www.grizzlybit.dev/blog/increase-nodejs-memory-limit)
-- [Use Hook in React 18](https://www.grizzlybit.dev/blog/use-hook-in-react)
-
 ## Tech stack & expertise
 
 JavaScript, TypeScript, Node.js, React, Next.js, Ionic, React Native, MongoDB, MSSQL, PostgreSQL, Redis, RabbitMQ, Docker, AWS, GCP, Leaflet / OpenStreetMap, Google Maps, OSRM, BLE / IoT integration, Linux sysadmin, mutual TLS, SSH automation, NGINX.
 
-## Licensing
+## Blog
 
-Content is © Zubair Ahmed. Quoting with attribution is allowed.
+- [What's New in Node.js 24 (And How to Upgrade Your Codebase Smoothly)](https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24.md): What’s new in Node.js 24: V8 13.6, Float16Array, explicit resource management with using, RegExp.escape, URLPattern and npm 11, plus how to upgrade.
+- [Use Hook in React 18](https://www.grizzlybit.dev/blog/use-hook-in-react.md): An introduction to the experimental use hook in React 18 and how it can help build reusable custom hooks that simplify state management in components.
+- [Optimal SEO Performance for NextJS](https://www.grizzlybit.dev/blog/optimal-seo-performance-for-nextjs.md): How Next.js helps SEO with static HTML, server-side rendering and per-page metadata, and the steps to get optimal search performance from your site.
+- [How to install OpenVPN using Docker](https://www.grizzlybit.dev/blog/how-to-install-openvpn-using-docker.md): Host your own VPN: build Kyle Manna’s docker-openvpn image, initialise the PKI, start the OpenVPN server in Docker and generate client config files.
+- [How to create an SSH tarpit](https://www.grizzlybit.dev/blog/how-to-create-an-ssh-tarpit.md): Trap brute-force bots trying to log into your Linux server: build and run endlessh as an SSH tarpit that drips an endless banner to waste their time.
+- [JavaScript Promises: Promise.all vs Promise.allSettled vs Promise.race vs Promise.any](https://www.grizzlybit.dev/blog/javascript-promises-promise-all-promise-allsettled-promise-race-promise-any.md): Compare Promise.all, Promise.allSettled, Promise.race and Promise.any in JavaScript, with examples of how each handles an array of promises.
+- [Easy PGP Encryption using Node.js](https://www.grizzlybit.dev/blog/easy-pgp-encryption-using-nodejs.md): Step-by-step guide to PGP encryption in Node.js with the openpgp package: set up a project, generate a key pair, then encrypt and decrypt messages.
+- [Setup OpenStreetMap Tile Server on Ubuntu 20.x 🗺](https://www.grizzlybit.dev/blog/setup-openstreemaps-tile-server-on-ubuntu.md): Set up your own OpenStreetMap tile server on Ubuntu 20 with PostGIS, osm2pgsql, Mapnik, OSM Carto, mod_tile and renderd instead of paying for tiles.
+- [How to Use Tee on Linux](https://www.grizzlybit.dev/blog/how-to-use-tee-on-linux.md): The tee command on Linux reads standard input and writes to standard output and files at once. Examples cover basic use, appending and multiple files.
+- [How to use Screen on Linux to Detach and Reattach your Terminal](https://www.grizzlybit.dev/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal.md): Learn GNU Screen on Linux: install it, run multiple shell sessions over one SSH connection, then detach and reattach terminals without losing work.
+- [Easy Remote Debugging Node.js using VS Code](https://www.grizzlybit.dev/blog/easy-remote-debugging-nodejs-using-vscode.md): Debug a Node.js app running on a remote headless server from VS Code using the Remote - SSH extension and an SSH tunnel, with setup steps for each OS.
+- [Increase Node.js Memory Limit (Bonus: PM2)](https://www.grizzlybit.dev/blog/increase-nodejs-memory-limit.md): Fix the JavaScript heap out of memory error by raising the Node.js memory limit with --max-old-space-size, plus how to set it for apps run with PM2.
+- [My Terminal Setup: iTerm2 + ZSH + Powerlevel10k](https://www.grizzlybit.dev/blog/my-terminal-setup.md): My developer terminal setup: iTerm2 as the emulator, ZSH with Oh My Zsh and useful plugins, and the Powerlevel10k theme, with install steps for each.
+- [How to generate keys for Mutual TLS Authentication 🔑](https://www.grizzlybit.dev/blog/how-to-generate-keys-for-mutual-tls-authentication.md): Create a CA plus server and client certificates with OpenSSL, then use them for mutual TLS (mTLS) authentication between a client and a server.
+- [How to SSH using Node.js](https://www.grizzlybit.dev/blog/how-to-ssh-using-nodejs.md): Use node-ssh to connect to servers over SSH from Node.js and run remote commands, automating tasks such as installing Redis on an Ubuntu machine.
+- [How to send CSV Files with Nodemailer 📨](https://www.grizzlybit.dev/blog/how-send-csv-files-with-nodemailer.md): Send CSV files as email attachments in Node.js: convert JSON to CSV with json2csv and attach it to a message sent over SMTP with Nodemailer.
+- [Install Docker on Ubuntu 18.04 (Bionic Beaver) 🐳](https://www.grizzlybit.dev/blog/install-docker-on-ubuntu-18.md): Install Docker on Ubuntu 18.04 (Bionic Beaver) step by step: update repositories, remove old versions, install docker.io and verify that it runs.
+- [Addressing Businesses with the Right Innovation: IoT 📈](https://www.grizzlybit.dev/blog/addressing-business-with-the-right-innovation-iot.md): Why IoT projects stall without proper integration, and how bespoke IoT solutions built around each business’s operations and KPIs deliver real value.
+
+## Optional
+
+- [Truth About Being a Full-Stack Developer 👩‍💻](https://www.grizzlybit.dev/blog/truth-about-being-a-full-stack-developer.md): What being a full-stack developer really means: working knowledge across every layer of the stack, the freedom it brings, its trade-offs and demand.
+- [Importance of Teaching Children to Code 🧒](https://www.grizzlybit.dev/blog/importance-of-teaching-children-to-code.md): Why teaching children to code matters in an automated world: programming helps kids understand and control technology, not just consume it.
+- [Node.js 8: util.promisify() 💡](https://www.grizzlybit.dev/blog/nodejs-util-promisify.md): How util.promisify() in Node.js 8 turns callback-based functions into promise-based ones, including multi-argument callbacks and a polyfill.
+- [GET query string parameters 💁‍♂️](https://www.grizzlybit.dev/blog/get-query-string-parameters.md): A small JavaScript utility function that parses window.location and returns the value of any URL query string parameter by name, with usage examples.
+- [Yarn on the Rise 😺](https://www.grizzlybit.dev/blog/yarn-on-the-rise.md): Why Yarn emerged as a faster npm alternative: parallel installs, offline caching, retried requests and a yarn.lock file for consistent dependencies.
+- [Rick And Morty 👾](https://www.grizzlybit.dev/blog/rick-and-morty-if-you-havent-watched-it.md): A review of Rick and Morty: why the animated adventures of an alcoholic scientist and his grandson beat every expectation with sharp writing.
