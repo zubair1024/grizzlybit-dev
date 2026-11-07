@@ -9,6 +9,7 @@ Personal portfolio and blog website for Zubair Ahmed (grizzlybit.dev) built with
 ## Commands
 
 ### Development
+
 ```bash
 npm run dev          # Start development server on localhost:3000
 npm run build        # Build for production
@@ -17,12 +18,15 @@ npm run lint         # Run ESLint
 ```
 
 ### Type Checking
+
 ```bash
 npx tsc --noEmit     # Run TypeScript compiler without emitting files
 ```
 
 ### Code Quality
+
 The project uses Husky with lint-staged to automatically format code on commit:
+
 - TypeScript files: Type check + ESLint + Prettier
 - JavaScript files: ESLint + Prettier
 - Markdown/JSON files: Prettier
@@ -30,6 +34,7 @@ The project uses Husky with lint-staged to automatically format code on commit:
 ## Architecture
 
 ### Pages Router Structure
+
 - **Homepage (`src/pages/index.tsx`)**: Statically generated (`getStaticProps`) with multiple sections (Banner, Services, AboutMe, BlogSection, Toolbelt, Portfolio, Companies, Testimonials, Contact)
 - **Blog Posts (`src/pages/blog/[slug].tsx`)**: Static generation using MDX files from `src/posts/`
 - **Portfolio Pages (`src/pages/portfolio/*.tsx`)**: Individual static pages for each project
@@ -38,16 +43,19 @@ The project uses Husky with lint-staged to automatically format code on commit:
   - `/api/statistics` - Dynamic statistics endpoint
 
 ### Content Management
+
 - **Blog posts**: Written in MDX format in `src/posts/`, processed using `mdx-bundler` with gray-matter for frontmatter
 - **Static data**: Stored in `data/` directory (badges, companies, portfolio items, testimonials, toolbelt, social links)
 - **Post utilities (`src/util/posts.ts`)**: Functions for reading MDX files, extracting frontmatter, and bundling with rehype-prism-plus (syntax highlighting) and remark-gfm (GitHub Flavored Markdown)
 
 ### Key Components
+
 - **Layout (`src/components/Layout.tsx`)**: Wraps all pages with Header/Footer and an opacity-only Motion fade on client navigations (first render stays visible for SEO)
 - **Section Components**: Self-contained components for each homepage section (AboutMe, Banner, BlogSection, Companies, Contact, Portfolio, Services, Statistics, Testimonials, Toolbelt)
 - **CustomHead**: SEO metadata management with next-seo
 
 ### Styling
+
 - Tailwind CSS 4, configured CSS-first in `src/styles/globals.css` (`@theme`, `@theme inline`); no `tailwind.config.js`
 - shadcn/ui (`components.json`, style `radix-nova`, `rsc: false`); primitives in `src/components/ui/`, add more with `npx shadcn@latest add <name>`
 - tweakcn "neo-brutalism" theme: tokens in `:root` / `.dark` in `globals.css` (radius 0, 2px borders, hard offset shadows; DM Sans + Space Mono via `next/font` in `_app.tsx`)
@@ -57,20 +65,32 @@ The project uses Husky with lint-staged to automatically format code on commit:
 - Hero (`Banner.tsx`, `Statistics.tsx`) uses shadcn Card/Badge/Tooltip; only the backdrop, icon inversion and stat grid are `.hero*` classes in `globals.css`
 
 ### External Integrations
+
 - **Analytics**: Google Analytics 4 (gtag.js bootstrapped in `src/util/ga.ts`) and Hotjar
 - **Email**: AWS SES via nodemailer for contact form (`src/util/mailer.ts`)
 - **SEO**: next-sitemap for automatic sitemap generation (postbuild script)
 
 ### Environment Variables
+
 Required environment variables (see `example.env`):
+
 - `NEXT_PUBLIC_GA_TRACKING_ID` - Google Analytics tracking ID
 - `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` - AWS credentials for SES email service
 
 ### MDX Blog Post Structure
+
 Blog posts require frontmatter with:
+
 - `title`: Post title
 - `publishedAt`: Publication date
 - `description`: Meta description
 - `summary`: Short summary
 - `image`: Cover image path
 - `showOnHome`: Boolean to display on homepage
+- `lastModified` (optional): bump when editing a post; drives sitemap `lastmod`, `dateModified` and IndexNow pings
+
+After adding a post, add its cover spec to `COVERS` in `scripts/generate-og.js` and run `node scripts/generate-og.js`.
+
+### IndexNow
+
+`.github/workflows/indexnow.yml` runs `scripts/indexnow.js` after each successful Vercel production deploy, submitting sitemap URLs with `lastmod` in the last 7 days. Key file: `public/ae4eeb39423ddff4632786a5cd80abf4.txt`.

@@ -3,7 +3,9 @@ import { TagLink } from '@/components/blog/TagLink';
 import CustomHead from '@/components/CustomHead';
 import Layout from '@/components/Layout';
 import RelatedPosts from '@/components/RelatedPosts';
-import BlogPostingSchema from '@/components/schemas/BlogPostingSchema';
+import BlogPostingSchema, {
+  plainHeadline,
+} from '@/components/schemas/BlogPostingSchema';
 import BreadcrumbListSchema from '@/components/schemas/BreadcrumbListSchema';
 import {
   Breadcrumb,
@@ -139,7 +141,7 @@ export default function BlogPost({
     { name: 'Home', url: 'https://www.grizzlybit.dev' },
     { name: 'Blog', url: 'https://www.grizzlybit.dev/blog' },
     {
-      name: frontmatter.title,
+      name: plainHeadline(frontmatter.title),
       url: `https://www.grizzlybit.dev/blog/${slug}`,
     },
   ];
@@ -155,7 +157,7 @@ export default function BlogPost({
         ogImageWidth={1200}
         ogImageHeight={630}
         ogImageType="image/png"
-        ogImageAlt={frontmatter.title}
+        ogImageAlt={plainHeadline(frontmatter.title)}
         publishedTime={frontmatter.publishedAt}
         modifiedTime={frontmatter.lastModified}
         author={author}
@@ -247,7 +249,7 @@ export default function BlogPost({
                   src={cover.src}
                   width={cover.width}
                   height={cover.height}
-                  alt={frontmatter.title}
+                  alt={plainHeadline(frontmatter.title)}
                   // LCP: in the SSR HTML, so eager + high priority beats a
                   // preload (`priority` is deprecated in Next 16).
                   loading="eager"

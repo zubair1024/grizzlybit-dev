@@ -16,6 +16,16 @@ interface BlogPostingSchemaProps {
   };
 }
 
+// Emoji in titles are decoration; keep them out of structured-data headlines.
+export const plainHeadline = (title: string) =>
+  title
+    .replace(
+      /[\p{Extended_Pictographic}\p{Emoji_Modifier}\p{Regional_Indicator}\u{FE0F}\u{200D}\u{20E3}\u{E0020}-\u{E007F}]/gu,
+      '',
+    )
+    .replace(/\s+/g, ' ')
+    .trim();
+
 const BlogPostingSchema = ({
   title,
   description,
@@ -50,7 +60,7 @@ const BlogPostingSchema = ({
     '@type': 'BlogPosting',
     '@id': `${url}#article`,
     isPartOf: { '@id': `${site}/#website` },
-    headline: title,
+    headline: plainHeadline(title),
     description,
     image: images,
     datePublished: toDateTime(publishedAt),

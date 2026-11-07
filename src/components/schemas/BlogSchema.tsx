@@ -1,5 +1,7 @@
 import Head from 'next/head';
 
+import { plainHeadline } from './BlogPostingSchema';
+
 const SITE = 'https://www.grizzlybit.dev';
 
 interface BlogSchemaProps {
@@ -37,7 +39,7 @@ const BlogSchema = ({ name, description, posts }: BlogSchemaProps) => {
       '@type': 'BlogPosting',
       '@id': `${SITE}/blog/${slug}#article`,
       url: `${SITE}/blog/${slug}`,
-      headline: title,
+      headline: plainHeadline(title),
     })),
   };
 

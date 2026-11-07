@@ -2,7 +2,7 @@
 title: 'Herdr: A Home for Your Coding Agents 🐑'
 seoTitle: 'What is Herdr? A native app for running coding agents'
 publishedAt: '2026-11-07'
-description: 'Herdr is a free, open source app for running Claude Code, Codex and other coding agents, with live status, SSH machines and helper agents.'
+description: 'Herdr is a free, open source app for running multiple coding agents like Claude Code and Codex, showing who is working, done or waiting on you.'
 summary: 'Running three or four coding agents at once turns your terminal into a guessing game: who is done, who is stuck, who is waiting on you? Herdr is a free, open source app built to herd them, and it is designed to be reshaped by the agents themselves.'
 image: '/blog/herdr-a-home-for-your-coding-agents/cover.png'
 keywords:
@@ -18,9 +18,9 @@ author: 'Zubair Ahmed'
 showOnHome: true
 ---
 
-If you have started running more than one coding agent at a time, you know the routine. One tab has Claude Code refactoring a module, another has Codex writing tests, a third is chewing on a migration. Then you spend half your day cycling through tabs asking the same question: _is anyone waiting on me?_
+**[Herdr](https://herdr.dev/) is a free, open source (Apache 2.0) native app for running coding agents like Claude Code and Codex side by side on macOS, Linux and Windows.** Supported agents report whether they are working, done or waiting on you, agents keep running in a local server (herdr-core) when you quit the app, and you customise it by asking your agent to edit its config files.
 
-[Herdr](https://herdr.dev/) is a native app built for exactly that problem. It is a home for your coding agents, and its pitch is a little unusual: you shape the app by asking your agent to change it.
+If you have started running more than one coding agent at a time, you know the routine. One tab has Claude Code refactoring a module, another has Codex writing tests, a third is chewing on a migration. Then you spend half your day cycling through tabs asking the same question: _is anyone waiting on me?_ Herdr is built for exactly that problem.
 
 > "Made for your agents. Remade by them."
 
@@ -34,9 +34,9 @@ Herdr runs real terminals, organised around how agent work actually happens:
 
 That last point is the whole game. Instead of polling every terminal, you glance at the sidebar and go where you are needed.
 
-It is free and open source under the **Apache 2.0** license, split across three repos under the [herdrdev](https://github.com/herdrdev) GitHub organisation: `herdr-app`, `herdr-core` and the original `herdr` TUI.
+The source is split across three repos under the [herdrdev](https://github.com/herdrdev) GitHub organisation: `herdr-app`, `herdr-core` and the original `herdr` TUI.
 
-## 🔥 The Features That Matter
+## 🔥 Features for Running Multiple Coding Agents
 
 ### Agents Keep Running
 
@@ -66,7 +66,7 @@ hc run --bg codex "review my diff. Done: hc send t1"
 hc send t3 "take another look"
 ```
 
-Reports come back tagged with their source, like `<hc from="t3 reviewer">`. So your main Claude Code session can spin up a Codex reviewer, keep working, and pick up the review when it lands. That is a small, practical form of multi-agent orchestration without any framework.
+Reports come back tagged with their source, like `<hc from="t3 reviewer">`. So your main Claude Code session can spin up a Codex reviewer, keep working, and pick up the review when it lands. That is a small, practical form of multi-agent orchestration without any framework. It is also the easiest way I have seen to run multiple Claude Code agents that actually talk to each other.
 
 ### Works With Any Agent
 
@@ -131,9 +131,26 @@ Then:
 
 ## ⚠️ A Few Gotchas
 
-- **Herdr TUI is separate.** The original terminal app has its own server, and the two do not share agents. Agents started in the TUI will not appear in the app.
+- **Herdr TUI agents don't show up.** Agents started in the original TUI will not appear in the app (see the FAQ below).
 - **Don't nest in tmux.** If an agent is not showing up, update it and run it directly in a Herdr pane rather than inside tmux.
-- **No auto-resume after reboot.** Shells come back, agents do not.
+
+## ❓ FAQ
+
+### Is Herdr free?
+
+Yes. The app, herdr-core and the Herdr TUI are all open source under the Apache 2.0 license.
+
+### Does Herdr work with Codex and other agents?
+
+Yes. Herdr runs real terminals, so any agent works. Agents that support OSC 7501, an open status protocol, also report whether they are working, done or waiting.
+
+### Does Herdr resume agents after a reboot?
+
+No. Panes come back with a shell in the same folder, but you start the agents again yourself.
+
+### What is the difference between Herdr and Herdr TUI?
+
+Herdr TUI is the original terminal app with its own server. The Herdr app is separate, and the two do not share agents.
 
 ## 🤔 Final Thoughts
 
