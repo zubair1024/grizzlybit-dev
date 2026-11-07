@@ -1,0 +1,140 @@
+---
+title: '5 Must-Have Herdr Plugins 🧩'
+seoTitle: '5 must-have Herdr plugins (mods) for coding agents'
+publishedAt: '2026-11-07'
+description: 'The 5 Herdr mods worth installing first: Agenttrail, herdr-nvim, Herdr Annotator, Revive and Over9k Usage, plus how to install any mod in one line.'
+summary: 'The Herdr gallery has over 400 community mods, from stock tickers to Pokémon. These five fix real day-to-day problems with running coding agents: knowing what they are doing, editing beside them, reviewing their code, surviving reboots and not hitting your limits.'
+image: '/blog/5-must-have-herdr-plugins/cover.png'
+keywords:
+  - herdr
+  - herdr mods
+  - herdr plugins
+  - coding agents
+  - claude code
+  - codex
+  - neovim
+  - developer tools
+author: 'Zubair Ahmed'
+showOnHome: true
+---
+
+**The five Herdr plugins worth installing first are Agenttrail, herdr-nvim, Herdr Annotator, Revive and Over9k Usage.** Between them they show what your agents are working on, put an editor and a code review next to them, bring agents back after a reboot, and warn you before you hit your Claude or Codex limits.
+
+In my [introduction to Herdr](/blog/herdr-a-home-for-your-coding-agents) I covered the app itself. The real fun starts in the [gallery](https://herdr.dev/gallery/?type=mods), which at the time of writing lists **430 mods**. Herdr calls its plugins **mods**: add-ons that add panels, buttons, keys and whole new windows to the app.
+
+Plenty of them are just for fun (there is a stock ticker, and one that turns every agent into a Pokémon). These five are the ones that solve problems you will actually hit when running several coding agents at once.
+
+## 📦 How to Install a Herdr Mod
+
+You don't install mods by hand. Every mod page gives you one line to paste to your agent:
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: herdr.dev/mods/<owner>/<mod>
+```
+
+Mods are small JavaScript programs that reload live. Herdr's guide tells your agent exactly how to add one:
+
+1. Read the mod's `RECIPE.md` and every file first, and **tell you if the mod reaches the network, runs programs or reads files outside its own folder**.
+2. Copy it into `~/.config/herdr-app/mods/` without overwriting anything you already have.
+3. Merge any keyboard shortcuts it brings, and **ask before replacing a key you already use**.
+4. Run `herdr-app check` on it.
+
+To remove a mod, delete its folder. If a mod doesn't work on your version, your agent can rebuild it from its `RECIPE.md`, which is a plain-English brief for building the mod from scratch.
+
+## 1. 🗺️ Agenttrail: See What Your Agents Are Building
+
+**Problem:** with several agents on one project, you lose track of who is doing what.
+
+[Agenttrail](https://herdr.dev/mods/sodiumsun/agenttrail--herdr--agenttrail/) draws your project as a map beside your agents: cards with connectors, each card's tasks and progress, which card an agent is on right now, and the path it took to get there. It opens as a panel on the right, expands to full size, and follows the repo of whichever terminal you focus.
+
+The map comes from your repo's `PLAN.md`. With no plan, it falls back to a simpler view of branches and worktrees from git. It is also read-only: it never writes to your agents, plans or repos.
+
+It is the most-starred mod in the gallery by a wide margin, and once you have seen agents moving across a plan, a plain list of tabs feels blind.
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: herdr.dev/mods/sodiumsun/agenttrail--herdr--agenttrail
+```
+
+## 2. ✏️ herdr-nvim: Neovim Beside Your Agents
+
+**Problem:** you keep switching to another window to read and fix what an agent wrote.
+
+[herdr-nvim](https://herdr.dev/mods/ChmaraX/herdr-nvim--herdr-app/) puts Neovim inside Herdr. The **Files** button (or `cmd-e`) opens a file tree of the tab's repo with that tab's own nvim next to it.
+
+Two features make it more than an embedded editor:
+
+- `cmd-o` lists the files the agent just **read and edited**, so you jump straight to its changes.
+- Comments you write in nvim are **sent to the agent** with their `file:line`, so feedback goes to the agent instead of a separate chat.
+
+If you live in Neovim, this is the first one to try.
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: herdr.dev/mods/ChmaraX/herdr-nvim--herdr-app
+```
+
+## 3. 🔍 Herdr Annotator: Review Agent Code Like a Pull Request
+
+**Problem:** agents produce diffs faster than you can review them, and copying feedback back into a prompt is tedious.
+
+[Herdr Annotator](https://herdr.dev/mods/jakub-tucek/herdr-annotator/) lets you review your agent's code without leaving Herdr. Compare a branch, the last commit or uncommitted changes in a sidebar or a full review tab, leave comments on files or lines, and **send the whole review to the agent** working in that checkout.
+
+It also reads GitHub PR review threads, so you can reply directly or queue comments for the agent to address. It works with local and SSH worktrees too.
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: herdr.dev/mods/jakub-tucek/herdr-annotator
+```
+
+> Prefer reviewing GitHub or GitLab pull requests with an AI reviewer beside the diff? [Redline](https://herdr.dev/mods/iampedii/herdr-redline/) is a strong alternative.
+
+## 4. ♻️ Revive: Bring Agents Back After a Reboot
+
+**Problem:** Herdr keeps your agents running when the app closes, but after a reboot or a herdr-core restart you get a shell back, not your agent.
+
+[Revive](https://herdr.dev/mods/dmazlum/herdr-revive/) fills exactly that gap. It brings back the coding agent a terminal lost, **in the same pane, with the same session and flags**. It can also fork the focused agent's conversation into a new session beside it, which is handy for trying a different approach without losing the original.
+
+It supports Claude Code, Codex, pi, oh-my-pi, Factory Droid and the Cursor CLI. The author notes that Droid and Cursor support is built from their docs and not yet tested end to end.
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: herdr.dev/mods/dmazlum/herdr-revive
+```
+
+## 5. 📊 Over9k Usage: Know Your Limits Before You Hit Them
+
+**Problem:** running several agents in parallel burns through plan limits fast, and you only find out when one stops.
+
+[Over9k Usage](https://herdr.dev/mods/herunan/herdr-over9k--over9k-usage/) puts Claude's, Codex's and Gemini's 5-hour and weekly limits on one line along the bottom of the window. Each is coloured green, yellow or red, with when it resets. Hover a service to see every limit.
+
+It is tiny, and once agents run all day it saves you from finding out the hard way.
+
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: herdr.dev/mods/herunan/herdr-over9k--over9k-usage
+```
+
+> Want history rather than a live meter? [Insights](https://herdr.dev/mods/GaganSD/coding-agent-toolkit--herdr-insights/) is a token-usage dashboard across Claude Code, Codex, OpenCode and more, built from session data already on your disk.
+
+## 🏅 Honourable Mentions
+
+- **[Recap](https://herdr.dev/mods/mrolafsson/herdr-recap--app/)**: come back to a dozen agents and see, grouped by whose move it is, a one-line recap of where each got to. You can answer a blocked agent right from the list.
+- **[Automations](https://herdr.dev/mods/DnzzL/herdr-automations--app/)**: scheduled agent prompts. A prompt, a cron line and a repo, and an agent starts in a fresh worktree on schedule.
+- **[Pokémon agents](https://herdr.dev/mods/mathieucroset/herdr-pokemon-agents/)**: every agent is a pixel-art Pokémon along the bottom of the window. Working ones walk, idle ones fall asleep, and a blocked one shows a pulsing "!". Completely unnecessary, and great.
+
+## ⚠️ Before You Install
+
+Every mod page carries the same warning:
+
+> "Mods aren't reviewed by Herdr. Check what it runs and which keys it changes before adding it."
+
+Mods are community code running next to agents that have access to your repos, so treat them like any other dependency:
+
+- Read what your agent reports before it adds a mod, especially network access and programs it runs.
+- Skim the mod's GitHub repo (every gallery page links to it).
+- Prefer mods that say what they read and write. Agenttrail, for example, states that it only reads and never writes to your agents, plans or repos.
+- Remove what you don't use. Fewer mods means fewer things to trust.
+
+## 🤔 Final Thoughts
+
+The best thing about Herdr's mod gallery is how specific the mods are. Each one exists because someone running agents all day hit a problem and asked their agent to fix it. Start with these five, then browse the [gallery](https://herdr.dev/gallery/?type=mods) for the problem you have.
+
+And if nothing fits, that is the point of Herdr: describe what you want to your agent and build your own. To share it, put the mod folder in a public GitHub repo with a `RECIPE.md` and a `preview.png`, and add the repo topic `herdr-mod`. It shows up in the gallery within the hour.
+
+Happy herding! 🐑

@@ -6,7 +6,24 @@
     <atom:link href="https://www.grizzlybit.dev/rss.xml" rel="self" type="application/rss+xml" />
     <description>Engineering blog of Zubair Ahmed (Grizzlybit) — Node.js, React, TypeScript, IoT, and full-stack engineering.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Nov 2026 20:13:02 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 20:47:14 GMT</lastBuildDate>
+    <item>
+      <title>5 Must-Have Herdr Plugins 🧩</title>
+      <link>https://www.grizzlybit.dev/blog/5-must-have-herdr-plugins</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/5-must-have-herdr-plugins</guid>
+      <pubDate>Sat, 07 Nov 2026 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[The Herdr gallery has over 400 community mods, from stock tickers to Pokémon. These five fix real day-to-day problems with running coding agents: knowing what they are doing, editing beside them, reviewing their code, surviving reboots and not hitting your limits.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/5-must-have-herdr-plugins/cover.png" type="image/png" />
+      <category>herdr</category>
+      <category>herdr mods</category>
+      <category>herdr plugins</category>
+      <category>coding agents</category>
+      <category>claude code</category>
+      <category>codex</category>
+      <category>neovim</category>
+      <category>developer tools</category>
+    </item>
     <item>
       <title>Herdr: A Home for Your Coding Agents 🐑</title>
       <link>https://www.grizzlybit.dev/blog/herdr-a-home-for-your-coding-agents</link>

@@ -334,6 +334,12 @@ const COVERS = {
     'tee',
     'stdout · files · pipelines',
   ],
+  '5-must-have-herdr-plugins': [
+    'TOOLS',
+    '5 must-have Herdr plugins',
+    '5',
+    'agenttrail · nvim · revive · usage',
+  ],
   'herdr-a-home-for-your-coding-agents': [
     'TOOLS',
     'Herdr: a home for your coding agents',
