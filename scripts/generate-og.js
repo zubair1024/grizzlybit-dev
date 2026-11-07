@@ -334,6 +334,12 @@ const COVERS = {
     'tee',
     'stdout · files · pipelines',
   ],
+  'herdr-a-home-for-your-coding-agents': [
+    'TOOLS',
+    'Herdr: a home for your coding agents',
+    'hc',
+    'spaces · tabs · helper agents',
+  ],
   'my-terminal-setup': [
     'TOOLS',
     'My terminal setup',

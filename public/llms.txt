@@ -44,6 +44,7 @@ JavaScript, TypeScript, Node.js, React, Next.js, Ionic, React Native, MongoDB, M
 
 ## Blog
 
+- [Herdr: A Home for Your Coding Agents 🐑](https://www.grizzlybit.dev/blog/herdr-a-home-for-your-coding-agents.md): Herdr is a free, open source app for running Claude Code, Codex and other coding agents, with live status, SSH machines and helper agents.
 - [What's New in Node.js 24 (And How to Upgrade Your Codebase Smoothly)](https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24.md): What’s new in Node.js 24: V8 13.6, Float16Array, explicit resource management with using, RegExp.escape, URLPattern and npm 11, plus how to upgrade.
 - [Use Hook in React 18](https://www.grizzlybit.dev/blog/use-hook-in-react.md): An introduction to the experimental use hook in React 18 and how it can help build reusable custom hooks that simplify state management in components.
 - [Optimal SEO Performance for NextJS](https://www.grizzlybit.dev/blog/optimal-seo-performance-for-nextjs.md): How Next.js helps SEO with static HTML, server-side rendering and per-page metadata, and the steps to get optimal search performance from your site.

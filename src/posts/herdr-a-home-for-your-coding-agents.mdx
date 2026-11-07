@@ -1,0 +1,146 @@
+---
+title: 'Herdr: A Home for Your Coding Agents 🐑'
+seoTitle: 'What is Herdr? A native app for running coding agents'
+publishedAt: '2026-11-07'
+description: 'Herdr is a free, open source app for running Claude Code, Codex and other coding agents, with live status, SSH machines and helper agents.'
+summary: 'Running three or four coding agents at once turns your terminal into a guessing game: who is done, who is stuck, who is waiting on you? Herdr is a free, open source app built to herd them, and it is designed to be reshaped by the agents themselves.'
+image: '/blog/herdr-a-home-for-your-coding-agents/cover.png'
+keywords:
+  - herdr
+  - coding agents
+  - claude code
+  - codex
+  - ai agents
+  - terminal
+  - developer tools
+  - open source
+author: 'Zubair Ahmed'
+showOnHome: true
+---
+
+If you have started running more than one coding agent at a time, you know the routine. One tab has Claude Code refactoring a module, another has Codex writing tests, a third is chewing on a migration. Then you spend half your day cycling through tabs asking the same question: _is anyone waiting on me?_
+
+[Herdr](https://herdr.dev/) is a native app built for exactly that problem. It is a home for your coding agents, and its pitch is a little unusual: you shape the app by asking your agent to change it.
+
+> "Made for your agents. Remade by them."
+
+## 🐑 What Is Herdr?
+
+Herdr runs real terminals, organised around how agent work actually happens:
+
+- **Spaces** are for repos.
+- **Tabs** are for tasks.
+- Each agent reports whether it is **working**, **done**, or **waiting**, and the sidebar and tabs surface whoever needs your attention.
+
+That last point is the whole game. Instead of polling every terminal, you glance at the sidebar and go where you are needed.
+
+It is free and open source under the **Apache 2.0** license, split across three repos under the [herdrdev](https://github.com/herdrdev) GitHub organisation: `herdr-app`, `herdr-core` and the original `herdr` TUI.
+
+## 🔥 The Features That Matter
+
+### Agents Keep Running
+
+Agents do not live inside the app window. They run in **herdr-core**, a local server. Quit the app, update it, or crash it, and your terminals keep going.
+
+One caveat worth knowing: if the machine reboots or the server stops, panes come back with a shell in the same folder, but Herdr does not restart or resume the agents. You start them again yourself.
+
+### Multiple Machines, One Sidebar
+
+Any machine you can reach over SSH (a VPS, a VM, a cloud sandbox) can join the same sidebar:
+
+```bash
+hc machine add vps
+```
+
+Agents on that machine show up in the same list as your local ones. If you offload heavy agent runs to a beefy remote box, this is a big quality-of-life win.
+
+### Agents That Coordinate
+
+This is the part I find most interesting. One agent can start helper agents, steer them, and receive their reports, all through the `hc` CLI:
+
+```bash
+# Start a background reviewer that reports back to tab t1 when done
+hc run --bg codex "review my diff. Done: hc send t1"
+
+# Nudge a running helper
+hc send t3 "take another look"
+```
+
+Reports come back tagged with their source, like `<hc from="t3 reviewer">`. So your main Claude Code session can spin up a Codex reviewer, keep working, and pick up the review when it lands. That is a small, practical form of multi-agent orchestration without any framework.
+
+### Works With Any Agent
+
+Because Herdr runs real terminals, anything that runs in a shell runs in Herdr. For status reporting, agents use **OSC 7501**, an open escape-sequence protocol. Any program can report its own state with a single `printf`:
+
+```bash
+printf '\e]7501;state=blocked:app=my-agent\e\\'
+```
+
+That means your own scripts and homegrown agents can light up the sidebar exactly like Claude Code or Codex do.
+
+## 🛠️ Customise It by Asking Your Agent
+
+Everything about Herdr's look and behaviour lives in plain files:
+
+```text
+~/.config/herdr-app/
+├── AGENTS.md
+├── settings.json
+├── keys.json
+├── layouts/
+├── mods/
+└── themes/
+```
+
+The `AGENTS.md` file explains all of it to your agent. So instead of reading docs and editing JSON yourself, you tell your agent what you want:
+
+> "put a timer on each tab: how long its agent has been working."
+
+and it builds it. **Layouts** rearrange how your agents are shown (for example, a board with "needs you", "working" and "done" columns, switchable with `ctrl-shift-l`). **Mods** extend behaviour, like a notification mod that pings [ntfy.sh](https://ntfy.sh) when an agent needs you.
+
+There is also a community gallery. At the time of writing it lists **215 layouts, 435 mods and 393 contributors**, and you can add someone else's layout or mod straight from its `herdr.dev/layouts/...` or `herdr.dev/mods/...` address.
+
+## 🚀 Getting Started
+
+Herdr runs on **macOS (Apple silicon)**, **Linux (x86_64 and arm64)** and **Windows (x86_64)**. Remote machines join over SSH regardless of their OS.
+
+On macOS or Linux:
+
+```bash
+curl -fsSL https://releases.herdr.dev/app/install.sh | sh
+```
+
+On Windows (PowerShell):
+
+```powershell
+powershell -c "irm https://releases.herdr.dev/app/install.ps1 | iex"
+```
+
+Mac users can also grab the [`.dmg` directly](https://releases.herdr.dev/app/Herdr.dmg). As always, read an install script before piping it into your shell.
+
+Then:
+
+1. Start an agent from the `+` in the tab bar (Claude Code, Codex, or any program).
+2. Point it at the guide:
+
+   ```text
+   Read ~/.config/herdr-app/AGENTS.md
+   ```
+
+3. Ask it for whatever you want Herdr to do.
+
+## ⚠️ A Few Gotchas
+
+- **Herdr TUI is separate.** The original terminal app has its own server, and the two do not share agents. Agents started in the TUI will not appear in the app.
+- **Don't nest in tmux.** If an agent is not showing up, update it and run it directly in a Herdr pane rather than inside tmux.
+- **No auto-resume after reboot.** Shells come back, agents do not.
+
+## 🤔 Final Thoughts
+
+I've written before about [my terminal setup](/blog/my-terminal-setup) and about using [`screen` to detach and reattach sessions](/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal). Herdr feels like the natural next step for the agent era: a persistent session manager that knows _what_ is running in each terminal and whether it needs you.
+
+The "remade by agents" idea could easily have been a gimmick, but putting all configuration in plain files with an `AGENTS.md` guide is a genuinely sensible design. Your agent already knows how to edit files; Herdr just gives it a map.
+
+If you are juggling more than a couple of agents a day, it is free, open source, and worth an afternoon. Grab it at [herdr.dev](https://herdr.dev/).
+
+Happy herding! 🐑
