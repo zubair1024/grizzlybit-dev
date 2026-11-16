@@ -44,6 +44,7 @@ JavaScript, TypeScript, Node.js, React, Next.js, Ionic, React Native, MongoDB, M
 
 ## Blog
 
+- [Orca: The IDE for Running Coding Agents in Parallel 🐋](https://www.grizzlybit.dev/blog/orca-the-ide-for-parallel-coding-agents.md): Orca is a free, MIT-licensed IDE for running Claude Code, Codex and other coding agents in parallel, each in its own git worktree.
 - [5 Must-Have Herdr Plugins 🧩](https://www.grizzlybit.dev/blog/5-must-have-herdr-plugins.md): The 5 Herdr mods worth installing first: Agenttrail, herdr-nvim, Herdr Annotator, Revive and Over9k Usage, plus how to install any mod in one line.
 - [Herdr: A Home for Your Coding Agents 🐑](https://www.grizzlybit.dev/blog/herdr-a-home-for-your-coding-agents.md): Herdr is a free, open source app for running multiple coding agents like Claude Code and Codex, showing who is working, done or waiting on you.
 - [What's New in Node.js 24 (And How to Upgrade Your Codebase Smoothly)](https://www.grizzlybit.dev/blog/whats-new-in-nodejs-24.md): What’s new in Node.js 24: V8 13.6, Float16Array, explicit resource management with using, RegExp.escape, URLPattern and npm 11, plus how to upgrade.

@@ -6,7 +6,25 @@
     <atom:link href="https://www.grizzlybit.dev/rss.xml" rel="self" type="application/rss+xml" />
     <description>Engineering blog of Zubair Ahmed (Grizzlybit) — Node.js, React, TypeScript, IoT, and full-stack engineering.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 07 Nov 2026 20:47:14 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2026 21:12:25 GMT</lastBuildDate>
+    <item>
+      <title>Orca: The IDE for Running Coding Agents in Parallel 🐋</title>
+      <link>https://www.grizzlybit.dev/blog/orca-the-ide-for-parallel-coding-agents</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/orca-the-ide-for-parallel-coding-agents</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[One coding agent is a tool. Five coding agents on the same repo is a merge conflict waiting to happen. Orca gives every task its own git worktree, terminal and browser, then wraps it all in an IDE built for reviewing what the agents did.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/orca-the-ide-for-parallel-coding-agents/cover.png" type="image/png" />
+      <category>orca</category>
+      <category>orca ide</category>
+      <category>coding agents</category>
+      <category>claude code</category>
+      <category>codex</category>
+      <category>git worktree</category>
+      <category>ai agents</category>
+      <category>developer tools</category>
+      <category>open source</category>
+    </item>
     <item>
       <title>5 Must-Have Herdr Plugins 🧩</title>
       <link>https://www.grizzlybit.dev/blog/5-must-have-herdr-plugins</link>

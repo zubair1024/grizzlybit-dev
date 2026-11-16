@@ -334,6 +334,12 @@ const COVERS = {
     'tee',
     'stdout · files · pipelines',
   ],
+  'orca-the-ide-for-parallel-coding-agents': [
+    'TOOLS',
+    'Orca: the IDE for parallel coding agents',
+    'wt',
+    'worktrees · review · orchestration',
+  ],
   '5-must-have-herdr-plugins': [
     'TOOLS',
     '5 must-have Herdr plugins',
