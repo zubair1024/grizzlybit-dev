@@ -334,6 +334,12 @@ const COVERS = {
     'tee',
     'stdout · files · pipelines',
   ],
+  'duckdb-quick-start-and-performance-vs-postgres': [
+    'DATABASES',
+    'DuckDB vs Postgres',
+    '35x',
+    'quick start · tpc-h · 60M rows',
+  ],
   'orca-the-ide-for-parallel-coding-agents': [
     'TOOLS',
     'Orca: the IDE for parallel coding agents',

@@ -6,7 +6,25 @@
     <atom:link href="https://www.grizzlybit.dev/rss.xml" rel="self" type="application/rss+xml" />
     <description>Engineering blog of Zubair Ahmed (Grizzlybit) — Node.js, React, TypeScript, IoT, and full-stack engineering.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Nov 2026 21:12:25 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2026 21:35:42 GMT</lastBuildDate>
+    <item>
+      <title>DuckDB: Quick Start and How It Compares to Postgres 🦆</title>
+      <link>https://www.grizzlybit.dev/blog/duckdb-quick-start-and-performance-vs-postgres</link>
+      <guid isPermaLink="true">https://www.grizzlybit.dev/blog/duckdb-quick-start-and-performance-vs-postgres</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+      <author>noreply@grizzlybit.dev (Zubair Ahmed)</author>
+      <description><![CDATA[DuckDB is a free, in-process SQL database built for analytics. Here is how to start using it in five minutes, plus a benchmark against PostgreSQL 18 on 60 million rows, including the queries where Postgres still wins.]]></description>
+      <enclosure url="https://www.grizzlybit.dev/blog/duckdb-quick-start-and-performance-vs-postgres/cover.png" type="image/png" />
+      <category>duckdb</category>
+      <category>duckdb vs postgres</category>
+      <category>postgresql</category>
+      <category>olap</category>
+      <category>analytics</category>
+      <category>sql</category>
+      <category>parquet</category>
+      <category>benchmark</category>
+      <category>data engineering</category>
+    </item>
     <item>
       <title>Orca: The IDE for Running Coding Agents in Parallel 🐋</title>
       <link>https://www.grizzlybit.dev/blog/orca-the-ide-for-parallel-coding-agents</link>
