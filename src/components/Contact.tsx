@@ -73,8 +73,8 @@ const Contact = () => {
     <Section
       id="contact-form"
       muted
-      title="Hire a full-stack engineer in Dubai"
-      intro="Planning a product build, need CTO-level technical consulting, or looking for hands-on Node.js and React work? Tell me about your project and I'll get back to you."
+      title="Get in touch"
+      intro="Want to talk about a project, an idea or something you read here? Send me a message and I'll get back to you."
     >
       <div className="grid gap-10 md:grid-cols-[2fr_3fr] md:gap-12">
         <Reveal>

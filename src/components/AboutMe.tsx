@@ -13,7 +13,7 @@ const AboutMe = () => {
   return (
     <Section
       id="about-me"
-      title="About Zubair Ahmed, CTO and full-stack engineer in Dubai"
+      title="About Zubair Ahmed, CTO and full-stack engineer"
     >
       <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] md:items-center">
         <Reveal className="order-2 max-w-prose space-y-6 text-lg leading-relaxed text-pretty md:order-1">
@@ -37,12 +37,12 @@ const AboutMe = () => {
             products for businesses and consumers.
           </p>
           <p>
-            Day to day I build with Node.js, React and TypeScript, mostly
-            IoT and real-time fleet-tracking platforms with their web
-            dashboards and mobile apps. I&apos;ve built software with teams at
-            Dubai Police, Dubai Municipality, Haifa Logistics and Roamworks,
-            and my vehicle tracking work earned a certificate of appreciation
-            from Dubai Police.
+            Day to day I build with Node.js, React and TypeScript, mostly IoT
+            and real-time fleet-tracking platforms with their web dashboards and
+            mobile apps. I&apos;ve built software with teams at Dubai Police,
+            Dubai Municipality, Haifa Logistics and Roamworks, and my vehicle
+            tracking work earned a certificate of appreciation from Dubai
+            Police.
           </p>
         </Reveal>
 
