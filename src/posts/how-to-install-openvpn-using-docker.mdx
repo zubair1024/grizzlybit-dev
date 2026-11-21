@@ -1,6 +1,7 @@
 ---
 title: 'How to install OpenVPN using Docker'
 publishedAt: '2021-10-02'
+lastModified: '2026-11-21'
 description: 'Host your own VPN: build Kyle Manna’s docker-openvpn image, initialise the PKI, start the OpenVPN server in Docker and generate client config files.'
 summary: 'In this article we will be seeing how easy it is to get started with your own OpenVPN server.'
 image: '/blog/how-to-install-openvpn-using-docker/cover.png'
@@ -73,5 +74,7 @@ docker run -v $PWD/vpn-data:/etc/openvpn --rm open-vpn-server ovpn_getclient fir
 ```
 
 You can then use this file to establish a connection to the VPN server using the OpenVPN Connect App which is available on most of the platforms.
+
+New to Docker? Start with [installing Docker on Ubuntu](/blog/install-docker-on-ubuntu-18).
 
 Yes, it was that simple. 😉

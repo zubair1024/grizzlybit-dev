@@ -2,6 +2,7 @@
 title: 'Herdr: A Home for Your Coding Agents 🐑'
 seoTitle: 'What is Herdr? A native app for running coding agents'
 publishedAt: '2026-11-07'
+lastModified: '2026-11-21'
 description: 'Herdr is a free, open source app for running multiple coding agents like Claude Code and Codex, showing who is working, done or waiting on you.'
 summary: 'Running three or four coding agents at once turns your terminal into a guessing game: who is done, who is stuck, who is waiting on you? Herdr is a free, open source app built to herd them, and it is designed to be reshaped by the agents themselves.'
 image: '/blog/herdr-a-home-for-your-coding-agents/cover.png'
@@ -98,7 +99,7 @@ The `AGENTS.md` file explains all of it to your agent. So instead of reading doc
 
 and it builds it. **Layouts** rearrange how your agents are shown (for example, a board with "needs you", "working" and "done" columns, switchable with `ctrl-shift-l`). **Mods** extend behaviour, like a notification mod that pings [ntfy.sh](https://ntfy.sh) when an agent needs you.
 
-There is also a community gallery. At the time of writing it lists **215 layouts, 435 mods and 393 contributors**, and you can add someone else's layout or mod straight from its `herdr.dev/layouts/...` or `herdr.dev/mods/...` address.
+There is also a community gallery. At the time of writing it lists **215 layouts, 435 mods and 393 contributors**, and you can add someone else's layout or mod straight from its `herdr.dev/layouts/...` or `herdr.dev/mods/...` address. I picked my favourites in [5 must-have Herdr plugins](/blog/5-must-have-herdr-plugins).
 
 ## 🚀 Getting Started
 
@@ -146,7 +147,7 @@ Yes. Herdr runs real terminals, so any agent works. Agents that support OSC 7501
 
 ### Does Herdr resume agents after a reboot?
 
-No. Panes come back with a shell in the same folder, but you start the agents again yourself.
+No. Panes come back with a shell in the same folder, but you start the agents again yourself. The [Revive mod](/blog/5-must-have-herdr-plugins) brings them back in the same pane.
 
 ### What is the difference between Herdr and Herdr TUI?
 
@@ -157,6 +158,8 @@ Herdr TUI is the original terminal app with its own server. The Herdr app is sep
 I've written before about [my terminal setup](/blog/my-terminal-setup) and about using [`screen` to detach and reattach sessions](/blog/how-to-use-screen-on-linux-to-detach-and-reattach-your-terminal). Herdr feels like the natural next step for the agent era: a persistent session manager that knows _what_ is running in each terminal and whether it needs you.
 
 The "remade by agents" idea could easily have been a gimmick, but putting all configuration in plain files with an `AGENTS.md` guide is a genuinely sensible design. Your agent already knows how to edit files; Herdr just gives it a map.
+
+If you would rather have worktrees, diff review and a browser handled for you, [Orca](/blog/orca-the-ide-for-parallel-coding-agents) is the heavier alternative.
 
 If you are juggling more than a couple of agents a day, it is free, open source, and worth an afternoon. Grab it at [herdr.dev](https://herdr.dev/).
 

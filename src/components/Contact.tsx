@@ -53,6 +53,8 @@ const Contact = () => {
     try {
       await sendMessage(values);
       trackEvent('contact_submit', { status: 'success' });
+      // GA4 recommended event; mark as a key event in GA Admin
+      trackEvent('generate_lead', { lead_source: 'contact_form' });
       reset();
       setSent(true);
       toast.success('Message sent. Thanks for reaching out!');

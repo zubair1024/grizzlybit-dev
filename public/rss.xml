@@ -6,7 +6,7 @@
     <atom:link href="https://www.grizzlybit.dev/rss.xml" rel="self" type="application/rss+xml" />
     <description>Engineering blog of Zubair Ahmed (Grizzlybit) — Node.js, React, TypeScript, IoT, and full-stack engineering.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Nov 2026 21:35:42 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 21 Nov 2026 18:56:05 GMT</lastBuildDate>
     <item>
       <title>DuckDB: Quick Start and How It Compares to Postgres 🦆</title>
       <link>https://www.grizzlybit.dev/blog/duckdb-quick-start-and-performance-vs-postgres</link>

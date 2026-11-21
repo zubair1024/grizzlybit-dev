@@ -1,6 +1,7 @@
 ---
 title: 'How to create an SSH tarpit'
 publishedAt: '2021-05-23'
+lastModified: '2026-11-21'
 description: 'Trap brute-force bots trying to log into your Linux server: build and run endlessh as an SSH tarpit that drips an endless banner to waste their time.'
 summary: 'A quick an easy way get back at those obnoxious hacker that target to gain SSH access to your Linux server. This article will show you how to trap the hackers in a SSH tarpit.'
 image: '/blog/ssh-tarpit-endlessh/cover.png'
@@ -117,5 +118,7 @@ ssh -vvv root@<server-address> -p
 You'll notice that the user will keep getting gibberish in the banner, each line taking almost 30 seconds to show up. And since the banner is not generally treated as anything that you can perform a timeout on explicitly the script that the hacker will be using will be stuck on this stage forever, who otherwise would. Mission accomplished 👍 .
 
 You have successfully wasted the time and efforts of a hacker. You are badass. 😎
+
+Want to script your own SSH sessions instead? See [how to SSH using Node.js](/blog/how-to-ssh-using-nodejs).
 
 Now go out there and waste someone's time and effort and make the world a safer place, one server at a time.
